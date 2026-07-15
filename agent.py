@@ -110,29 +110,8 @@ def route_assessment(state: AgentState) -> Literal["fetch_external_data", "__end
 async def build_graph():
     mcp_client = MultiServerMCPClient(
         {
-            # # Since the VPN doesn't allwo direct access to the ThingsBoard server to virtual machines, i deploy the mcp server locally.
-            # "thingsboard": {
-            #     "command": "java",
-            #     "args": [
-            #         "-jar",
-            #         "thingsboard-mcp-server-2.1.0.jar",
-            #         "--logging.level.root=ERROR",  # Muta i log informativi
-            #         "--spring.main.banner-mode=off",  # Nasconde il banner testuale
-            #     ],
-            #     "env": {
-            #         "THINGSBOARD_URL": "http://193.205.92.195:8080",
-            #         "THINGSBOARD_USERNAME": "tenant@thingsboard.org",
-            #         "THINGSBOARD_PASSWORD": "tenant",
-            #         "THINGSBOARD_TOOLS_EDQ": "false",
-            #         "THINGSBOARD_TOOLS_OTA": "false",
-            #         "THINGSBOARD_TOOLS_GROUP": "false",
-            #         "THINGSBOARD_TOOLS_USER": "false",
-            #     },
-            #     "transport": "stdio",
-            # },
-            # THINGSBOARD_URL="http://193.205.92.195:8080" THINGSBOARD_USERNAME="tenant@thingsboard.org" THINGSBOARD_PASSWORD="tenant" java -Dserver.port=8081 -Dspring.ai.mcp.server.stdio=false -Dspring.main.web-application-type=servlet -jar thingsboard-mcp-server-2.1.0.jar
             "thingsboard": {
-                "url": "http://localhost:8081/sse",
+                "url": "http://localhost:8000/sse",
                 "transport": "sse",
             },
             "ddgs": {
@@ -158,8 +137,6 @@ async def build_graph():
     )
 
     tools = await mcp_client.get_tools()
-    for tool in tools:
-        print(f"   [Tool] -> Tool '{tool.name}' is available for use in the graph.")
 
     # 6. Construct graph routing
     workflow = StateGraph(AgentState)

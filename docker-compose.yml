@@ -1,0 +1,49 @@
+services:
+  nodered:
+    image: nodered/node-red:5.0
+    container_name: nodered
+    ports:
+      - "1880:1880"
+    volumes:
+      - node_red_data:/data
+    network_mode: host
+
+    restart: "no"
+
+  thingsboard-mcp:
+    image: thingsboard/mcp:2.1.0
+    container_name: thingsboard-mcp
+    network_mode: host
+    ports:
+      - "8000:8000"
+    # stdin_open: true
+    environment:
+      THINGSBOARD_URL: "http://193.205.92.195:8080"
+      THINGSBOARD_USERNAME: "tenant@thingsboard.org"
+      THINGSBOARD_PASSWORD: "tenant"
+
+      THINGSBOARD_TOOLS_TELEMETRY: "true"
+      THINGSBOARD_TOOLS_DEVICE: "true"
+      THINGSBOARD_TOOLS_ALARM: "true"
+      THINGSBOARD_TOOLS_EDQ: "true"
+      THINGSBOARD_TOOLS_ASSET: "true"
+      THINGSBOARD_TOOLS_RELATION: "true"
+
+      THINGSBOARD_TOOLS_CUSTOMER: "false"
+      THINGSBOARD_TOOLS_USER: "false"
+      THINGSBOARD_TOOLS_OTA: "false"
+      THINGSBOARD_TOOLS_GROUP: "false"
+      # for sse connection
+      SPRING_AI_MCP_SERVER_STDIO: "false"
+      SPRING_WEB_APPLICATION_TYPE: "servlet"
+
+  redis:
+    image: redis:8.2
+    container_name: redis
+    network_mode: host
+    ports:
+      - "6379:6379"
+    restart: "no"
+
+volumes:
+  node_red_data:
