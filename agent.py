@@ -1,3 +1,5 @@
+import os
+import logging
 from typing import Literal, TypedDict, Annotated
 import operator
 from ddgs import DDGS
@@ -7,6 +9,14 @@ from pydantic import BaseModel, Field
 from langchain_core.messages import HumanMessage
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langgraph.prebuilt import ToolNode
+
+# Configure the logger
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
 PROMPT_TEMPLATE = """
 Given this IoT data, evaluate if there is a risk of fires. 
@@ -52,49 +62,6 @@ async def assess_danger(state: AgentState) -> dict:
     return {"assessment": result.model_dump()}
 
 
-# 4. Define the external fetch node (Internet / MCP / DB)
-# async def fetch_external_data(state: AgentState) -> dict:
-#     query = state["assessment"].get("search_query", "general fire risk factors")
-#     print(f"   [Tool] -> LLM is unsure. Fetching external data for: '{query}'...")
-
-#     # TODO: Replace this mock with your actual MCP client call, DB query, or SerpAPI call
-#     simulated_mcp_response = f"External System Data for '{query}': The local humidity dropped below 20% and wind speeds are 45km/h."
-
-#     # Return the new information as a message to be appended to the state
-#     return {"messages": [HumanMessage(content=simulated_mcp_response)]}
-
-
-async def fetch_external_data(state: AgentState) -> dict:
-    query = state["assessment"].get("search_query", "general fire risk factors")
-    print(f"   [Tool] -> LLM is unsure. Fetching external data for: '{query}'...")
-
-    try:
-        # Initialize the async DuckDuckGo search client
-        async with DDGS() as ddgs:
-            # Fetch the top 3 text results asynchronously
-            # (You can adjust max_results as needed for your context window)
-            results = await ddgs.atext(query, max_results=3)
-
-        if results:
-            # Format the results into a readable string for the LLM
-            formatted_results = "\n".join(
-                [f"- {res.get('title', '')}: {res.get('body', '')}" for res in results]
-            )
-            search_response = (
-                f"External Search Data for '{query}':\n{formatted_results}"
-            )
-        else:
-            search_response = f"No external data found on DuckDuckGo for '{query}'."
-
-    except Exception as e:
-        # Fallback in case the search fails (e.g., rate limits or network issues)
-        print(f"   [Tool Error] -> DuckDuckGo search failed: {e}")
-        search_response = f"External search failed for '{query}'. Error: {str(e)}"
-
-    # Return the new information as a message to be appended to the state
-    return {"messages": [HumanMessage(content=search_response)]}
-
-
 # 5. Define the routing logic
 def route_assessment(state: AgentState) -> Literal["fetch_external_data", "__end__"]:
     assessment = state["assessment"]
@@ -121,16 +88,13 @@ async def build_graph():
             },
         }
     )
-    LLM_MODEL = "gemini-2.5-flash-lite"
-    LLM_API_KEY = "AQ.Ab8RN6I-GckFbpcdRhRNTKBG2_ZXfv_kJRcXbFC8A-Pq1o8CiA"
-    LLM_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
 
     global llm
     llm = ChatOpenAI(
-        model=LLM_MODEL,
-        api_key=LLM_API_KEY,
-        base_url=LLM_BASE_URL,
-        temperature=0.2,  # Lower temperature is usually better for strict classification (da verificare)
+        model=os.getenv("LLM_MODEL"),
+        api_key=os.getenv("LLM_API_KEY"),
+        base_url=os.getenv("LLM_BASE_URL"),
+        temperature=0.2,  # Lower temperature is usually better for strict classification (to be verified)
         max_tokens=None,
         timeout=None,
         max_retries=2,
@@ -158,21 +122,25 @@ async def build_graph():
     global app
     app = workflow.compile()
 
+    # Print the graph in ASCII format in the terminal
+    ascii_art = app.get_graph().draw_ascii()
+    logger.info("\n%s", ascii_art)
+
 
 # 7. Execution function
 async def call_agent(data):
-    print("   [Agent] -> Avvio chiamata a LangGraph...")
+    logger.info("   [Agent] -> Starting LangGraph call...")
 
-    prompt_completo = f"{PROMPT_TEMPLATE}\n\n{data}"
-    initial_state = {"messages": [HumanMessage(content=prompt_completo)]}
+    complete_prompt = f"{PROMPT_TEMPLATE}\n\n{data}"
+    initial_state = {"messages": [HumanMessage(content=complete_prompt)]}
 
     try:
         result = await app.ainvoke(initial_state)
-        print("   [Agent] -> Risposta finale ricevuta dall'LLM!")
-        print(f"   [Agent] -> Valutazione: {result['assessment']}")
+        logger.info("   [Agent] -> Final response received from LLM!")
+        logger.info("   [Agent] -> Assessment: %s", result["assessment"])
 
         return result["assessment"]
 
     except Exception as e:
-        print(f"   [Agent] -> ERRORE FATALE dentro LangGraph: {e}")
+        logger.error("   [Agent] -> FATAL ERROR inside LangGraph: %s", e)
         raise

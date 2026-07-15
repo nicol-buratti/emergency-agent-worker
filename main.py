@@ -1,79 +1,88 @@
 import signal
 import sys
 import asyncio
-import redis.asyncio as redis  # <-- Import fondamentale per l'uso asincrono
-
+import logging
+import redis.asyncio as redis  # <-- Essential import for asynchronous use
+from dotenv import load_dotenv
 from agent import build_graph, call_agent
 
-# Connessione a Redis ASINCRONA
+# Configure the logger
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
+
+load_dotenv()
+
+# ASYNCHRONOUS Redis Connection
 r = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
 
 QUEUE_NAME = "room_pq"
 PUBLISH_CHANNEL = "sensors_processed"
 
-# Variabile globale
-in_esecuzione = True
+# Global variable
+is_running = True
 
 
-def spegnimento_sicuro(signum, frame):
-    """Cattura il segnale SIGTERM (Docker) o SIGINT (Ctrl+C)."""
-    global in_esecuzione
-    print(
-        f"\n[*] Ricevuto segnale di spegnimento ({signum}). Uscita al prossimo ciclo..."
-    )
-    in_esecuzione = False
+def graceful_shutdown(signum, frame):
+    """Catches the SIGTERM (Docker) or SIGINT (Ctrl+C) signal."""
+    global is_running
+    logger.info("Received shutdown signal (%s). Exiting on the next cycle...", signum)
+    is_running = False
 
 
-# Registra i gestori di segnale
-signal.signal(signal.SIGTERM, spegnimento_sicuro)
-signal.signal(signal.SIGINT, spegnimento_sicuro)
+# Register signal handlers
+signal.signal(signal.SIGTERM, graceful_shutdown)
+signal.signal(signal.SIGINT, graceful_shutdown)
 
 
-async def processa_sensore(room):
-    """Logica di elaborazione del task."""
-    # Essendo r diventato asincrono, dobbiamo usare await
+async def process_sensor(room):
+    """Task processing logic."""
     result = await r.get(room)
 
     if result is None:
-        print(f"[!] Nessun dato associato alla stanza {room}.")
+        logger.warning("No data associated with room %s.", room)
         return None
 
-    # Questa chiamata ora bloccherà l'esecuzione fino alla risposta dell'LLM
+    # This call will now block execution until the LLM responds
     result = await call_agent(result)
 
-    dato_elaborato = f"PROCESSED_{room}: {result}"
-    return dato_elaborato
+    processed_data = f"PROCESSED_{room}: {result}"
+    return processed_data
 
 
 async def main():
+    logger.info("Building graph...")
     await build_graph()
-    print(f"[*] Worker in ascolto sulla priority queue (ZSET) '{QUEUE_NAME}'...")
-    print(f"[*] I risultati verranno pubblicati sul canale '{PUBLISH_CHANNEL}'.")
-    print("[*] Premi Ctrl+C per uscire.\n")
+    logger.info("Worker listening on priority queue (ZSET) '%s'...", QUEUE_NAME)
+    logger.info("Results will be published on channel '%s'.", PUBLISH_CHANNEL)
+    logger.info("Press Ctrl+C to exit.")
 
-    while in_esecuzione:
+    while is_running:
         try:
-            # await su bzpopmin garantisce che il loop non impazzisca
-            risultato = await r.bzpopmin(QUEUE_NAME, timeout=5)
+            # await on bzpopmin ensures the loop doesn't block synchronously
+            queue_result = await r.bzpopmin(QUEUE_NAME, timeout=5)
 
-            if risultato:
-                chiave_coda, room, score = risultato
-                print(f"[↓] Estratto (Priorità: {score}): {room}")
+            if queue_result:
+                queue_key, room, score = queue_result
+                logger.info("[↓] Extracted (Priority: %s): %s", score, room)
 
-                # 1. Elabora il dato (il loop si ferma qui finché call_agent non finisce)
-                dato_elaborato = await processa_sensore(room)
+                # 1. Process the data (the loop pauses here until call_agent finishes)
+                processed_data = await process_sensor(room)
 
-                # 2. Fai il publish sul canale Pub/Sub
-                if dato_elaborato:
-                    await r.publish(PUBLISH_CHANNEL, dato_elaborato)
-                    print(f"[↑] Pubblicato: {dato_elaborato}\n")
+                # 2. Publish to the Pub/Sub channel
+                if processed_data:
+                    await r.publish(PUBLISH_CHANNEL, processed_data)
+                    logger.info("[↑] Published: %s", processed_data)
 
         except Exception as e:
-            print(f"[!] Si è verificato un errore: {e}")
-            # time.sleep(2) bloccava tutto il thread. Usa asyncio.sleep
+            logger.error("An error occurred: %s", e)
+            # time.sleep(2) used to block the whole thread. Use asyncio.sleep
             await asyncio.sleep(2)
 
-    print("[*] Worker arrestato in modo sicuro.")
+    logger.info("Worker gracefully stopped.")
     sys.exit(0)
 
 
