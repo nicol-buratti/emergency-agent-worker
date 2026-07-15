@@ -1,0 +1,13 @@
+[project]
+name = "agent-worker"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "ddgs[mcp]>=9.14.4",
+    "langchain-mcp-adapters>=0.3.0",
+    "langchain-openai>=1.3.5",
+    "langgraph>=1.2.9",
+    "redis>=8.0.1",
+]
