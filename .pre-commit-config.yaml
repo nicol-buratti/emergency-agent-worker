@@ -1,4 +1,5 @@
 repos:
+# Linting and Formatting
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Ruff version.
   rev: v0.15.21
@@ -8,3 +9,28 @@ repos:
       args: [ --fix ]
     # Run the formatter.
     - id: ruff-format
+
+# General file hygiene
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+  hooks:
+    - id: trailing-whitespace        # Removes trailing whitespace
+    - id: end-of-file-fixer          # Ensures every file ends with an empty line
+    - id: check-yaml                 # Checks YAML files for syntax errors
+    - id: check-added-large-files    # Blocks committing huge files (e.g., datasets, model weights)
+    - id: check-merge-conflict       # Blocks commit if there are unresolved merge markers (e.g., <<<<<<< HEAD)
+#  # Type Checking
+# - repo: https://github.com/pre-commit/mirrors-mypy
+#   rev: v2.3.0
+#   hooks:
+#     - id: mypy
+#     - additional_dependencies: [pydantic]
+# .pre-commit-config.yaml
+
+  # Secrets checker
+-   repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+    -   id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: package.lock.json
