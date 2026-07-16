@@ -12,6 +12,7 @@ dependencies = [
     { name = "langchain-mcp-adapters" },
     { name = "langchain-openai" },
     { name = "langgraph" },
+    { name = "langgraph-swarm" },
     { name = "redis" },
 ]
 
@@ -22,6 +23,7 @@ requires-dist = [
     { name = "langchain-mcp-adapters", specifier = ">=0.3.0" },
     { name = "langchain-openai", specifier = ">=1.3.5" },
     { name = "langgraph", specifier = ">=1.2.9" },
+    { name = "langgraph-swarm", specifier = ">=0.1.0" },
     { name = "redis", specifier = ">=8.0.1" },
 ]
 
@@ -502,6 +504,20 @@ wheels = [
 ]
 
 [[package]]
+name = "langchain"
+version = "1.3.13"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "langchain-core" },
+    { name = "langgraph" },
+    { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/29/33/fd716d0273c8495482953bd63461bf02f71f3a8f4a2fe6c0a70a0e6ff799/langchain-1.3.13.tar.gz", hash = "sha256:bcf874680f31e9970f0db2264509df5bc2115d9680e9d651d537eb49bf1a7d8a", size = 642868, upload-time = "2026-07-10T23:06:08.555Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/95/c6/dc676c632f3d20c88789b0726c43ad5e039c25338cc3bb7090fc247d1522/langchain-1.3.13-py3-none-any.whl", hash = "sha256:20a8fe4b1dea7db74356f7d2b5455c4970099b9f7f53c2122ea97f115c907fbd", size = 136911, upload-time = "2026-07-10T23:06:07.012Z" },
+]
+
+[[package]]
 name = "langchain-core"
 version = "1.4.9"
 source = { registry = "https://pypi.org/simple" }
@@ -618,6 +634,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/b4/2b/bd8ac26d4e97f6df88ef05ce5b6a38945a3903e1025d926f4752aa88aa97/langgraph_sdk-0.4.2.tar.gz", hash = "sha256:b88f0f5f6328ac0680d6790614a905b2bcfa257f2276dba4e38f0e86db0aa738", size = 348327, upload-time = "2026-06-01T17:51:19.856Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a0/05/aac507337cceae773c2cc9ab91eb6301963af7aeeb55b4217a00e15aff17/langgraph_sdk-0.4.2-py3-none-any.whl", hash = "sha256:75fa5096c1177ce39c847096a8fe3745ffd480ddb412995f836e9f5f884c43dd", size = 160521, upload-time = "2026-06-01T17:51:18.849Z" },
+]
+
+[[package]]
+name = "langgraph-swarm"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "langchain" },
+    { name = "langchain-core" },
+    { name = "langgraph" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/89/9c/b76ce5eb38584097e671464632fdb854ab28457dd9e8ec3912f7208a1d9a/langgraph_swarm-0.1.0.tar.gz", hash = "sha256:e0f189fc2471d06108fc293da05771d0106d72f755cd130ee37d579561942479", size = 12432, upload-time = "2025-12-04T19:04:05.56Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/49/1f/a2fd04e6ba6f34609ae37a290b198f37155516ed67e34c12948c5a742437/langgraph_swarm-0.1.0-py3-none-any.whl", hash = "sha256:7020b9a1ba6959b8ddd0168e49b236e8f9967ea40a8a2ccd14c28ec57fe6c227", size = 10227, upload-time = "2025-12-04T19:04:04.72Z" },
 ]
 
 [[package]]
