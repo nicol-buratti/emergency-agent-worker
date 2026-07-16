@@ -28,7 +28,7 @@ class ThreatAssessment(BaseModel):
     danger: Literal["high", "medium", "low", "unsure"] = Field(
         description="Final assessed danger level based on all gathered data."
     )
-    danger_type: Literal["fire", "smoke", "heat", "other"] = Field(
+    danger_type: Literal["fire", "smoke", "heat", "other", "none"] = Field(
         description="Type of danger identified, if any."
     )
     danger_score: float = Field(
@@ -46,11 +46,12 @@ class AgentState(TypedDict):
 
 async def reason(state: AgentState) -> dict:
     logger.info("   [Agent] -> Reasoning with LangGraph...")
-    llm_with_tools = llm.bind_tools(tools)
+    llm_with_tools = llm.bind_tools(tools, tool_choice="any")
 
     # Prepend instructions to the message history dynamically
     system_msg = SystemMessage(content="Analyze the IoT data for fire risk. ,.")
     messages = [system_msg] + state["messages"]
+    # messages = state["messages"]
 
     result = await llm_with_tools.ainvoke(messages)
     return {"messages": [result]}
@@ -69,12 +70,13 @@ def route_reasoning(
     return "extract_final_assessment"
 
 
-def safe_tool_node(state: AgentState):
+async def safe_tool_node(state: AgentState):
     logger.info("   [Agent] -> Invoking tools with LangGraph...")
     try:
-        # tool_node is the instantiated ToolNode(tools)
-        return tool_node.invoke(state)
+        result = await tool_node.ainvoke(state)
+        return result
     except Exception as e:
+        logger.error("Tool execution failed: %s", e)
         last_message = state["messages"][-1]
         error_messages = []
 
@@ -141,10 +143,11 @@ async def build_graph():
 async def call_agent(data):
     logger.info("   [Agent] -> Starting LangGraph call...")
 
-    prompt = f"Given this IoT data, evaluate if there is a risk of fires:\n\n{data}"
+    # TODO refine prompt
+    prompt = f"Given this IoT data, where the room value is the device name, check the telemetry of the device in the last 5 minutes:\n\n{data}"
     initial_state = {"messages": [HumanMessage(content=prompt)]}
 
     result = await app.ainvoke(initial_state)
-    logger.info("   [Agent] -> Final Assessment: %s", result.get("assessment"))
+    logger.info("[Agent] -> Final Assessment: %s", result.get("assessment"))
 
     return result.get("assessment")
