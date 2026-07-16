@@ -103,7 +103,7 @@ async def build_graph():
                 description="Terminate the swarm process and output the final assessment.",
             ),
         ],
-        system_prompt="You are the coordinator, you examine IoT data, detect the possible hazards and pass the informations to the appropriate hazard agent.",
+        system_prompt="You are the Hazard Assessment Coordinator. Your task is to triage IoT data for building safety. 1) Use your tools to fetch telemetry for the given device/room over the last 5 minutes. 2) Identify the primary threat signature (e.g., thermal/smoke vs. seismic/vibration). 3) Transfer the data and control to the appropriate expert agent (Fire Agent or Earthquake Agent). If no threat is detected, terminate the swarm directly with a 'none' danger assessment.",
         name="Coordinator",
     )
 
@@ -116,7 +116,7 @@ async def build_graph():
                 description="Terminate the swarm process and output the final assessment.",
             ),
         ],
-        system_prompt="You are an expert of Fire Safety. You examine IoT data, detect the possible fire hazards and pass the informations to the Coordinator.",
+        system_prompt="You are the Fire Safety Expert. Analyze the provided IoT telemetry specifically for fire-related hazards (e.g., temperature spikes, smoke presence, rapid heat rise). Formulate a clear final assessment detailing the danger level, specific danger type, a severity score (0.0 to 1.0), and a concise justification. Once complete, terminate the swarm to output the final assessment.",
         name="Fire Agent",
     )
 
@@ -129,7 +129,7 @@ async def build_graph():
                 description="Terminate the swarm process and output the final assessment.",
             ),
         ],
-        system_prompt="You are an expert of Earthquake Safety. You examine IoT data, detect the possible earthquake hazards and pass the informations to the Coordinator.",
+        system_prompt="You are the Earthquake Safety Expert. Analyze the provided IoT telemetry specifically for seismic hazards (e.g., abnormal vibrations, structural shifts, accelerometer anomalies). Formulate a clear final assessment detailing the danger level, specific danger type, a severity score (0.0 to 1.0), and a concise justification. Once complete, terminate the swarm to output the final assessment.",
         name="Earthquake Agent",
     )
 
@@ -145,9 +145,14 @@ async def build_graph():
 async def call_agent(data):
     logger.info("   [Agent] -> Starting LangGraph call...")
 
-    # TODO refine prompt
-    prompt = f"Given this IoT data, where the room value is the device name, check the telemetry of the device in the last 5 minutes and formulate a threat assessment:\n\n{data}"
-
+    prompt = (
+        f"Initial IoT Data:\n{data}\n\n"
+        "Instructions:\n"
+        "1. The 'room' field in the data indicates the device name.\n"
+        "2. Use your tools to query this device's telemetry for the last 5 minutes.\n"
+        "3. Evaluate the readings for anomalies.\n"
+        "4. Route to the appropriate expert agent if a threat is suspected, or terminate with a safe baseline assessment."
+    )
     # 1. agentstate is given in input
     initial_state: AgentState = {
         "messages": [HumanMessage(content=prompt)],
