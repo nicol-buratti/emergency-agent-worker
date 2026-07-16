@@ -1,3 +1,4 @@
+import json
 import signal
 import sys
 import asyncio
@@ -40,7 +41,9 @@ signal.signal(signal.SIGINT, graceful_shutdown)
 
 async def process_sensor(room):
     """Task processing logic."""
-    result = await r.get(room)
+    result = await r.hgetall(room)
+    # result = json.loads(result) if result else None
+    result["room"] = room
 
     if result is None:
         logger.warning("No data associated with room %s.", room)
@@ -48,9 +51,7 @@ async def process_sensor(room):
 
     # This call will now block execution until the LLM responds
     result = await call_agent(result)
-
-    processed_data = f"PROCESSED_{room}: {result}"
-    return processed_data
+    return result
 
 
 async def main():
@@ -66,7 +67,7 @@ async def main():
             queue_result = await r.bzpopmin(QUEUE_NAME, timeout=5)
 
             if queue_result:
-                queue_key, room, score = queue_result
+                _, room, score = queue_result
                 logger.info("[↓] Extracted (Priority: %s): %s", score, room)
 
                 # 1. Process the data (the loop pauses here until call_agent finishes)
@@ -74,7 +75,7 @@ async def main():
 
                 # 2. Publish to the Pub/Sub channel
                 if processed_data:
-                    await r.publish(PUBLISH_CHANNEL, processed_data)
+                    await r.publish(PUBLISH_CHANNEL, json.dumps(processed_data))
                     logger.info("[↑] Published: %s", processed_data)
 
         except Exception as e:
