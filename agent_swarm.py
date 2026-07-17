@@ -1,6 +1,5 @@
 from langchain_openai import ChatOpenAI
 import os
-from langgraph.checkpoint.memory import InMemorySaver
 from langchain.agents import create_agent
 from langgraph_swarm import create_handoff_tool, create_swarm
 from langchain_core.messages import HumanMessage
@@ -9,7 +8,6 @@ from typing import Literal, Optional, TypedDict, Annotated
 import operator
 from langgraph.graph import END
 from pydantic import BaseModel, Field
-from langchain_mcp_adapters.client import MultiServerMCPClient
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -46,29 +44,39 @@ class AgentState(TypedDict):
 
 
 model = ChatOpenAI(
-    model=os.getenv("LLM_MODEL"),
+    # model=os.getenv("LLM_MODEL"),
+    model="tencent/hy3:free",
     api_key=os.getenv("LLM_API_KEY"),
     base_url=os.getenv("LLM_BASE_URL"),
     temperature=0.2,
     max_retries=2,
+    extra_body={
+        "models": [
+            # "tencent/hy3:free",
+            "google/gemma-4-26b-a4b-it:free",
+            # "nvidia/nemotron-3-super-120b-a12b:free",
+            "nvidia/nemotron-nano-9b-v2:free",
+            "openai/gpt-oss-20b:free",
+        ]
+    },
 )
 agent_model = model.with_structured_output(ThreatAssessment)
 
 
 async def build_graph():
-    mcp_client_thingsboard = MultiServerMCPClient(
-        {
-            "thingsboard": {"url": "http://localhost:8000/sse", "transport": "sse"},
-            # "ddgs": {"command": "ddgs", "args": ["mcp"], "transport": "stdio"},
-        }
-    )
+    # mcp_client_thingsboard = MultiServerMCPClient(
+    #     {
+    #         "thingsboard": {"url": "http://localhost:8000/sse", "transport": "sse"},
+    #         # "ddgs": {"command": "ddgs", "args": ["mcp"], "transport": "stdio"},
+    #     }
+    # )
 
-    thingsboard_tools = await mcp_client_thingsboard.get_tools()
+    # thingsboard_tools = await mcp_client_thingsboard.get_tools()
 
     coordinator = create_agent(
         model,
         tools=[
-            *thingsboard_tools,
+            # *thingsboard_tools,
             create_handoff_tool(
                 agent_name="Fire Agent",
                 description="Transfer to Fire Agent the hazard assessment",
@@ -104,13 +112,17 @@ async def build_graph():
         name="Earthquake Agent",
     )
 
-    checkpointer = InMemorySaver()
     workflow = create_swarm(
-        [coordinator, fire_agent, earthquake_agent], default_active_agent="Coordinator"
+        [coordinator, fire_agent, earthquake_agent],
+        default_active_agent="Coordinator",
     )
+
     global app
-    app = workflow.compile(checkpointer=checkpointer)
+    app = workflow.compile()
     logger.info("\n%s", app.get_graph().draw_ascii())
+    _ = app.get_graph().draw_mermaid_png()
+    # with open("grafo_langgraph.png", "wb") as f:
+    #     f.write(png_bytes)
 
 
 async def call_agent(data):
@@ -122,7 +134,10 @@ async def call_agent(data):
         "1. The 'room' field in the data indicates the device name.\n"
         "2. Use your tools to query this device's telemetry for the last 5 minutes.\n"
         "3. Evaluate the readings for anomalies.\n"
-        "4. Route to the appropriate expert agent if a threat is suspected, or terminate with a safe baseline assessment."
+        "4. Route to the appropriate expert agent if a threat is suspected, or terminate with a safe baseline assessment.\n"
+        "Analysis Guidelines:\n"
+        "- Timestamps are in Unix Epoch format.\n"
+        "- TVOC values of 60,000 indicate sensor saturation.\n"
     )
     # 1. agentstate is given in input
     initial_state: AgentState = {
@@ -134,12 +149,15 @@ async def call_agent(data):
 
     config = {"configurable": {"thread_id": "1"}}
     result = await app.ainvoke(initial_state, config=config)
-
-    logger.info(
-        "   [Agent] -> Swarm finished. Extracting structured Threat Assessment..."
+    logger.info("   [Formatter] -> Formatting final assessment into Pydantic schema...")
+    result = await agent_model.ainvoke(
+        result["messages"]
+        + [
+            HumanMessage(
+                content="Extract the structural threat assessment from this conversation summary"
+            )
+        ]
     )
-    final_messages = result["messages"]
-    assessment: ThreatAssessment = await agent_model.ainvoke(final_messages)
 
-    logger.info("[Agent] -> Final Assessment: %s", assessment)
-    return assessment.model_dump()
+    logger.info("[Agent] -> Swarm completed.")
+    return result.model_dump()
