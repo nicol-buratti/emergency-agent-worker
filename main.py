@@ -6,7 +6,7 @@ import logging
 import time
 import redis.asyncio as redis  # <-- Essential import for asynchronous use
 from dotenv import load_dotenv
-from agent_swarm import build_graph, call_agent
+from agent_swarm_prebuilts import build_graph, call_agent
 
 # Configure the logger
 logging.basicConfig(
