@@ -1,14 +1,19 @@
-from langchain_openai import ChatOpenAI
+import json
 import os
-from langchain.agents import create_agent
-from langgraph_swarm import create_handoff_tool, create_swarm
-from langchain_core.messages import HumanMessage
 import logging
-from typing import Literal, Optional, TypedDict, Annotated
 import operator
-from langgraph.graph import END
-from pydantic import BaseModel, Field
+from typing import Literal, Optional, Annotated
 from dotenv import load_dotenv
+
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage
+from langgraph.graph import END, StateGraph
+from langgraph_swarm import (
+    SwarmState,
+    add_active_agent_router,
+    create_handoff_tool,
+)
+from pydantic import BaseModel, Field
 
 load_dotenv()
 logging.basicConfig(
@@ -36,7 +41,8 @@ class ThreatAssessment(BaseModel):
     )
 
 
-class AgentState(TypedDict):
+# class AgentState(TypedDict):
+class AgentState(SwarmState):
     messages: Annotated[list, operator.add]
     recent_history: Optional[list[dict]]
     room_metadata: dict
@@ -44,7 +50,6 @@ class AgentState(TypedDict):
 
 
 model = ChatOpenAI(
-    # model=os.getenv("LLM_MODEL"),
     model="tencent/hy3:free",
     api_key=os.getenv("LLM_API_KEY"),
     base_url=os.getenv("LLM_BASE_URL"),
@@ -52,68 +57,166 @@ model = ChatOpenAI(
     max_retries=2,
     extra_body={
         "models": [
-            # "tencent/hy3:free",
             "google/gemma-4-26b-a4b-it:free",
-            # "nvidia/nemotron-3-super-120b-a12b:free",
             "nvidia/nemotron-nano-9b-v2:free",
             "openai/gpt-oss-20b:free",
         ]
     },
 )
-agent_model = model.with_structured_output(ThreatAssessment)
+fire_handoff = create_handoff_tool(
+    agent_name="Fire Agent",
+    description="Transfer to Fire Agent the hazard assessment",
+)
+earthquake_handoff = create_handoff_tool(
+    agent_name="Earthquake Agent",
+    description="Transfer to Earthquake Agent the hazard assessment",
+)
+formatter_handoff = create_handoff_tool(
+    agent_name="Formatter Agent",
+    description="Transfer to Formatter Agent the hazard assessment",
+)
+structured_model = model.with_structured_output(ThreatAssessment)
+coordinator_model = model.bind_tools(
+    [formatter_handoff, fire_handoff, earthquake_handoff]
+)
+fire_model = model.bind_tools([formatter_handoff])
+
+
+async def coordinator_node(state: AgentState) -> dict:
+    logger.info("[Coordinator] Initializing assessment.")
+    room_metadata = state.get("room_metadata", {})
+    messages = state["messages"]
+
+    system_prompt = (
+        "You are the Hazard Assessment Coordinator. Your task is to triage IoT data for building safety.\n\n"
+        f"CURRENT ROOM METADATA:\n{json.dumps(room_metadata, indent=2)}\n\n"
+        "OPERATIONAL INSTRUCTIONS:\n"
+        "1. Identify the primary threat signature (e.g., thermal/smoke vs. seismic/vibration).\n"
+        "2. Transfer the data and control to the appropriate expert agent (Fire Agent or Earthquake Agent).\n"
+        "If no threat is detected, route the workflow directly to the Formatter with a 'none' danger assessment."
+    )
+    response = await coordinator_model.ainvoke(
+        [SystemMessage(content=system_prompt)] + messages
+    )
+
+    return {"messages": [response]}
+
+
+async def fire_agent_node(state: AgentState) -> dict:
+    room_meta = state.get("room_metadata", {})
+    logger.info(
+        f"[Fire Agent] Analyzing thermal/smoke telemetry. Room: {room_meta.get('name')}"
+    )
+    messages = state["messages"]
+
+    system_prompt = (
+        "You are the Fire Safety Expert. Analyze the provided IoT telemetry specifically for "
+        "fire-related hazards (e.g., temperature spikes, smoke presence, rapid heat rise). "
+        "Formulate a clear final assessment detailing the danger level, specific danger type, "
+        f"a severity score (0.0 to 1.0), and a concise justification. Room context: {room_meta}."
+    )
+    response = await model.ainvoke([SystemMessage(content=system_prompt)] + messages)
+
+    logger.info(
+        f"[Fire Agent] Analysis complete. Proceeding to Formatter. Room: {room_meta.get('name')}"
+    )
+    return {"messages": [response]}
+
+
+async def earthquake_agent_node(state: AgentState) -> dict:
+    room_meta = state.get("room_metadata", {})
+    logger.info(
+        f"[Earthquake Agent] Analyzing seismic/vibration telemetry. Room: {room_meta.get('name')}"
+    )
+    messages = state["messages"]
+
+    system_prompt = (
+        "You are the Earthquake Safety Expert. Analyze the provided IoT telemetry specifically for "
+        "seismic hazards (e.g., abnormal vibrations, structural shifts, accelerometer anomalies). "
+        "Formulate a clear final assessment detailing the danger level, specific danger type, "
+        f"a severity score (0.0 to 1.0), and a concise justification. Room context: {room_meta}."
+    )
+
+    response = await model.ainvoke([SystemMessage(content=system_prompt)] + messages)
+
+    logger.info(
+        f"[Earthquake Agent] Analysis complete. Proceeding to Formatter. Room: {room_meta.get('name')}"
+    )
+    return {"messages": [response]}
+
+
+async def formatter_node(state: AgentState) -> ThreatAssessment:
+    logger.info("[Formatter] Extracting structured ThreatAssessment.")
+    messages = state["messages"]
+
+    assessment_result = await structured_model.ainvoke(
+        f"Extract the final assessment from this conversation: {messages[-1].content}"
+    )
+    assessment_result.room = state.get("room_metadata", {}).get("name", "unknown")
+
+    logger.info(f"[Formatter] Assessment finalized: {assessment_result.model_dump()}")
+    return {"assessment": assessment_result}
 
 
 async def build_graph():
-    # mcp_client_thingsboard = MultiServerMCPClient(
-    #     {
-    #         "thingsboard": {"url": "http://localhost:8000/sse", "transport": "sse"},
-    #         # "ddgs": {"command": "ddgs", "args": ["mcp"], "transport": "stdio"},
-    #     }
-    # )
+    # coordinator_agent = (
+    #     StateGraph(AgentState)
+    #     .add_node("Coordinator", coordinator_node)
+    #     .add_edge(START, "Coordinator")
+    #     .add_edge("Coordinator", END)
+    # ).compile(name="Coordinator")
+    # fire_agent = (
+    #     StateGraph(AgentState)
+    #     .add_node("Fire Agent", fire_agent_node)
+    #     .add_edge(START, "Fire Agent")
+    #     .add_edge("Fire Agent", END)
+    # ).compile()
+    # earthquake_agent = (
+    #     StateGraph(AgentState)
+    #     .add_node("Earthquake Agent", earthquake_agent_node)
+    #     .add_edge(START, "Earthquake Agent")
+    #     .add_edge("Earthquake Agent", END)
+    # ).compile()
+    # formatter_agent = (
+    #     StateGraph(AgentState)
+    #     .add_node("Formatter", formatter_node)
+    #     .add_edge(START, "Formatter")
+    #     .add_edge("Formatter", END)
+    # ).compile(name="Formatter")
 
-    # thingsboard_tools = await mcp_client_thingsboard.get_tools()
-
-    coordinator = create_agent(
-        model,
-        tools=[
-            # *thingsboard_tools,
-            create_handoff_tool(
-                agent_name="Fire Agent",
-                description="Transfer to Fire Agent the hazard assessment",
+    workflow = (
+        StateGraph(AgentState)
+        .add_node(
+            "Coordinator",
+            coordinator_node,
+            destinations=(
+                "Formatter",
+                "Earthquake Agent",
+                "Fire Agent",
+                # get_handoff_destinations(formatter_agent),
+                # get_handoff_destinations(fire_agent),
+                # get_handoff_destinations(earthquake_agent),
             ),
-            create_handoff_tool(
-                agent_name="Earthquake Agent",
-                description="Transfer to Earthquake Agent the hazard assessment",
-            ),
-            create_handoff_tool(
-                agent_name=END,
-                description="Terminate the swarm and output the final assessment",
-            ),
-        ],
-        system_prompt="You are the Hazard Assessment Coordinator. Your task is to triage IoT data for building safety. 1) Use your tools to fetch telemetry for the given device/room over the last 5 minutes. 2) Identify the primary threat signature (e.g., thermal/smoke vs. seismic/vibration). 3) Transfer the data and control to the appropriate expert agent (Fire Agent or Earthquake Agent). If no threat is detected, terminate the swarm directly with a 'none' danger assessment.",
-        name="Coordinator",
+        )
+        .add_node(
+            "Fire Agent",
+            fire_agent_node,
+            destinations=("Formatter",),
+        )
+        .add_node(
+            "Earthquake Agent",
+            earthquake_agent_node,
+            destinations=("Formatter",),
+        )
+        .add_node(
+            "Formatter",
+            formatter_node,
+            destinations=(END,),
+        )
     )
-
-    fire_agent = create_agent(
-        model,
-        tools=[
-            # *thingsboard_tools,
-        ],
-        system_prompt="You are the Fire Safety Expert. Analyze the provided IoT telemetry specifically for fire-related hazards (e.g., temperature spikes, smoke presence, rapid heat rise). Formulate a clear final assessment detailing the danger level, specific danger type, a severity score (0.0 to 1.0), and a concise justification. Once complete, terminate the swarm to output the final assessment.",
-        name="Fire Agent",
-    )
-
-    earthquake_agent = create_agent(
-        model,
-        tools=[
-            # *thingsboard_tools,
-        ],
-        system_prompt="You are the Earthquake Safety Expert. Analyze the provided IoT telemetry specifically for seismic hazards (e.g., abnormal vibrations, structural shifts, accelerometer anomalies). Formulate a clear final assessment detailing the danger level, specific danger type, a severity score (0.0 to 1.0), and a concise justification. Once complete, terminate the swarm to output the final assessment.",
-        name="Earthquake Agent",
-    )
-
-    workflow = create_swarm(
-        [coordinator, fire_agent, earthquake_agent],
+    workflow = add_active_agent_router(
+        builder=workflow,
+        route_to=["Coordinator", "Formatter", "Earthquake Agent", "Fire Agent"],
         default_active_agent="Coordinator",
     )
 
@@ -121,43 +224,32 @@ async def build_graph():
     app = workflow.compile()
     logger.info("\n%s", app.get_graph().draw_ascii())
     _ = app.get_graph().draw_mermaid_png()
-    # with open("grafo_langgraph.png", "wb") as f:
-    #     f.write(png_bytes)
 
 
 async def call_agent(data):
-    logger.info("   [Agent] -> Starting LangGraph call...")
+    logger.info("[Agent] Starting LangGraph call.")
 
     prompt = (
         f"Initial IoT Data:\n{data}\n\n"
         "Instructions:\n"
         "1. The 'room' field in the data indicates the device name.\n"
-        "2. Use your tools to query this device's telemetry for the last 5 minutes.\n"
-        "3. Evaluate the readings for anomalies.\n"
-        "4. Route to the appropriate expert agent if a threat is suspected, or terminate with a safe baseline assessment.\n"
+        "2. Evaluate the readings for anomalies.\n"
         "Analysis Guidelines:\n"
         "- Timestamps are in Unix Epoch format.\n"
         "- TVOC values of 60,000 indicate sensor saturation.\n"
     )
-    # 1. agentstate is given in input
     initial_state: AgentState = {
         "messages": [HumanMessage(content=prompt)],
-        "recent_history": [],
-        "room_metadata": {},
+        "recent_history": data.get("sensor_data", []),
+        "room_metadata": {
+            "name": data.get("room", "unknown"),
+        },
         "assessment": None,
     }
 
     config = {"configurable": {"thread_id": "1"}}
     result = await app.ainvoke(initial_state, config=config)
-    logger.info("   [Formatter] -> Formatting final assessment into Pydantic schema...")
-    result = await agent_model.ainvoke(
-        result["messages"]
-        + [
-            HumanMessage(
-                content="Extract the structural threat assessment from this conversation summary"
-            )
-        ]
-    )
-
-    logger.info("[Agent] -> Swarm completed.")
-    return result.model_dump()
+    # result = result["assessment"]
+    logger.info(result)
+    logger.info("[Agent] Execution complete.")
+    return result["assessment"]
