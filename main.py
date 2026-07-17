@@ -3,6 +3,7 @@ import signal
 import sys
 import asyncio
 import logging
+import time
 import redis.asyncio as redis  # <-- Essential import for asynchronous use
 from dotenv import load_dotenv
 from agent_swarm import build_graph, call_agent
@@ -41,16 +42,18 @@ signal.signal(signal.SIGINT, graceful_shutdown)
 
 async def process_sensor(room):
     """Task processing logic."""
-    result = await r.hgetall(room)
-    # result = json.loads(result) if result else None
-    result["room"] = room
-
+    result = await r.zrange(room + "_timeserie", 0, -1, withscores=True)
+    result = [{"timestamp": ts, **json.loads(val)} for val, ts in result]
+    data = {
+        "room": room,
+        "sensor_data": result,
+    }
     if result is None:
         logger.warning("No data associated with room %s.", room)
         return None
 
     # This call will now block execution until the LLM responds
-    result = await call_agent(result)
+    result = await call_agent(data)
     return result
 
 
@@ -66,17 +69,26 @@ async def main():
             # await on bzpopmin ensures the loop doesn't block synchronously
             queue_result = await r.bzpopmin(QUEUE_NAME, timeout=5)
 
-            if queue_result:
-                _, room, score = queue_result
-                logger.info("[↓] Extracted (Priority: %s): %s", score, room)
+            if not queue_result:
+                continue
+            _, room, score = queue_result
+            logger.info("[↓] Extracted (Priority: %s): %s", score, room)
 
-                # 1. Process the data (the loop pauses here until call_agent finishes)
-                processed_data = await process_sensor(room)
+            # --- Timing block starts ---
+            start_time = time.perf_counter()
 
-                # 2. Publish to the Pub/Sub channel
-                if processed_data:
-                    await r.publish(PUBLISH_CHANNEL, json.dumps(processed_data))
-                    logger.info("[↑] Published: %s", processed_data)
+            # 1. Process the data (the loop pauses here until call_agent finishes)
+            processed_data = await process_sensor(room)
+
+            elapsed_time = time.perf_counter() - start_time
+            logger.info(
+                "[⏱️] process_sensor took %.4f seconds for room: %s", elapsed_time, room
+            )
+
+            # 2. Publish to the Pub/Sub channel
+            if processed_data:
+                await r.publish(PUBLISH_CHANNEL, json.dumps(processed_data))
+                logger.info("[↑] Published: %s", processed_data)
 
         except Exception as e:
             logger.error("An error occurred: %s", e)
