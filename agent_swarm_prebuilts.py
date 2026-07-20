@@ -90,8 +90,15 @@ async def build_graph():
                 description="Terminate the swarm and output the final assessment",
             ),
         ],
-        system_prompt="You are the Hazard Assessment Coordinator. Your task is to triage IoT data for building safety. 1) Use your tools to fetch telemetry for the given device/room over the last 5 minutes. 2) Identify the primary threat signature (e.g., thermal/smoke vs. seismic/vibration). 3) Transfer the data and control to the appropriate expert agent (Fire Agent or Earthquake Agent). If no threat is detected, terminate the swarm directly with a 'none' danger assessment.",
+        system_prompt="""You are the Hazard Assessment Coordinator. Your task is to triage IoT data for building safety.
+
+1) Use your tools to fetch telemetry for the given device/room over the last 5 minutes.
+2) Identify the primary threat signature (e.g., thermal/smoke vs. seismic/vibration).
+3) Transfer the data and control to the appropriate expert agent (Fire Agent or Earthquake Agent).
+
+If no threat is detected, terminate the swarm directly with a 'none' danger assessment.""",
         name="Coordinator",
+        # debug=True,
     )
 
     fire_agent = create_agent(
@@ -99,8 +106,17 @@ async def build_graph():
         tools=[
             # *thingsboard_tools,
         ],
-        system_prompt="You are the Fire Safety Expert. Analyze the provided IoT telemetry specifically for fire-related hazards (e.g., temperature spikes, smoke presence, rapid heat rise). Formulate a clear final assessment detailing the danger level, specific danger type, a severity score (0.0 to 1.0), and a concise justification. Once complete, terminate the swarm to output the final assessment.",
+        system_prompt="""You are the Fire Safety Expert. Analyze the provided IoT telemetry specifically for fire-related hazards (e.g., temperature spikes, smoke presence, rapid heat rise).
+
+Formulate a clear final assessment detailing:
+- Danger level
+- Specific danger type
+- Severity score (0.0 to 1.0)
+- Concise justification
+
+Once complete, terminate the swarm to output the final assessment.""",
         name="Fire Agent",
+        debug=True,
     )
 
     earthquake_agent = create_agent(
@@ -108,8 +124,17 @@ async def build_graph():
         tools=[
             # *thingsboard_tools,
         ],
-        system_prompt="You are the Earthquake Safety Expert. Analyze the provided IoT telemetry specifically for seismic hazards (e.g., abnormal vibrations, structural shifts, accelerometer anomalies). Formulate a clear final assessment detailing the danger level, specific danger type, a severity score (0.0 to 1.0), and a concise justification. Once complete, terminate the swarm to output the final assessment.",
+        system_prompt="""You are the Earthquake Safety Expert. Analyze the provided IoT telemetry specifically for seismic hazards (e.g., abnormal vibrations, structural shifts, accelerometer anomalies).
+
+Formulate a clear final assessment detailing:
+- Danger level
+- Specific danger type
+- Severity score (0.0 to 1.0)
+- Concise justification
+
+Once complete, terminate the swarm to output the final assessment.""",
         name="Earthquake Agent",
+        # debug=True,
     )
 
     workflow = create_swarm(
@@ -128,33 +153,33 @@ async def build_graph():
 async def call_agent(data):
     logger.info("[Agent] -> Starting LangGraph call...")
 
-    #     data = """[
-    #   {
-    #     "timestamp": "2026-07-17T22:45:00Z",
-    #     "temperature_celsius": 22.4,
-    #     "co2_ppm": 415
-    #   },
-    #   {
-    #     "timestamp": "2026-07-17T22:46:00Z",
-    #     "temperature_celsius": 28.1,
-    #     "co2_ppm": 950
-    #   },
-    #   {
-    #     "timestamp": "2026-07-17T22:47:00Z",
-    #     "temperature_celsius": 46.8,
-    #     "co2_ppm": 2800
-    #   },
-    #   {
-    #     "timestamp": "2026-07-17T22:48:00Z",
-    #     "temperature_celsius": 78.5,
-    #     "co2_ppm": 5500
-    #   },
-    #   {
-    #     "timestamp": "2026-07-17T22:49:00Z",
-    #     "temperature_celsius": 124.0,
-    #     "co2_ppm": 9200
-    #   }
-    # ]"""
+    data = """[
+      {
+        "timestamp": "2026-07-17T22:45:00Z",
+        "temperature_celsius": 22.4,
+        "co2_ppm": 415
+      },
+      {
+        "timestamp": "2026-07-17T22:46:00Z",
+        "temperature_celsius": 28.1,
+        "co2_ppm": 950
+      },
+      {
+        "timestamp": "2026-07-17T22:47:00Z",
+        "temperature_celsius": 46.8,
+        "co2_ppm": 2800
+      },
+      {
+        "timestamp": "2026-07-17T22:48:00Z",
+        "temperature_celsius": 78.5,
+        "co2_ppm": 5500
+      },
+      {
+        "timestamp": "2026-07-17T22:49:00Z",
+        "temperature_celsius": 124.0,
+        "co2_ppm": 9200
+      }
+    ]"""
     prompt = (
         f"Initial IoT Data:\n{data}\n\n"
         "Instructions:\n"
