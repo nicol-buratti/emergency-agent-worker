@@ -1,14 +1,17 @@
+import datetime
+
 from langchain_openai import ChatOpenAI
 import os
 from langchain.agents import create_agent
-from langgraph_swarm import create_handoff_tool, create_swarm
+from langgraph_swarm import SwarmState, create_handoff_tool, create_swarm
 from langchain_core.messages import HumanMessage
 import logging
-from typing import Literal, Optional, TypedDict, Annotated
+from typing import Literal, Optional, Annotated
 import operator
 from langgraph.graph import END
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+from langgraph.checkpoint.memory import MemorySaver
 
 load_dotenv()
 logging.basicConfig(
@@ -16,6 +19,23 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 app = None
+model = ChatOpenAI(
+    # model=os.getenv("LLM_MODEL"),
+    model="tencent/hy3:free",
+    api_key=os.getenv("LLM_API_KEY"),
+    base_url=os.getenv("LLM_BASE_URL"),
+    temperature=0.2,
+    max_retries=2,
+    extra_body={
+        "models": [
+            # "tencent/hy3:free",
+            "google/gemma-4-26b-a4b-it:free",
+            # "nvidia/nemotron-3-super-120b-a12b:free",
+            "nvidia/nemotron-nano-9b-v2:free",
+            "openai/gpt-oss-20b:free",
+        ]
+    },
+)
 
 
 class ThreatAssessment(BaseModel):
@@ -36,34 +56,17 @@ class ThreatAssessment(BaseModel):
     )
 
 
-class AgentState(TypedDict):
+class AgentState(SwarmState):
     messages: Annotated[list, operator.add]
     recent_history: Optional[list[dict]]
     room_metadata: dict
     assessment: Optional[ThreatAssessment]
 
 
-model = ChatOpenAI(
-    # model=os.getenv("LLM_MODEL"),
-    model="tencent/hy3:free",
-    api_key=os.getenv("LLM_API_KEY"),
-    base_url=os.getenv("LLM_BASE_URL"),
-    temperature=0.2,
-    max_retries=2,
-    extra_body={
-        "models": [
-            # "tencent/hy3:free",
-            "google/gemma-4-26b-a4b-it:free",
-            # "nvidia/nemotron-3-super-120b-a12b:free",
-            "nvidia/nemotron-nano-9b-v2:free",
-            "openai/gpt-oss-20b:free",
-        ]
-    },
-)
 agent_model = model.with_structured_output(ThreatAssessment)
 
 
-async def build_graph():
+async def build_graph() -> ThreatAssessment:
     # mcp_client_thingsboard = MultiServerMCPClient(
     #     {
     #         "thingsboard": {"url": "http://localhost:8000/sse", "transport": "sse"},
@@ -116,7 +119,7 @@ Formulate a clear final assessment detailing:
 
 Once complete, terminate the swarm to output the final assessment.""",
         name="Fire Agent",
-        debug=True,
+        # debug=True,
     )
 
     earthquake_agent = create_agent(
@@ -141,9 +144,9 @@ Once complete, terminate the swarm to output the final assessment.""",
         [coordinator, fire_agent, earthquake_agent],
         default_active_agent="Coordinator",
     )
-
+    checkpointer = MemorySaver()
     global app
-    app = workflow.compile()
+    app = workflow.compile(checkpointer=checkpointer, debug=True)
     logger.info("\n%s", app.get_graph().draw_ascii())
     _ = app.get_graph().draw_mermaid_png()
     # with open("grafo_langgraph.png", "wb") as f:
@@ -153,54 +156,67 @@ Once complete, terminate the swarm to output the final assessment.""",
 async def call_agent(data):
     logger.info("[Agent] -> Starting LangGraph call...")
 
-    data = """[
-      {
-        "timestamp": "2026-07-17T22:45:00Z",
-        "temperature_celsius": 22.4,
-        "co2_ppm": 415
-      },
-      {
-        "timestamp": "2026-07-17T22:46:00Z",
-        "temperature_celsius": 28.1,
-        "co2_ppm": 950
-      },
-      {
-        "timestamp": "2026-07-17T22:47:00Z",
-        "temperature_celsius": 46.8,
-        "co2_ppm": 2800
-      },
-      {
-        "timestamp": "2026-07-17T22:48:00Z",
-        "temperature_celsius": 78.5,
-        "co2_ppm": 5500
-      },
-      {
-        "timestamp": "2026-07-17T22:49:00Z",
-        "temperature_celsius": 124.0,
-        "co2_ppm": 9200
-      }
-    ]"""
-    prompt = (
-        f"Initial IoT Data:\n{data}\n\n"
-        "Instructions:\n"
-        "1. The 'room' field in the data indicates the device name.\n"
-        "2. Use your tools to query this device's telemetry for the last 5 minutes.\n"
-        "3. Evaluate the readings for anomalies.\n"
-        "4. Route to the appropriate expert agent if a threat is suspected, or terminate with a safe baseline assessment.\n"
-        "Analysis Guidelines:\n"
-        "- Timestamps are in Unix Epoch format.\n"
-        "- TVOC values of 60,000 indicate sensor saturation.\n"
-    )
-    # 1. agentstate is given in input
-    initial_state: AgentState = {
-        "messages": [HumanMessage(content=prompt)],
-        "recent_history": [],
-        "room_metadata": {},
-        "assessment": None,
-    }
+    # data = """[
+    #   {
+    #     "timestamp": "2026-07-17T22:45:00Z",
+    #     "temperature_celsius": 22.4,
+    #     "co2_ppm": 415
+    #   },
+    #   {
+    #     "timestamp": "2026-07-17T22:46:00Z",
+    #     "temperature_celsius": 28.1,
+    #     "co2_ppm": 950
+    #   },
+    #   {
+    #     "timestamp": "2026-07-17T22:47:00Z",
+    #     "temperature_celsius": 46.8,
+    #     "co2_ppm": 2800
+    #   },
+    #   {
+    #     "timestamp": "2026-07-17T22:48:00Z",
+    #     "temperature_celsius": 78.5,
+    #     "co2_ppm": 5500
+    #   },
+    #   {
+    #     "timestamp": "2026-07-17T22:49:00Z",
+    #     "temperature_celsius": 124.0,
+    #     "co2_ppm": 9200
+    #   }
+    # ]"""
+    thread_id = f"{data['room']}_{datetime.datetime.now()}"
+    config = {"configurable": {"thread_id": thread_id}}
 
-    config = {"configurable": {"thread_id": "1"}}
-    result = await app.ainvoke(initial_state, config=config)
+    # 1. Verifica se esiste un checkpoint salvato per questo thread
+    current_state = await app.aget_state(config)
+
+    if current_state.values:
+        logger.info(
+            f"Previous state detected for thread_id={thread_id}. Resuming execution..."
+        )
+        result = await app.ainvoke(None, config=config)
+    else:
+        logger.info("No status found. Starting a new execution...")
+
+        prompt = (
+            f"Initial IoT Data:\n{data}\n\n"
+            "Instructions:\n"
+            "1. The 'room' field in the data indicates the device name.\n"
+            "2. Use your tools to query this device's telemetry for the last 5 minutes.\n"
+            "3. Evaluate the readings for anomalies.\n"
+            "4. Route to the appropriate expert agent if a threat is suspected, or terminate with a safe baseline assessment.\n"
+            "Analysis Guidelines:\n"
+            "- Timestamps are in Unix Epoch format.\n"
+            "- TVOC values of 60,000 indicate sensor saturation.\n"
+        )
+
+        initial_state: AgentState = {
+            "messages": [HumanMessage(content=prompt)],
+            "recent_history": [],
+            "room_metadata": {},
+            "assessment": None,
+        }
+
+        result = await app.ainvoke(initial_state, config=config)
 
     # result = list(initial_state["messages"])
     # async for event in app.astream(initial_state, config=config, stream_mode="updates"):
