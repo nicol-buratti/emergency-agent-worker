@@ -1,5 +1,3 @@
-import datetime
-
 from langchain_openai import ChatOpenAI
 import os
 from langchain.agents import create_agent
@@ -183,7 +181,7 @@ async def call_agent(data):
     #     "co2_ppm": 9200
     #   }
     # ]"""
-    thread_id = f"{data['room']}_{datetime.datetime.now()}"
+    thread_id = data["room"]
     config = {"configurable": {"thread_id": thread_id}}
 
     # 1. Verifica se esiste un checkpoint salvato per questo thread
@@ -234,6 +232,6 @@ async def call_agent(data):
             )
         ]
     )
-
+    await app.checkpointer.adelete_thread(thread_id=thread_id)
     logger.info("[Agent] -> Swarm completed.")
     return result.model_dump()
