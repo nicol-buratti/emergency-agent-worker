@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 app = None
 model = ChatOpenAI(
     # model=os.getenv("LLM_MODEL"),
-    model="tencent/hy3:free",
+    model="google/gemma-4-26b-a4b-it:free",
     api_key=os.getenv("LLM_API_KEY"),
     base_url=os.getenv("LLM_BASE_URL"),
     temperature=0.2,
@@ -27,7 +27,7 @@ model = ChatOpenAI(
     extra_body={
         "models": [
             # "tencent/hy3:free",
-            "google/gemma-4-26b-a4b-it:free",
+            "tencent/hy3:free",
             # "nvidia/nemotron-3-super-120b-a12b:free",
             "nvidia/nemotron-nano-9b-v2:free",
             "openai/gpt-oss-20b:free",
