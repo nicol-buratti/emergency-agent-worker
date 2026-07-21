@@ -40,10 +40,43 @@ signal.signal(signal.SIGTERM, graceful_shutdown)
 signal.signal(signal.SIGINT, graceful_shutdown)
 
 
+def parse_redis_timeseries_to_snapshots(mrange_data):
+    """
+    It parses the output of a TS.MRANGE (with the “withlabels” option) and groups the
+    sensor data into “snapshots” based on the timestamp.
+    """
+    snapshots_by_time = {}
+
+    for series in mrange_data:
+        for key_name, (labels, datapoints) in series.items():
+            sensor_type = labels.get("type")
+            room_name = labels.get("room")
+
+            for timestamp, value in datapoints:
+                if timestamp not in snapshots_by_time:
+                    snapshots_by_time[timestamp] = {
+                        "timestamp": timestamp,
+                        "room": room_name,
+                    }
+
+                snapshots_by_time[timestamp][sensor_type] = value
+
+    sorted_snapshots = [snapshot for ts, snapshot in sorted(snapshots_by_time.items())]
+
+    return sorted_snapshots
+
+
 async def process_sensor(room):
     """Task processing logic."""
-    result = await r.zrange(room + "_timeserie", 0, -1, withscores=True)
-    result = [{"timestamp": ts, **json.loads(val)} for val, ts in result]
+    mrange_result = await r.ts().mrange(
+        from_time="-",
+        to_time="+",
+        with_labels=True,
+        filters=[f"room={room}"],
+        aggregation_type="avg",  # If a sensor publish multiple values in the same minute, they are aggregated
+        bucket_size_msec=60000,
+    )
+    result = parse_redis_timeseries_to_snapshots(mrange_result)
     data = {
         "room": room,
         "sensor_data": result,
