@@ -6,7 +6,7 @@ import logging
 import time
 import redis.asyncio as redis  # <-- Essential import for asynchronous use
 from dotenv import load_dotenv
-from agent_swarm_prebuilts import build_graph, call_agent
+from agent_swarm_prebuilts import HazardSwarmManager
 
 # Configure the logger
 logging.basicConfig(
@@ -66,7 +66,7 @@ def parse_redis_timeseries_to_snapshots(mrange_data):
     return sorted_snapshots
 
 
-async def process_sensor(room):
+async def process_sensor(swarm_manager: HazardSwarmManager, room):
     """Task processing logic."""
     mrange_result = await r.ts().mrange(
         from_time="-",
@@ -86,13 +86,22 @@ async def process_sensor(room):
         return None
 
     # This call will now block execution until the LLM responds
-    result = await call_agent(data)
+    result = await swarm_manager.process_data(data)
     return result
 
 
 async def main():
     logger.info("Building graph...")
-    await build_graph()
+    # mcp_client_thingsboard = MultiServerMCPClient(
+    #     {
+    #         "thingsboard": {"url": "http://localhost:8000/sse", "transport": "sse"},
+    #         # "ddgs": {"command": "ddgs", "args": ["mcp"], "transport": "stdio"},
+    #     }
+    # )
+
+    # thingsboard_tools = await mcp_client_thingsboard.get_tools()
+    swarm_manager = HazardSwarmManager()
+    await swarm_manager.initialize_graph(debug=True)
     logger.info("Worker listening on priority queue (ZSET) '%s'...", QUEUE_NAME)
     logger.info("Results will be published on channel '%s'.", PUBLISH_CHANNEL)
     logger.info("Press Ctrl+C to exit.")
@@ -111,7 +120,7 @@ async def main():
             start_time = time.perf_counter()
 
             # 1. Process the data (the loop pauses here until call_agent finishes)
-            processed_data = await process_sensor(room)
+            processed_data = await process_sensor(swarm_manager, room)
 
             elapsed_time = time.perf_counter() - start_time
             logger.info(
