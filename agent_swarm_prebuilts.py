@@ -25,6 +25,9 @@ class ThreatAssessment(BaseModel):
     room: str = Field(
         description="The room identifier for which the assessment is made."
     )
+    warning: Literal["none", "pre-alert"] = Field(
+        description="Early warning indicator for suspicious data that may precede a danger"
+    )
     danger: Literal["high", "medium", "low", "none"] = Field(
         description="Final assessed danger level based on all gathered data."
     )
