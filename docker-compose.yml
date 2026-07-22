@@ -45,5 +45,33 @@ services:
       - "6379:6379"
     restart: "no"
 
+  memgraph-mage:
+    image: memgraph/memgraph-mage:3.12.0
+    container_name: memgraph-mage
+    network_mode: host
+    volumes:
+      - mg_lib:/var/lib/memgraph
+      - mg_log:/var/log/memgraph
+    ports:
+      - "7687:7687"
+      - "7444:7444"
+    command: [ "--log-level=TRACE" ]
+
+  lab:
+    image: memgraph/lab:3.12.0
+    container_name: memgraph-lab
+    network_mode: host
+    ports:
+      - "3000:3000"
+    depends_on:
+      - memgraph-mage
+    environment:
+      - QUICK_CONNECT_MG_HOST=memgraph
+      - QUICK_CONNECT_MG_PORT=7687
+
 volumes:
   node_red_data:
+
+  mg_lib:
+  mg_log:
+  mg_etc:
