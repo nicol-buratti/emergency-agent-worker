@@ -6,7 +6,6 @@ from typing import Annotated, Literal
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
-from langgraph.graph import END
 from langgraph_swarm import SwarmState, create_handoff_tool, create_swarm
 from pydantic import BaseModel, Field
 from langchain.agents import create_agent
@@ -68,13 +67,15 @@ class HazardSwarmManager:
         self.structured_model = self.model.with_structured_output(ThreatAssessment)
         self.app = None
 
-    async def initialize_graph(self, tools: list = None, debug: bool = False):
+    async def initialize_graph(
+        self, tools: list = None, debug: bool = False, print_agent=False
+    ):
         """Initialize and build the agent swarm"""
         tools = tools or []
 
         # Shared Termination Tool for Specialists
         end_handoff = create_handoff_tool(
-            agent_name=END,
+            agent_name="Formatter",
             description="Terminate the swarm and finalize assessment.",
         )
 
@@ -91,40 +92,50 @@ class HazardSwarmManager:
                     description="Transfer to Earthquake Agent for seismic/vibration analysis.",
                 ),
                 end_handoff,
-                ThreatAssessment,
             ],
-            system_prompt=f"""You are the Hazard Assessment Coordinator.
+            system_prompt="""You are the Hazard Assessment Coordinator.
 Triage the provided IoT data or use available tools to assess room safety.
 Transfer control to 'Fire Agent' or 'Earthquake Agent' if anomalies exist.
-If data shows normal conditions, terminate directly with a safe assessment.
-If no specialized agent is needed, the response output must follow the {ThreatAssessment.__name__} structure.""",
+If data shows normal conditions, terminate directly with a safe assessment.""",
             name="Coordinator",
         )
 
         fire_agent = create_agent(
             self.model,
-            tools=[*tools, end_handoff, ThreatAssessment],
-            system_prompt=f"""You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes).
-Formulate a clear diagnosis and terminate the swarm once ready.
-The response output must follow the {ThreatAssessment.__name__} structure.""",
+            tools=[*tools, end_handoff],
+            system_prompt="""You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes).
+Formulate a clear diagnosis and terminate the swarm once ready.""",
             name="Fire Agent",
         )
 
         earthquake_agent = create_agent(
             self.model,
-            tools=[*tools, end_handoff, ThreatAssessment],
-            system_prompt=f"""You are the Earthquake Safety Expert. Analyze telemetry for seismic activity (vibrations, acceleration).
-Formulate a clear diagnosis and terminate the swarm once ready.
-The response output must follow the {ThreatAssessment.__name__} structure.""",
+            tools=[*tools, end_handoff],
+            system_prompt="""You are the Earthquake Safety Expert. Analyze telemetry for seismic activity (vibrations, acceleration).
+Formulate a clear diagnosis and terminate the swarm once ready.""",
             name="Earthquake Agent",
         )
 
+        formatter_agent = create_agent(
+            self.model,
+            tools=[],
+            system_prompt="""You are the Formatter Agent for the Hazard Assessment Swarm.
+Your sole responsibility is to review the conversation history, diagnostics, and telemetry data gathered by the other Agents.
+Synthesize their findings and formulate the final safety assessment. Accurately translate the experts' consensus—including identified hazard types, danger levels, and early warnings—into the required structured output.
+Provide a concise, evidence-based justification for the final verdict based strictly on the preceding investigation, without conducting any new analysis of your own.""",
+            name="Formatter",
+            response_format=ThreatAssessment,
+        )
+
         workflow = create_swarm(
-            [coordinator, fire_agent, earthquake_agent],
+            [coordinator, fire_agent, earthquake_agent, formatter_agent],
             default_active_agent="Coordinator",
         )
 
         self.app = workflow.compile(debug=debug)
+        if print_agent:
+            logger.info(self.app.get_graph().draw_ascii())
+
         logger.info("Swarm graph compiled successfully.")
 
     async def process_data(self, data: dict) -> dict:

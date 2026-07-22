@@ -44,7 +44,7 @@ class HazardWorker:
         # )
 
         # thingsboard_tools = await mcp_client_thingsboard.get_tools()
-        await self.swarm_manager.initialize_graph(debug=True)
+        await self.swarm_manager.initialize_graph(debug=True, print_agent=True)
 
     async def cleanup(self) -> None:
         if self.redis:
