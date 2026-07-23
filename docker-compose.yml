@@ -1,4 +1,5 @@
 services:
+  # NOTE: containers have network_mode=host for development reasons, without it i cannot access to the department sensor data via VPN
   nodered:
     image: nodered/node-red:5.0
     container_name: nodered
@@ -9,6 +10,38 @@ services:
     network_mode: host
 
     restart: "no"
+
+  redis:
+    image: redis:8.2
+    container_name: redis
+    network_mode: host
+    ports:
+      - "6379:6379"
+    restart: "no"
+
+  memgraph-mage:
+    image: memgraph/memgraph-mage:3.12.0
+    container_name: memgraph-mage
+    # network_mode: host
+    volumes:
+      - mg_lib:/var/lib/memgraph
+      - mg_log:/var/log/memgraph
+    ports:
+      - "7687:7687"
+      - "7444:7444"
+    command: [ "--log-level=TRACE" ]
+
+  lab:
+    image: memgraph/lab:3.12.0
+    container_name: memgraph-lab
+    network_mode: host
+    ports:
+      - "3000:3000"
+    depends_on:
+      - memgraph-mage
+    environment:
+      - QUICK_CONNECT_MG_HOST=memgraph
+      - QUICK_CONNECT_MG_PORT=7687
 
   thingsboard-mcp:
     image: thingsboard/mcp:2.1.0
@@ -37,37 +70,18 @@ services:
       SPRING_AI_MCP_SERVER_STDIO: "false"
       SPRING_WEB_APPLICATION_TYPE: "servlet"
 
-  redis:
-    image: redis:8.2
-    container_name: redis
-    network_mode: host
+  memgraph-mcp:
+    image: memgraph/mcp-memgraph:0.2.0
+    container_name: memgraph-mcp
+    # network_mode: host
     ports:
-      - "6379:6379"
-    restart: "no"
-
-  memgraph-mage:
-    image: memgraph/memgraph-mage:3.12.0
-    container_name: memgraph-mage
-    network_mode: host
-    volumes:
-      - mg_lib:/var/lib/memgraph
-      - mg_log:/var/log/memgraph
-    ports:
-      - "7687:7687"
-      - "7444:7444"
-    command: [ "--log-level=TRACE" ]
-
-  lab:
-    image: memgraph/lab:3.12.0
-    container_name: memgraph-lab
-    network_mode: host
-    ports:
-      - "3000:3000"
-    depends_on:
-      - memgraph-mage
+      - "8001:8000"
+    # stdin_open: true
     environment:
-      - QUICK_CONNECT_MG_HOST=memgraph
-      - QUICK_CONNECT_MG_PORT=7687
+      MEMGRAPH_URL: "bolt://memgraph-mage:7687"
+      MCP_TRANSPORT: "streamable-http"
+      MCP_READ_ONLY: "true"
+      MCP_SERVER: "server"
 
 volumes:
   node_red_data:
