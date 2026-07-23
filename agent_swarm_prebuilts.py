@@ -4,11 +4,12 @@ import os
 from typing import Annotated, Literal
 
 from dotenv import load_dotenv
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from langgraph_swarm import SwarmState, create_handoff_tool, create_swarm
 from pydantic import BaseModel, Field
 from langchain.agents import create_agent
+from langgraph.checkpoint.memory import InMemorySaver
 
 load_dotenv()
 logging.basicConfig(
@@ -65,6 +66,13 @@ class HazardSwarmManager:
             },
         )
         self.structured_model = self.model.with_structured_output(ThreatAssessment)
+        self.formatter_system_prompt = SystemMessage(
+            content="""You are the Formatter Agent for the Hazard Assessment Swarm.
+        Your sole responsibility is to review the conversation history, diagnostics, and telemetry data gathered by the other Agents.
+        Synthesize their findings and formulate the final safety assessment. Accurately translate the experts' consensus—including identified hazard types, danger levels, and early warnings—into the required structured output.
+        Provide a concise, evidence-based justification for the final verdict based strictly on the preceding investigation, without conducting any new analysis of your own.""",
+        )
+
         self.app = None
 
     async def initialize_graph(
@@ -72,12 +80,6 @@ class HazardSwarmManager:
     ):
         """Initialize and build the agent swarm"""
         tools = tools or []
-
-        # Shared Termination Tool for Specialists
-        end_handoff = create_handoff_tool(
-            agent_name="Formatter",
-            description="Terminate the swarm and finalize assessment.",
-        )
 
         coordinator = create_agent(
             self.model,
@@ -91,7 +93,6 @@ class HazardSwarmManager:
                     agent_name="Earthquake Agent",
                     description="Transfer to Earthquake Agent for seismic/vibration analysis.",
                 ),
-                end_handoff,
             ],
             system_prompt="""You are the Hazard Assessment Coordinator.
 Triage the provided IoT data or use available tools to assess room safety.
@@ -102,7 +103,7 @@ If data shows normal conditions, terminate directly with a safe assessment.""",
 
         fire_agent = create_agent(
             self.model,
-            tools=[*tools, end_handoff],
+            tools=[*tools],
             system_prompt="""You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes).
 Formulate a clear diagnosis and terminate the swarm once ready.""",
             name="Fire Agent",
@@ -110,29 +111,19 @@ Formulate a clear diagnosis and terminate the swarm once ready.""",
 
         earthquake_agent = create_agent(
             self.model,
-            tools=[*tools, end_handoff],
+            tools=[*tools],
             system_prompt="""You are the Earthquake Safety Expert. Analyze telemetry for seismic activity (vibrations, acceleration).
 Formulate a clear diagnosis and terminate the swarm once ready.""",
             name="Earthquake Agent",
         )
 
-        formatter_agent = create_agent(
-            self.model,
-            tools=[],
-            system_prompt="""You are the Formatter Agent for the Hazard Assessment Swarm.
-Your sole responsibility is to review the conversation history, diagnostics, and telemetry data gathered by the other Agents.
-Synthesize their findings and formulate the final safety assessment. Accurately translate the experts' consensus—including identified hazard types, danger levels, and early warnings—into the required structured output.
-Provide a concise, evidence-based justification for the final verdict based strictly on the preceding investigation, without conducting any new analysis of your own.""",
-            name="Formatter",
-            response_format=ThreatAssessment,
-        )
-
         workflow = create_swarm(
-            [coordinator, fire_agent, earthquake_agent, formatter_agent],
+            [coordinator, fire_agent, earthquake_agent],
             default_active_agent="Coordinator",
         )
 
-        self.app = workflow.compile(debug=debug)
+        checkpointer = InMemorySaver()
+        self.app = workflow.compile(checkpointer=checkpointer, debug=debug)
         if print_agent:
             logger.info(self.app.get_graph().draw_ascii())
 
@@ -159,24 +150,9 @@ Provide a concise, evidence-based justification for the final verdict based stri
 
         # Swarm execution
         result = await self.app.ainvoke(initial_state, config=config)
-
-        # Search for the latest AI message (AIMessage) that contains a call to the ThreatAssessment tool
-        assessment_data = None
-        for msg in reversed(result["messages"]):
-            if hasattr(msg, "tool_calls") and msg.tool_calls:
-                for tool_call in msg.tool_calls:
-                    if tool_call["name"] == ThreatAssessment.__name__:
-                        assessment_data = tool_call["args"]
-                        break
-            if assessment_data:
-                break
-
-        if not assessment_data:
-            # Safety fallback in case the LLM did not use the tool
-            logger.warning("The ThreatAssessment tool was not called.")
-            return {}
-
-        # Native Pydantic Validation
-        assessment = ThreatAssessment(**assessment_data)
+        # Formatting prediction
+        assessment: ThreatAssessment = await self.structured_model.ainvoke(
+            [self.formatter_system_prompt, result["messages"][-1]]
+        )
 
         return assessment.model_dump()
