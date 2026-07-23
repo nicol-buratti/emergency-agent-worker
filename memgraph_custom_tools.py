@@ -6,7 +6,6 @@ from langchain_core.tools import tool, BaseTool
 
 async def get_memgraph_tools() -> List[BaseTool]:
     """Connects to the Memgraph MCP server and returns a list of high-level LangChain/LangGraph tools."""
-    # 1. Connect to the underlying Memgraph MCP server
     mcp_client = MultiServerMCPClient(
         {
             "memgraph": {
@@ -18,7 +17,6 @@ async def get_memgraph_tools() -> List[BaseTool]:
     mcp_tools = await mcp_client.get_tools()
     query_tool = next(t for t in mcp_tools if t.name == "run_query")
 
-    # 2. Define custom tools using the @tool decorator
     @tool
     async def get_room_data(room: str) -> str:
         """Finds a specific room in Memgraph and returns its properties."""
@@ -37,27 +35,26 @@ async def get_memgraph_tools() -> List[BaseTool]:
         MATCH (n:Place)
         WHERE n.name CONTAINS '{room}'
 
-        MATCH p = (n)-[*1..{depth}]-(destinazione)
+        MATCH p = (n)-[:CONNECTED_TO*1..{depth}]-(target)
 
         UNWIND range(0, length(p) - 1) AS i
         WITH
-          relationships(p)[i] AS rel,
-          nodes(p)[i] AS n_from,
-          nodes(p)[i+1] AS n_to,
-          i AS livello
+        relationships(p)[i] AS rel,
+        nodes(p)[i] AS n_from,
+        nodes(p)[i+1] AS n_to,
+        i AS level
 
-        ORDER BY livello ASC
+        ORDER BY level ASC
 
-        WITH rel, collect({{n1: n_from, n2: n_to, strato: livello}})[0] AS dati
+        WITH rel, collect({{n1: n_from, n2: n_to, depth: level}})[0] AS data
 
         RETURN
-          dati.n1.name AS nodo1,
-          type(rel) AS edge,
-          dati.n2.name AS nodo2
-        ORDER BY dati.strato ASC, nodo1 ASC, nodo2 ASC
+        data.n1.name AS n1,
+        type(rel) AS edge,
+        data.n2.name AS n2
+        ORDER BY data.depth ASC, n1 ASC, n2 ASC
         LIMIT {limit}
         """
         return await query_tool.ainvoke({"query": cypher})
 
-    # 3. Return the tools as a list
     return [get_room_data, get_adjacent_rooms]
