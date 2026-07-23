@@ -4,12 +4,12 @@ import os
 from typing import Annotated, Literal
 
 from dotenv import load_dotenv
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
 from langgraph_swarm import SwarmState, create_handoff_tool, create_swarm
 from pydantic import BaseModel, Field
 from langchain.agents import create_agent
-from langgraph.checkpoint.memory import InMemorySaver
+from langfuse.langchain import CallbackHandler
 
 load_dotenv()
 logging.basicConfig(
@@ -22,6 +22,8 @@ logger = logging.getLogger(__name__)
 # Pydantic schemas and State
 # ------------------------------------------------------------------
 class ThreatAssessment(BaseModel):
+    """Class that represent the threat assessment of a room"""
+
     room: str = Field(
         description="The room identifier for which the assessment is made."
     )
@@ -65,14 +67,9 @@ class HazardSwarmManager:
                 ]
             },
         )
-        self.structured_model = self.model.with_structured_output(ThreatAssessment)
-        self.formatter_system_prompt = SystemMessage(
-            content="""You are the Formatter Agent for the Hazard Assessment Swarm.
-        Your sole responsibility is to review the conversation history, diagnostics, and telemetry data gathered by the other Agents.
-        Synthesize their findings and formulate the final safety assessment. Accurately translate the experts' consensus—including identified hazard types, danger levels, and early warnings—into the required structured output.
-        Provide a concise, evidence-based justification for the final verdict based strictly on the preceding investigation, without conducting any new analysis of your own.""",
-        )
-
+        self.callbacks = []
+        if os.getenv("LANGFUSE_ENABLED", "false").lower() in ("true", "1", "t", "yes"):
+            self.callbacks.append(CallbackHandler())
         self.app = None
 
     async def initialize_graph(
@@ -94,26 +91,33 @@ class HazardSwarmManager:
                     description="Transfer to Earthquake Agent for seismic/vibration analysis.",
                 ),
             ],
+            response_format=ThreatAssessment,
             system_prompt="""You are the Hazard Assessment Coordinator.
-Triage the provided IoT data or use available tools to assess room safety.
-Transfer control to 'Fire Agent' or 'Earthquake Agent' if anomalies exist.
-If data shows normal conditions, terminate directly with a safe assessment.""",
+Triage the provided IoT data to assess room safety. When necessary, use the provided Memgraph database tools to query the building's topology and inspect node parameters to understand the spatial layout and current sensor snapshot.
+Transfer control to the specialized Agents if anomalies exist.
+If both the telemetry data and the building's node parameters indicate normal, safe conditions, terminate directly with a safe assessment.""",
             name="Coordinator",
         )
 
         fire_agent = create_agent(
             self.model,
             tools=[*tools],
-            system_prompt="""You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes).
-Formulate a clear diagnosis and terminate the swarm once ready.""",
+            response_format=ThreatAssessment,
+            system_prompt=f"""You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes).
+If anomalous data is detected, use the Memgraph database tools to check the building's topology and node parameters. You must identify adjacent rooms, ventilation paths, or connected structural nodes to assess the risk of fire and smoke spread.
+Formulate a clear diagnosis based on both the telemetry and the building's spatial graph, and terminate the swarm once ready.
+Output the final responce by using {ThreatAssessment.__name__} format.""",
             name="Fire Agent",
         )
 
         earthquake_agent = create_agent(
             self.model,
             tools=[*tools],
-            system_prompt="""You are the Earthquake Safety Expert. Analyze telemetry for seismic activity (vibrations, acceleration).
-Formulate a clear diagnosis and terminate the swarm once ready.""",
+            response_format=ThreatAssessment,
+            system_prompt=f"""You are the Earthquake Safety Expert. Analyze telemetry for seismic activity (vibrations, acceleration, structural shifts).
+When assessing seismic impact, use the Memgraph database tools to query the building's topology and structural node parameters. You must understand load-bearing dependencies, material parameters, and damage propagation across connected building elements.
+Formulate a clear diagnosis based on the telemetry and the building's structural graph, and terminate the swarm once ready.
+Output the final responce by using {ThreatAssessment.__name__} format.""",
             name="Earthquake Agent",
         )
 
@@ -122,8 +126,8 @@ Formulate a clear diagnosis and terminate the swarm once ready.""",
             default_active_agent="Coordinator",
         )
 
-        checkpointer = InMemorySaver()
-        self.app = workflow.compile(checkpointer=checkpointer, debug=debug)
+        # checkpointer = InMemorySaver()
+        self.app = workflow.compile(debug=debug)
         if print_agent:
             logger.info(self.app.get_graph().draw_ascii())
 
@@ -134,7 +138,10 @@ Formulate a clear diagnosis and terminate the swarm once ready.""",
             await self.initialize_graph()
 
         thread_id = str(data.get("room", "default_room"))
-        config = {"configurable": {"thread_id": thread_id}}
+        config = {
+            "configurable": {"thread_id": thread_id},
+            "callbacks": self.callbacks,
+        }
 
         logger.info(f"[Agent] -> Executing Swarm for room: {thread_id}")
 
@@ -150,9 +157,23 @@ Formulate a clear diagnosis and terminate the swarm once ready.""",
 
         # Swarm execution
         result = await self.app.ainvoke(initial_state, config=config)
-        # Formatting prediction
-        assessment: ThreatAssessment = await self.structured_model.ainvoke(
-            [self.formatter_system_prompt, result["messages"][-1]]
-        )
+
+        assessment_data = None
+        for msg in reversed(result["messages"]):
+            if hasattr(msg, "tool_calls") and msg.tool_calls:
+                for tool_call in msg.tool_calls:
+                    if tool_call["name"] == ThreatAssessment.__name__:
+                        assessment_data = tool_call["args"]
+                        break
+            if assessment_data:
+                break
+
+        if not assessment_data:
+            # Safety fallback in case the LLM did not use the tool
+            logger.warning("The ThreatAssessment tool was not called.")
+            return {}
+
+        # Native Pydantic Validation
+        assessment = ThreatAssessment(**assessment_data)
 
         return assessment.model_dump()

@@ -7,9 +7,11 @@ import time
 from collections import defaultdict
 from typing import Any, Dict, List
 
+from langfuse import get_client
 import redis.asyncio as redis
 from dotenv import load_dotenv
 from agent_swarm_prebuilts import HazardSwarmManager
+from memgraph_custom_tools import get_memgraph_tools
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,7 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 load_dotenv()
-
+langfuse = get_client()
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
 QUEUE_NAME = os.getenv("QUEUE_NAME", "room_pq")
@@ -36,15 +38,14 @@ class HazardWorker:
         self.redis = redis.Redis(
             host=REDIS_HOST, port=REDIS_PORT, db=0, decode_responses=True
         )
-        # mcp_client_thingsboard = MultiServerMCPClient(
-        #     {
-        #         "thingsboard": {"url": "http://localhost:8000/sse", "transport": "sse"},
-        #         # "ddgs": {"command": "ddgs", "args": ["mcp"], "transport": "stdio"},
-        #     }
-        # )
 
-        # thingsboard_tools = await mcp_client_thingsboard.get_tools()
-        await self.swarm_manager.initialize_graph(debug=True, print_agent=True)
+        memgraph_tools = await get_memgraph_tools()
+
+        await self.swarm_manager.initialize_graph(
+            tools=memgraph_tools,
+            debug=True,
+            print_agent=True,
+        )
 
     async def cleanup(self) -> None:
         if self.redis:
