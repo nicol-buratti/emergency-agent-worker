@@ -1,3 +1,4 @@
+import json
 import logging
 import operator
 import os
@@ -62,7 +63,7 @@ class HazardSwarmManager:
             base_url=os.getenv("LLM_BASE_URL"),
             temperature=0.2,
             max_retries=2,
-            extra_body={"models": os.getenv("EXTRA_LLM_MODELS")},
+            extra_body={"models": json.loads(os.getenv("EXTRA_LLM_MODELS"))},
         )
         self.callbacks = []
         if os.getenv("LANGFUSE_ENABLED", "false").lower() in ("true", "1", "t", "yes"):
@@ -81,6 +82,7 @@ Instructions:
 
         self.app = None
 
+    @staticmethod
     def _extract_assessment(result):
         assessment_data = None
         for msg in reversed(result["messages"]):
