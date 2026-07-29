@@ -57,7 +57,7 @@ async def get_memgraph_tools() -> List[BaseTool]:
         Args:
             room (str): The name of the starting room.
             depth (int): The maximum number of relationship hops to explore (e.g., 1 for direct neighbors, 2 for neighbors of neighbors).
-            limit (int): The maximum number of relationship records to return.
+            limit (int): The maximum number of node records to return.
 
         Returns:
             str: A stringified table or JSON representation of connected rooms, edges, and their traversal depth.
