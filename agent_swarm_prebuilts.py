@@ -10,6 +10,7 @@ from langgraph_swarm import SwarmState, create_handoff_tool, create_swarm
 from pydantic import BaseModel, Field
 from langchain.agents import create_agent
 from langfuse.langchain import CallbackHandler
+from langchain_core.prompts import PromptTemplate
 
 load_dotenv()
 logging.basicConfig(
@@ -52,31 +53,75 @@ class AgentState(SwarmState):
 # Swarm manager Class
 # ------------------------------------------------------------------
 class HazardSwarmManager:
+    """Manages the lifecycle and execution of the LangGraph-based hazard assessment swarm."""
+
     def __init__(self):
         self.model = ChatOpenAI(
-            model="google/gemma-4-26b-a4b-it:free",
+            model=os.getenv("LLM_MODEL"),
             api_key=os.getenv("LLM_API_KEY"),
             base_url=os.getenv("LLM_BASE_URL"),
             temperature=0.2,
             max_retries=2,
-            extra_body={
-                "models": [
-                    "tencent/hy3:free",
-                    "nvidia/nemotron-nano-9b-v2:free",
-                    "openai/gpt-oss-20b:free",
-                ]
-            },
+            extra_body={"models": os.getenv("EXTRA_LLM_MODELS")},
         )
         self.callbacks = []
         if os.getenv("LANGFUSE_ENABLED", "false").lower() in ("true", "1", "t", "yes"):
             self.callbacks.append(CallbackHandler())
+        template_string = """IoT Context & Input Data:
+{data}
+
+Instructions:
+1. Evaluate the reading values for safety/threat levels.
+2. Hand over to specialized agents if needed.
+3. Conclude the assessment."""
+
+        self.prompt_template = PromptTemplate(
+            input_variables=["data"], template=template_string
+        )
+
         self.app = None
+
+    def _extract_assessment(result):
+        assessment_data = None
+        for msg in reversed(result["messages"]):
+            if hasattr(msg, "tool_calls") and msg.tool_calls:
+                for tool_call in msg.tool_calls:
+                    if tool_call["name"] == ThreatAssessment.__name__:
+                        assessment_data = tool_call["args"]
+                        break
+            if assessment_data:
+                break
+        return assessment_data
 
     async def initialize_graph(
         self, tools: list = None, debug: bool = False, print_agent=False
-    ):
+    ) -> None:
         """Initialize and build the agent swarm"""
         tools = tools or []
+
+        coordinator_prompt = PromptTemplate(
+            input_variables=[],
+            template="""You are the Hazard Assessment Coordinator.
+Triage the provided IoT data to assess room safety. When necessary, use the provided Memgraph database tools to query the building's topology and inspect node parameters to understand the spatial layout and current sensor snapshot.
+Transfer control to the specialized Agents if anomalies exist.
+If both the telemetry data and the building's node parameters indicate normal, safe conditions, terminate directly with a safe assessment.""",
+        )
+
+        fire_prompt = PromptTemplate(
+            input_variables=["format_name"],
+            template="""You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes).
+If anomalous data is detected, use the Memgraph database tools to check the building's topology and node parameters. You must identify adjacent rooms, ventilation paths, or connected structural nodes to assess the risk of fire and smoke spread.
+Formulate a clear diagnosis based on both the telemetry and the building's spatial graph, and terminate the swarm once ready.
+Output the final response by using {format_name} format.""",
+        )
+
+        earthquake_prompt = PromptTemplate(
+            input_variables=["format_name"],
+            template="""You are the Earthquake Safety Expert. Analyze telemetry for seismic activity (vibrations, acceleration, structural shifts).
+When assessing seismic impact, use the Memgraph database tools to query the building's topology and structural node parameters. You must understand load-bearing dependencies, material parameters, and damage propagation across connected building elements.
+Formulate a clear diagnosis based on the telemetry and the building's structural graph, and terminate the swarm once ready.
+Output the final response by using {format_name} format.""",
+        )
 
         coordinator = create_agent(
             self.model,
@@ -92,10 +137,7 @@ class HazardSwarmManager:
                 ),
             ],
             response_format=ThreatAssessment,
-            system_prompt="""You are the Hazard Assessment Coordinator.
-Triage the provided IoT data to assess room safety. When necessary, use the provided Memgraph database tools to query the building's topology and inspect node parameters to understand the spatial layout and current sensor snapshot.
-Transfer control to the specialized Agents if anomalies exist.
-If both the telemetry data and the building's node parameters indicate normal, safe conditions, terminate directly with a safe assessment.""",
+            system_prompt=coordinator_prompt.format(),
             name="Coordinator",
         )
 
@@ -103,10 +145,7 @@ If both the telemetry data and the building's node parameters indicate normal, s
             self.model,
             tools=[*tools],
             response_format=ThreatAssessment,
-            system_prompt=f"""You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes).
-If anomalous data is detected, use the Memgraph database tools to check the building's topology and node parameters. You must identify adjacent rooms, ventilation paths, or connected structural nodes to assess the risk of fire and smoke spread.
-Formulate a clear diagnosis based on both the telemetry and the building's spatial graph, and terminate the swarm once ready.
-Output the final responce by using {ThreatAssessment.__name__} format.""",
+            system_prompt=fire_prompt.format(format_name=ThreatAssessment.__name__),
             name="Fire Agent",
         )
 
@@ -114,10 +153,9 @@ Output the final responce by using {ThreatAssessment.__name__} format.""",
             self.model,
             tools=[*tools],
             response_format=ThreatAssessment,
-            system_prompt=f"""You are the Earthquake Safety Expert. Analyze telemetry for seismic activity (vibrations, acceleration, structural shifts).
-When assessing seismic impact, use the Memgraph database tools to query the building's topology and structural node parameters. You must understand load-bearing dependencies, material parameters, and damage propagation across connected building elements.
-Formulate a clear diagnosis based on the telemetry and the building's structural graph, and terminate the swarm once ready.
-Output the final responce by using {ThreatAssessment.__name__} format.""",
+            system_prompt=earthquake_prompt.format(
+                format_name=ThreatAssessment.__name__
+            ),
             name="Earthquake Agent",
         )
 
@@ -126,7 +164,6 @@ Output the final responce by using {ThreatAssessment.__name__} format.""",
             default_active_agent="Coordinator",
         )
 
-        # checkpointer = InMemorySaver()
         self.app = workflow.compile(debug=debug)
         if print_agent:
             logger.info(self.app.get_graph().draw_ascii())
@@ -145,28 +182,14 @@ Output the final responce by using {ThreatAssessment.__name__} format.""",
 
         logger.info(f"[Agent] -> Executing Swarm for room: {thread_id}")
 
-        prompt = (
-            f"IoT Context & Input Data:\n{data}\n\n"
-            "Instructions:\n"
-            "1. Evaluate the reading values for safety/threat levels.\n"
-            "2. Hand over to specialized agents if needed.\n"
-            "3. Conclude the assessment."
-        )
+        prompt = self.prompt_template.format(data=data)
 
         initial_state: AgentState = {"messages": [HumanMessage(content=prompt)]}
 
         # Swarm execution
         result = await self.app.ainvoke(initial_state, config=config)
 
-        assessment_data = None
-        for msg in reversed(result["messages"]):
-            if hasattr(msg, "tool_calls") and msg.tool_calls:
-                for tool_call in msg.tool_calls:
-                    if tool_call["name"] == ThreatAssessment.__name__:
-                        assessment_data = tool_call["args"]
-                        break
-            if assessment_data:
-                break
+        assessment_data = self._extract_assessment(result)
 
         if not assessment_data:
             # Safety fallback in case the LLM did not use the tool
