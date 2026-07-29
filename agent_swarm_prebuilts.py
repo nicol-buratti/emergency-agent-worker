@@ -166,7 +166,7 @@ Output the final response by using {format_name} format.""",
 
         self.app = workflow.compile(debug=debug)
         if print_agent:
-            logger.info(self.app.get_graph().draw_ascii())
+            logger.info("\n" + self.app.get_graph().draw_ascii())
 
         logger.info("Swarm graph compiled successfully.")
 
