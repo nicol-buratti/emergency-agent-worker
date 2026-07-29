@@ -28,13 +28,14 @@ async def get_memgraph_tools() -> List[BaseTool]:
     query_tool = next(t for t in mcp_tools if t.name == "run_query")
 
     @tool
-    async def get_room_data(room: str) -> str:
+    async def get_room_data(department: str, room: str) -> str:
         """Retrieves the properties and metadata of a specific room from the graph database.
 
         Use this tool when you need basic information about a room, such as its exact name,
         dimensions, or primary function.
 
         Args:
+            department (str): The name of the department where the room is located.
             room (str): The name or partial name of the room to search for.
 
         Returns:
@@ -42,19 +43,22 @@ async def get_memgraph_tools() -> List[BaseTool]:
         """
         cypher = f"""
         MATCH (n:Place)
-        WHERE n.name CONTAINS '{room}'
+        WHERE n.department = '{department}' AND n.room = '{room}'
         RETURN n
         LIMIT 1
         """
         return await query_tool.ainvoke({"query": cypher})
 
     @tool
-    async def get_adjacent_rooms(room: str, depth: int, limit: int) -> str:
+    async def get_adjacent_rooms(
+        department: str, room: str, depth: int, limit: int
+    ) -> str:
         """Explores the graph to find rooms connected to a specific starting room up to a maximum depth.
 
         Use this tool to understand spatial flow, horizontal topology, and room connectivity.
 
         Args:
+            department (str): The name of the department where the starting room is located.
             room (str): The name of the starting room.
             depth (int): The maximum number of relationship hops to explore (e.g., 1 for direct neighbors, 2 for neighbors of neighbors).
             limit (int): The maximum number of node records to return.
@@ -64,7 +68,7 @@ async def get_memgraph_tools() -> List[BaseTool]:
         """
         cypher = f"""
         MATCH (n:Place)
-        WHERE n.name CONTAINS '{room}'
+        WHERE n.department = '{department}' AND n.room = '{room}'
 
         MATCH p = (n)-[:CONNECTED_TO*1..{depth}]-(target)
 
@@ -80,9 +84,9 @@ async def get_memgraph_tools() -> List[BaseTool]:
         WITH rel, collect({{n1: n_from, n2: n_to, depth: level}})[0] AS data
 
         RETURN
-        data.n1.name AS n1,
+        data.n1.room AS n1,
         type(rel) AS edge,
-        data.n2.name AS n2
+        data.n2.room AS n2
         ORDER BY data.depth ASC, n1 ASC, n2 ASC
         LIMIT {limit}
         """
