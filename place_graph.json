@@ -1,0 +1,201 @@
+[
+    {
+        "node_var": "cisco",
+        "department": "departmentA",
+        "room_name": "cisco",
+        "connected_to": [
+            "c1"
+        ]
+    },
+    {
+        "node_var": "la1",
+        "department": "departmentA",
+        "room_name": "LA1",
+        "connected_to": [
+            "c1",
+            "e1"
+        ]
+    },
+    {
+        "node_var": "tlab",
+        "department": "departmentA",
+        "room_name": "TeamLab",
+        "connected_to": [
+            "e3",
+            "c1",
+            "c2"
+        ]
+    },
+    {
+        "node_var": "aa1",
+        "department": "departmentA",
+        "room_name": "AA1",
+        "connected_to": [
+            "c1",
+            "c2",
+            "e1"
+        ]
+    },
+    {
+        "node_var": "ab1",
+        "department": "departmentA",
+        "room_name": "AB1",
+        "connected_to": [
+            "c3",
+            "e5"
+        ]
+    },
+    {
+        "node_var": "ab2",
+        "department": "departmentA",
+        "room_name": "AB2",
+        "connected_to": [
+            "c3",
+            "e5"
+        ]
+    },
+    {
+        "node_var": "ab3",
+        "department": "departmentA",
+        "room_name": "AB3",
+        "connected_to": [
+            "c3",
+            "e6"
+        ]
+    },
+    {
+        "node_var": "aric",
+        "department": "departmentA",
+        "room_name": "AulaRicercatori",
+        "connected_to": [
+            "c3"
+        ]
+    },
+    {
+        "node_var": "sriunioni",
+        "department": "departmentA",
+        "room_name": "SalaRiunioni",
+        "connected_to": [
+            "c3",
+            "e7"
+        ]
+    },
+    {
+        "node_var": "uprof",
+        "department": "departmentA",
+        "room_name": "UfficiProf",
+        "connected_to": [
+            "c3"
+        ]
+    },
+    {
+        "node_var": "scale",
+        "department": "departmentA",
+        "room_name": "scale",
+        "connected_to": [
+            "c1",
+            "c3"
+        ]
+    },
+    {
+        "node_var": "c1",
+        "department": "departmentA",
+        "room_name": "C1",
+        "connected_to": [
+            "tlab",
+            "aa1",
+            "la1",
+            "cisco",
+            "scale",
+            "e1",
+            "e3",
+            "e4"
+        ]
+    },
+    {
+        "node_var": "c2",
+        "department": "departmentA",
+        "room_name": "C2",
+        "connected_to": [
+            "tlab",
+            "aa1",
+            "e2"
+        ]
+    },
+    {
+        "node_var": "c3",
+        "department": "departmentA",
+        "room_name": "C3",
+        "connected_to": [
+            "ab1",
+            "ab2",
+            "ab3",
+            "aric",
+            "sriunioni",
+            "uprof",
+            "scale",
+            "e5"
+        ]
+    },
+    {
+        "node_var": "e1",
+        "department": "departmentA",
+        "room_name": "E1",
+        "connected_to": [
+            "la1",
+            "aa1",
+            "c1"
+        ]
+    },
+    {
+        "node_var": "e2",
+        "department": "departmentA",
+        "room_name": "E2",
+        "connected_to": [
+            "c2"
+        ]
+    },
+    {
+        "node_var": "e3",
+        "department": "departmentA",
+        "room_name": "E3",
+        "connected_to": [
+            "tlab",
+            "c1"
+        ]
+    },
+    {
+        "node_var": "e4",
+        "department": "departmentA",
+        "room_name": "E4",
+        "connected_to": [
+            "c1"
+        ]
+    },
+    {
+        "node_var": "e5",
+        "department": "departmentA",
+        "room_name": "E5",
+        "connected_to": [
+            "c3",
+            "ab1",
+            "ab2"
+        ]
+    },
+    {
+        "node_var": "e6",
+        "department": "departmentA",
+        "room_name": "E6",
+        "connected_to": [
+            "ab3"
+        ]
+    },
+    {
+        "node_var": "e7",
+        "department": "departmentA",
+        "room_name": "E7",
+        "connected_to": [
+            "sriunioni"
+        ]
+    }
+]
