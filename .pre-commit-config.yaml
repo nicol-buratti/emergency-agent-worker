@@ -33,4 +33,4 @@ repos:
     hooks:
     -   id: detect-secrets
         args: ['--baseline', '.secrets.baseline']
-        exclude: package.lock.json
+        exclude: "package\\.lock\\.json|node_red_data/flows\\.json|node_red_data/settings\\.js"
