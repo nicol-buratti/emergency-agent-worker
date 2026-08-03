@@ -11,7 +11,7 @@
         "id": "f6e66dbd5ff4b931",
         "type": "tab",
         "label": "iot caching local computation",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -28,6 +28,14 @@
         "type": "tab",
         "label": "Digital Twin",
         "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e4842373559f1514",
+        "type": "tab",
+        "label": "iot caching local computation",
+        "disabled": false,
         "info": "",
         "env": []
     },
@@ -1144,9 +1152,11 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 130,
-        "y": 480,
+        "y": 420,
         "wires": [
-            []
+            [
+                "29cbe68757b3c5cb"
+            ]
         ]
     },
     {
@@ -1263,43 +1273,6 @@
         ]
     },
     {
-        "id": "af2e10d4764e9fa3",
-        "type": "redis-command",
-        "z": "f6e66dbd5ff4b931",
-        "server": "a12b266a42104227",
-        "command": "FLUSHDB",
-        "name": "",
-        "topic": "",
-        "params": "[]",
-        "paramsType": "json",
-        "payloadType": "json",
-        "block": false,
-        "x": 300,
-        "y": 480,
-        "wires": [
-            [
-                "f3e240278248d3ae",
-                "29cbe68757b3c5cb"
-            ]
-        ]
-    },
-    {
-        "id": "f3e240278248d3ae",
-        "type": "redis-lua-script",
-        "z": "f6e66dbd5ff4b931",
-        "server": "a12b266a42104227",
-        "name": "create sensors timeseries",
-        "keyval": 0,
-        "func": "local retention = 1000 * 60 * 5\nlocal metrics = {\"temperature\", \"co2\", \"humidity\", \"tvoc\", \"eco2\"}\n\n-- Table mapping each room_label to its specific sensor IDs (without the department prefix)\nlocal rooms = {\n    [\"departmentA:AA1\"]           = {\"AA1-01\", \"AA1-02\"},\n    [\"departmentA:AB1\"]           = {\"AB1-01\"},\n    [\"departmentA:AB2\"]           = {\"AB2-01\", \"AB2-02\"},\n    [\"departmentA:LA1\"]           = {\"LA1-01\", \"LA1-02\"},\n    [\"departmentA:StanzaCulmone\"] = {\"StanzaCulmone\"},\n    [\"departmentA:StanzaDocente\"] = {\"StanzaDocente\"},\n    [\"departmentA:TeamLab\"]       = {\"TeamLab-01\", \"TeamLab-02\"},\n    [\"departmentB:B1\"]            = {\"B1-01\", \"B1-03\"},\n    [\"departmentB:LB1\"]           = {\"LB1-01\"},\n    [\"departmentB:SalaRiunioni\"]  = {\"SalaRiunioni\"}\n}\n\n-- Iterate through the configuration table and create the time series keys\nfor room_label, sensors in pairs(rooms) do\n    for _, sensor_id in ipairs(sensors) do\n        for _, metric in ipairs(metrics) do\n            -- Genera la chiave nel formato richiesto: stanza:sensore:metrica\n            local key = room_label .. \":\" .. sensor_id .. \":\" .. metric\n            redis.call(\"TS.CREATE\", key, \"RETENTION\", retention, \"LABELS\", \"room\", room_label, \"type\", metric)\n        end\n    end\nend\n\nredis.call(\"TS.CREATE\", \"departmentA:StanzaCulmone:StanzaCulmone:people_count\", \"RETENTION\", retention, \"LABELS\", \"room\", \"departmentA:StanzaCulmone\", \"type\", \"people_count\")\n\nreturn \"OK\"",
-        "stored": false,
-        "block": false,
-        "x": 530,
-        "y": 480,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "29cbe68757b3c5cb",
         "type": "redis-lua-script",
         "z": "f6e66dbd5ff4b931",
@@ -1309,34 +1282,11 @@
         "func": "local bucket_ms = 60*1000\nredis.call(\"HSET\", \"config:param:temperature\", \"agg_type\", \"max\", \"bucket_ms\",bucket_ms)\nredis.call(\"HSET\", \"config:param:humidity\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:co2\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:tvoc\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:eco2\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:people_count\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nreturn \"OK\"",
         "stored": false,
         "block": false,
-        "x": 520,
+        "x": 320,
         "y": 420,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "5afa8a6bd70b878e",
-        "type": "function",
-        "z": "f6e66dbd5ff4b931",
-        "name": "aggregator",
-        "func": "var values = context.get(\"values\") || {};\nvar config = context.get(\"config\");\n\nif (msg.payload !== null && msg.payload !== undefined && msg.payload !== \"\") {\n    // Mantiene il topic originale o stringa vuota\n    var topic = (msg.topic !== undefined && msg.topic !== null) ? msg.topic.toString() : \"\";\n\n    if (!values[topic]) {\n        values[topic] = {\n            payloads: [],\n            strategy: msg.strategy || config.aggregationType\n        };\n    } else if (msg.strategy) {\n        // Aggiorna la strategia in volo se ne arriva una nuova\n        values[topic].strategy = msg.strategy;\n    }\n\n    values[topic].payloads.push(msg.payload);\n}\n\n// Salva di nuovo nel context\ncontext.set(\"values\", values);\n\n// Ritorna null per bloccare il normale flusso (i messaggi verranno inviati dal timer)\nreturn null;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "// CONFIGURAZIONE DEL NODO (Modifica questi valori secondo necessità)\nvar config = {\n    intervalCount: 10,           // Numero di intervalli\n    intervalUnits: \"s\",         // \"s\" (secondi), \"m\" (minuti), \"h\" (ore), \"d\" (giorni)\n    submitPerTopic: true,       // true: invia un msg separato per ogni topic, false: singolo payload\n    submitIncompleteInterval: false,\n    aggregationType: \"mean\",    // Strategia di fallback se msg.strategy non c'è\n    topic: \"aggregated\"         // Topic usato solo se submitPerTopic è false\n};\n\ncontext.set(\"config\", config);\ncontext.set(\"values\", {});\n\nvar factor = 1;\nswitch (config.intervalUnits) {\n    case \"s\": factor = 1000; break;\n    case \"m\": factor = 1000 * 60; break;\n    case \"h\": factor = 1000 * 60 * 60; break;\n    case \"d\": factor = 1000 * 60 * 60 * 24; break;\n}\n\nvar intervalTimeout = factor * config.intervalCount;\nvar absoluteStartupTime = new Date();\nabsoluteStartupTime.setMinutes(absoluteStartupTime.getMinutes() - absoluteStartupTime.getTimezoneOffset());\nvar correctedStartupTime = absoluteStartupTime.getTime();\nvar startupTimeout = intervalTimeout - (correctedStartupTime % intervalTimeout);\n\nfunction aggregate(list, strategy) {\n    if (!list || list.length === 0) return null;\n    var aggType = strategy || config.aggregationType;\n\n    switch (aggType) {\n        case \"mean\": return simpleStatistics.mean(list);\n        case \"geometricMean\": return simpleStatistics.geometricMean(list);\n        case \"harmonicMean\": return simpleStatistics.harmonicMean(list);\n        case \"median\": return simpleStatistics.median(list);\n        case \"min\": return simpleStatistics.min(list);\n        case \"max\": return simpleStatistics.max(list);\n        case \"sum\": return simpleStatistics.sumSimple(list);\n        default: return list[list.length - 1]; // Fallback\n    }\n}\n\nfunction aggregateAll() {\n    var values = context.get(\"values\") || {};\n    var results = [];\n    var lastGlobalStrategy = config.aggregationType;\n    var messagesToSend = [];\n\n    if (config.submitPerTopic) {\n        for (var topic in values) {\n            if (values.hasOwnProperty(topic)) {\n                var topicData = values[topic];\n                var payloads = topicData.payloads;\n                var strategy = topicData.strategy;\n\n                if (payloads.length > 0) {\n                    var finalPayload;\n\n                    if (typeof payloads[0] === 'object' && !Array.isArray(payloads[0]) && payloads[0] !== null) {\n                        finalPayload = {};\n                        var keys = Object.keys(payloads[0]);\n\n                        keys.forEach(function (key) {\n                            var list = payloads.map(function (p) { return parseFloat(p[key]); }).filter(function (v) { return !isNaN(v); });\n\n                            // Assegnazione sicura per il linter\n                            var attrStrategy = strategy;\n                            if (strategy && typeof strategy === 'object') {\n                                attrStrategy = strategy[key];\n                            }\n\n                            finalPayload[key] = aggregate(list, attrStrategy);\n                        });\n                    } else {\n                        var list = payloads.map(function (p) { return parseFloat(p); }).filter(function (v) { return !isNaN(v); });\n                        finalPayload = aggregate(list, strategy);\n                    }\n\n                    messagesToSend.push({ topic: topic, payload: finalPayload });\n                }\n            }\n        }\n    } else {\n        for (var topic in values) {\n            if (values.hasOwnProperty(topic)) {\n                var topicData = values[topic];\n                var payloads = topicData.payloads;\n                var strategy = topicData.strategy;\n\n                // Aggiorniamo la strategia globale se esiste\n                if (strategy) {\n                    lastGlobalStrategy = strategy;\n                }\n\n                if (payloads.length > 0) {\n                    if (typeof payloads[0] === 'object' && !Array.isArray(payloads[0]) && payloads[0] !== null) {\n                        var aggregatedObj = {};\n                        var keys = Object.keys(payloads[0]);\n                        keys.forEach(function (key) {\n                            var list = payloads.map(function (p) { return parseFloat(p[key]); }).filter(function (v) { return !isNaN(v); });\n\n                            // Assegnazione sicura per il linter\n                            var attrStrategy = strategy;\n                            if (strategy && typeof strategy === 'object') {\n                                attrStrategy = strategy[key];\n                            }\n\n                            aggregatedObj[key] = aggregate(list, attrStrategy);\n                        });\n                        results.push(aggregatedObj);\n                    } else {\n                        var list = payloads.map(function (p) { return parseFloat(p); }).filter(function (v) { return !isNaN(v); });\n                        results.push(aggregate(list, strategy));\n                    }\n                }\n            }\n        }\n\n        if (results.length > 0) {\n            var finalPayload;\n            if (typeof results[0] === 'object' && !Array.isArray(results[0]) && results[0] !== null) {\n                finalPayload = {};\n                var keys = Object.keys(results[0]);\n                keys.forEach(function (key) {\n                    var list = results.map(function (p) { return parseFloat(p[key]); }).filter(function (v) { return !isNaN(v); });\n\n                    // Assegnazione sicura della lastGlobalStrategy\n                    var attrStrategy = lastGlobalStrategy;\n                    if (lastGlobalStrategy && typeof lastGlobalStrategy === 'object') {\n                        // @ts-ignore\n                        attrStrategy = lastGlobalStrategy[key];\n                    }\n\n                    finalPayload[key] = aggregate(list, attrStrategy);\n                });\n            } else {\n                finalPayload = aggregate(results, lastGlobalStrategy);\n            }\n\n            messagesToSend.push({ topic: config.topic || \"\", payload: finalPayload });\n        }\n    }\n\n    // Invia i messaggi\n    messagesToSend.forEach(function (m) {\n        node.send(m);\n    });\n\n    // Svuota la memoria dopo l'invio\n    context.set(\"values\", {});\n}\n\n// Avvia i timer\nvar primaryTimeout = setTimeout(function () {\n    var intervalId = setInterval(aggregateAll, intervalTimeout);\n    context.set(\"intervalId\", intervalId);\n\n    if (config.submitIncompleteInterval) {\n        aggregateAll();\n    } else {\n        context.set(\"values\", {});\n    }\n}, startupTimeout);\n\ncontext.set(\"primaryTimeoutId\", primaryTimeout);",
-        "finalize": "var primaryTimeoutId = context.get(\"primaryTimeoutId\");\nvar intervalId = context.get(\"intervalId\");\n\nif (primaryTimeoutId) {\n    clearTimeout(primaryTimeoutId);\n}\nif (intervalId) {\n    clearInterval(intervalId);\n}",
-        "libs": [
-            {
-                "var": "simpleStatistics",
-                "module": "simple-statistics"
-            }
-        ],
-        "x": 970,
-        "y": 540,
-        "wires": [
             [
-                "328f284af7cef90a"
+                "redis_config_fetch_lua"
             ]
         ]
     },
@@ -1345,7 +1295,7 @@
         "type": "debug",
         "z": "f6e66dbd5ff4b931",
         "name": "debug 21",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1582,7 +1532,7 @@
         "type": "debug",
         "z": "f6e66dbd5ff4b931",
         "name": "debug 25",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1599,7 +1549,7 @@
         "type": "function",
         "z": "f6e66dbd5ff4b931",
         "name": "format data",
-        "func": "const dangerTiers = {\n    'high': 1,\n    'medium': 2,\n    'low': 3\n};\n\nlet tier = 3;\nif (msg.danger !== undefined)\n    tier = dangerTiers[msg.danger.toLowerCase()];\n\nlet priority = parseFloat(`${tier}.${msg.collected_at}`)\n\nmsg.payload = [\"room_pq\", priority, msg.topic]\n\nreturn msg;\n",
+        "func": "const dangerTiers = {\n    'high': 1,\n    'medium': 2,\n    'low': 3\n};\n\nlet tier = 3;\nif (msg.danger !== undefined)\n    tier = dangerTiers[msg.danger.toLowerCase()];\n\nlet priority = parseFloat(`${tier}.${msg.collected_at}`)\n\nmsg.payload = [\"room_pq\", priority, msg.topic]\n\nmsg.topic = null\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1637,7 +1587,7 @@
         "type": "function",
         "z": "f6e66dbd5ff4b931",
         "name": "update danger",
-        "func": "// 1. Write the query using placeholders (names starting with $)\nmsg.query = `\n  MATCH (n:Place {name: $room})\n  SET n += $sensors\n  RETURN n;\n`;\n\n// 2. Pass the actual parameters in msg.params\n// (The database will automatically map $room to params.room)\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\n\nmsg.payload = null\nreturn msg;",
+        "func": "// 1. Write the query using placeholders (names starting with $)\nmsg.query = `\n  MATCH (n:Place {department: $department, room: $room})\n  SET n += $sensors\n  RETURN n;\n`;\n\n// 2. Pass the actual parameters in msg.params\n// (The database will automatically map $room to params.room)\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\n\nmsg.payload = null\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1667,6 +1617,95 @@
             [],
             [],
             []
+        ]
+    },
+    {
+        "id": "redis_config_fetch_lua",
+        "type": "redis-lua-script",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "name": "Fetch all configs",
+        "keyval": 0,
+        "func": "local keys = redis.call('KEYS', 'config:param:*')\nlocal config = {}\nfor i, k in ipairs(keys) do\n    local sensor = string.gsub(k, 'config:param:', '')\n    local hash = redis.call('HGETALL', k)\n    local obj = {}\n    for j=1, #hash, 2 do\n        obj[hash[j]] = hash[j+1]\n    end\n    config[sensor] = obj\nend\nreturn cjson.encode(config)",
+        "stored": false,
+        "block": false,
+        "x": 540,
+        "y": 420,
+        "wires": [
+            [
+                "redis_config_save_global"
+            ]
+        ]
+    },
+    {
+        "id": "redis_config_save_global",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "Save to global context",
+        "func": "if (msg.payload) {\n    let parsedConfigs = JSON.parse(msg.payload);\n    global.set('sensor_configs', parsedConfigs);\n    node.warn(\"Sensor configurations loaded from Redis: \" + JSON.stringify(parsedConfigs));\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "852c9f44cf396fe1",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "TODO adapt agent with this workflow",
+        "info": "",
+        "x": 690,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "1191b116fab6d354",
+        "type": "debug",
+        "z": "f6e66dbd5ff4b931",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "5afa8a6bd70b878e",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "aggregator",
+        "func": "var values = context.get(\"values\") || {};\nvar redisConfigs = global.get(\"sensor_configs\") || {};\nvar topic = (msg.topic !== undefined && msg.topic !== null) ? msg.topic.toString() : \"\";\n\n// Controlla che il payload sia un oggetto JSON (es. { temperature: 22, humidity: 50 })\nif (msg.payload && typeof msg.payload === 'object' && !Array.isArray(msg.payload)) {\n    if (!values[topic]) values[topic] = {};\n\n    let now = Date.now();\n\n    Object.keys(msg.payload).forEach(key => {\n        let val = parseFloat(msg.payload[key]);\n        \n        // Ignora valori non numerici\n        if (!isNaN(val)) {\n            if (!values[topic][key]) {\n                // Leggi bucket_ms da Redis o usa 60000 come fallback\n                let bucket = redisConfigs[key] && redisConfigs[key].bucket_ms ? parseInt(redisConfigs[key].bucket_ms) : 60000;\n                values[topic][key] = {\n                    payloads: [],\n                    next_send: now + bucket\n                };\n            }\n            values[topic][key].payloads.push(val);\n        }\n    });\n}\n\n// Salva di nuovo nel context\ncontext.set(\"values\", values);\n\n// Ritorna null, l'invio è gestito dal motore temporale\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "context.set(\"values\", {});\n\nfunction aggregate(list, strategy) {\n    if (!list || list.length === 0) return null;\n    switch (strategy) {\n        case \"mean\": return simpleStatistics.mean(list);\n        case \"geometricMean\": return simpleStatistics.geometricMean(list);\n        case \"harmonicMean\": return simpleStatistics.harmonicMean(list);\n        case \"median\": return simpleStatistics.median(list);\n        case \"min\": return simpleStatistics.min(list);\n        case \"max\": return simpleStatistics.max(list);\n        case \"sum\": return simpleStatistics.sumSimple(list);\n        default: return list[list.length - 1]; // Fallback (Last value)\n    }\n}\n\n// Tick engine: gira ogni 1 secondo (1000ms)\nvar tickId = setInterval(function() {\n    var values = context.get(\"values\") || {};\n    var redisConfigs = global.get(\"sensor_configs\") || {};\n    var now = Date.now();\n    \n    // Raggruppiamo i messaggi in uscita per \"topic\" (Stanza)\n    var messagesToSend = {}; \n\n    for (var topic in values) {\n        for (var key in values[topic]) {\n            var metricData = values[topic][key];\n            \n            // Il timer per questo sensore in questa stanza è scaduto?\n            if (now >= metricData.next_send) {\n                \n                // Se abbiamo raccolto dei dati...\n                if (metricData.payloads.length > 0) {\n                    var strategy = redisConfigs[key] && redisConfigs[key].agg_type ? redisConfigs[key].agg_type : \"mean\";\n                    var result = aggregate(metricData.payloads, strategy);\n\n                    if (!messagesToSend[topic]) messagesToSend[topic] = {};\n                    messagesToSend[topic][key] = result;\n                }\n\n                // Ricalcola il prossimo invio aggiornando dinamicamente il bucket\n                var bucket = redisConfigs[key] && redisConfigs[key].bucket_ms ? parseInt(redisConfigs[key].bucket_ms) : 60000;\n                metricData.payloads = [];\n                metricData.next_send = now + bucket;\n            }\n        }\n    }\n\n    // Invia i messaggi accumulati in questo tick\n    for (var t in messagesToSend) {\n        // Il topic è sempre nel formato \"department:room\" nel tuo flusso, lo separo per Memgraph\n        let parts = t.split(\":\"); \n        \n        node.send({ \n            topic: t, \n            payload: messagesToSend[t],\n            department: parts[0] || \"\",\n            room: parts[1] || t\n        });\n    }\n\n    context.set(\"values\", values);\n}, 1000); // <-- Risoluzione a 1 secondo\n\ncontext.set(\"tickId\", tickId);",
+        "finalize": "var tickId = context.get(\"tickId\");\nif (tickId) {\n    clearInterval(tickId);\n}",
+        "libs": [
+            {
+                "var": "simpleStatistics",
+                "module": "simple-statistics"
+            }
+        ],
+        "x": 970,
+        "y": 540,
+        "wires": [
+            [
+                "328f284af7cef90a",
+                "1191b116fab6d354"
+            ]
         ]
     },
     {
@@ -2419,5 +2458,830 @@
                 "67e65303e2e4f749"
             ]
         ]
+    },
+    {
+        "id": "89418cdd0e562402",
+        "type": "catch",
+        "z": "e4842373559f1514",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "1efd40b6092c4759",
+                "cdc173109e04ac19"
+            ]
+        ]
+    },
+    {
+        "id": "1efd40b6092c4759",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "Errors",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error.message",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "da13443e922e8a07",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "filter danger data",
+        "func": "let cachingData = {}\nlet device_id = msg.payload.device_id\ncachingData.device_id = device_id\ncachingData.sensors = msg.payload.sensors\n\ndelete cachingData.sensors.light\n\nreturn cachingData;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 540,
+        "wires": [
+            [
+                "a5f3392a2df577e8",
+                "7246f35b964d9302"
+            ]
+        ]
+    },
+    {
+        "id": "fa9a6ba1d0500a00",
+        "type": "mqtt in",
+        "z": "e4842373559f1514",
+        "name": "iot data",
+        "topic": "sensors/+/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "19268c5a199e4927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "da13443e922e8a07"
+            ]
+        ],
+        "info": "thingsboard has the Shared Subscriptions feature that allows to define a group of clients that will share the same topic\n\nthis allows to have multiple deployed agents where each one dynamically handle the telemetry of a room/area\n"
+    },
+    {
+        "id": "4dfaa4a279c5775d",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "if room telemetry changed\n then update the cache",
+        "info": "",
+        "x": 1830,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "13e71f90c341cdef",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "instead of using nodered to get data and then pass to the webserver,\n i can implement some workers (agents) that autonomously get data from redis,\n do the prediction and then publish via redis the results and continue the loop",
+        "info": "",
+        "x": 270,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "9e251001e57c0a93",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "680ec5f0682fa080",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "format message",
+        "func": "msg.topic = msg.payload.room\n\nmsg.payload = [\n    \"danger_\" + msg.payload.danger_type, msg.payload.danger\n]\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 1220,
+        "wires": [
+            [
+                "18143abf58a8b9ad",
+                "eb83b9929a6b808d"
+            ]
+        ]
+    },
+    {
+        "id": "18143abf58a8b9ad",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "b8e8872b127a5723",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "28845acc20f5ebb4",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "this priority queue is used to give priority to more dangerouse zones\n and more \"old\" updates",
+        "info": "",
+        "x": 2000,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "e573fda44bf58db3",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "saves the values in the last n minutes (now n=5)",
+        "info": "",
+        "x": 1120,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "5de569671ec93b4f",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "TODO nei casi in cui c'è una ridondanza di sensori \n nella stessa stanza, unirli.\n unire anche i sensori del tipo AA1-01 e  AA1-02 in uno unico",
+        "info": "",
+        "x": 630,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b0ef83a9de98f0a3",
+        "type": "switch",
+        "z": "e4842373559f1514",
+        "name": "",
+        "property": "payload.danger_type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "none",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 1220,
+        "wires": [
+            [
+                "680ec5f0682fa080"
+            ]
+        ]
+    },
+    {
+        "id": "0165311111765a32",
+        "type": "inject",
+        "z": "e4842373559f1514",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 420,
+        "wires": [
+            [
+                "e6bff4cc4afa2197"
+            ]
+        ]
+    },
+    {
+        "id": "d58249bea66828ca",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "In the upper flow, a \"snapshot\" of the room is created\n it is used to avoid that the agents analyze similar telemetries multiple times",
+        "info": "",
+        "x": 1210,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "a5f3392a2df577e8",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "mapping department",
+        "func": "// 1. Fetch context with fallbacks (empty objects) to prevent TypeErrors\nlet roomToDepartment = this.roomToDepartment || {};\nlet sensorToRoom = this.sensorToRoom || {};\n\nlet sensor = msg.device_id;\n\n// 2. Ensure the incoming message actually has a device_id\nif (!sensor) {\n    node.warn(\"Missing msg.device_id. Cannot map room.\");\n    return null; // Halts the flow for this message\n}\n\nlet room = sensorToRoom[sensor];\n\n// 3. Ensure the sensor is actually mapped to a room\nif (!room) {\n    node.warn(`No room mapping found for sensor ID: ${sensor}`);\n    return null;\n}\n\n// 4. Get department, providing a fallback if the room isn't categorized\nlet department = roomToDepartment[room] || \"UnknownDepartment\";\n\n// 5. Construct the final string\nmsg.room = room;\nmsg.department = department\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "let mapping_department_room = {\n    \"departmentA\": [\n        \"AA1\", \"AB1\", \"AB2\", \"LA1\", \"StanzaCulmone\",\n        \"StanzaDocente\", \"TeamLab\"\n    ],\n    \"departmentB\": [\n        \"B1\", \"LB1\", \"SalaRiunioni\"\n    ]\n};\n\nlet mapping_room_sensor = {\n    \"AA1\": [\"AA1-01\", \"AA1-02\"],\n    \"AB1\": [\"AB1-01\"],\n    \"AB2\": [\"AB2-01\", \"AB2-02\"],\n    \"LA1\": [\"LA1-01\", \"LA1-02\"],\n    \"StanzaCulmone\": [\"StanzaCulmone\"],\n    \"StanzaDocente\": [\"StanzaDocente\"],\n    \"TeamLab\": [\"TeamLab-01\", \"TeamLab-02\"],\n    \"B1\": [\"B1-01\", \"B1-03\"],\n    \"LB1\": [\"LB1-01\"],\n    \"SalaRiunioni\": [\"SalaRiunioni\"],\n}\n\n\nlet roomMap = {};\n\nfor (const [department, rooms] of Object.entries(mapping_department_room)) {\n    for (const room of rooms) {\n        roomMap[room] = department;\n    }\n}\n\nlet sensorMap = {};\n\nfor (const [room, sensors] of Object.entries(mapping_room_sensor)) {\n    for (const sensor of sensors) {\n        sensorMap[sensor] = room;\n    }\n}\n\nthis.roomToDepartment = roomMap\nthis.sensorToRoom = sensorMap\n",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 540,
+        "wires": [
+            [
+                "2c341b2c6311f1c1"
+            ]
+        ]
+    },
+    {
+        "id": "50a3a9f19475ccd9",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "if the sensors changed, update the place graph",
+        "info": "",
+        "x": 2000,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "cdc173109e04ac19",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 300,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "0332ed18d86b5b93",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "TODO ho aggiunto un TTL per i parametri dello snapshot,\n ma sono veramente utili?\n se i sensori di una stanza si spengono per molto tempo,\n di conseguenza cancellando lo snapshot,\n  cè bisogno di analizzare di nuovo la stanza?",
+        "info": "",
+        "x": 1210,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "8cee088bd540512b",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "Since Redis couldn't handle the high volume of requests,\n the aggregation computation was moved to Node-RED",
+        "info": "",
+        "x": 1160,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c168f61e633c4c1a",
+        "type": "redis-in",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "command": "subscribe",
+        "name": "",
+        "topic": "sensors_processed",
+        "obj": true,
+        "timeout": 0,
+        "x": 150,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eb83b9929a6b808d",
+        "type": "redis-command",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 790,
+        "y": 1220,
+        "wires": [
+            [
+                "b8e8872b127a5723"
+            ]
+        ]
+    },
+    {
+        "id": "e6bff4cc4afa2197",
+        "type": "redis-lua-script",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "name": "set parameters config",
+        "keyval": 0,
+        "func": "local bucket_ms = 60*1000\nredis.call(\"HSET\", \"config:param:temperature\", \"agg_type\", \"max\", \"bucket_ms\",bucket_ms)\nredis.call(\"HSET\", \"config:param:humidity\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:co2\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:tvoc\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:eco2\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:people_count\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nreturn \"OK\"",
+        "stored": false,
+        "block": false,
+        "x": 320,
+        "y": 420,
+        "wires": [
+            [
+                "c1197eaf3eb41f82"
+            ]
+        ]
+    },
+    {
+        "id": "d98b5f86e8b84f04",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 21",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1640,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "6fb9e4f3b63d2d67",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "ttl and format redis get message",
+        "func": "let sensor_keys = Object.keys(msg.payload)\n\nmsg.current_data = msg.payload\nmsg.payload = sensor_keys\nmsg.sensor_attributes = sensor_keys\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 540,
+        "wires": [
+            [
+                "3473323080c95541"
+            ]
+        ]
+    },
+    {
+        "id": "3473323080c95541",
+        "type": "redis-command",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "command": "HMGET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 1460,
+        "y": 540,
+        "wires": [
+            [
+                "d98b5f86e8b84f04",
+                "24dba38adca78fec"
+            ]
+        ]
+    },
+    {
+        "id": "24dba38adca78fec",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "cache checking",
+        "func": "function strict_comparison(value1, value2){\n    return value1 !== value2\n}\n\n\nlet attributes_to_update = {}\n\nfor (let i = 0; i<msg.payload.length;i++ ){\n    let key = msg.sensor_attributes[i]\n    let cache = msg.payload[i]\n    let current = msg.current_data[key]\n\n    let to_update = strict_comparison(cache, current)\n    if (to_update){\n        attributes_to_update[key] = current\n    }\n}\nmsg.attributes_to_update = attributes_to_update\nmsg.current_data= null\nmsg.payload=null\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1760,
+        "y": 540,
+        "wires": [
+            [
+                "e85d67063fb4f8be"
+            ]
+        ]
+    },
+    {
+        "id": "917c1d5a9c9c598d",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "cache checking threshold",
+        "func": "if (Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        if (old_value === 0) {\n            if (value !== 0) {\n                attributes_to_update[key] = value;\n            }\n        } else {\n            let percentage_change = Math.abs((value - old_value) / old_value);\n            if (percentage_change >= 0.05) {\n                attributes_to_update[key] = value;\n            }\n        }\n    } else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\nmsg.attributes_to_update = attributes_to_update;\nmsg.current_data = null;\nmsg.cached_snapshot = null;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1770,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e85d67063fb4f8be",
+        "type": "switch",
+        "z": "e4842373559f1514",
+        "name": "",
+        "property": "attributes_to_update",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1990,
+        "y": 540,
+        "wires": [
+            [
+                "c8f8dbec3f6e50cb",
+                "42f6ecfb33e1f2eb"
+            ]
+        ]
+    },
+    {
+        "id": "c8f8dbec3f6e50cb",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "format message",
+        "func": "msg.payload = Object.entries(msg.attributes_to_update).flat()\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2240,
+        "y": 540,
+        "wires": [
+            [
+                "e7fc37a47653ebe8",
+                "8cffcb99da357fa8"
+            ]
+        ]
+    },
+    {
+        "id": "e7fc37a47653ebe8",
+        "type": "redis-command",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 2430,
+        "y": 540,
+        "wires": [
+            [
+                "a0aae69d588da9b5"
+            ]
+        ]
+    },
+    {
+        "id": "2c341b2c6311f1c1",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "format message",
+        "func": "msg.payload = msg.sensors\nmsg.topic = msg.department + \":\" + msg.room\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 540,
+        "wires": [
+            [
+                "4539ed3d8641347d",
+                "9af7bb8334583dcf"
+            ]
+        ]
+    },
+    {
+        "id": "8cffcb99da357fa8",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 24",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2420,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "084be5df80c08944",
+        "type": "redis-lua-script",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "name": "Apply TTL",
+        "keyval": "1",
+        "func": "local room_name = KEYS[1]\nlocal ttl = ARGV[1]\nlocal num_fields = #ARGV - 1\n\nreturn redis.call(\"HEXPIRE\", room_name, ttl, \"FIELDS\", num_fields, unpack(ARGV, 2))\n",
+        "stored": false,
+        "block": false,
+        "x": 2850,
+        "y": 540,
+        "wires": [
+            [
+                "be5d8f5d10610bce",
+                "c980a0b62621bb1e"
+            ]
+        ]
+    },
+    {
+        "id": "a0aae69d588da9b5",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "tormat TTL message",
+        "func": "\nlet ttl = 5 * 60 // 5 minutes\nmsg.payload = [msg.topic, ttl, ...msg.sensor_attributes]\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2640,
+        "y": 540,
+        "wires": [
+            [
+                "084be5df80c08944"
+            ]
+        ]
+    },
+    {
+        "id": "c980a0b62621bb1e",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 25",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3000,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "be5d8f5d10610bce",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "format data",
+        "func": "const dangerTiers = {\n    'high': 1,\n    'medium': 2,\n    'low': 3\n};\n\nlet tier = 3;\nif (msg.danger !== undefined)\n    tier = dangerTiers[msg.danger.toLowerCase()];\n\nlet priority = parseFloat(`${tier}.${Date.now()}`)\n\nmsg.payload = [\"room_pq\", priority, msg.topic]\n\nmsg.topic = null\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3090,
+        "y": 540,
+        "wires": [
+            [
+                "de8a92f54521c47f"
+            ]
+        ]
+    },
+    {
+        "id": "de8a92f54521c47f",
+        "type": "redis-command",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "command": "ZADD",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 3290,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "42f6ecfb33e1f2eb",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "update danger",
+        "func": "// 1. Write the query using placeholders (names starting with $)\nmsg.query = `\n  MATCH (n:Place {department: $department, room: $room})\n  SET n += $sensors\n  RETURN n;\n`;\n\n// 2. Pass the actual parameters in msg.params\n// (The database will automatically map $room to params.room)\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\n\nmsg.payload = null\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2200,
+        "y": 460,
+        "wires": [
+            [
+                "53aa612513bc05aa"
+            ]
+        ]
+    },
+    {
+        "id": "53aa612513bc05aa",
+        "type": "neo4j-bolt",
+        "z": "e4842373559f1514",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 2420,
+        "y": 460,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c1197eaf3eb41f82",
+        "type": "redis-lua-script",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "name": "Fetch all configs",
+        "keyval": 0,
+        "func": "local keys = redis.call('KEYS', 'config:param:*')\nlocal config = {}\nfor i, k in ipairs(keys) do\n    local sensor = string.gsub(k, 'config:param:', '')\n    local hash = redis.call('HGETALL', k)\n    local obj = {}\n    for j=1, #hash, 2 do\n        obj[hash[j]] = hash[j+1]\n    end\n    config[sensor] = obj\nend\nreturn cjson.encode(config)",
+        "stored": false,
+        "block": false,
+        "x": 540,
+        "y": 420,
+        "wires": [
+            [
+                "293d9b5707f3fdf3"
+            ]
+        ]
+    },
+    {
+        "id": "293d9b5707f3fdf3",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "Save to global context",
+        "func": "if (msg.payload) {\n    let parsedConfigs = JSON.parse(msg.payload);\n    global.set('sensor_configs', parsedConfigs);\n    node.warn(\"Sensor configurations loaded from Redis: \" + JSON.stringify(parsedConfigs));\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "30df3e9e9ee4e574",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "TODO adapt agent with this workflow",
+        "info": "",
+        "x": 690,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "1f068303a2eb51d4",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "4539ed3d8641347d",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "aggregator",
+        "func": "var values = context.get(\"values\") || {};\nvar redisConfigs = global.get(\"sensor_configs\") || {};\nvar topic = (msg.topic !== undefined && msg.topic !== null) ? msg.topic.toString() : \"\";\n\n// Check that the payload is a JSON object (e.g. { temperature: 22, humidity: 50 })\nif (msg.payload && typeof msg.payload === 'object' && !Array.isArray(msg.payload)) {\n    if (!values[topic]) values[topic] = {};\n\n    let now = Date.now();\n\n    Object.keys(msg.payload).forEach(key => {\n        let val = parseFloat(msg.payload[key]);\n        \n        // Ignore non-numeric values\n        if (!isNaN(val)) {\n            if (!values[topic][key]) {\n                // Read bucket_ms from Redis or use 60000 as fallback\n                let bucket = redisConfigs[key] && redisConfigs[key].bucket_ms ? parseInt(redisConfigs[key].bucket_ms) : 60000;\n                values[topic][key] = {\n                    payloads: [],\n                    next_send: now + bucket\n                };\n            }\n            values[topic][key].payloads.push(val);\n        }\n    });\n}\n\n// Save back to context\ncontext.set(\"values\", values);\n\n// Return null, sending is managed by the time engine\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "context.set(\"values\", {});\n\nfunction aggregate(list, strategy) {\n    if (!list || list.length === 0) return null;\n    switch (strategy) {\n        case \"mean\": return simpleStatistics.mean(list);\n        case \"geometricMean\": return simpleStatistics.geometricMean(list);\n        case \"harmonicMean\": return simpleStatistics.harmonicMean(list);\n        case \"median\": return simpleStatistics.median(list);\n        case \"min\": return simpleStatistics.min(list);\n        case \"max\": return simpleStatistics.max(list);\n        case \"sum\": return simpleStatistics.sumSimple(list);\n        default: return list[list.length - 1]; // Fallback (Last value)\n    }\n}\n\n// Tick engine: runs every 1 second (1000ms)\nvar tickId = setInterval(function() {\n    var values = context.get(\"values\") || {};\n    var redisConfigs = global.get(\"sensor_configs\") || {};\n    var now = Date.now();\n    \n    // Group outgoing messages by \"topic\" (Room)\n    var messagesToSend = {}; \n\n    for (var topic in values) {\n        for (var key in values[topic]) {\n            var metricData = values[topic][key];\n            \n            // Has the timer for this sensor in this room expired?\n            if (now >= metricData.next_send) {\n                \n                // If we have collected data...\n                if (metricData.payloads.length > 0) {\n                    var strategy = redisConfigs[key] && redisConfigs[key].agg_type ? redisConfigs[key].agg_type : \"mean\";\n                    var result = aggregate(metricData.payloads, strategy);\n\n                    if (!messagesToSend[topic]) messagesToSend[topic] = {};\n                    messagesToSend[topic][key] = result;\n                }\n\n                // Recalculate next send by dynamically updating the bucket\n                var bucket = redisConfigs[key] && redisConfigs[key].bucket_ms ? parseInt(redisConfigs[key].bucket_ms) : 60000;\n                metricData.payloads = [];\n                metricData.next_send = now + bucket;\n            }\n        }\n    }\n\n    // Send accumulated messages in this tick\n    for (var t in messagesToSend) {\n        // The topic is always in the format \"department:room\" in your flow, I separate it for Memgraph\n        let parts = t.split(\":\"); \n        \n        node.send({ \n            topic: t, \n            payload: messagesToSend[t],\n            department: parts[0] || \"\",\n            room: parts[1] || t\n        });\n    }\n\n    context.set(\"values\", values);\n}, 1000); // <-- 1 second resolution\n\ncontext.set(\"tickId\", tickId);",
+        "finalize": "var tickId = context.get(\"tickId\");\nif (tickId) {\n    clearInterval(tickId);\n}",
+        "libs": [
+            {
+                "var": "simpleStatistics",
+                "module": "simple-statistics"
+            }
+        ],
+        "x": 970,
+        "y": 540,
+        "wires": [
+            [
+                "6fb9e4f3b63d2d67",
+                "1f068303a2eb51d4"
+            ]
+        ]
+    },
+    {
+        "id": "7246f35b964d9302",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "9af7bb8334583dcf",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 620,
+        "wires": []
     }
 ]
