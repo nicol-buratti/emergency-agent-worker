@@ -8,6 +8,14 @@
         "env": []
     },
     {
+        "id": "f6e66dbd5ff4b931",
+        "type": "tab",
+        "label": "iot caching local computation",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "61370204cb540a30",
         "type": "tab",
         "label": "Place Graph",
@@ -20,14 +28,6 @@
         "type": "tab",
         "label": "Digital Twin",
         "disabled": true,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "554b0a02f4edc742",
-        "type": "tab",
-        "label": "Flow 2",
-        "disabled": false,
         "info": "",
         "env": []
     },
@@ -912,6 +912,764 @@
         ]
     },
     {
+        "id": "915f2aa8b0aee08d",
+        "type": "catch",
+        "z": "f6e66dbd5ff4b931",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "c0184dbec2f6f05f",
+                "1948377913ab9ba7"
+            ]
+        ]
+    },
+    {
+        "id": "c0184dbec2f6f05f",
+        "type": "debug",
+        "z": "f6e66dbd5ff4b931",
+        "name": "Errors",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error.message",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "8ae668cbb4c1456f",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "filter danger data",
+        "func": "let cachingData = {}\nlet device_id = msg.payload.device_id\ncachingData.device_id = device_id\ncachingData.collected_at = msg.payload.collected_at;\ncachingData.sensors = msg.payload.sensors\n\ndelete cachingData.sensors.light\n\nreturn cachingData;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 540,
+        "wires": [
+            [
+                "b8d0a9afd2b0b2cb"
+            ]
+        ]
+    },
+    {
+        "id": "0c0a2a5c8339fb6b",
+        "type": "mqtt in",
+        "z": "f6e66dbd5ff4b931",
+        "name": "iot data",
+        "topic": "sensors/+/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "19268c5a199e4927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "8ae668cbb4c1456f"
+            ]
+        ],
+        "info": "thingsboard has the Shared Subscriptions feature that allows to define a group of clients that will share the same topic\n\nthis allows to have multiple deployed agents where each one dynamically handle the telemetry of a room/area\n"
+    },
+    {
+        "id": "ddf5c44b570bf6a6",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "if room telemetry changed\\n then update the cache",
+        "info": "",
+        "x": 1830,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "64899510b932cbab",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "instead of using nodered to get data and then pass to the webserver,\\n i can implement some workers (agents) that autonomously get data from redis,\\n do the prediction and then publish via redis the results and continue the loop",
+        "info": "",
+        "x": 270,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "18c240b3afb49cde",
+        "type": "debug",
+        "z": "f6e66dbd5ff4b931",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "5e49491716986502",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "format message",
+        "func": "msg.topic = msg.payload.room\n\nmsg.payload = [\n    \"danger_\" + msg.payload.danger_type, msg.payload.danger\n]\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 1220,
+        "wires": [
+            [
+                "05e3905e24c60571",
+                "c108fcfe24b7911d"
+            ]
+        ]
+    },
+    {
+        "id": "05e3905e24c60571",
+        "type": "debug",
+        "z": "f6e66dbd5ff4b931",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "6f1f7c24a54e28e9",
+        "type": "debug",
+        "z": "f6e66dbd5ff4b931",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "5235697680261594",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "this priority queue is used to give priority to more dangerouse zones\\n and more \"old\" updates",
+        "info": "",
+        "x": 2000,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "cbcb9ca1e0e1b9e3",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "saves the values in the last n minutes (now n=5)",
+        "info": "",
+        "x": 1120,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "e09f1d5e5b292d81",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "TODO nei casi in cui c'è una ridondanza di sensori \\n nella stessa stanza, unirli.\\n unire anche i sensori del tipo AA1-01 e  AA1-02 in uno unico",
+        "info": "",
+        "x": 630,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d2d8ada0252e7c9a",
+        "type": "switch",
+        "z": "f6e66dbd5ff4b931",
+        "name": "",
+        "property": "payload.danger_type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "none",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 1220,
+        "wires": [
+            [
+                "5e49491716986502"
+            ]
+        ]
+    },
+    {
+        "id": "ad118fb086c2bb4b",
+        "type": "inject",
+        "z": "f6e66dbd5ff4b931",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c4f30890e19e5797",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "In the upper flow, a \"snapshot\" of the room is created\\n it is used to avoid that the agents analyze similar telemetries multiple times",
+        "info": "",
+        "x": 1220,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "b8d0a9afd2b0b2cb",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "mapping department",
+        "func": "// 1. Fetch context with fallbacks (empty objects) to prevent TypeErrors\nlet roomToDepartment = this.roomToDepartment || {};\nlet sensorToRoom = this.sensorToRoom || {};\n\nlet sensor = msg.device_id;\n\n// 2. Ensure the incoming message actually has a device_id\nif (!sensor) {\n    node.warn(\"Missing msg.device_id. Cannot map room.\");\n    return null; // Halts the flow for this message\n}\n\nlet room = sensorToRoom[sensor];\n\n// 3. Ensure the sensor is actually mapped to a room\nif (!room) {\n    node.warn(`No room mapping found for sensor ID: ${sensor}`);\n    return null;\n}\n\n// 4. Get department, providing a fallback if the room isn't categorized\nlet department = roomToDepartment[room] || \"UnknownDepartment\";\n\n// 5. Construct the final string\nmsg.room = room;\nmsg.department = department\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "let mapping_department_room = {\n    \"departmentA\": [\n        \"AA1\", \"AB1\", \"AB2\", \"LA1\", \"StanzaCulmone\",\n        \"StanzaDocente\", \"TeamLab\"\n    ],\n    \"departmentB\": [\n        \"B1\", \"LB1\", \"SalaRiunioni\"\n    ]\n};\n\nlet mapping_room_sensor = {\n    \"AA1\": [\"AA1-01\", \"AA1-02\"],\n    \"AB1\": [\"AB1-01\"],\n    \"AB2\": [\"AB2-01\", \"AB2-02\"],\n    \"LA1\": [\"LA1-01\", \"LA1-02\"],\n    \"StanzaCulmone\": [\"StanzaCulmone\"],\n    \"StanzaDocente\": [\"StanzaDocente\"],\n    \"TeamLab\": [\"TeamLab-01\", \"TeamLab-02\"],\n    \"B1\": [\"B1-01\", \"B1-03\"],\n    \"LB1\": [\"LB1-01\"],\n    \"SalaRiunioni\": [\"SalaRiunioni\"],\n}\n\n\nlet roomMap = {};\n\nfor (const [department, rooms] of Object.entries(mapping_department_room)) {\n    for (const room of rooms) {\n        roomMap[room] = department;\n    }\n}\n\nlet sensorMap = {};\n\nfor (const [room, sensors] of Object.entries(mapping_room_sensor)) {\n    for (const sensor of sensors) {\n        sensorMap[sensor] = room;\n    }\n}\n\nthis.roomToDepartment = roomMap\nthis.sensorToRoom = sensorMap\n",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 540,
+        "wires": [
+            [
+                "3c33b01eb682d244"
+            ]
+        ]
+    },
+    {
+        "id": "af311d6fa10271e6",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "if the sensors changed, update the place graph",
+        "info": "",
+        "x": 2000,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "1948377913ab9ba7",
+        "type": "debug",
+        "z": "f6e66dbd5ff4b931",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 300,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "58906c98ea3a850c",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "TODO ho aggiunto un TTL per i parametri dello snapshot,\\n ma sono veramente utili?\\n se i sensori di una stanza si spengono per molto tempo,\\n di conseguenza cancellando lo snapshot,\\n  cè bisogno di analizzare di nuovo la stanza?",
+        "info": "",
+        "x": 1210,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "8eee228d427cfb9d",
+        "type": "comment",
+        "z": "f6e66dbd5ff4b931",
+        "name": "Since Redis couldn't handle the high volume of requests,\\n the aggregation computation was moved to Node-RED",
+        "info": "",
+        "x": 1170,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "457ac9646f6843c0",
+        "type": "redis-in",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "command": "subscribe",
+        "name": "",
+        "topic": "sensors_processed",
+        "obj": true,
+        "timeout": 0,
+        "x": 150,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c108fcfe24b7911d",
+        "type": "redis-command",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 790,
+        "y": 1220,
+        "wires": [
+            [
+                "6f1f7c24a54e28e9"
+            ]
+        ]
+    },
+    {
+        "id": "af2e10d4764e9fa3",
+        "type": "redis-command",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "command": "FLUSHDB",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 300,
+        "y": 480,
+        "wires": [
+            [
+                "f3e240278248d3ae",
+                "29cbe68757b3c5cb"
+            ]
+        ]
+    },
+    {
+        "id": "f3e240278248d3ae",
+        "type": "redis-lua-script",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "name": "create sensors timeseries",
+        "keyval": 0,
+        "func": "local retention = 1000 * 60 * 5\nlocal metrics = {\"temperature\", \"co2\", \"humidity\", \"tvoc\", \"eco2\"}\n\n-- Table mapping each room_label to its specific sensor IDs (without the department prefix)\nlocal rooms = {\n    [\"departmentA:AA1\"]           = {\"AA1-01\", \"AA1-02\"},\n    [\"departmentA:AB1\"]           = {\"AB1-01\"},\n    [\"departmentA:AB2\"]           = {\"AB2-01\", \"AB2-02\"},\n    [\"departmentA:LA1\"]           = {\"LA1-01\", \"LA1-02\"},\n    [\"departmentA:StanzaCulmone\"] = {\"StanzaCulmone\"},\n    [\"departmentA:StanzaDocente\"] = {\"StanzaDocente\"},\n    [\"departmentA:TeamLab\"]       = {\"TeamLab-01\", \"TeamLab-02\"},\n    [\"departmentB:B1\"]            = {\"B1-01\", \"B1-03\"},\n    [\"departmentB:LB1\"]           = {\"LB1-01\"},\n    [\"departmentB:SalaRiunioni\"]  = {\"SalaRiunioni\"}\n}\n\n-- Iterate through the configuration table and create the time series keys\nfor room_label, sensors in pairs(rooms) do\n    for _, sensor_id in ipairs(sensors) do\n        for _, metric in ipairs(metrics) do\n            -- Genera la chiave nel formato richiesto: stanza:sensore:metrica\n            local key = room_label .. \":\" .. sensor_id .. \":\" .. metric\n            redis.call(\"TS.CREATE\", key, \"RETENTION\", retention, \"LABELS\", \"room\", room_label, \"type\", metric)\n        end\n    end\nend\n\nredis.call(\"TS.CREATE\", \"departmentA:StanzaCulmone:StanzaCulmone:people_count\", \"RETENTION\", retention, \"LABELS\", \"room\", \"departmentA:StanzaCulmone\", \"type\", \"people_count\")\n\nreturn \"OK\"",
+        "stored": false,
+        "block": false,
+        "x": 530,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "29cbe68757b3c5cb",
+        "type": "redis-lua-script",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "name": "set parameters config",
+        "keyval": 0,
+        "func": "local bucket_ms = 60*1000\nredis.call(\"HSET\", \"config:param:temperature\", \"agg_type\", \"max\", \"bucket_ms\",bucket_ms)\nredis.call(\"HSET\", \"config:param:humidity\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:co2\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:tvoc\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:eco2\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:people_count\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nreturn \"OK\"",
+        "stored": false,
+        "block": false,
+        "x": 520,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5afa8a6bd70b878e",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "aggregator",
+        "func": "var values = context.get(\"values\") || {};\nvar config = context.get(\"config\");\n\nif (msg.payload !== null && msg.payload !== undefined && msg.payload !== \"\") {\n    // Mantiene il topic originale o stringa vuota\n    var topic = (msg.topic !== undefined && msg.topic !== null) ? msg.topic.toString() : \"\";\n\n    if (!values[topic]) {\n        values[topic] = {\n            payloads: [],\n            strategy: msg.strategy || config.aggregationType\n        };\n    } else if (msg.strategy) {\n        // Aggiorna la strategia in volo se ne arriva una nuova\n        values[topic].strategy = msg.strategy;\n    }\n\n    values[topic].payloads.push(msg.payload);\n}\n\n// Salva di nuovo nel context\ncontext.set(\"values\", values);\n\n// Ritorna null per bloccare il normale flusso (i messaggi verranno inviati dal timer)\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "// CONFIGURAZIONE DEL NODO (Modifica questi valori secondo necessità)\nvar config = {\n    intervalCount: 10,           // Numero di intervalli\n    intervalUnits: \"s\",         // \"s\" (secondi), \"m\" (minuti), \"h\" (ore), \"d\" (giorni)\n    submitPerTopic: true,       // true: invia un msg separato per ogni topic, false: singolo payload\n    submitIncompleteInterval: false,\n    aggregationType: \"mean\",    // Strategia di fallback se msg.strategy non c'è\n    topic: \"aggregated\"         // Topic usato solo se submitPerTopic è false\n};\n\ncontext.set(\"config\", config);\ncontext.set(\"values\", {});\n\nvar factor = 1;\nswitch (config.intervalUnits) {\n    case \"s\": factor = 1000; break;\n    case \"m\": factor = 1000 * 60; break;\n    case \"h\": factor = 1000 * 60 * 60; break;\n    case \"d\": factor = 1000 * 60 * 60 * 24; break;\n}\n\nvar intervalTimeout = factor * config.intervalCount;\nvar absoluteStartupTime = new Date();\nabsoluteStartupTime.setMinutes(absoluteStartupTime.getMinutes() - absoluteStartupTime.getTimezoneOffset());\nvar correctedStartupTime = absoluteStartupTime.getTime();\nvar startupTimeout = intervalTimeout - (correctedStartupTime % intervalTimeout);\n\nfunction aggregate(list, strategy) {\n    if (!list || list.length === 0) return null;\n    var aggType = strategy || config.aggregationType;\n\n    switch (aggType) {\n        case \"mean\": return simpleStatistics.mean(list);\n        case \"geometricMean\": return simpleStatistics.geometricMean(list);\n        case \"harmonicMean\": return simpleStatistics.harmonicMean(list);\n        case \"median\": return simpleStatistics.median(list);\n        case \"min\": return simpleStatistics.min(list);\n        case \"max\": return simpleStatistics.max(list);\n        case \"sum\": return simpleStatistics.sumSimple(list);\n        default: return list[list.length - 1]; // Fallback\n    }\n}\n\nfunction aggregateAll() {\n    var values = context.get(\"values\") || {};\n    var results = [];\n    var lastGlobalStrategy = config.aggregationType;\n    var messagesToSend = [];\n\n    if (config.submitPerTopic) {\n        for (var topic in values) {\n            if (values.hasOwnProperty(topic)) {\n                var topicData = values[topic];\n                var payloads = topicData.payloads;\n                var strategy = topicData.strategy;\n\n                if (payloads.length > 0) {\n                    var finalPayload;\n\n                    if (typeof payloads[0] === 'object' && !Array.isArray(payloads[0]) && payloads[0] !== null) {\n                        finalPayload = {};\n                        var keys = Object.keys(payloads[0]);\n\n                        keys.forEach(function (key) {\n                            var list = payloads.map(function (p) { return parseFloat(p[key]); }).filter(function (v) { return !isNaN(v); });\n\n                            // Assegnazione sicura per il linter\n                            var attrStrategy = strategy;\n                            if (strategy && typeof strategy === 'object') {\n                                attrStrategy = strategy[key];\n                            }\n\n                            finalPayload[key] = aggregate(list, attrStrategy);\n                        });\n                    } else {\n                        var list = payloads.map(function (p) { return parseFloat(p); }).filter(function (v) { return !isNaN(v); });\n                        finalPayload = aggregate(list, strategy);\n                    }\n\n                    messagesToSend.push({ topic: topic, payload: finalPayload });\n                }\n            }\n        }\n    } else {\n        for (var topic in values) {\n            if (values.hasOwnProperty(topic)) {\n                var topicData = values[topic];\n                var payloads = topicData.payloads;\n                var strategy = topicData.strategy;\n\n                // Aggiorniamo la strategia globale se esiste\n                if (strategy) {\n                    lastGlobalStrategy = strategy;\n                }\n\n                if (payloads.length > 0) {\n                    if (typeof payloads[0] === 'object' && !Array.isArray(payloads[0]) && payloads[0] !== null) {\n                        var aggregatedObj = {};\n                        var keys = Object.keys(payloads[0]);\n                        keys.forEach(function (key) {\n                            var list = payloads.map(function (p) { return parseFloat(p[key]); }).filter(function (v) { return !isNaN(v); });\n\n                            // Assegnazione sicura per il linter\n                            var attrStrategy = strategy;\n                            if (strategy && typeof strategy === 'object') {\n                                attrStrategy = strategy[key];\n                            }\n\n                            aggregatedObj[key] = aggregate(list, attrStrategy);\n                        });\n                        results.push(aggregatedObj);\n                    } else {\n                        var list = payloads.map(function (p) { return parseFloat(p); }).filter(function (v) { return !isNaN(v); });\n                        results.push(aggregate(list, strategy));\n                    }\n                }\n            }\n        }\n\n        if (results.length > 0) {\n            var finalPayload;\n            if (typeof results[0] === 'object' && !Array.isArray(results[0]) && results[0] !== null) {\n                finalPayload = {};\n                var keys = Object.keys(results[0]);\n                keys.forEach(function (key) {\n                    var list = results.map(function (p) { return parseFloat(p[key]); }).filter(function (v) { return !isNaN(v); });\n\n                    // Assegnazione sicura della lastGlobalStrategy\n                    var attrStrategy = lastGlobalStrategy;\n                    if (lastGlobalStrategy && typeof lastGlobalStrategy === 'object') {\n                        // @ts-ignore\n                        attrStrategy = lastGlobalStrategy[key];\n                    }\n\n                    finalPayload[key] = aggregate(list, attrStrategy);\n                });\n            } else {\n                finalPayload = aggregate(results, lastGlobalStrategy);\n            }\n\n            messagesToSend.push({ topic: config.topic || \"\", payload: finalPayload });\n        }\n    }\n\n    // Invia i messaggi\n    messagesToSend.forEach(function (m) {\n        node.send(m);\n    });\n\n    // Svuota la memoria dopo l'invio\n    context.set(\"values\", {});\n}\n\n// Avvia i timer\nvar primaryTimeout = setTimeout(function () {\n    var intervalId = setInterval(aggregateAll, intervalTimeout);\n    context.set(\"intervalId\", intervalId);\n\n    if (config.submitIncompleteInterval) {\n        aggregateAll();\n    } else {\n        context.set(\"values\", {});\n    }\n}, startupTimeout);\n\ncontext.set(\"primaryTimeoutId\", primaryTimeout);",
+        "finalize": "var primaryTimeoutId = context.get(\"primaryTimeoutId\");\nvar intervalId = context.get(\"intervalId\");\n\nif (primaryTimeoutId) {\n    clearTimeout(primaryTimeoutId);\n}\nif (intervalId) {\n    clearInterval(intervalId);\n}",
+        "libs": [
+            {
+                "var": "simpleStatistics",
+                "module": "simple-statistics"
+            }
+        ],
+        "x": 970,
+        "y": 540,
+        "wires": [
+            [
+                "328f284af7cef90a"
+            ]
+        ]
+    },
+    {
+        "id": "b5f0e6b6b905474a",
+        "type": "debug",
+        "z": "f6e66dbd5ff4b931",
+        "name": "debug 21",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1640,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "328f284af7cef90a",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "ttl and format redis get message",
+        "func": "let sensor_keys = Object.keys(msg.payload)\n\nmsg.current_data = msg.payload\nmsg.payload = sensor_keys\nmsg.sensor_attributes = sensor_keys\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 540,
+        "wires": [
+            [
+                "10f230b1045cad66"
+            ]
+        ]
+    },
+    {
+        "id": "10f230b1045cad66",
+        "type": "redis-command",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "command": "HMGET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 1460,
+        "y": 540,
+        "wires": [
+            [
+                "b5f0e6b6b905474a",
+                "e159c1d467b4b759"
+            ]
+        ]
+    },
+    {
+        "id": "e159c1d467b4b759",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "cache checking",
+        "func": "function strict_comparison(value1, value2){\n    return value1 !== value2\n}\n\n\nlet attributes_to_update = {}\n\nfor (let i = 0; i<msg.payload.length;i++ ){\n    let key = msg.sensor_attributes[i]\n    let cache = msg.payload[i]\n    let current = msg.current_data[key]\n\n    let to_update = strict_comparison(cache, current)\n    if (to_update){\n        attributes_to_update[key] = current\n    }\n}\nmsg.attributes_to_update = attributes_to_update\nmsg.current_data= null\nmsg.payload=null\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1760,
+        "y": 540,
+        "wires": [
+            [
+                "3ea5cbd81c19ea23"
+            ]
+        ]
+    },
+    {
+        "id": "d58b83a8515dcda2",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "cache checking threshold",
+        "func": "if (Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        if (old_value === 0) {\n            if (value !== 0) {\n                attributes_to_update[key] = value;\n            }\n        } else {\n            let percentage_change = Math.abs((value - old_value) / old_value);\n            if (percentage_change >= 0.05) {\n                attributes_to_update[key] = value;\n            }\n        }\n    } else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\nmsg.attributes_to_update = attributes_to_update;\nmsg.current_data = null;\nmsg.cached_snapshot = null;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1770,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3ea5cbd81c19ea23",
+        "type": "switch",
+        "z": "f6e66dbd5ff4b931",
+        "name": "",
+        "property": "attributes_to_update",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1990,
+        "y": 540,
+        "wires": [
+            [
+                "6a3e9881b67c0cee",
+                "4a0498c720708b5e"
+            ]
+        ]
+    },
+    {
+        "id": "6a3e9881b67c0cee",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "format message",
+        "func": "msg.payload = Object.entries(msg.attributes_to_update).flat()\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2240,
+        "y": 540,
+        "wires": [
+            [
+                "ab80b9c613d2fe7e",
+                "8878b92d86345caf"
+            ]
+        ]
+    },
+    {
+        "id": "ab80b9c613d2fe7e",
+        "type": "redis-command",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 2430,
+        "y": 540,
+        "wires": [
+            [
+                "930cf39f63b14c4e"
+            ]
+        ]
+    },
+    {
+        "id": "3c33b01eb682d244",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "format message",
+        "func": "msg.payload = msg.sensors\nmsg.topic = msg.department + \":\" + msg.room\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 540,
+        "wires": [
+            [
+                "5afa8a6bd70b878e"
+            ]
+        ]
+    },
+    {
+        "id": "8878b92d86345caf",
+        "type": "debug",
+        "z": "f6e66dbd5ff4b931",
+        "name": "debug 24",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2420,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "a2561fabdc7651e7",
+        "type": "redis-lua-script",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "name": "Apply TTL",
+        "keyval": "1",
+        "func": "local room_name = KEYS[1]\nlocal ttl = ARGV[1]\nlocal num_fields = #ARGV - 1\n\nreturn redis.call(\"HEXPIRE\", room_name, ttl, \"FIELDS\", num_fields, unpack(ARGV, 2))\n",
+        "stored": false,
+        "block": false,
+        "x": 2850,
+        "y": 540,
+        "wires": [
+            [
+                "412d392aa98ddaa8",
+                "9b56f5cc2ea6027a"
+            ]
+        ]
+    },
+    {
+        "id": "930cf39f63b14c4e",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "tormat TTL message",
+        "func": "\nlet ttl = 5 * 60 // 5 minutes\nmsg.payload = [msg.topic, ttl, ...msg.sensor_attributes]\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2640,
+        "y": 540,
+        "wires": [
+            [
+                "a2561fabdc7651e7"
+            ]
+        ]
+    },
+    {
+        "id": "9b56f5cc2ea6027a",
+        "type": "debug",
+        "z": "f6e66dbd5ff4b931",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3000,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "412d392aa98ddaa8",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "format data",
+        "func": "const dangerTiers = {\n    'high': 1,\n    'medium': 2,\n    'low': 3\n};\n\nlet tier = 3;\nif (msg.danger !== undefined)\n    tier = dangerTiers[msg.danger.toLowerCase()];\n\nlet priority = parseFloat(`${tier}.${msg.collected_at}`)\n\nmsg.payload = [\"room_pq\", priority, msg.topic]\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3090,
+        "y": 540,
+        "wires": [
+            [
+                "17a3b4f30f1b2650"
+            ]
+        ]
+    },
+    {
+        "id": "17a3b4f30f1b2650",
+        "type": "redis-command",
+        "z": "f6e66dbd5ff4b931",
+        "server": "a12b266a42104227",
+        "command": "ZADD",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 3290,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a0498c720708b5e",
+        "type": "function",
+        "z": "f6e66dbd5ff4b931",
+        "name": "update danger",
+        "func": "// 1. Write the query using placeholders (names starting with $)\nmsg.query = `\n  MATCH (n:Place {name: $room})\n  SET n += $sensors\n  RETURN n;\n`;\n\n// 2. Pass the actual parameters in msg.params\n// (The database will automatically map $room to params.room)\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\n\nmsg.payload = null\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2200,
+        "y": 460,
+        "wires": [
+            [
+                "06b63dbe070b8dcc"
+            ]
+        ]
+    },
+    {
+        "id": "06b63dbe070b8dcc",
+        "type": "neo4j-bolt",
+        "z": "f6e66dbd5ff4b931",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 2420,
+        "y": 460,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
         "id": "415a07d2bd7c55d5",
         "type": "comment",
         "z": "61370204cb540a30",
@@ -1659,195 +2417,6 @@
         "wires": [
             [
                 "67e65303e2e4f749"
-            ]
-        ]
-    },
-    {
-        "id": "069f468f611fb0e4",
-        "type": "mqtt in",
-        "z": "554b0a02f4edc742",
-        "name": "iot data",
-        "topic": "sensors/+/data",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "19268c5a199e4927",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 331,
-        "y": 399,
-        "wires": [
-            [
-                "16fedfa45739488e",
-                "78b8737d5a3c7cf1"
-            ]
-        ],
-        "info": "thingsboard has the Shared Subscriptions feature that allows to define a group of clients that will share the same topic\n\nthis allows to have multiple deployed agents where each one dynamically handle the telemetry of a room/area\n"
-    },
-    {
-        "id": "6ba32845b5f85cce",
-        "type": "debug",
-        "z": "554b0a02f4edc742",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 900,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "16fedfa45739488e",
-        "type": "debug",
-        "z": "554b0a02f4edc742",
-        "name": "debug 4",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 320,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "78b8737d5a3c7cf1",
-        "type": "function",
-        "z": "554b0a02f4edc742",
-        "name": "function 1",
-        "func": "msg.payload = msg.payload.sensors.co2\nmsg.strategy = \"mean\"\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 540,
-        "y": 400,
-        "wires": [
-            [
-                "18526b6c467190b0",
-                "9e739b5ea16faa32"
-            ]
-        ]
-    },
-    {
-        "id": "31e18ab570759f28",
-        "type": "catch",
-        "z": "554b0a02f4edc742",
-        "name": "",
-        "scope": null,
-        "uncaught": false,
-        "x": 300,
-        "y": 200,
-        "wires": [
-            [
-                "8c578ef8912eecf7",
-                "f6100311026a1bc2"
-            ]
-        ]
-    },
-    {
-        "id": "8c578ef8912eecf7",
-        "type": "debug",
-        "z": "554b0a02f4edc742",
-        "name": "Errors",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "error.message",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 450,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "f6100311026a1bc2",
-        "type": "debug",
-        "z": "554b0a02f4edc742",
-        "name": "debug 5",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 460,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "9e739b5ea16faa32",
-        "type": "function",
-        "z": "554b0a02f4edc742",
-        "name": "aggregator",
-        "func": "var values = context.get(\"values\") || {};\nvar config = context.get(\"config\");\n\nif (msg.payload !== null && msg.payload !== undefined && msg.payload !== \"\") {\n    // Mantiene il topic originale o stringa vuota\n    var topic = (msg.topic !== undefined && msg.topic !== null) ? msg.topic.toString() : \"\";\n\n    if (!values[topic]) {\n        values[topic] = {\n            payloads: [],\n            strategy: msg.strategy || config.aggregationType\n        };\n    } else if (msg.strategy) {\n        // Aggiorna la strategia in volo se ne arriva una nuova\n        values[topic].strategy = msg.strategy;\n    }\n\n    values[topic].payloads.push(msg.payload);\n}\n\n// Salva di nuovo nel context\ncontext.set(\"values\", values);\n\n// Ritorna null per bloccare il normale flusso (i messaggi verranno inviati dal timer)\nreturn null;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "// CONFIGURAZIONE DEL NODO (Modifica questi valori secondo necessità)\nvar config = {\n    intervalCount: 10,           // Numero di intervalli\n    intervalUnits: \"s\",         // \"s\" (secondi), \"m\" (minuti), \"h\" (ore), \"d\" (giorni)\n    submitPerTopic: true,       // true: invia un msg separato per ogni topic, false: singolo payload\n    submitIncompleteInterval: false,\n    aggregationType: \"mean\",    // Strategia di fallback se msg.strategy non c'è\n    topic: \"aggregated\"         // Topic usato solo se submitPerTopic è false\n};\n\ncontext.set(\"config\", config);\ncontext.set(\"values\", {});\n\nvar factor = 1;\nswitch (config.intervalUnits) {\n    case \"s\": factor = 1000; break;\n    case \"m\": factor = 1000 * 60; break;\n    case \"h\": factor = 1000 * 60 * 60; break;\n    case \"d\": factor = 1000 * 60 * 60 * 24; break;\n}\n\nvar intervalTimeout = factor * config.intervalCount;\nvar absoluteStartupTime = new Date();\nabsoluteStartupTime.setMinutes(absoluteStartupTime.getMinutes() - absoluteStartupTime.getTimezoneOffset());\nvar correctedStartupTime = absoluteStartupTime.getTime();\nvar startupTimeout = intervalTimeout - (correctedStartupTime % intervalTimeout);\n\nfunction aggregate(list, strategy) {\n    if (!list || list.length === 0) return null;\n    var aggType = strategy || config.aggregationType;\n\n    switch (aggType) {\n        case \"mean\": return simpleStatistics.mean(list);\n        case \"geometricMean\": return simpleStatistics.geometricMean(list);\n        case \"harmonicMean\": return simpleStatistics.harmonicMean(list);\n        case \"median\": return simpleStatistics.median(list);\n        case \"min\": return simpleStatistics.min(list);\n        case \"max\": return simpleStatistics.max(list);\n        case \"sum\": return simpleStatistics.sumSimple(list);\n        default: return list[list.length - 1]; // Fallback\n    }\n}\n\nfunction aggregateAll() {\n    var values = context.get(\"values\") || {};\n    var results = [];\n    var lastGlobalStrategy = config.aggregationType;\n    var messagesToSend = [];\n\n    if (config.submitPerTopic) {\n        for (var topic in values) {\n            if (values.hasOwnProperty(topic)) {\n                var topicData = values[topic];\n                var payloads = topicData.payloads;\n                var strategy = topicData.strategy;\n\n                if (payloads.length > 0) {\n                    var finalPayload;\n\n                    if (typeof payloads[0] === 'object' && !Array.isArray(payloads[0]) && payloads[0] !== null) {\n                        finalPayload = {};\n                        var keys = Object.keys(payloads[0]);\n\n                        keys.forEach(function (key) {\n                            var list = payloads.map(function (p) { return parseFloat(p[key]); }).filter(function (v) { return !isNaN(v); });\n\n                            // Assegnazione sicura per il linter\n                            var attrStrategy = strategy;\n                            if (strategy && typeof strategy === 'object') {\n                                attrStrategy = strategy[key];\n                            }\n\n                            finalPayload[key] = aggregate(list, attrStrategy);\n                        });\n                    } else {\n                        var list = payloads.map(function (p) { return parseFloat(p); }).filter(function (v) { return !isNaN(v); });\n                        finalPayload = aggregate(list, strategy);\n                    }\n\n                    messagesToSend.push({ topic: topic, payload: finalPayload });\n                }\n            }\n        }\n    } else {\n        for (var topic in values) {\n            if (values.hasOwnProperty(topic)) {\n                var topicData = values[topic];\n                var payloads = topicData.payloads;\n                var strategy = topicData.strategy;\n\n                // Aggiorniamo la strategia globale se esiste\n                if (strategy) {\n                    lastGlobalStrategy = strategy;\n                }\n\n                if (payloads.length > 0) {\n                    if (typeof payloads[0] === 'object' && !Array.isArray(payloads[0]) && payloads[0] !== null) {\n                        var aggregatedObj = {};\n                        var keys = Object.keys(payloads[0]);\n                        keys.forEach(function (key) {\n                            var list = payloads.map(function (p) { return parseFloat(p[key]); }).filter(function (v) { return !isNaN(v); });\n\n                            // Assegnazione sicura per il linter\n                            var attrStrategy = strategy;\n                            if (strategy && typeof strategy === 'object') {\n                                attrStrategy = strategy[key];\n                            }\n\n                            aggregatedObj[key] = aggregate(list, attrStrategy);\n                        });\n                        results.push(aggregatedObj);\n                    } else {\n                        var list = payloads.map(function (p) { return parseFloat(p); }).filter(function (v) { return !isNaN(v); });\n                        results.push(aggregate(list, strategy));\n                    }\n                }\n            }\n        }\n\n        if (results.length > 0) {\n            var finalPayload;\n            if (typeof results[0] === 'object' && !Array.isArray(results[0]) && results[0] !== null) {\n                finalPayload = {};\n                var keys = Object.keys(results[0]);\n                keys.forEach(function (key) {\n                    var list = results.map(function (p) { return parseFloat(p[key]); }).filter(function (v) { return !isNaN(v); });\n\n                    // Assegnazione sicura della lastGlobalStrategy\n                    var attrStrategy = lastGlobalStrategy;\n                    if (lastGlobalStrategy && typeof lastGlobalStrategy === 'object') {\n                        // @ts-ignore\n                        attrStrategy = lastGlobalStrategy[key];\n                    }\n\n                    finalPayload[key] = aggregate(list, attrStrategy);\n                });\n            } else {\n                finalPayload = aggregate(results, lastGlobalStrategy);\n            }\n\n            messagesToSend.push({ topic: config.topic || \"\", payload: finalPayload });\n        }\n    }\n\n    // Invia i messaggi\n    messagesToSend.forEach(function (m) {\n        node.send(m);\n    });\n\n    // Svuota la memoria dopo l'invio\n    context.set(\"values\", {});\n}\n\n// Avvia i timer\nvar primaryTimeout = setTimeout(function () {\n    var intervalId = setInterval(aggregateAll, intervalTimeout);\n    context.set(\"intervalId\", intervalId);\n\n    if (config.submitIncompleteInterval) {\n        aggregateAll();\n    } else {\n        context.set(\"values\", {});\n    }\n}, startupTimeout);\n\ncontext.set(\"primaryTimeoutId\", primaryTimeout);",
-        "finalize": "var primaryTimeoutId = context.get(\"primaryTimeoutId\");\nvar intervalId = context.get(\"intervalId\");\n\nif (primaryTimeoutId) {\n    clearTimeout(primaryTimeoutId);\n}\nif (intervalId) {\n    clearInterval(intervalId);\n}",
-        "libs": [
-            {
-                "var": "simpleStatistics",
-                "module": "simple-statistics"
-            }
-        ],
-        "x": 730,
-        "y": 560,
-        "wires": [
-            [
-                "814e756aa8725110"
-            ]
-        ]
-    },
-    {
-        "id": "814e756aa8725110",
-        "type": "debug",
-        "z": "554b0a02f4edc742",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 900,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "18526b6c467190b0",
-        "type": "aggregator",
-        "z": "554b0a02f4edc742",
-        "name": "",
-        "topic": "",
-        "intervalCount": "10",
-        "intervalUnits": "s",
-        "submitIncompleteInterval": true,
-        "submitPerTopic": true,
-        "aggregationType": "mean",
-        "x": 730,
-        "y": 400,
-        "wires": [
-            [
-                "6ba32845b5f85cce"
             ]
         ]
     }
