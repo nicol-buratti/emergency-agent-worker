@@ -3,7 +3,6 @@ import logging
 import operator
 import os
 from typing import Annotated, Literal
-
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
@@ -101,9 +100,9 @@ Instructions:
         """Initialize and build the agent swarm"""
         tools = tools or []
 
-        coordinator_prompt = PromptTemplate(
+        triage_prompt = PromptTemplate(
             input_variables=[],
-            template="""You are the Hazard Assessment Coordinator.
+            template="""You are the Hazard Assessment Triage.
 Triage the provided IoT data to assess room safety. When necessary, use the provided Memgraph database tools to query the building's topology and inspect node parameters to understand the spatial layout and current sensor snapshot.
 Transfer control to the specialized Agents if anomalies exist.
 If both the telemetry data and the building's node parameters indicate normal, safe conditions, terminate directly with a safe assessment.""",
@@ -125,7 +124,7 @@ Formulate a clear diagnosis based on the telemetry and the building's structural
 Output the final response by using {format_name} format.""",
         )
 
-        coordinator = create_agent(
+        triage = create_agent(
             self.model,
             tools=[
                 *tools,
@@ -139,8 +138,8 @@ Output the final response by using {format_name} format.""",
                 ),
             ],
             response_format=ThreatAssessment,
-            system_prompt=coordinator_prompt.format(),
-            name="Coordinator",
+            system_prompt=triage_prompt.format(),
+            name="Triage",
         )
 
         fire_agent = create_agent(
@@ -162,8 +161,8 @@ Output the final response by using {format_name} format.""",
         )
 
         workflow = create_swarm(
-            [coordinator, fire_agent, earthquake_agent],
-            default_active_agent="Coordinator",
+            [triage, fire_agent, earthquake_agent],
+            default_active_agent="Triage",
         )
 
         self.app = workflow.compile(debug=debug)
