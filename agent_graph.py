@@ -49,8 +49,14 @@ class TriageOutput(BaseModel):
     required_experts: list[Literal["fire", "earthquake"]] = Field(
         description="List of experts required. Empty if none."
     )
-    assessment: ThreatAssessment | None = Field(
-        description="Threat assessment if no experts are required. Null if routing to experts."
+    assessments: list[ThreatAssessment] | None = Field(
+        description="List of threat assessments if no experts are required, covering the primary room and any affected neighbors. Null if routing to experts."
+    )
+
+
+class ExpertOutput(BaseModel):
+    assessments: list[ThreatAssessment] = Field(
+        description="List of threat assessments for the primary room and any affected neighboring rooms."
     )
 
 
@@ -89,7 +95,7 @@ class HazardMapReduceManager:
 {data}
 
 Instructions:
-Evaluate the reading values for safety/threat levels."""
+Evaluate the reading values for safety/threat levels. Assess the primary room and determine if threat propagation requires assessing neighboring rooms."""
         self.prompt_template = PromptTemplate(
             input_variables=["data"], template=template_string
         )
@@ -99,18 +105,17 @@ Evaluate the reading values for safety/threat levels."""
         self, tools: list = None, debug: bool = False, print_agent: bool = False
     ) -> None:
 
-        # Enforce direct structured output for speed (replaces slow agent loops)
         triage_llm = self.model.with_structured_output(TriageOutput)
-        expert_llm = self.model.with_structured_output(ThreatAssessment)
+        expert_llm = self.model.with_structured_output(ExpertOutput)
 
         triage_sys = SystemMessage(
-            content="You are the Hazard Assessment Triage. Determine if 'fire' or 'earthquake' experts are required based on anomalies. If conditions are safe, provide the ThreatAssessment directly. Do not route if safe."
+            content="You are the Hazard Assessment Triage. Determine if 'fire' or 'earthquake' experts are required based on anomalies. If conditions are safe, provide the ThreatAssessments directly (including neighbors if relevant). Do not route if safe."
         )
         fire_sys = SystemMessage(
-            content="You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes). Provide a final ThreatAssessment."
+            content="You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes). Provide final ThreatAssessments for the primary room and any adjacent rooms at risk."
         )
         earthquake_sys = SystemMessage(
-            content="You are the Earthquake Safety Expert. Analyze telemetry for seismic activity. Provide a final ThreatAssessment."
+            content="You are the Earthquake Safety Expert. Analyze telemetry for seismic activity. Provide final ThreatAssessments for the primary room and affected structural zones."
         )
 
         async def run_triage(state: GraphState):
@@ -121,8 +126,8 @@ Evaluate the reading values for safety/threat levels."""
             result = await triage_llm.ainvoke(input_messages)
 
             assessments = (
-                [result.assessment.model_dump()]
-                if not result.route_to_experts and result.assessment
+                [a.model_dump() for a in result.assessments]
+                if not result.route_to_experts and result.assessments
                 else []
             )
             return {
@@ -136,7 +141,6 @@ Evaluate the reading values for safety/threat levels."""
                 return [Send("safe_node", {})]
 
             sends = []
-            # Isolate input: send only initial prompt and data, avoiding Triage contamination
             input_prompt = HumanMessage(
                 content=self.prompt_template.format(data=state["data"])
             )
@@ -168,11 +172,11 @@ Evaluate the reading values for safety/threat levels."""
 
         async def run_fire(state: ExpertState):
             result = await expert_llm.ainvoke(state["messages"])
-            return {"assessments": [result.model_dump()]}
+            return {"assessments": [a.model_dump() for a in result.assessments]}
 
         async def run_earthquake(state: ExpertState):
             result = await expert_llm.ainvoke(state["messages"])
-            return {"assessments": [result.model_dump()]}
+            return {"assessments": [a.model_dump() for a in result.assessments]}
 
         builder = StateGraph(GraphState)
         builder.add_node("triage", run_triage)
