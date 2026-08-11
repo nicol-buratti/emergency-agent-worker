@@ -1,8 +1,7 @@
 import logging
 import operator
-from typing import Annotated, Any, Literal, TypedDict, Union
+from typing import Annotated, Any, Literal, TypedDict, Union, get_args
 
-from dotenv import load_dotenv
 from langchain.agents import create_agent
 from langchain_core.messages import AnyMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import PromptTemplate
@@ -14,7 +13,6 @@ from pydantic import BaseModel, Field, ValidationError
 
 from app_settings import AppSettings
 
-load_dotenv()
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s"
 )
@@ -42,11 +40,15 @@ class ThreatAssessment(BaseModel):
     )
 
 
+ExpertType = Literal["fire", "earthquake"]
+VALID_EXPERTS = get_args(ExpertType)
+
+
 class EscalateAction(BaseModel):
     action: Literal["escalate"] = Field(
         description="Select this action if a specialized analysis is required."
     )
-    required_experts: list[Literal["fire", "earthquake"]] = Field(
+    required_experts: list[ExpertType] = Field(
         description="Experts required. Do not generate assessment."
     )
 
@@ -187,23 +189,15 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
             input_prompt: HumanMessage = HumanMessage(
                 content=self.prompt_template.format(data=state["data"])
             )
+
             for expert in experts:
-                if expert.lower() == "fire":
+                expert_lower = expert.lower()
+                if expert_lower in VALID_EXPERTS:
                     sends.append(
                         Send(
-                            "fire_node",
+                            f"{expert_lower}_node",
                             {
-                                "messages": [fire_sys, input_prompt],
-                                "data": state["data"],
-                            },
-                        )
-                    )
-                elif expert.lower() == "earthquake":
-                    sends.append(
-                        Send(
-                            "earthquake_node",
-                            {
-                                "messages": [earthquake_sys, input_prompt],
+                                "messages": [input_prompt],
                                 "data": state["data"],
                             },
                         )
@@ -230,9 +224,11 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
         builder.add_node("safe_node", run_safe_node)
 
         builder.add_edge(START, "triage")
-        builder.add_conditional_edges(
-            "triage", route_experts, ["fire_node", "earthquake_node", "safe_node"]
-        )
+
+        # Dynamically construct the allowed nodes list
+        allowed_nodes = [f"{expert}_node" for expert in VALID_EXPERTS] + ["safe_node"]
+        builder.add_conditional_edges("triage", route_experts, allowed_nodes)
+
         builder.add_edge("fire_node", END)
         builder.add_edge("earthquake_node", END)
         builder.add_edge("safe_node", END)

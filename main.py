@@ -10,7 +10,9 @@ from typing import Any, Dict, List
 from langfuse import get_client
 import redis.asyncio as redis
 from dotenv import load_dotenv
-from agent_swarm_prebuilts import HazardSwarmManager
+
+# from agent_swarm_prebuilts import HazardSwarmManager
+from agent_graph import HazardMapReduceManager
 from memgraph_custom_tools import get_memgraph_tools
 
 logging.basicConfig(
@@ -31,7 +33,8 @@ PUBLISH_CHANNEL = os.getenv("PUBLISH_CHANNEL", "sensors_processed")
 class HazardWorker:
     def __init__(self):
         self.redis: redis.Redis | None = None
-        self.swarm_manager = HazardSwarmManager()
+        # self.swarm_manager = HazardSwarmManager()
+        self.swarm_manager = HazardMapReduceManager()
         self.stop_event = asyncio.Event()
 
     async def initialize(self) -> None:
@@ -71,7 +74,7 @@ class HazardWorker:
 
         return [snapshot for _, snapshot in sorted(snapshots.items())]
 
-    async def fetch_and_process_room(self, room: str) -> Dict[str, Any] | None:
+    async def fetch_and_process_room(self, room: str) -> list[Dict[str, Any]] | None:
         mrange_result = await self.redis.ts().mrange(
             from_time="-",
             to_time="+",
@@ -110,10 +113,9 @@ class HazardWorker:
                 )
 
                 if processed_data:
-                    await self.redis.publish(
-                        PUBLISH_CHANNEL, json.dumps(processed_data)
-                    )
-                    logger.info("[↑] Published: %s", processed_data)
+                    for item in processed_data:
+                        await self.redis.publish(PUBLISH_CHANNEL, json.dumps(item))
+                        logger.info("[↑] Published: %s", item)
 
             except Exception as e:
                 logger.error("An error occurred: %s", e)
