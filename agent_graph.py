@@ -4,13 +4,13 @@ import operator
 import os
 from typing import Annotated, Literal, TypedDict
 from dotenv import load_dotenv
+from langchain.agents import create_agent
 
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, Field
 from langfuse.langchain import CallbackHandler
-
 from langgraph.graph import StateGraph, START, END
 from langgraph.types import Send
 
@@ -104,9 +104,7 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
     async def initialize_graph(
         self, tools: list = None, debug: bool = False, print_agent: bool = False
     ) -> None:
-
-        triage_llm = self.model.with_structured_output(TriageOutput)
-        expert_llm = self.model.with_structured_output(ExpertOutput)
+        """Initialize and build the agent swarm"""
 
         triage_sys = SystemMessage(
             content="You are the Hazard Assessment Triage. Determine if 'fire' or 'earthquake' experts are required based on anomalies. If conditions are safe, provide the ThreatAssessments directly (including neighbors if relevant). Do not route if safe."
@@ -118,18 +116,51 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
             content="You are the Earthquake Safety Expert. Analyze telemetry for seismic activity. Provide final ThreatAssessments for the primary room and affected structural zones."
         )
 
+        triage_agent = create_agent(
+            self.model,
+            tools=[*tools],
+            response_format=TriageOutput,
+            system_prompt=triage_sys,
+            name="Triage",
+        )
+
+        fire_agent = create_agent(
+            self.model,
+            tools=[*tools],
+            response_format=ExpertOutput,
+            system_prompt=fire_sys,
+            name="Fire Agent",
+        )
+        earthquake_agent = create_agent(
+            self.model,
+            tools=[*tools],
+            response_format=ExpertOutput,
+            system_prompt=earthquake_sys,
+            name="Earthquake Agent",
+        )
+
         async def run_triage(state: GraphState):
-            input_messages = [
+            # Construct the message sequence without in-place state mutation
+            messages = [
                 triage_sys,
                 HumanMessage(content=self.prompt_template.format(data=state["data"])),
             ]
-            result = await triage_llm.ainvoke(input_messages)
 
+            result: dict = await triage_agent.ainvoke({"messages": messages})
+            print(f"\n\nTriage result: {result.get('structured_response')}\n\n")
+
+            result: TriageOutput = result.get("structured_response")
+
+            raw_assessments = result.assessments or []
             assessments = (
-                [a.model_dump() for a in result.assessments]
-                if not result.route_to_experts and result.assessments
+                [
+                    a.model_dump() if hasattr(a, "model_dump") else a
+                    for a in raw_assessments
+                ]
+                if not result.route_to_experts and raw_assessments
                 else []
             )
+
             return {
                 "required_experts": result.required_experts,
                 "assessments": assessments,
@@ -171,11 +202,13 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
             return {}
 
         async def run_fire(state: ExpertState):
-            result = await expert_llm.ainvoke(state["messages"])
+            result = await fire_agent.ainvoke(state)
+            result = result.get("structured_response")
             return {"assessments": [a.model_dump() for a in result.assessments]}
 
         async def run_earthquake(state: ExpertState):
-            result = await expert_llm.ainvoke(state["messages"])
+            result = await earthquake_agent.ainvoke(state)
+            result = result.get("structured_response")
             return {"assessments": [a.model_dump() for a in result.assessments]}
 
         builder = StateGraph(GraphState)
