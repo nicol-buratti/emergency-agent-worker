@@ -17,6 +17,8 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s"
 )
 logger = logging.getLogger(__name__)
+ExpertType = Literal["fire", "earthquake"]
+VALID_EXPERTS = get_args(ExpertType)
 
 
 class ThreatAssessment(BaseModel):
@@ -38,10 +40,6 @@ class ThreatAssessment(BaseModel):
     justification: str = Field(
         description="Brief justification for the assigned danger level."
     )
-
-
-ExpertType = Literal["fire", "earthquake"]
-VALID_EXPERTS = get_args(ExpertType)
 
 
 class EscalateAction(BaseModel):
@@ -124,13 +122,31 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
         tools = tools or []
 
         triage_sys: SystemMessage = SystemMessage(
-            content="You are the Hazard Assessment Triage. Determine if 'fire' or 'earthquake' experts are required based on anomalies. If conditions are safe, provide the ThreatAssessments directly (including neighbors if relevant). Do not route if safe."
+            content="""
+You are the Hazard Assessment Triage.
+Triage the provided IoT data to assess room safety.
+When necessary, use the provided Memgraph database tools to query the building's topology and inspect node parameters to understand the spatial layout and current sensor snapshot.
+Transfer control to the specialized Agents if anomalies exist.
+If both the telemetry data and the building's node parameters indicate normal, safe conditions, terminate directly with a safe assessment
+            """
         )
         fire_sys: SystemMessage = SystemMessage(
-            content="You are the Fire Safety Expert. Analyze telemetry for fire hazards (heat, smoke, CO2 spikes). Provide final ThreatAssessments for the primary room and any adjacent rooms at risk."
+            content="""
+You are the Fire Safety Expert.
+Analyze telemetry for fire hazards (heat, smoke, CO2 spikes).
+If anomalous data is detected, use the Memgraph database tools to check the building's topology and node parameters.
+You must identify adjacent rooms, ventilation paths, or connected structural nodes to assess the risk of fire and smoke spread.
+Formulate a clear diagnosis based on both the telemetry and the building's spatial graph, and terminate the swarm once ready
+        """
         )
         earthquake_sys: SystemMessage = SystemMessage(
-            content="You are the Earthquake Safety Expert. Analyze telemetry for seismic activity. Provide final ThreatAssessments for the primary room and affected structural zones."
+            content="""
+You are the Earthquake Safety Expert.
+Analyze telemetry for seismic activity (vibrations, acceleration, structural shifts).
+When assessing seismic impact, use the Memgraph database tools to query the building's topology and structural node parameters.
+You must understand load-bearing dependencies, material parameters, and damage propagation across connected building elements.
+Formulate a clear diagnosis based on the telemetry and the building's structural graph, and terminate the swarm once ready.
+"""
         )
 
         triage_agent = create_agent(
@@ -140,7 +156,6 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
             system_prompt=triage_sys,
             name="Triage",
         )
-
         fire_agent = create_agent(
             self.model,
             tools=tools,
