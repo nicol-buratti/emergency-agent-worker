@@ -1,8 +1,6 @@
-import json
 import logging
 import operator
-import os
-from typing import Annotated, Any, Literal, TypedDict
+from typing import Annotated, Any, Literal, TypedDict, Union
 
 from dotenv import load_dotenv
 from langchain.agents import create_agent
@@ -12,7 +10,9 @@ from langchain_openai import ChatOpenAI
 from langfuse.langchain import CallbackHandler
 from langgraph.graph import StateGraph, START, END
 from langgraph.types import Send
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
+
+from app_settings import AppSettings
 
 load_dotenv()
 logging.basicConfig(
@@ -42,16 +42,25 @@ class ThreatAssessment(BaseModel):
     )
 
 
-class TriageOutput(BaseModel):
-    route_to_experts: bool = Field(
-        description="True if specialized analysis is needed, False if safe to assess directly."
+class EscalateAction(BaseModel):
+    action: Literal["escalate"] = Field(
+        description="Select this action if a specialized analysis is required."
     )
     required_experts: list[Literal["fire", "earthquake"]] = Field(
-        description="List of experts required. Empty if none."
+        description="Experts required. Do not generate assessment."
     )
-    assessments: list[ThreatAssessment] | None = Field(
-        description="List of threat assessments if no experts are required, covering the primary room and any affected neighbors. Null if routing to experts."
+
+
+class AssessAction(BaseModel):
+    action: Literal["assess"] = Field(
+        description="Select this action if the conditions are safe and no experts are needed."
     )
+    assessments: list[ThreatAssessment] = Field(
+        description="List of safety assessments."
+    )
+
+
+TriageOutput = Union[EscalateAction, AssessAction]
 
 
 class ExpertOutput(BaseModel):
@@ -74,21 +83,24 @@ class ExpertState(TypedDict):
 
 class HazardMapReduceManager:
     def __init__(self) -> None:
-        extra_models_env: str | None = os.getenv("EXTRA_LLM_MODELS")
+        # Pydantic parses .env and environment variables here
+        settings = AppSettings()
+
         extra_body: dict[str, Any] | None = (
-            {"models": json.loads(extra_models_env)} if extra_models_env else None
+            {"models": settings.extra_llm_models} if settings.extra_llm_models else None
         )
 
         self.model: ChatOpenAI = ChatOpenAI(
-            model=os.getenv("LLM_MODEL"),
-            api_key=os.getenv("LLM_API_KEY"),
-            base_url=os.getenv("LLM_BASE_URL"),
+            model=settings.llm_model,
+            api_key=settings.llm_api_key.get_secret_value(),
+            base_url=settings.llm_base_url,
             temperature=0.2,
             max_retries=2,
             extra_body=extra_body,
         )
+
         self.callbacks: list[Any] = []
-        if os.getenv("LANGFUSE_ENABLED", "false").lower() in ("true", "1", "t", "yes"):
+        if settings.langfuse_enabled:
             self.callbacks.append(CallbackHandler())
 
         template_string: str = """IoT Context & Input Data:
@@ -121,7 +133,7 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
 
         triage_agent = create_agent(
             self.model,
-            tools=tools,
+            # tools=tools,
             response_format=TriageOutput,
             system_prompt=triage_sys,
             name="Triage",
@@ -153,21 +165,17 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
             )
             triage_result: TriageOutput = invocation_result.get("structured_response")
 
-            print(f"\n\nTriage result: {triage_result}\n\n")
+            print(f"\n\n\nTriage result: {triage_result}")
 
-            raw_assessments: list[ThreatAssessment] = triage_result.assessments or []
-            assessments: list[dict[str, Any]] = (
-                [
-                    a.model_dump() if hasattr(a, "model_dump") else a
-                    for a in raw_assessments
-                ]
-                if not triage_result.route_to_experts and raw_assessments
-                else []
-            )
+            if triage_result.action == "escalate":
+                return {
+                    "required_experts": triage_result.required_experts,
+                    "assessments": [],
+                }
 
             return {
-                "required_experts": triage_result.required_experts,
-                "assessments": assessments,
+                "required_experts": [],
+                "assessments": [a.model_dump() for a in triage_result.assessments],
             }
 
         def route_experts(state: GraphState) -> list[Send]:
@@ -261,7 +269,7 @@ Evaluate the reading values for safety/threat levels. Assess the primary room an
             try:
                 assessment = ThreatAssessment(**assessment_data)
                 validated_assessments.append(assessment.model_dump())
-            except Exception as e:
+            except ValidationError as e:
                 logger.error(
                     f"Validation failed for assessment data {assessment_data}: {e}"
                 )
