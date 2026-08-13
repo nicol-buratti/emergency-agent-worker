@@ -2840,7 +2840,7 @@
         "wires": [
             [
                 "d98b5f86e8b84f04",
-                "24dba38adca78fec"
+                "917c1d5a9c9c598d"
             ]
         ]
     },
@@ -2859,9 +2859,7 @@
         "x": 1740,
         "y": 620,
         "wires": [
-            [
-                "e85d67063fb4f8be"
-            ]
+            []
         ]
     },
     {
@@ -2869,7 +2867,7 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "cache checking threshold",
-        "func": "// 1. Retrieve global settings and the threshold, setting 0.05 (5%) as a fallback\nlet global_settings = global.get(\"global_settings\") || {};\nlet threshold = global_settings.cache_threshold_percent !== undefined ? global_settings.cache_threshold_percent : 0.05;\n\n// 2. If there is no snapshot, update everything\nif (Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    // New value, needs updating\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    // Compare numbers\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        if (old_value === 0) {\n            if (value !== 0) {\n                attributes_to_update[key] = value;\n            }\n        } else {\n            // Calculate the percentage change\n            let percentage_change = Math.abs((value - old_value) / old_value);\n\n            // 3. Use the dynamic threshold instead of the hardcoded value\n            if (percentage_change >= threshold) {\n                attributes_to_update[key] = value;\n            }\n        }\n    }\n    // Compare non-numeric values (e.g., strings or booleans)\n    else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\nmsg.attributes_to_update = attributes_to_update;\n\n// Memory cleanup\nmsg.current_data = null;\nmsg.cached_snapshot = null;\n\nreturn msg;",
+        "func": "// 1. Define threshold evaluation strategies\n// Each function returns true if the value should be updated, false otherwise.\nconst thresholdStrategies = {\n    percentage: function(newValue, oldValue, threshold) {\n        if (oldValue === 0) return newValue !== 0;\n        let percentageChange = Math.abs(newValue - oldValue) / Math.abs(oldValue);\n        return percentageChange >= threshold;\n    },\n    absolute: function(newValue, oldValue, threshold) {\n        let diff = Math.abs(newValue - oldValue);\n        return diff >= threshold;\n    },\n    always: function(newValue, oldValue, threshold) {\n        return newValue !== oldValue; // Updates whenever it's not strictly equal\n    }\n    // Add new strategies here in the future (e.g., 'moving_average', 'time_based')\n};\n\n// 2. Fetch configurations from global context\nlet sensor_parameters = global.get(\"sensor_parameters\") || global.get(\"sensor_configs\") || {};\n\n// 3. Fallback if the cache is completely empty\nif (!msg.cached_snapshot || Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\n// 4. Compare current data against the cached snapshot\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    // If the sensor is entirely new to the cache, force an update\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    // Handle numeric values using the dynamic strategies\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        \n        let sensorConfig = sensor_parameters[key] || {};\n        let thresholdType = sensorConfig.threshold_type || \"percentage\";\n        let thresholdValue = (sensorConfig.threshold_value !== undefined) ? sensorConfig.threshold_value : 0.05;\n\n        // Select the evaluation function, fallback to 'percentage' if the type is unrecognized\n        let evaluateThreshold = thresholdStrategies[thresholdType] || thresholdStrategies[\"percentage\"];\n\n        // Execute the strategy\n        if (evaluateThreshold(value, old_value, thresholdValue)) {\n            attributes_to_update[key] = value;\n        }\n        \n    } \n    // Handle non-numeric values (e.g., strings, booleans)\n    else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\n// 5. Prepare the output message\nmsg.attributes_to_update = attributes_to_update;\n\n// Clean up memory payload\nmsg.current_data = null;\nmsg.cached_snapshot = null;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2879,7 +2877,9 @@
         "x": 1730,
         "y": 580,
         "wires": [
-            []
+            [
+                "e85d67063fb4f8be"
+            ]
         ]
     },
     {
@@ -3139,7 +3139,7 @@
         "type": "debug",
         "z": "e4842373559f1514",
         "name": "debug 3",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,

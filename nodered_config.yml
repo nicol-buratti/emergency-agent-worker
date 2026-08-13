@@ -1,7 +1,7 @@
 global_settings:
-  cache_threshold_percent: 0.05 # the threshold could be set for each sensor, but if not set, this default value will be used
-  ttl_seconds: 300
-  retention_ms: 300000
+  cache_threshold_percent: 0.05 # fallback threshold for sensor data changes (5%)
+  ttl_seconds: 300  # time to live for the cached data in seconds
+  retention_ms: 300000 # 5 minues
   excluded_sensors:
     - light
 
@@ -35,21 +35,36 @@ departments:
       sensors: ["SalaRiunioni"]
 
 sensor_configs:
+  # bucket_ms: the time window in milliseconds for aggregating data
+  # agg_type: the aggregation type (mean, geometricMean, harmonicMean, median, min, max, sum)
+  # threshold_type: the type of threshold (percentage, absolute)
+  # threshold_value: the value of the threshold (percentage, absolute, always)
   temperature:
-    agg_type: max
     bucket_ms: 60000
+    agg_type: mean
+    threshold_type: always
+
+    # threshold_type: percentage
+    # threshold_value: 0.04   # 4%
+  co2:
+    bucket_ms: 60000
+    agg_type: max
+    threshold_type: always
+    # threshold_type: absolute
+    # threshold_value: 10     # +/- 10 ppm
   humidity:
     agg_type: max
     bucket_ms: 60000
-  co2:
-    agg_type: max
-    bucket_ms: 60000
+    threshold_type: always
   tvoc:
     agg_type: max
     bucket_ms: 60000
+    threshold_type: always
   eco2:
     agg_type: max
     bucket_ms: 60000
+    threshold_type: always
   people_count:
     agg_type: max
     bucket_ms: 60000
+    threshold_type: always
