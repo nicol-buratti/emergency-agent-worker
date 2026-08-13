@@ -6,7 +6,7 @@ import logging
 import time
 from collections import defaultdict
 from typing import Any, Dict, List
-
+import datetime
 from langfuse import get_client
 import redis.asyncio as redis
 from dotenv import load_dotenv
@@ -59,32 +59,26 @@ class HazardWorker:
         self.stop_event.set()
 
     @staticmethod
-    def parse_snapshots(mrange_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def parse_snapshots(
+        zrange_data: List[Dict[str, Any]], room: str
+    ) -> List[Dict[str, Any]]:
         snapshots = defaultdict(dict)
 
-        for series in mrange_data:
-            for _, (labels, datapoints) in series.items():
-                sensor_type = labels.get("type")
-                room_name = labels.get("room")
-
-                for timestamp, value in datapoints:
-                    snapshots[timestamp]["timestamp"] = timestamp
-                    snapshots[timestamp]["room"] = room_name
-                    snapshots[timestamp][sensor_type] = value
+        for json_str, timestamp in zrange_data:
+            timestamp = int(timestamp)
+            data = json.loads(json_str)
+            data["room"] = room
+            data["timestamp"] = datetime.datetime.fromtimestamp(
+                timestamp / 1000
+            ).strftime("%Y-%m-%d %H:%M:%S")
+            snapshots[timestamp] = data
 
         return [snapshot for _, snapshot in sorted(snapshots.items())]
 
     async def fetch_and_process_room(self, room: str) -> list[Dict[str, Any]] | None:
-        mrange_result = await self.redis.ts().mrange(
-            from_time="-",
-            to_time="+",
-            with_labels=True,
-            filters=[f"room={room}"],
-            aggregation_type="avg",
-            bucket_size_msec=60000,
-        )
+        zrange_result = await self.redis.zrange(room + ":ts", 0, -1, withscores=True)
 
-        parsed_data = self.parse_snapshots(mrange_result)
+        parsed_data = self.parse_snapshots(zrange_result, room)
         if not parsed_data:
             logger.warning("No data associated with room %s.", room)
             return None
