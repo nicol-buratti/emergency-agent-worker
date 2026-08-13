@@ -1751,65 +1751,6 @@
         "wires": []
     },
     {
-        "id": "719585f830abd9cf",
-        "type": "function",
-        "z": "61370204cb540a30",
-        "name": "create query to create graph",
-        "func": "// 1. Get the data from the Read File node\nlet rawCsv = msg.payload;\n\n// Convert to string if the Read File node output a Buffer instead of a utf-8 string\nif (Buffer.isBuffer(rawCsv)) {\n    rawCsv = rawCsv.toString('utf8');\n}\n\nif (typeof rawCsv !== 'string' || rawCsv.trim() === '') {\n    node.error(\"Expected msg.payload to be a CSV string, but received empty or invalid data.\", msg);\n    return null;\n}\n\n// 2. Parse the CSV data\nconst lines = rawCsv.split(/\\r?\\n/).filter(line => line.trim() !== '');\n\nif (lines.length < 2) {\n    node.warn(\"CSV data is missing rows or headers.\");\n    return msg;\n}\n\nconst headers = lines[0].split(',');\nconst data = [];\n\nfor (let i = 1; i < lines.length; i++) {\n    const values = lines[i].split(',');\n    const row = {};\n    headers.forEach((header, index) => {\n        row[header.trim()] = values[index] ? values[index].trim() : '';\n    });\n    data.push(row);\n}\n\nconst queryParts = [];\n\n// 3. Generate Nodes\nqueryParts.push(\"  // Creazione dei nodi\");\ndata.forEach(row => {\n    const varName = row['node_var'];\n    const dept = row['department'];\n    const room = row['room_name'];\n    \n    if (varName) {\n        queryParts.push(`  (${varName}:Place {department: '${dept}', room: '${room}'})`);\n    }\n});\n\n// 4. Generate Relationships\ndata.forEach(row => {\n    const varName = row['node_var'];\n    const room = row['room_name'];\n    const connectedString = row['connected_to'];\n    \n    if (connectedString) {\n        // Split targets by semicolon, ignoring empty strings\n        const targets = connectedString.split(';').map(t => t.trim()).filter(t => t);\n        \n        if (targets.length > 0) {\n            // Format the comment to show targets in uppercase\n            const commentTargets = targets.map(t => t.toUpperCase()).join(', ');\n            queryParts.push(`\\n  // ${room} -> [${commentTargets}]`);\n            \n            targets.forEach(t => {\n                queryParts.push(`  (${varName})-[:CONNECTED_TO]->(${t})`);\n            });\n        }\n    }\n});\n\n// 5. Build the final query string with correct comma/semicolon placement\nlet finalQuery = \"CREATE\\n\";\n\nfor (let i = 0; i < queryParts.length; i++) {\n    const part = queryParts[i];\n    \n    // Determine if this is the last actual Cypher command (ignoring comments)\n    let isLastStatement = true;\n    for (let j = i + 1; j < queryParts.length; j++) {\n        if (!queryParts[j].trim().startsWith(\"//\")) {\n            isLastStatement = false;\n            break;\n        }\n    }\n        \n    if (part.trim().startsWith(\"//\")) {\n        // It's a comment, just add a newline\n        finalQuery += part + \"\\n\";\n    } else {\n        // It's a statement, append a comma or semicolon\n        finalQuery += part;\n        if (!isLastStatement) {\n            finalQuery += \",\\n\";\n        } else {\n            finalQuery += \";\\n\";\n        }\n    }\n}\n\n// 6. Output the formatted Cypher query\nmsg.query = finalQuery;\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1020,
-        "y": 380,
-        "wires": [
-            [
-                "5ca84ef9764b925e"
-            ]
-        ]
-    },
-    {
-        "id": "3837bff31afd0e5a",
-        "type": "file in",
-        "z": "61370204cb540a30",
-        "name": "",
-        "filename": "/data/host_files/places.csv",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 730,
-        "y": 380,
-        "wires": [
-            [
-                "719585f830abd9cf"
-            ]
-        ]
-    },
-    {
-        "id": "41d42426c5705f2f",
-        "type": "inject",
-        "z": "61370204cb540a30",
-        "name": "",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 150,
-        "y": 380,
-        "wires": [
-            [
-                "3930b524260164cb"
-            ]
-        ]
-    },
-    {
         "id": "3930b524260164cb",
         "type": "function",
         "z": "61370204cb540a30",
@@ -1821,8 +1762,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 330,
-        "y": 380,
+        "x": 670,
+        "y": 400,
         "wires": [
             [
                 "cbc88b2b5dff0fe9"
@@ -1857,12 +1798,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1020,
-        "y": 540,
+        "x": 1440,
+        "y": 400,
         "wires": [
             [
-                "5ca84ef9764b925e",
-                "9334a7249e633843"
+                "5ca84ef9764b925e"
             ]
         ]
     },
@@ -1878,31 +1818,13 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 720,
-        "y": 540,
+        "x": 1120,
+        "y": 400,
         "wires": [
             [
-                "f23b46eb9a3a6d60",
-                "9334a7249e633843"
+                "f23b46eb9a3a6d60"
             ]
         ]
-    },
-    {
-        "id": "9334a7249e633843",
-        "type": "debug",
-        "z": "61370204cb540a30",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1240,
-        "y": 640,
-        "wires": []
     },
     {
         "id": "5ca84ef9764b925e",
@@ -1913,8 +1835,8 @@
         "query": "",
         "sessions": 10,
         "database": "memgraph",
-        "x": 1240,
-        "y": 380,
+        "x": 1740,
+        "y": 420,
         "wires": [
             [],
             [],
@@ -1930,14 +1852,54 @@
         "query": "",
         "sessions": 10,
         "database": "memgraph",
-        "x": 500,
-        "y": 380,
+        "x": 840,
+        "y": 400,
         "wires": [
             [
                 "4e12b832230d1c12"
             ],
             [],
             []
+        ]
+    },
+    {
+        "id": "7bf231e26484ad73",
+        "type": "watch",
+        "z": "61370204cb540a30",
+        "name": "",
+        "files": "/data/host_files/place_graph.json",
+        "recursive": "",
+        "x": 170,
+        "y": 400,
+        "wires": [
+            [
+                "91b4253e9faf1525"
+            ]
+        ]
+    },
+    {
+        "id": "91b4253e9faf1525",
+        "type": "delay",
+        "z": "61370204cb540a30",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 400,
+        "wires": [
+            [
+                "3930b524260164cb"
+            ]
         ]
     },
     {
@@ -2504,8 +2466,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 310,
-        "y": 540,
+        "x": 290,
+        "y": 620,
         "wires": [
             [
                 "a5f3392a2df577e8",
@@ -2526,8 +2488,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 130,
-        "y": 540,
+        "x": 110,
+        "y": 620,
         "wires": [
             [
                 "da13443e922e8a07"
@@ -2682,25 +2644,6 @@
         ]
     },
     {
-        "id": "0165311111765a32",
-        "type": "inject",
-        "z": "e4842373559f1514",
-        "name": "",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 130,
-        "y": 420,
-        "wires": [
-            [
-                "e6bff4cc4afa2197"
-            ]
-        ]
-    },
-    {
         "id": "d58249bea66828ca",
         "type": "comment",
         "z": "e4842373559f1514",
@@ -2722,11 +2665,13 @@
         "initialize": "let mapping_department_room = {\n    \"departmentA\": [\n        \"AA1\", \"AB1\", \"AB2\", \"LA1\", \"StanzaCulmone\",\n        \"StanzaDocente\", \"TeamLab\"\n    ],\n    \"departmentB\": [\n        \"B1\", \"LB1\", \"SalaRiunioni\"\n    ]\n};\n\nlet mapping_room_sensor = {\n    \"AA1\": [\"AA1-01\", \"AA1-02\"],\n    \"AB1\": [\"AB1-01\"],\n    \"AB2\": [\"AB2-01\", \"AB2-02\"],\n    \"LA1\": [\"LA1-01\", \"LA1-02\"],\n    \"StanzaCulmone\": [\"StanzaCulmone\"],\n    \"StanzaDocente\": [\"StanzaDocente\"],\n    \"TeamLab\": [\"TeamLab-01\", \"TeamLab-02\"],\n    \"B1\": [\"B1-01\", \"B1-03\"],\n    \"LB1\": [\"LB1-01\"],\n    \"SalaRiunioni\": [\"SalaRiunioni\"],\n}\n\n\nlet roomMap = {};\n\nfor (const [department, rooms] of Object.entries(mapping_department_room)) {\n    for (const room of rooms) {\n        roomMap[room] = department;\n    }\n}\n\nlet sensorMap = {};\n\nfor (const [room, sensors] of Object.entries(mapping_room_sensor)) {\n    for (const sensor of sensors) {\n        sensorMap[sensor] = room;\n    }\n}\n\nthis.roomToDepartment = roomMap\nthis.sensorToRoom = sensorMap\n",
         "finalize": "",
         "libs": [],
-        "x": 540,
-        "y": 540,
+        "x": 520,
+        "y": 620,
         "wires": [
             [
-                "2c341b2c6311f1c1"
+                "2c341b2c6311f1c1",
+                "fe4e7772b2104cbb",
+                "662b8d3580dcfaa8"
             ]
         ]
     },
@@ -2764,7 +2709,7 @@
         "name": "TODO ho aggiunto un TTL per i parametri dello snapshot,\n ma sono veramente utili?\n se i sensori di una stanza si spengono per molto tempo,\n di conseguenza cancellando lo snapshot,\n  cè bisogno di analizzare di nuovo la stanza?",
         "info": "",
         "x": 1210,
-        "y": 700,
+        "y": 760,
         "wires": []
     },
     {
@@ -2814,24 +2759,6 @@
         ]
     },
     {
-        "id": "e6bff4cc4afa2197",
-        "type": "redis-lua-script",
-        "z": "e4842373559f1514",
-        "server": "a12b266a42104227",
-        "name": "set parameters config",
-        "keyval": 0,
-        "func": "local bucket_ms = 60*1000\nredis.call(\"HSET\", \"config:param:temperature\", \"agg_type\", \"max\", \"bucket_ms\",bucket_ms)\nredis.call(\"HSET\", \"config:param:humidity\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:co2\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:tvoc\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:eco2\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nredis.call(\"HSET\", \"config:param:people_count\", \"agg_type\", \"max\", \"bucket_ms\", bucket_ms)\nreturn \"OK\"",
-        "stored": false,
-        "block": false,
-        "x": 320,
-        "y": 420,
-        "wires": [
-            [
-                "c1197eaf3eb41f82"
-            ]
-        ]
-    },
-    {
         "id": "d98b5f86e8b84f04",
         "type": "debug",
         "z": "e4842373559f1514",
@@ -2844,8 +2771,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1640,
-        "y": 600,
+        "x": 1620,
+        "y": 680,
         "wires": []
     },
     {
@@ -2860,8 +2787,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1210,
-        "y": 540,
+        "x": 1190,
+        "y": 620,
         "wires": [
             [
                 "3473323080c95541"
@@ -2880,8 +2807,8 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 1460,
-        "y": 540,
+        "x": 1440,
+        "y": 620,
         "wires": [
             [
                 "d98b5f86e8b84f04",
@@ -2901,8 +2828,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1760,
-        "y": 540,
+        "x": 1740,
+        "y": 620,
         "wires": [
             [
                 "e85d67063fb4f8be"
@@ -2942,8 +2869,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1990,
-        "y": 540,
+        "x": 1970,
+        "y": 620,
         "wires": [
             [
                 "c8f8dbec3f6e50cb",
@@ -2963,8 +2890,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2240,
-        "y": 540,
+        "x": 2220,
+        "y": 620,
         "wires": [
             [
                 "e7fc37a47653ebe8",
@@ -2984,8 +2911,8 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 2430,
-        "y": 540,
+        "x": 2410,
+        "y": 620,
         "wires": [
             [
                 "a0aae69d588da9b5"
@@ -3004,8 +2931,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
-        "y": 540,
+        "x": 740,
+        "y": 620,
         "wires": [
             [
                 "4539ed3d8641347d",
@@ -3026,8 +2953,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2420,
-        "y": 640,
+        "x": 2400,
+        "y": 720,
         "wires": []
     },
     {
@@ -3040,8 +2967,8 @@
         "func": "local room_name = KEYS[1]\nlocal ttl = ARGV[1]\nlocal num_fields = #ARGV - 1\n\nreturn redis.call(\"HEXPIRE\", room_name, ttl, \"FIELDS\", num_fields, unpack(ARGV, 2))\n",
         "stored": false,
         "block": false,
-        "x": 2850,
-        "y": 540,
+        "x": 2830,
+        "y": 620,
         "wires": [
             [
                 "be5d8f5d10610bce",
@@ -3061,8 +2988,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2640,
-        "y": 540,
+        "x": 2620,
+        "y": 620,
         "wires": [
             [
                 "084be5df80c08944"
@@ -3082,8 +3009,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3000,
-        "y": 620,
+        "x": 2980,
+        "y": 700,
         "wires": []
     },
     {
@@ -3098,8 +3025,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 3090,
-        "y": 540,
+        "x": 3070,
+        "y": 620,
         "wires": [
             [
                 "de8a92f54521c47f"
@@ -3118,8 +3045,8 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 3290,
-        "y": 540,
+        "x": 3270,
+        "y": 620,
         "wires": [
             []
         ]
@@ -3136,8 +3063,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2200,
-        "y": 460,
+        "x": 2180,
+        "y": 540,
         "wires": [
             [
                 "53aa612513bc05aa"
@@ -3153,8 +3080,8 @@
         "query": "",
         "sessions": 10,
         "database": "",
-        "x": 2420,
-        "y": 460,
+        "x": 2400,
+        "y": 540,
         "wires": [
             [],
             [],
@@ -3171,8 +3098,8 @@
         "func": "local keys = redis.call('KEYS', 'config:param:*')\nlocal config = {}\nfor i, k in ipairs(keys) do\n    local sensor = string.gsub(k, 'config:param:', '')\n    local hash = redis.call('HGETALL', k)\n    local obj = {}\n    for j=1, #hash, 2 do\n        obj[hash[j]] = hash[j+1]\n    end\n    config[sensor] = obj\nend\nreturn cjson.encode(config)",
         "stored": false,
         "block": false,
-        "x": 540,
-        "y": 420,
+        "x": 1620,
+        "y": 440,
         "wires": [
             [
                 "293d9b5707f3fdf3"
@@ -3191,8 +3118,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
-        "y": 420,
+        "x": 1840,
+        "y": 440,
         "wires": [
             []
         ]
@@ -3220,8 +3147,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1160,
-        "y": 600,
+        "x": 1140,
+        "y": 680,
         "wires": []
     },
     {
@@ -3241,8 +3168,8 @@
                 "module": "simple-statistics"
             }
         ],
-        "x": 970,
-        "y": 540,
+        "x": 950,
+        "y": 620,
         "wires": [
             [
                 "6fb9e4f3b63d2d67",
@@ -3263,8 +3190,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 480,
-        "y": 620,
+        "x": 460,
+        "y": 700,
         "wires": []
     },
     {
@@ -3272,6 +3199,59 @@
         "type": "debug",
         "z": "e4842373559f1514",
         "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "12aaaeac13df91bb",
+        "type": "redis-lua-script",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "name": "",
+        "keyval": "1",
+        "func": "-- Keys and arguments\nlocal topic = KEYS[1]\nlocal json_payload = ARGV[1]\n\n-- Get current time directly from the Redis server\n-- TIME returns an array: [1] = seconds, [2] = microseconds\nlocal server_time = redis.call('TIME')\nlocal current_timestamp_ms = (tonumber(server_time[1]) * 1000) + math.floor(tonumber(server_time[2]) / 1000)\n\n-- Calculate the timestamp for 5 minutes ago (300,000 milliseconds)\nlocal cutoff_timestamp_ms = current_timestamp_ms - 300000\n\n-- 1. Insert the new data into the Priority Queue\nredis.call('ZADD', topic, current_timestamp_ms, json_payload)\n\n-- 2. Remove all elements older than 5 minutes\nlocal removed_count = redis.call('ZREMRANGEBYSCORE', topic, '-inf', cutoff_timestamp_ms)\n\n-- Return the number of removed elements\nreturn removed_count",
+        "stored": false,
+        "block": false,
+        "x": 940,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fe4e7772b2104cbb",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "format message",
+        "func": "let sensor_data = JSON.stringify(msg.sensors)\nlet ts_topic = msg.department + \":\" + msg.room + \":ts\"\n\nmsg.payload = [ts_topic, sensor_data]\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 560,
+        "wires": [
+            [
+                "12aaaeac13df91bb"
+            ]
+        ]
+    },
+    {
+        "id": "922a09a5c71c7a5c",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 6",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -3280,8 +3260,159 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 900,
-        "y": 620,
+        "x": 1320,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "662b8d3580dcfaa8",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 10",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "63a24ec1ae45c954",
+        "type": "redis-command",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 1430,
+        "y": 440,
+        "wires": [
+            [
+                "c1197eaf3eb41f82"
+            ]
+        ]
+    },
+    {
+        "id": "c29944ac97ec441d",
+        "type": "file in",
+        "z": "e4842373559f1514",
+        "name": "",
+        "filename": "/data/host_files/sensors_agg_config.yml",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 760,
+        "y": 440,
+        "wires": [
+            [
+                "ee4785cc46efc524"
+            ]
+        ]
+    },
+    {
+        "id": "602fbb693d894d1f",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "format message",
+        "func": "const params = msg.payload.parameters;\nconst messages = [];\n\n// Iterate over each key in the YAML file (temperature, humidity, etc.)\nfor (const [key, values] of Object.entries(params)) {\n    \n    const redisKey = `config:param:${key}`;\n    \n    // Prepare the array of arguments for the Redis HSET command\n    // HSET key field1 value1 field2 value2\n    const payload = [\n        redisKey, \n        \"agg_type\", values.agg_type, \n        \"bucket_ms\", values.bucket_ms\n    ];\n    \n    // Add a new message to the queue\n    messages.push({\n        payload: payload\n    });\n}\n\n// By returning an array of arrays, Node-RED will send each \n// object as a separate, sequential message to the Redis node\nreturn [messages];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 440,
+        "wires": [
+            [
+                "63a24ec1ae45c954",
+                "922a09a5c71c7a5c"
+            ]
+        ]
+    },
+    {
+        "id": "ee4785cc46efc524",
+        "type": "yaml",
+        "z": "e4842373559f1514",
+        "property": "payload",
+        "name": "",
+        "x": 1010,
+        "y": 440,
+        "wires": [
+            [
+                "602fbb693d894d1f",
+                "922a09a5c71c7a5c"
+            ]
+        ]
+    },
+    {
+        "id": "779060680f352952",
+        "type": "watch",
+        "z": "e4842373559f1514",
+        "name": "",
+        "files": "/data/host_files/sensors_agg_config.yml",
+        "recursive": "",
+        "x": 210,
+        "y": 440,
+        "wires": [
+            [
+                "a6e9b9558d889001",
+                "aad772c70a7a7cef"
+            ]
+        ]
+    },
+    {
+        "id": "a6e9b9558d889001",
+        "type": "delay",
+        "z": "e4842373559f1514",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 470,
+        "y": 440,
+        "wires": [
+            [
+                "c29944ac97ec441d"
+            ]
+        ]
+    },
+    {
+        "id": "aad772c70a7a7cef",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 500,
         "wires": []
     }
 ]
