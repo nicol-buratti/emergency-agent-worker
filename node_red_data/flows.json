@@ -2876,8 +2876,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1770,
-        "y": 480,
+        "x": 1730,
+        "y": 580,
         "wires": [
             []
         ]
@@ -3117,36 +3117,18 @@
         ]
     },
     {
-        "id": "c1197eaf3eb41f82",
-        "type": "redis-lua-script",
-        "z": "e4842373559f1514",
-        "server": "a12b266a42104227",
-        "name": "Fetch all configs",
-        "keyval": 0,
-        "func": "local keys = redis.call('KEYS', 'config:param:*')\nlocal config = {}\nfor i, k in ipairs(keys) do\n    local sensor = string.gsub(k, 'config:param:', '')\n    local hash = redis.call('HGETALL', k)\n    local obj = {}\n    for j=1, #hash, 2 do\n        obj[hash[j]] = hash[j+1]\n    end\n    config[sensor] = obj\nend\nreturn cjson.encode(config)",
-        "stored": false,
-        "block": false,
-        "x": 1620,
-        "y": 440,
-        "wires": [
-            [
-                "293d9b5707f3fdf3"
-            ]
-        ]
-    },
-    {
         "id": "293d9b5707f3fdf3",
         "type": "function",
         "z": "e4842373559f1514",
         "name": "Save to global context",
-        "func": "if (msg.payload) {\n    let parsedConfigs = JSON.parse(msg.payload);\n    global.set('sensor_configs', parsedConfigs);\n    node.warn(\"Sensor configurations loaded from Redis: \" + JSON.stringify(parsedConfigs));\n}\nreturn msg;",
+        "func": "if (msg.payload) {\n    global.set('sensor_configs', msg.payload);\n    node.warn(\"Sensor configurations loaded: \" + JSON.stringify(msg.payload));\n}\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1840,
+        "x": 1220,
         "y": 440,
         "wires": [
             []
@@ -3174,11 +3156,11 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "aggregator",
-        "func": "var values = context.get(\"values\") || {};\nvar redisConfigs = global.get(\"sensor_configs\") || {};\nvar topic = (msg.topic !== undefined && msg.topic !== null) ? msg.topic.toString() : \"\";\n\n// Check that the payload is a JSON object (e.g. { temperature: 22, humidity: 50 })\nif (msg.payload && typeof msg.payload === 'object' && !Array.isArray(msg.payload)) {\n    if (!values[topic]) values[topic] = {};\n\n    let now = Date.now();\n\n    Object.keys(msg.payload).forEach(key => {\n        let val = parseFloat(msg.payload[key]);\n        \n        // Ignore non-numeric values\n        if (!isNaN(val)) {\n            if (!values[topic][key]) {\n                // Read bucket_ms from Redis or use 60000 as fallback\n                let bucket = redisConfigs[key] && redisConfigs[key].bucket_ms ? parseInt(redisConfigs[key].bucket_ms) : 60000;\n                values[topic][key] = {\n                    payloads: [],\n                    next_send: now + bucket\n                };\n            }\n            values[topic][key].payloads.push(val);\n        }\n    });\n}\n\n// Save back to context\ncontext.set(\"values\", values);\n\n// Return null, sending is managed by the time engine\nreturn null;",
+        "func": "var topic = (msg.topic !== undefined && msg.topic !== null) ? msg.topic.toString() : \"\";\nif (!topic) return null;\n\nvar redisKey = \"room:\" + topic;\nvar redisConfigs = global.get(\"sensor_configs\") || {};\n\nif (msg.payload && typeof msg.payload === 'object' && !Array.isArray(msg.payload)) {\n    \n    context.get(\"active_rooms\", \"redis\", function(err, rooms) {\n        rooms = rooms || {};\n        if (!rooms[topic]) {\n            rooms[topic] = true;\n            context.set(\"active_rooms\", rooms, \"redis\", function(err) {\n                if (err) node.error(err);\n            });\n        }\n    });\n\n    context.get(redisKey, \"redis\", function(err, roomData) {\n        roomData = roomData || {};\n        let now = Date.now();\n\n        Object.keys(msg.payload).forEach(key => {\n            let val = parseFloat(msg.payload[key]);\n            if (!isNaN(val)) {\n                if (!roomData[key]) {\n                    let bucket = redisConfigs[key] && redisConfigs[key].bucket_ms ? parseInt(redisConfigs[key].bucket_ms) : 60000;\n                    roomData[key] = { payloads: [], next_send: now + bucket };\n                }\n                roomData[key].payloads.push(val);\n            }\n        });\n\n        context.set(redisKey, roomData, \"redis\", function(err) {\n            if (err) node.error(err);\n        });\n    });\n}\n\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "context.set(\"values\", {});\n\nfunction aggregate(list, strategy) {\n    if (!list || list.length === 0) return null;\n    switch (strategy) {\n        case \"mean\": return simpleStatistics.mean(list);\n        case \"geometricMean\": return simpleStatistics.geometricMean(list);\n        case \"harmonicMean\": return simpleStatistics.harmonicMean(list);\n        case \"median\": return simpleStatistics.median(list);\n        case \"min\": return simpleStatistics.min(list);\n        case \"max\": return simpleStatistics.max(list);\n        case \"sum\": return simpleStatistics.sumSimple(list);\n        default: return list[list.length - 1]; // Fallback (Last value)\n    }\n}\n\n// Tick engine: runs every 1 second (1000ms)\nvar tickId = setInterval(function() {\n    var values = context.get(\"values\") || {};\n    var redisConfigs = global.get(\"sensor_configs\") || {};\n    var now = Date.now();\n    \n    // Group outgoing messages by \"topic\" (Room)\n    var messagesToSend = {}; \n\n    for (var topic in values) {\n        for (var key in values[topic]) {\n            var metricData = values[topic][key];\n            \n            // Has the timer for this sensor in this room expired?\n            if (now >= metricData.next_send) {\n                \n                // If we have collected data...\n                if (metricData.payloads.length > 0) {\n                    var strategy = redisConfigs[key] && redisConfigs[key].agg_type ? redisConfigs[key].agg_type : \"mean\";\n                    var result = aggregate(metricData.payloads, strategy);\n\n                    if (!messagesToSend[topic]) messagesToSend[topic] = {};\n                    messagesToSend[topic][key] = result;\n                }\n\n                // Recalculate next send by dynamically updating the bucket\n                var bucket = redisConfigs[key] && redisConfigs[key].bucket_ms ? parseInt(redisConfigs[key].bucket_ms) : 60000;\n                metricData.payloads = [];\n                metricData.next_send = now + bucket;\n            }\n        }\n    }\n\n    // Send accumulated messages in this tick\n    for (var t in messagesToSend) {\n        // The topic is always in the format \"department:room\" in your flow, I separate it for Memgraph\n        let parts = t.split(\":\"); \n        \n        node.send({ \n            topic: t, \n            payload: messagesToSend[t],\n            department: parts[0] || \"\",\n            room: parts[1] || t\n        });\n    }\n\n    context.set(\"values\", values);\n}, 1000); // <-- 1 second resolution\n\ncontext.set(\"tickId\", tickId);",
+        "initialize": "function aggregate(list, strategy) {\n    if (!list || list.length === 0) return null;\n    switch (strategy) {\n        case \"mean\": return simpleStatistics.mean(list);\n        case \"geometricMean\": return simpleStatistics.geometricMean(list);\n        case \"harmonicMean\": return simpleStatistics.harmonicMean(list);\n        case \"median\": return simpleStatistics.median(list);\n        case \"min\": return simpleStatistics.min(list);\n        case \"max\": return simpleStatistics.max(list);\n        case \"sum\": return simpleStatistics.sumSimple(list);\n        default: return list[list.length - 1];\n    }\n}\n\nvar tickId = setInterval(function () {\n    context.get(\"active_rooms\", \"redis\", function (err, rooms) {\n        if (err || !rooms) return;\n\n        var redisConfigs = global.get(\"sensor_configs\") || {};\n        var now = Date.now();\n\n        Object.keys(rooms).forEach(function (topic) {\n            var redisKey = \"room:\" + topic;\n\n            context.get(redisKey, \"redis\", function (err, roomData) {\n                if (err || !roomData) return;\n\n                var messagesToSend = {};\n                var updated = false;\n\n                for (var key in roomData) {\n                    var metricData = roomData[key];\n                    if (now >= metricData.next_send) {\n                        if (metricData.payloads.length > 0) {\n                            var strategy = redisConfigs[key] && redisConfigs[key].agg_type ? redisConfigs[key].agg_type : \"mean\";\n                            var result = aggregate(metricData.payloads, strategy);\n                            messagesToSend[key] = result;\n                        }\n                        var bucket = redisConfigs[key] && redisConfigs[key].bucket_ms ? parseInt(redisConfigs[key].bucket_ms) : 60000;\n                        metricData.payloads = [];\n                        metricData.next_send = now + bucket;\n                        updated = true;\n                    }\n                }\n\n                if (Object.keys(messagesToSend).length > 0) {\n                    let parts = topic.split(\":\");\n                    node.send({\n                        topic: topic,\n                        payload: messagesToSend,\n                        department: parts[0] || \"\",\n                        room: parts[1] || topic\n                    });\n                }\n\n                if (updated) {\n                    context.set(redisKey, roomData, \"redis\", function (err) {\n                        if (err) node.error(err);\n                    });\n                }\n            });\n        });\n    });\n}, 1000);\n\ncontext.set(\"tickId\", tickId);",
         "finalize": "var tickId = context.get(\"tickId\");\nif (tickId) {\n    clearInterval(tickId);\n}",
         "libs": [
             {
@@ -3267,23 +3249,6 @@
         ]
     },
     {
-        "id": "922a09a5c71c7a5c",
-        "type": "debug",
-        "z": "e4842373559f1514",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1340,
-        "y": 500,
-        "wires": []
-    },
-    {
         "id": "662b8d3580dcfaa8",
         "type": "debug",
         "z": "e4842373559f1514",
@@ -3299,26 +3264,6 @@
         "x": 700,
         "y": 680,
         "wires": []
-    },
-    {
-        "id": "63a24ec1ae45c954",
-        "type": "redis-command",
-        "z": "e4842373559f1514",
-        "server": "a12b266a42104227",
-        "command": "HSET",
-        "name": "",
-        "topic": "",
-        "params": "[]",
-        "paramsType": "json",
-        "payloadType": "json",
-        "block": false,
-        "x": 1430,
-        "y": 440,
-        "wires": [
-            [
-                "c1197eaf3eb41f82"
-            ]
-        ]
     },
     {
         "id": "c29944ac97ec441d",
@@ -3341,27 +3286,6 @@
         ]
     },
     {
-        "id": "602fbb693d894d1f",
-        "type": "function",
-        "z": "e4842373559f1514",
-        "name": "format message",
-        "func": "const params = msg.payload.parameters;\nconst messages = [];\n\n// Iterate over each key in the YAML file (temperature, humidity, etc.)\nfor (const [key, values] of Object.entries(params)) {\n    \n    const redisKey = `config:param:${key}`;\n    \n    // Prepare the array of arguments for the Redis HSET command\n    // HSET key field1 value1 field2 value2\n    const payload = [\n        redisKey, \n        \"agg_type\", values.agg_type, \n        \"bucket_ms\", values.bucket_ms\n    ];\n    \n    // Add a new message to the queue\n    messages.push({\n        payload: payload\n    });\n}\n\n// By returning an array of arrays, Node-RED will send each \n// object as a separate, sequential message to the Redis node\nreturn [messages];",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1240,
-        "y": 440,
-        "wires": [
-            [
-                "63a24ec1ae45c954",
-                "922a09a5c71c7a5c"
-            ]
-        ]
-    },
-    {
         "id": "ee4785cc46efc524",
         "type": "yaml",
         "z": "e4842373559f1514",
@@ -3371,8 +3295,8 @@
         "y": 440,
         "wires": [
             [
-                "602fbb693d894d1f",
-                "922a09a5c71c7a5c"
+                "b14a10de36fbc3c2",
+                "293d9b5707f3fdf3"
             ]
         ]
     },
@@ -3430,7 +3354,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 480,
+        "x": 500,
         "y": 500,
         "wires": []
     },
@@ -3462,5 +3386,22 @@
                 "a6e9b9558d889001"
             ]
         ]
+    },
+    {
+        "id": "b14a10de36fbc3c2",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 500,
+        "wires": []
     }
 ]
