@@ -1903,6 +1903,35 @@
         ]
     },
     {
+        "id": "85e43fa2842d066c",
+        "type": "inject",
+        "z": "61370204cb540a30",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 460,
+        "wires": [
+            [
+                "91b4253e9faf1525"
+            ]
+        ]
+    },
+    {
         "id": "3713381206ef865e",
         "type": "mqtt in",
         "z": "a9e0311771b5bf2d",
@@ -2670,7 +2699,6 @@
         "wires": [
             [
                 "2c341b2c6311f1c1",
-                "fe4e7772b2104cbb",
                 "662b8d3580dcfaa8"
             ]
         ]
@@ -3125,21 +3153,11 @@
         ]
     },
     {
-        "id": "30df3e9e9ee4e574",
-        "type": "comment",
-        "z": "e4842373559f1514",
-        "name": "TODO adapt agent with this workflow",
-        "info": "",
-        "x": 690,
-        "y": 360,
-        "wires": []
-    },
-    {
         "id": "1f068303a2eb51d4",
         "type": "debug",
         "z": "e4842373559f1514",
         "name": "debug 3",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3173,7 +3191,8 @@
         "wires": [
             [
                 "6fb9e4f3b63d2d67",
-                "1f068303a2eb51d4"
+                "1f068303a2eb51d4",
+                "fe4e7772b2104cbb"
             ]
         ]
     },
@@ -3221,7 +3240,7 @@
         "func": "-- Keys and arguments\nlocal topic = KEYS[1]\nlocal json_payload = ARGV[1]\n\n-- Get current time directly from the Redis server\n-- TIME returns an array: [1] = seconds, [2] = microseconds\nlocal server_time = redis.call('TIME')\nlocal current_timestamp_ms = (tonumber(server_time[1]) * 1000) + math.floor(tonumber(server_time[2]) / 1000)\n\n-- Calculate the timestamp for 5 minutes ago (300,000 milliseconds)\nlocal cutoff_timestamp_ms = current_timestamp_ms - 300000\n\n-- 1. Insert the new data into the Priority Queue\nredis.call('ZADD', topic, current_timestamp_ms, json_payload)\n\n-- 2. Remove all elements older than 5 minutes\nlocal removed_count = redis.call('ZREMRANGEBYSCORE', topic, '-inf', cutoff_timestamp_ms)\n\n-- Return the number of removed elements\nreturn removed_count",
         "stored": false,
         "block": false,
-        "x": 940,
+        "x": 1320,
         "y": 560,
         "wires": [
             []
@@ -3232,14 +3251,14 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "format message",
-        "func": "let sensor_data = JSON.stringify(msg.sensors)\nlet ts_topic = msg.department + \":\" + msg.room + \":ts\"\n\nmsg.payload = [ts_topic, sensor_data]\nreturn msg;\n",
+        "func": "let sensor_data = JSON.stringify(msg.payload)\nlet ts_key = msg.topic + \":ts\"\n\nmsg.payload = [ts_key, sensor_data]\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
+        "x": 1140,
         "y": 560,
         "wires": [
             [
@@ -3260,7 +3279,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1320,
+        "x": 1340,
         "y": 500,
         "wires": []
     },
@@ -3403,7 +3422,7 @@
         "type": "debug",
         "z": "e4842373559f1514",
         "name": "debug 2",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3414,5 +3433,34 @@
         "x": 480,
         "y": 500,
         "wires": []
+    },
+    {
+        "id": "01cb047fb0a03fca",
+        "type": "inject",
+        "z": "e4842373559f1514",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 310,
+        "y": 380,
+        "wires": [
+            [
+                "a6e9b9558d889001"
+            ]
+        ]
     }
 ]
