@@ -1,0 +1,55 @@
+global_settings:
+  cache_threshold_percent: 0.05 # the threshold could be set for each sensor, but if not set, this default value will be used
+  ttl_seconds: 300
+  retention_ms: 300000
+  excluded_sensors:
+    - light
+
+danger_tiers:
+  high: 1
+  medium: 2
+  low: 3
+
+departments:
+  departmentA:
+    - name: AA1
+      sensors: ["AA1-01", "AA1-02"]
+    - name: AB1
+      sensors: ["AB1-01"]
+    - name: AB2
+      sensors: ["AB2-01", "AB2-02"]
+    - name: LA1
+      sensors: ["LA1-01", "LA1-02"]
+    - name: StanzaCulmone
+      sensors: ["StanzaCulmone"]
+    - name: StanzaDocente
+      sensors: ["StanzaDocente"]
+    - name: TeamLab
+      sensors: ["TeamLab-01", "TeamLab-02"]
+  departmentB:
+    - name: B1
+      sensors: ["B1-01", "B1-03"]
+    - name: LB1
+      sensors: ["LB1-01"]
+    - name: SalaRiunioni
+      sensors: ["SalaRiunioni"]
+
+sensor_configs:
+  temperature:
+    agg_type: max
+    bucket_ms: 60000
+  humidity:
+    agg_type: max
+    bucket_ms: 60000
+  co2:
+    agg_type: max
+    bucket_ms: 60000
+  tvoc:
+    agg_type: max
+    bucket_ms: 60000
+  eco2:
+    agg_type: max
+    bucket_ms: 60000
+  people_count:
+    agg_type: max
+    bucket_ms: 60000
