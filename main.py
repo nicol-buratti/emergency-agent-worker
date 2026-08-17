@@ -7,11 +7,11 @@ import time
 from collections import defaultdict
 from typing import Any, Dict, List
 import datetime
+import aiomqtt
 from langfuse import get_client
 import redis.asyncio as redis
 from dotenv import load_dotenv
 
-# from agent_swarm_prebuilts import HazardSwarmManager
 from agent_graph import HazardMapReduceManager
 from memgraph_custom_tools import get_memgraph_tools
 
@@ -27,7 +27,9 @@ langfuse = get_client()
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
 QUEUE_NAME = os.getenv("QUEUE_NAME", "room_pq")
-PUBLISH_CHANNEL = os.getenv("PUBLISH_CHANNEL", "sensors_processed")
+
+MQTT_BROKER_ADDRESS = os.getenv("MQTT_BROKER_ADDRESS", "localhost")
+MQTT_PUBLISH_TOPIC = os.getenv("MQTT_PUBLISH_TOPIC", "emergency/agent/data")
 
 
 class HazardWorker:
@@ -107,13 +109,17 @@ class HazardWorker:
                 )
 
                 if processed_data:
-                    for item in processed_data:
-                        await self.redis.publish(PUBLISH_CHANNEL, json.dumps(item))
-                        logger.info("[↑] Published: %s", item)
-
+                    async with aiomqtt.Client(MQTT_BROKER_ADDRESS) as client:
+                        for item in processed_data:
+                            await client.publish(MQTT_PUBLISH_TOPIC, json.dumps(item))
+                            logger.info("[↑] Published: %s", item)
             except Exception as e:
                 logger.error("An error occurred: %s", e)
                 await asyncio.sleep(2)
+            except aiomqtt.MqttError as error:
+                print(f"MQTT error: {error}")
+            except asyncio.CancelledError:
+                print("Async task cancelled")
 
 
 async def main():
