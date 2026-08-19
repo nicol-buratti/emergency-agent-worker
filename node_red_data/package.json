@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "node-red-camunda8": "~2.0.2",
         "node-red-context-redis": "github:node-red/node-red-context-redis",
         "node-red-contrib-aggregator": "~1.5.0",
         "node-red-contrib-neo4j-bolt": "~2.5.3",
