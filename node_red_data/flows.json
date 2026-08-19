@@ -825,11 +825,9 @@
         "y": 540,
         "wires": [
             [
-                "e1481f7c737be05b"
+                "e08ade7d50a3332f"
             ],
-            [
-                "e1481f7c737be05b"
-            ],
+            [],
             []
         ]
     },
@@ -1387,6 +1385,44 @@
         "x": 220,
         "y": 980,
         "wires": []
+    },
+    {
+        "id": "e08ade7d50a3332f",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "sensor room aggregation",
+        "func": "const payload = msg.attributes_to_update;\n\ndelete payload.people_count\n\n// 1. Isola solo i dati numerici dei sensori (escludendo stringhe o ID)\nconst sensorData = {};\nconst sensorKeys = [];\n\nfor (let key in payload) {\n    if (typeof payload[key] === \"number\") {\n        sensorData[key] = payload[key];\n        sensorKeys.push(key);\n    }\n}\n\n// 2. Crea dinamicamente le istruzioni Cypher per i dati REALI\n// Es: source.co2 = $sensorData.co2\nconst setRealClauses = sensorKeys\n    .map(k => `source.${k} = $sensorData.${k}`)\n    .join(\",\\n    \");\n\n// 3. Crea dinamicamente le istruzioni Cypher per i dati STIMATI\n// Es: blind.co2_estimated = coalesce(closest.s.co2, 0.0) * (0.8 ^ closest.d)\nconst setEstimatedClauses = sensorKeys\n    .map(k => `blind.${k}_estimated = coalesce(closest.s.${k}, 0.0) * (0.8 ^ closest.d)`)\n    .join(\",\\n    \");\n\n// 4. Costruiamo la query finale\nmsg.query = `\n  // A. Trova e aggiorna la stanza sorgente\n  MATCH (source:Place {department: $department, room: $room})\n  SET ${setRealClauses}\n  SET source.has_sensor = true\n  \n  // B. Trova le stanze cieche nel raggio di 2 salti\n  WITH source\n  MATCH (source)-[:CONNECTED_TO*1..2]-(blind:Place)\n  WHERE coalesce(blind.has_sensor, false) = false\n  WITH DISTINCT blind\n  \n  // C. Trova il sensore più vicino per ciascuna stanza cieca\n  MATCH path = (blind)-[:CONNECTED_TO*1..3]-(sensor:Place {has_sensor: true})\n  WITH blind, sensor, length(path) AS dist\n  ORDER BY dist ASC\n  WITH blind, collect({s: sensor, d: toFloat(dist)})[0] AS closest\n  \n  // D. Applica il decadimento (0.8) a TUTTI i parametri dinamici\n  SET ${setEstimatedClauses}\n  \n  RETURN blind.room_name AS updated_room;\n`;\n\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensorData: sensorData\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2630,
+        "y": 540,
+        "wires": [
+            [
+                "de2166cf1bee0391",
+                "e1481f7c737be05b"
+            ]
+        ]
+    },
+    {
+        "id": "de2166cf1bee0391",
+        "type": "neo4j-bolt",
+        "z": "e4842373559f1514",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 2840,
+        "y": 540,
+        "wires": [
+            [],
+            [],
+            []
+        ]
     },
     {
         "id": "9f334cea07f5104a",
