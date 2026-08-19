@@ -374,16 +374,6 @@
         "wires": []
     },
     {
-        "id": "13e71f90c341cdef",
-        "type": "comment",
-        "z": "e4842373559f1514",
-        "name": "instead of using nodered to get data and then pass to the webserver,\n i can implement some workers (agents) that autonomously get data from redis,\n do the prediction and then publish via redis the results and continue the loop",
-        "info": "",
-        "x": 630,
-        "y": 980,
-        "wires": []
-    },
-    {
         "id": "680ec5f0682fa080",
         "type": "function",
         "z": "e4842373559f1514",
@@ -411,16 +401,6 @@
         "info": "",
         "x": 2000,
         "y": 660,
-        "wires": []
-    },
-    {
-        "id": "e573fda44bf58db3",
-        "type": "comment",
-        "z": "e4842373559f1514",
-        "name": "saves the values in the last n minutes (now n=5)",
-        "info": "",
-        "x": 1120,
-        "y": 880,
         "wires": []
     },
     {
@@ -489,16 +469,6 @@
         "statusType": "auto",
         "x": 300,
         "y": 320,
-        "wires": []
-    },
-    {
-        "id": "0332ed18d86b5b93",
-        "type": "comment",
-        "z": "e4842373559f1514",
-        "name": "TODO ho aggiunto un TTL per i parametri dello snapshot,\n ma sono veramente utili?\n se i sensori di una stanza si spengono per molto tempo,\n di conseguenza cancellando lo snapshot,\n  cè bisogno di analizzare di nuovo la stanza?",
-        "info": "",
-        "x": 1210,
-        "y": 760,
         "wires": []
     },
     {
@@ -854,8 +824,12 @@
         "x": 2400,
         "y": 540,
         "wires": [
-            [],
-            [],
+            [
+                "e1481f7c737be05b"
+            ],
+            [
+                "e1481f7c737be05b"
+            ],
             []
         ]
     },
@@ -1199,7 +1173,7 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "update danger",
-        "func": "const [department, room] = msg.payload.room.split(\":\");\n\nlet to_save = {\n  [\"danger_\" + msg.payload.danger_type]: msg.payload.danger,\n  [msg.payload.danger_type + \"_danger_score\"]: msg.payload.danger_score\n};\n\nmsg.query = `\n  MATCH (n:Place {department: $department, room_name: $room})\n  \n  // 1. Aggiorna il nodo\n  SET n += $danger_data\n  \n  // 2. Estrai gli score e il weight\n  WITH n, \n       [k IN keys(n) WHERE k ENDS WITH \"_danger_score\" | n[k]] AS scores,\n       coalesce(n.weight, 1.0) AS db_weight\n  \n  // 3. Calcola e salva il totale per la stanza n\n  WITH n, reduce(total = toFloat(db_weight), s IN scores | total * toFloat(s)) AS aggregated_score\n  SET n.total_danger_score = aggregated_score\n  \n  // --- 4. NUOVA PARTE: AGGIORNAMENTO ARCHI ---\n  // Trova tutte le stanze (m) collegate a questa stanza (n) tramite CONNECTED_TO in qualsiasi direzione\n  WITH n\n  MATCH (n)-[r:CONNECTED_TO]-(m:Place)\n  \n  // Calcola la media tra il punteggio di n e quello di m.\n  // Uso coalesce(..., 0.0) perché la stanza m potrebbe non aver ancora mai ricevuto \n  // un alert, e quindi la proprietà total_danger_score potrebbe non esistere ancora.\n  SET r.avg_danger_score = (n.total_danger_score + coalesce(m.total_danger_score, 0.0)) / 2.0\n  \n  // Raggruppa i risultati per restituire il nodo 'n' una sola volta a Node-RED\n  WITH DISTINCT n\n  RETURN n;\n`;\n\nmsg.params = {\n  department: department,\n  room: room,\n  danger_data: to_save\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "func": "const [department, room] = msg.payload.room.split(\":\");\n\nlet to_save = {\n  [\"danger_\" + msg.payload.danger_type]: msg.payload.danger,\n  [msg.payload.danger_type + \"_danger_score\"]: msg.payload.danger_score\n};\n\nmsg.query = `\n  MATCH (n:Place {department: $department, room: $room})\n  \n  // 1. Aggiorna il nodo\n  SET n += $danger_data\n  \n  // 2. Estrai gli score e il weight\n  WITH n, \n       [k IN keys(n) WHERE k ENDS WITH \"_danger_score\" | n[k]] AS scores,\n       coalesce(n.weight, 1.0) AS db_weight\n  \n  // 3. Calcola e salva il totale per la stanza n\n  WITH n, reduce(total = toFloat(db_weight), s IN scores | total * toFloat(s)) AS aggregated_score\n  SET n.total_danger_score = aggregated_score\n  \n  // --- 4. NUOVA PARTE: AGGIORNAMENTO ARCHI ---\n  // Trova tutte le stanze (m) collegate a questa stanza (n) tramite CONNECTED_TO in qualsiasi direzione\n  WITH n\n  MATCH (n)-[r:CONNECTED_TO]-(m:Place)\n  \n  // Calcola la media tra il punteggio di n e quello di m.\n  // Uso coalesce(..., 0.0) perché la stanza m potrebbe non aver ancora mai ricevuto \n  // un alert, e quindi la proprietà total_danger_score potrebbe non esistere ancora.\n  SET r.avg_danger_score = (n.total_danger_score + coalesce(m.total_danger_score, 0.0)) / 2.0\n  \n  // Raggruppa i risultati per restituire il nodo 'n' una sola volta a Node-RED\n  WITH DISTINCT n\n  RETURN n;\n`;\n\nmsg.params = {\n  department: department,\n  room: room,\n  danger_data: to_save\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1386,6 +1360,33 @@
                 "d4eb6054a291814a"
             ]
         ]
+    },
+    {
+        "id": "e1481f7c737be05b",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2540,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "2462e5b11fedee01",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "simulated agent output",
+        "info": "",
+        "x": 220,
+        "y": 980,
+        "wires": []
     },
     {
         "id": "9f334cea07f5104a",

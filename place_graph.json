@@ -2,7 +2,7 @@
     {
         "node_var": "cisco",
         "department": "departmentA",
-        "room_name": "cisco",
+        "room": "cisco",
         "weight": 4,
         "connected_to": [
             "c1"
@@ -11,7 +11,7 @@
     {
         "node_var": "la1",
         "department": "departmentA",
-        "room_name": "LA1",
+        "room": "LA1",
         "weight": 10,
         "connected_to": [
             "c1",
@@ -21,7 +21,7 @@
     {
         "node_var": "tlab",
         "department": "departmentA",
-        "room_name": "TeamLab",
+        "room": "TeamLab",
         "weight": 8,
         "connected_to": [
             "e3",
@@ -32,7 +32,7 @@
     {
         "node_var": "aa1",
         "department": "departmentA",
-        "room_name": "AA1",
+        "room": "AA1",
         "weight": 10,
         "connected_to": [
             "c1",
@@ -43,7 +43,7 @@
     {
         "node_var": "ab1",
         "department": "departmentA",
-        "room_name": "AB1",
+        "room": "AB1",
         "weight": 8,
         "connected_to": [
             "c3",
@@ -53,7 +53,7 @@
     {
         "node_var": "ab2",
         "department": "departmentA",
-        "room_name": "AB2",
+        "room": "AB2",
         "weight": 8,
         "connected_to": [
             "c3",
@@ -63,7 +63,7 @@
     {
         "node_var": "ab3",
         "department": "departmentA",
-        "room_name": "AB3",
+        "room": "AB3",
         "weight": 7,
         "connected_to": [
             "c3",
@@ -73,7 +73,7 @@
     {
         "node_var": "aric",
         "department": "departmentA",
-        "room_name": "AulaRicercatori",
+        "room": "AulaRicercatori",
         "weight": 5,
         "connected_to": [
             "c3"
@@ -82,7 +82,7 @@
     {
         "node_var": "sriunioni",
         "department": "departmentA",
-        "room_name": "SalaRiunioni",
+        "room": "SalaRiunioni",
         "weight": 5,
         "connected_to": [
             "c3",
@@ -92,7 +92,7 @@
     {
         "node_var": "uprof",
         "department": "departmentA",
-        "room_name": "UfficiProf",
+        "room": "UfficiProf",
         "weight": 9,
         "connected_to": [
             "c3"
@@ -101,7 +101,7 @@
     {
         "node_var": "scale",
         "department": "departmentA",
-        "room_name": "scale",
+        "room": "scale",
         "weight": 3,
         "connected_to": [
             "c1",
@@ -111,7 +111,7 @@
     {
         "node_var": "c1",
         "department": "departmentA",
-        "room_name": "C1",
+        "room": "C1",
         "weight": 7,
         "connected_to": [
             "tlab",
@@ -127,7 +127,7 @@
     {
         "node_var": "c2",
         "department": "departmentA",
-        "room_name": "C2",
+        "room": "C2",
         "weight": 2,
         "connected_to": [
             "tlab",
@@ -138,7 +138,7 @@
     {
         "node_var": "c3",
         "department": "departmentA",
-        "room_name": "C3",
+        "room": "C3",
         "weight": 9,
         "connected_to": [
             "ab1",
@@ -154,7 +154,7 @@
     {
         "node_var": "e1",
         "department": "departmentA",
-        "room_name": "E1",
+        "room": "E1",
         "weight": 4,
         "connected_to": [
             "la1",
@@ -165,7 +165,7 @@
     {
         "node_var": "e2",
         "department": "departmentA",
-        "room_name": "E2",
+        "room": "E2",
         "weight": 2,
         "connected_to": [
             "c2"
@@ -174,7 +174,7 @@
     {
         "node_var": "e3",
         "department": "departmentA",
-        "room_name": "E3",
+        "room": "E3",
         "weight": 4,
         "connected_to": [
             "tlab",
@@ -184,7 +184,7 @@
     {
         "node_var": "e4",
         "department": "departmentA",
-        "room_name": "E4",
+        "room": "E4",
         "weight": 2,
         "connected_to": [
             "c1"
@@ -193,7 +193,7 @@
     {
         "node_var": "e5",
         "department": "departmentA",
-        "room_name": "E5",
+        "room": "E5",
         "weight": 4,
         "connected_to": [
             "c3",
@@ -204,7 +204,7 @@
     {
         "node_var": "e6",
         "department": "departmentA",
-        "room_name": "E6",
+        "room": "E6",
         "weight": 2,
         "connected_to": [
             "ab3"
@@ -213,7 +213,7 @@
     {
         "node_var": "e7",
         "department": "departmentA",
-        "room_name": "E7",
+        "room": "E7",
         "weight": 2,
         "connected_to": [
             "sriunioni"
