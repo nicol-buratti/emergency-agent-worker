@@ -1,0 +1,4975 @@
+[
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149368,
+    "sensors": {
+      "light": 72.5,
+      "co2": 437,
+      "temperature": 25.98001,
+      "humidity": 54.59525,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787149379,
+    "sensors": {
+      "light": 107.5,
+      "co2": 415,
+      "temperature": 27.45937,
+      "humidity": 51.45037,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787149389,
+    "sensors": {
+      "light": 132.5,
+      "co2": 422,
+      "temperature": 26.06813,
+      "humidity": 54.56168,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149391,
+    "sensors": {
+      "light": 52.5,
+      "co2": 444,
+      "temperature": 24.88251,
+      "humidity": 55.48333,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149404,
+    "sensors": {
+      "light": 249.1667,
+      "co2": 426,
+      "temperature": 26.02274,
+      "humidity": 53.15175,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149405,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 414,
+      "temperature": 25.16289,
+      "humidity": 53.04036,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149414,
+    "sensors": {
+      "light": 444.1667,
+      "co2": 413,
+      "temperature": 25.96666,
+      "humidity": 54.5861,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149428,
+    "sensors": {
+      "light": 72.5,
+      "co2": 440,
+      "temperature": 25.98802,
+      "humidity": 54.57999,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787149439,
+    "sensors": {
+      "light": 108.3333,
+      "co2": 413,
+      "temperature": 27.48074,
+      "humidity": 51.47173,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787149449,
+    "sensors": {
+      "light": 133.3333,
+      "co2": 421,
+      "temperature": 26.07881,
+      "humidity": 54.52048,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149451,
+    "sensors": {
+      "light": 52.5,
+      "co2": 443,
+      "temperature": 24.88518,
+      "humidity": 55.56268,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149464,
+    "sensors": {
+      "light": 250,
+      "co2": 426,
+      "temperature": 26.0441,
+      "humidity": 53.13039,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149465,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 415,
+      "temperature": 25.16823,
+      "humidity": 53.09377,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149474,
+    "sensors": {
+      "light": 445,
+      "co2": 414,
+      "temperature": 25.95865,
+      "humidity": 54.59373,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149488,
+    "sensors": {
+      "light": 72.5,
+      "co2": 439,
+      "temperature": 25.972,
+      "humidity": 54.56931,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787149499,
+    "sensors": {
+      "light": 108.3333,
+      "co2": 414,
+      "temperature": 27.42733,
+      "humidity": 51.36644,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787149509,
+    "sensors": {
+      "light": 133.3333,
+      "co2": 420,
+      "temperature": 26.10285,
+      "humidity": 54.53117,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149511,
+    "sensors": {
+      "light": 53.33333,
+      "co2": 443,
+      "temperature": 24.86114,
+      "humidity": 55.54742,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149524,
+    "sensors": {
+      "light": 251.6667,
+      "co2": 424,
+      "temperature": 26.06279,
+      "humidity": 53.10902,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149525,
+    "sensors": {
+      "light": 248.3333,
+      "co2": 415,
+      "temperature": 25.16556,
+      "humidity": 53.03273,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149534,
+    "sensors": {
+      "light": 444.1667,
+      "co2": 414,
+      "temperature": 25.95865,
+      "humidity": 54.69291,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149548,
+    "sensors": {
+      "light": 72.5,
+      "co2": 441,
+      "temperature": 25.94797,
+      "humidity": 54.61662,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787149559,
+    "sensors": {
+      "light": 108.3333,
+      "co2": 415,
+      "temperature": 27.46738,
+      "humidity": 51.48089,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787149569,
+    "sensors": {
+      "light": 133.3333,
+      "co2": 420,
+      "temperature": 26.07347,
+      "humidity": 54.56931,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149571,
+    "sensors": {
+      "light": 53.33333,
+      "co2": 444,
+      "temperature": 24.83711,
+      "humidity": 55.5581,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149584,
+    "sensors": {
+      "light": 250,
+      "co2": 425,
+      "temperature": 26.03609,
+      "humidity": 53.08766,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149585,
+    "sensors": {
+      "light": 247.5,
+      "co2": 415,
+      "temperature": 25.15488,
+      "humidity": 53.03731,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149594,
+    "sensors": {
+      "light": 438.3333,
+      "co2": 413,
+      "temperature": 25.91058,
+      "humidity": 54.70512,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149608,
+    "sensors": {
+      "light": 72.5,
+      "co2": 440,
+      "temperature": 25.95865,
+      "humidity": 54.56016,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787149619,
+    "sensors": {
+      "light": 108.3333,
+      "co2": 416,
+      "temperature": 27.48875,
+      "humidity": 51.54803,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787149629,
+    "sensors": {
+      "light": 133.3333,
+      "co2": 418,
+      "temperature": 26.05745,
+      "humidity": 54.60136,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149631,
+    "sensors": {
+      "light": 53.33333,
+      "co2": 445,
+      "temperature": 24.86114,
+      "humidity": 55.58251,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149644,
+    "sensors": {
+      "light": 249.1667,
+      "co2": 426,
+      "temperature": 26.04944,
+      "humidity": 53.03273,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149645,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 414,
+      "temperature": 25.17624,
+      "humidity": 53.00069,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787149650,
+    "sensors": {
+      "light": 466.6667,
+      "co2": 424,
+      "temperature": 27.10956,
+      "humidity": 50.81102,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149654,
+    "sensors": {
+      "light": 440.8333,
+      "co2": 413,
+      "temperature": 25.88922,
+      "humidity": 54.76921,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149668,
+    "sensors": {
+      "light": 72.5,
+      "co2": 439,
+      "temperature": 25.95598,
+      "humidity": 54.57694,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149691,
+    "sensors": {
+      "light": 53.33333,
+      "co2": 447,
+      "temperature": 24.8558,
+      "humidity": 55.52758,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149704,
+    "sensors": {
+      "light": 253.3333,
+      "co2": 427,
+      "temperature": 26.04677,
+      "humidity": 53.0312,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149705,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 414,
+      "temperature": 25.17357,
+      "humidity": 52.97475,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787149710,
+    "sensors": {
+      "light": 466.6667,
+      "co2": 427,
+      "temperature": 27.14427,
+      "humidity": 50.8217,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149714,
+    "sensors": {
+      "light": 438.3333,
+      "co2": 413,
+      "temperature": 25.88121,
+      "humidity": 54.80888,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149728,
+    "sensors": {
+      "light": 72.5,
+      "co2": 440,
+      "temperature": 25.95064,
+      "humidity": 54.53422,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149751,
+    "sensors": {
+      "light": 54.16666,
+      "co2": 444,
+      "temperature": 24.84245,
+      "humidity": 55.60387,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149764,
+    "sensors": {
+      "light": 248.3333,
+      "co2": 427,
+      "temperature": 26.0708,
+      "humidity": 53.00221,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149765,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 413,
+      "temperature": 25.17624,
+      "humidity": 52.95033,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787149770,
+    "sensors": {
+      "light": 464.1667,
+      "co2": 428,
+      "temperature": 27.1149,
+      "humidity": 50.78813,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149774,
+    "sensors": {
+      "light": 435.8333,
+      "co2": 413,
+      "temperature": 25.87053,
+      "humidity": 54.88365,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149788,
+    "sensors": {
+      "light": 72.5,
+      "co2": 439,
+      "temperature": 25.9453,
+      "humidity": 54.56779,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149811,
+    "sensors": {
+      "light": 54.16666,
+      "co2": 446,
+      "temperature": 24.81842,
+      "humidity": 55.53521,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149824,
+    "sensors": {
+      "light": 248.3333,
+      "co2": 427,
+      "temperature": 26.06279,
+      "humidity": 53.03426,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149825,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 413,
+      "temperature": 25.1709,
+      "humidity": 52.92134,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787149830,
+    "sensors": {
+      "light": 462.5,
+      "co2": 430,
+      "temperature": 27.1149,
+      "humidity": 50.76524,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149834,
+    "sensors": {
+      "light": 434.1667,
+      "co2": 415,
+      "temperature": 25.8732,
+      "humidity": 54.94926,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149848,
+    "sensors": {
+      "light": 72.5,
+      "co2": 438,
+      "temperature": 25.91859,
+      "humidity": 54.49912,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149871,
+    "sensors": {
+      "light": 53.33333,
+      "co2": 445,
+      "temperature": 24.80774,
+      "humidity": 55.54131,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149884,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 427,
+      "temperature": 26.0708,
+      "humidity": 52.98695,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149885,
+    "sensors": {
+      "light": 245,
+      "co2": 414,
+      "temperature": 25.18425,
+      "humidity": 52.92592,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787149890,
+    "sensors": {
+      "light": 459.1667,
+      "co2": 431,
+      "temperature": 27.12291,
+      "humidity": 50.75761,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149894,
+    "sensors": {
+      "light": 435.8333,
+      "co2": 415,
+      "temperature": 25.83848,
+      "humidity": 55.01335,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787149908,
+    "sensors": {
+      "light": 72.5,
+      "co2": 441,
+      "temperature": 25.8999,
+      "humidity": 54.49607,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787149931,
+    "sensors": {
+      "light": 54.16666,
+      "co2": 445,
+      "temperature": 24.80507,
+      "humidity": 55.58404,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787149944,
+    "sensors": {
+      "light": 248.3333,
+      "co2": 427,
+      "temperature": 26.07614,
+      "humidity": 52.96254,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787149945,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 414,
+      "temperature": 25.19226,
+      "humidity": 52.87709,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787149950,
+    "sensors": {
+      "light": 460.8333,
+      "co2": 430,
+      "temperature": 27.12558,
+      "humidity": 50.71183,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787149954,
+    "sensors": {
+      "light": 433.3333,
+      "co2": 415,
+      "temperature": 25.83314,
+      "humidity": 55.07133,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150004,
+    "sensors": {
+      "light": 248.3333,
+      "co2": 427,
+      "temperature": 26.08415,
+      "humidity": 52.98848,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150005,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 413,
+      "temperature": 25.18959,
+      "humidity": 52.85878,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150010,
+    "sensors": {
+      "light": 460,
+      "co2": 430,
+      "temperature": 27.12558,
+      "humidity": 50.74235,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150014,
+    "sensors": {
+      "light": 434.1667,
+      "co2": 415,
+      "temperature": 25.81979,
+      "humidity": 55.10338,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150064,
+    "sensors": {
+      "light": 248.3333,
+      "co2": 426,
+      "temperature": 26.10018,
+      "humidity": 52.99916,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150065,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 412,
+      "temperature": 25.19761,
+      "humidity": 52.88014,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150070,
+    "sensors": {
+      "light": 459.1667,
+      "co2": 429,
+      "temperature": 27.1416,
+      "humidity": 50.75151,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150074,
+    "sensors": {
+      "light": 430.8333,
+      "co2": 413,
+      "temperature": 25.79042,
+      "humidity": 55.14153,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150124,
+    "sensors": {
+      "light": 247.5,
+      "co2": 425,
+      "temperature": 26.09216,
+      "humidity": 52.96559,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150125,
+    "sensors": {
+      "light": 245,
+      "co2": 413,
+      "temperature": 25.18158,
+      "humidity": 52.86488,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150130,
+    "sensors": {
+      "light": 456.6667,
+      "co2": 428,
+      "temperature": 27.16297,
+      "humidity": 50.71489,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150134,
+    "sensors": {
+      "light": 429.1667,
+      "co2": 413,
+      "temperature": 25.77974,
+      "humidity": 55.24834,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150184,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 425,
+      "temperature": 26.12688,
+      "humidity": 52.89693,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150185,
+    "sensors": {
+      "light": 244.1667,
+      "co2": 412,
+      "temperature": 25.17624,
+      "humidity": 52.76875,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150190,
+    "sensors": {
+      "light": 454.1667,
+      "co2": 429,
+      "temperature": 27.1416,
+      "humidity": 50.69047,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150194,
+    "sensors": {
+      "light": 425.8333,
+      "co2": 414,
+      "temperature": 25.77707,
+      "humidity": 55.24834,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150244,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 424,
+      "temperature": 26.11887,
+      "humidity": 52.8954,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150245,
+    "sensors": {
+      "light": 243.3333,
+      "co2": 415,
+      "temperature": 25.18959,
+      "humidity": 52.82521,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150250,
+    "sensors": {
+      "light": 449.1667,
+      "co2": 430,
+      "temperature": 27.15495,
+      "humidity": 50.72252,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150254,
+    "sensors": {
+      "light": 422.5,
+      "co2": 414,
+      "temperature": 25.76371,
+      "humidity": 55.31395,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150304,
+    "sensors": {
+      "light": 245,
+      "co2": 424,
+      "temperature": 26.12421,
+      "humidity": 52.83894,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150305,
+    "sensors": {
+      "light": 241.6667,
+      "co2": 412,
+      "temperature": 25.20028,
+      "humidity": 52.78553,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150310,
+    "sensors": {
+      "light": 445.8333,
+      "co2": 426,
+      "temperature": 27.19768,
+      "humidity": 50.70268,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150314,
+    "sensors": {
+      "light": 418.3333,
+      "co2": 413,
+      "temperature": 25.75303,
+      "humidity": 55.37194,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150364,
+    "sensors": {
+      "light": 249.1667,
+      "co2": 424,
+      "temperature": 26.15625,
+      "humidity": 52.91676,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150365,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 411,
+      "temperature": 25.19761,
+      "humidity": 52.75959,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150370,
+    "sensors": {
+      "light": 455.8333,
+      "co2": 426,
+      "temperature": 27.1603,
+      "humidity": 50.692,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150374,
+    "sensors": {
+      "light": 431.6667,
+      "co2": 413,
+      "temperature": 25.80644,
+      "humidity": 55.3933,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150424,
+    "sensors": {
+      "light": 257.5,
+      "co2": 426,
+      "temperature": 26.1429,
+      "humidity": 52.79316,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150425,
+    "sensors": {
+      "light": 247.5,
+      "co2": 410,
+      "temperature": 25.19761,
+      "humidity": 52.68177,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150430,
+    "sensors": {
+      "light": 454.1667,
+      "co2": 427,
+      "temperature": 27.16564,
+      "humidity": 50.64622,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150434,
+    "sensors": {
+      "light": 432.5,
+      "co2": 414,
+      "temperature": 25.87053,
+      "humidity": 55.3811,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150484,
+    "sensors": {
+      "light": 248.3333,
+      "co2": 425,
+      "temperature": 26.1696,
+      "humidity": 52.76417,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150485,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 412,
+      "temperature": 25.22698,
+      "humidity": 52.73518,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150490,
+    "sensors": {
+      "light": 453.3333,
+      "co2": 428,
+      "temperature": 27.18967,
+      "humidity": 50.66301,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150494,
+    "sensors": {
+      "light": 430.8333,
+      "co2": 414,
+      "temperature": 25.93728,
+      "humidity": 55.27733,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150544,
+    "sensors": {
+      "light": 247.5,
+      "co2": 425,
+      "temperature": 26.14824,
+      "humidity": 52.76112,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150545,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 411,
+      "temperature": 25.19761,
+      "humidity": 52.65583,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150550,
+    "sensors": {
+      "light": 450,
+      "co2": 429,
+      "temperature": 27.19234,
+      "humidity": 50.57755,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150554,
+    "sensors": {
+      "light": 430,
+      "co2": 414,
+      "temperature": 26.01472,
+      "humidity": 55.17357,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150604,
+    "sensors": {
+      "light": 247.5,
+      "co2": 426,
+      "temperature": 26.16693,
+      "humidity": 52.74739,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150605,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 412,
+      "temperature": 25.19761,
+      "humidity": 52.68177,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150610,
+    "sensors": {
+      "light": 448.3333,
+      "co2": 427,
+      "temperature": 27.19501,
+      "humidity": 50.59434,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150614,
+    "sensors": {
+      "light": 430.8333,
+      "co2": 415,
+      "temperature": 26.0708,
+      "humidity": 55.05302,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150664,
+    "sensors": {
+      "light": 247.5,
+      "co2": 426,
+      "temperature": 26.20165,
+      "humidity": 52.7779,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150665,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 413,
+      "temperature": 25.20028,
+      "humidity": 52.63905,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150670,
+    "sensors": {
+      "light": 448.3333,
+      "co2": 427,
+      "temperature": 27.22705,
+      "humidity": 50.56535,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150674,
+    "sensors": {
+      "light": 431.6667,
+      "co2": 416,
+      "temperature": 26.12688,
+      "humidity": 54.8516,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787150694,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 418,
+      "temperature": 26.85588,
+      "humidity": 55.55352,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150724,
+    "sensors": {
+      "light": 247.5,
+      "co2": 425,
+      "temperature": 26.19364,
+      "humidity": 52.73518,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150725,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 412,
+      "temperature": 25.22431,
+      "humidity": 52.6482,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150730,
+    "sensors": {
+      "light": 446.6667,
+      "co2": 427,
+      "temperature": 27.21904,
+      "humidity": 50.52567,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150734,
+    "sensors": {
+      "light": 429.1667,
+      "co2": 417,
+      "temperature": 26.18563,
+      "humidity": 54.73869,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787150754,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 420,
+      "temperature": 26.85054,
+      "humidity": 55.523,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150784,
+    "sensors": {
+      "light": 246.6667,
+      "co2": 426,
+      "temperature": 26.22568,
+      "humidity": 52.72297,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150785,
+    "sensors": {
+      "light": 245,
+      "co2": 411,
+      "temperature": 25.20562,
+      "humidity": 52.62379,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150790,
+    "sensors": {
+      "light": 444.1667,
+      "co2": 426,
+      "temperature": 27.22705,
+      "humidity": 50.53483,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150794,
+    "sensors": {
+      "light": 429.1667,
+      "co2": 419,
+      "temperature": 26.22034,
+      "humidity": 54.65171,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787150814,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 419,
+      "temperature": 26.86122,
+      "humidity": 55.51385,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150844,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 427,
+      "temperature": 26.21233,
+      "humidity": 52.69703,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150845,
+    "sensors": {
+      "light": 245,
+      "co2": 411,
+      "temperature": 25.20295,
+      "humidity": 52.63142,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150850,
+    "sensors": {
+      "light": 441.6667,
+      "co2": 427,
+      "temperature": 27.25643,
+      "humidity": 50.56687,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150854,
+    "sensors": {
+      "light": 428.3333,
+      "co2": 419,
+      "temperature": 26.20432,
+      "humidity": 54.48692,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787150874,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 423,
+      "temperature": 26.87991,
+      "humidity": 55.47875,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150904,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 427,
+      "temperature": 26.22835,
+      "humidity": 52.67567,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150905,
+    "sensors": {
+      "light": 245,
+      "co2": 412,
+      "temperature": 25.20295,
+      "humidity": 52.58869,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150910,
+    "sensors": {
+      "light": 441.6667,
+      "co2": 428,
+      "temperature": 27.25376,
+      "humidity": 50.51347,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150914,
+    "sensors": {
+      "light": 430.8333,
+      "co2": 417,
+      "temperature": 26.19631,
+      "humidity": 54.34043,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787150934,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 424,
+      "temperature": 26.85855,
+      "humidity": 55.54436,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787150964,
+    "sensors": {
+      "light": 245.8333,
+      "co2": 425,
+      "temperature": 26.24437,
+      "humidity": 52.65278,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787150965,
+    "sensors": {
+      "light": 245,
+      "co2": 413,
+      "temperature": 25.20562,
+      "humidity": 52.52155,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787150970,
+    "sensors": {
+      "light": 440,
+      "co2": 426,
+      "temperature": 27.24308,
+      "humidity": 50.48142,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787150974,
+    "sensors": {
+      "light": 430.8333,
+      "co2": 418,
+      "temperature": 26.17761,
+      "humidity": 54.18479,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787150994,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 423,
+      "temperature": 26.8719,
+      "humidity": 55.51232,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151024,
+    "sensors": {
+      "light": 245,
+      "co2": 427,
+      "temperature": 26.23369,
+      "humidity": 52.66804,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151025,
+    "sensors": {
+      "light": 245,
+      "co2": 414,
+      "temperature": 25.25368,
+      "humidity": 52.58106,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151030,
+    "sensors": {
+      "light": 439.1667,
+      "co2": 427,
+      "temperature": 27.24842,
+      "humidity": 50.46769,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "B1-03",
+    "collected_at": 1787151034,
+    "sensors": {
+      "light": 431.6667,
+      "co2": 418,
+      "temperature": 26.12154,
+      "humidity": 54.17258,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151054,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 421,
+      "temperature": 26.86389,
+      "humidity": 55.52911,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151084,
+    "sensors": {
+      "light": 243.3333,
+      "co2": 427,
+      "temperature": 26.25772,
+      "humidity": 52.67872,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151085,
+    "sensors": {
+      "light": 243.3333,
+      "co2": 414,
+      "temperature": 25.23499,
+      "humidity": 52.59174,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151090,
+    "sensors": {
+      "light": 432.5,
+      "co2": 428,
+      "temperature": 27.27779,
+      "humidity": 50.48447,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151114,
+    "sensors": {
+      "light": 65,
+      "co2": 421,
+      "temperature": 26.88258,
+      "humidity": 55.48638,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151144,
+    "sensors": {
+      "light": 240.8333,
+      "co2": 427,
+      "temperature": 26.26574,
+      "humidity": 52.6482,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151145,
+    "sensors": {
+      "light": 240.8333,
+      "co2": 413,
+      "temperature": 25.23499,
+      "humidity": 52.58259,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151150,
+    "sensors": {
+      "light": 428.3333,
+      "co2": 429,
+      "temperature": 27.28847,
+      "humidity": 50.50736,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151174,
+    "sensors": {
+      "light": 65,
+      "co2": 422,
+      "temperature": 26.86923,
+      "humidity": 55.44213,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151204,
+    "sensors": {
+      "light": 243.3333,
+      "co2": 424,
+      "temperature": 26.27108,
+      "humidity": 52.7306,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151205,
+    "sensors": {
+      "light": 242.5,
+      "co2": 413,
+      "temperature": 25.21897,
+      "humidity": 52.60242,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151210,
+    "sensors": {
+      "light": 432.5,
+      "co2": 429,
+      "temperature": 27.30983,
+      "humidity": 50.47074,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151234,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 421,
+      "temperature": 26.88258,
+      "humidity": 55.41619,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151264,
+    "sensors": {
+      "light": 242.5,
+      "co2": 425,
+      "temperature": 26.29511,
+      "humidity": 52.7657,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151265,
+    "sensors": {
+      "light": 241.6667,
+      "co2": 414,
+      "temperature": 25.22698,
+      "humidity": 52.62379,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151270,
+    "sensors": {
+      "light": 426.6667,
+      "co2": 429,
+      "temperature": 27.26978,
+      "humidity": 50.50736,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151294,
+    "sensors": {
+      "light": 63.33333,
+      "co2": 420,
+      "temperature": 26.90394,
+      "humidity": 55.42077,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151324,
+    "sensors": {
+      "light": 240,
+      "co2": 424,
+      "temperature": 26.3138,
+      "humidity": 52.70314,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151325,
+    "sensors": {
+      "light": 240,
+      "co2": 413,
+      "temperature": 25.23499,
+      "humidity": 52.66957,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151330,
+    "sensors": {
+      "light": 423.3333,
+      "co2": 427,
+      "temperature": 27.26978,
+      "humidity": 50.48447,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151354,
+    "sensors": {
+      "light": 63.33333,
+      "co2": 422,
+      "temperature": 26.87991,
+      "humidity": 55.44061,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151384,
+    "sensors": {
+      "light": 240.8333,
+      "co2": 425,
+      "temperature": 26.30579,
+      "humidity": 52.69398,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151385,
+    "sensors": {
+      "light": 240.8333,
+      "co2": 412,
+      "temperature": 25.22965,
+      "humidity": 52.68483,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151390,
+    "sensors": {
+      "light": 425.8333,
+      "co2": 425,
+      "temperature": 27.29915,
+      "humidity": 50.486,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151414,
+    "sensors": {
+      "light": 63.33333,
+      "co2": 421,
+      "temperature": 26.89059,
+      "humidity": 55.45434,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151426,
+    "sensors": {
+      "light": 231.6667,
+      "co2": 422,
+      "temperature": 23.91051,
+      "humidity": 60.01984,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151444,
+    "sensors": {
+      "light": 240.8333,
+      "co2": 422,
+      "temperature": 26.32982,
+      "humidity": 52.76112,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151445,
+    "sensors": {
+      "light": 241.6667,
+      "co2": 412,
+      "temperature": 25.2163,
+      "humidity": 52.69703,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151450,
+    "sensors": {
+      "light": 424.1667,
+      "co2": 428,
+      "temperature": 27.32853,
+      "humidity": 50.5333,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151474,
+    "sensors": {
+      "light": 63.33333,
+      "co2": 420,
+      "temperature": 26.87724,
+      "humidity": 55.346,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151486,
+    "sensors": {
+      "light": 230,
+      "co2": 422,
+      "temperature": 23.89982,
+      "humidity": 60.13733,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151504,
+    "sensors": {
+      "light": 239.1667,
+      "co2": 424,
+      "temperature": 26.32982,
+      "humidity": 52.75349,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151505,
+    "sensors": {
+      "light": 240,
+      "co2": 412,
+      "temperature": 25.24567,
+      "humidity": 52.70619,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151510,
+    "sensors": {
+      "light": 418.3333,
+      "co2": 427,
+      "temperature": 27.34455,
+      "humidity": 50.47227,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151534,
+    "sensors": {
+      "light": 63.33333,
+      "co2": 421,
+      "temperature": 26.89593,
+      "humidity": 55.34447,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151546,
+    "sensors": {
+      "light": 232.5,
+      "co2": 424,
+      "temperature": 23.87579,
+      "humidity": 60.23346,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151564,
+    "sensors": {
+      "light": 240,
+      "co2": 425,
+      "temperature": 26.35653,
+      "humidity": 52.70771,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151565,
+    "sensors": {
+      "light": 241.6667,
+      "co2": 412,
+      "temperature": 25.23232,
+      "humidity": 52.71992,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151570,
+    "sensors": {
+      "light": 420,
+      "co2": 428,
+      "temperature": 27.3579,
+      "humidity": 50.49668,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151594,
+    "sensors": {
+      "light": 62.5,
+      "co2": 419,
+      "temperature": 26.88792,
+      "humidity": 55.44671,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151606,
+    "sensors": {
+      "light": 231.6667,
+      "co2": 427,
+      "temperature": 23.86778,
+      "humidity": 60.32502,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151624,
+    "sensors": {
+      "light": 239.1667,
+      "co2": 426,
+      "temperature": 26.36187,
+      "humidity": 52.71687,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151625,
+    "sensors": {
+      "light": 240.8333,
+      "co2": 412,
+      "temperature": 25.24567,
+      "humidity": 52.68177,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151630,
+    "sensors": {
+      "light": 416.6667,
+      "co2": 429,
+      "temperature": 27.36057,
+      "humidity": 50.50431,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151654,
+    "sensors": {
+      "light": 62.5,
+      "co2": 421,
+      "temperature": 26.88258,
+      "humidity": 55.45586,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151666,
+    "sensors": {
+      "light": 229.1667,
+      "co2": 426,
+      "temperature": 23.86244,
+      "humidity": 60.4242,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151684,
+    "sensors": {
+      "light": 235.8333,
+      "co2": 428,
+      "temperature": 26.37522,
+      "humidity": 52.69398,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151685,
+    "sensors": {
+      "light": 238.3333,
+      "co2": 415,
+      "temperature": 25.25635,
+      "humidity": 52.7184,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151690,
+    "sensors": {
+      "light": 410,
+      "co2": 428,
+      "temperature": 27.37392,
+      "humidity": 50.4509,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151714,
+    "sensors": {
+      "light": 62.5,
+      "co2": 419,
+      "temperature": 26.88258,
+      "humidity": 55.36126,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151726,
+    "sensors": {
+      "light": 231.6667,
+      "co2": 426,
+      "temperature": 23.85176,
+      "humidity": 60.57984,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-01",
+    "collected_at": 1787151744,
+    "sensors": {
+      "light": 237.5,
+      "co2": 427,
+      "temperature": 26.38056,
+      "humidity": 52.74281,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB1-01",
+    "collected_at": 1787151745,
+    "sensors": {
+      "light": 240,
+      "co2": 413,
+      "temperature": 25.23499,
+      "humidity": 52.71992,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151750,
+    "sensors": {
+      "light": 413.3333,
+      "co2": 427,
+      "temperature": 27.38193,
+      "humidity": 50.49058,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151774,
+    "sensors": {
+      "light": 62.5,
+      "co2": 420,
+      "temperature": 26.9173,
+      "humidity": 55.41924,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151786,
+    "sensors": {
+      "light": 234.1667,
+      "co2": 426,
+      "temperature": 23.8838,
+      "humidity": 60.60578,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151810,
+    "sensors": {
+      "light": 413.3333,
+      "co2": 425,
+      "temperature": 27.39261,
+      "humidity": 50.49821,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151834,
+    "sensors": {
+      "light": 62.5,
+      "co2": 419,
+      "temperature": 26.90661,
+      "humidity": 55.43603,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151846,
+    "sensors": {
+      "light": 236.6667,
+      "co2": 427,
+      "temperature": 23.93988,
+      "humidity": 60.60731,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151870,
+    "sensors": {
+      "light": 414.1667,
+      "co2": 425,
+      "temperature": 27.40864,
+      "humidity": 50.41428,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151894,
+    "sensors": {
+      "light": 62.5,
+      "co2": 420,
+      "temperature": 26.89059,
+      "humidity": 55.29717,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151906,
+    "sensors": {
+      "light": 238.3333,
+      "co2": 428,
+      "temperature": 24.02266,
+      "humidity": 60.57679,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151930,
+    "sensors": {
+      "light": 415,
+      "co2": 422,
+      "temperature": 27.40597,
+      "humidity": 50.42954,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787151954,
+    "sensors": {
+      "light": 62.5,
+      "co2": 420,
+      "temperature": 26.91463,
+      "humidity": 55.32616,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787151966,
+    "sensors": {
+      "light": 242.5,
+      "co2": 429,
+      "temperature": 24.11612,
+      "humidity": 60.50202,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787151990,
+    "sensors": {
+      "light": 416.6667,
+      "co2": 427,
+      "temperature": 27.42733,
+      "humidity": 50.48447,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152014,
+    "sensors": {
+      "light": 62.5,
+      "co2": 419,
+      "temperature": 26.9173,
+      "humidity": 55.34905,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152026,
+    "sensors": {
+      "light": 242.5,
+      "co2": 427,
+      "temperature": 24.15618,
+      "humidity": 60.32502,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152050,
+    "sensors": {
+      "light": 415,
+      "co2": 428,
+      "temperature": 27.45937,
+      "humidity": 50.44022,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152074,
+    "sensors": {
+      "light": 62.5,
+      "co2": 418,
+      "temperature": 26.91195,
+      "humidity": 55.29412,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152086,
+    "sensors": {
+      "light": 240.8333,
+      "co2": 428,
+      "temperature": 24.19623,
+      "humidity": 60.19532,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152110,
+    "sensors": {
+      "light": 405,
+      "co2": 427,
+      "temperature": 27.4567,
+      "humidity": 50.37156,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152134,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 419,
+      "temperature": 26.91463,
+      "humidity": 55.37194,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152146,
+    "sensors": {
+      "light": 238.3333,
+      "co2": 429,
+      "temperature": 24.25498,
+      "humidity": 60.09613,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152170,
+    "sensors": {
+      "light": 403.3333,
+      "co2": 428,
+      "temperature": 27.47807,
+      "humidity": 50.40208,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152194,
+    "sensors": {
+      "light": 62.5,
+      "co2": 419,
+      "temperature": 26.93866,
+      "humidity": 55.33837,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152206,
+    "sensors": {
+      "light": 239.1667,
+      "co2": 429,
+      "temperature": 24.26032,
+      "humidity": 59.97864,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152230,
+    "sensors": {
+      "light": 401.6667,
+      "co2": 426,
+      "temperature": 27.45937,
+      "humidity": 50.43259,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152254,
+    "sensors": {
+      "light": 62.5,
+      "co2": 419,
+      "temperature": 26.92264,
+      "humidity": 55.2697,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152266,
+    "sensors": {
+      "light": 240,
+      "co2": 430,
+      "temperature": 24.25765,
+      "humidity": 59.87946,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152290,
+    "sensors": {
+      "light": 402.5,
+      "co2": 426,
+      "temperature": 27.47807,
+      "humidity": 50.3563,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152314,
+    "sensors": {
+      "light": 62.5,
+      "co2": 420,
+      "temperature": 26.9173,
+      "humidity": 55.29412,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152326,
+    "sensors": {
+      "light": 240,
+      "co2": 431,
+      "temperature": 24.26032,
+      "humidity": 59.77111,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152350,
+    "sensors": {
+      "light": 401.6667,
+      "co2": 424,
+      "temperature": 27.47807,
+      "humidity": 50.37156,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152374,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 420,
+      "temperature": 26.91195,
+      "humidity": 55.17662,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152386,
+    "sensors": {
+      "light": 239.1667,
+      "co2": 432,
+      "temperature": 24.22026,
+      "humidity": 59.67346,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152410,
+    "sensors": {
+      "light": 397.5,
+      "co2": 426,
+      "temperature": 27.5021,
+      "humidity": 50.38071,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152434,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 420,
+      "temperature": 26.92531,
+      "humidity": 55.23766,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152446,
+    "sensors": {
+      "light": 236.6667,
+      "co2": 429,
+      "temperature": 24.14549,
+      "humidity": 59.6231,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152470,
+    "sensors": {
+      "light": 398.3333,
+      "co2": 427,
+      "temperature": 27.52079,
+      "humidity": 50.38071,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152494,
+    "sensors": {
+      "light": 62.5,
+      "co2": 419,
+      "temperature": 26.93866,
+      "humidity": 55.17357,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152506,
+    "sensors": {
+      "light": 237.5,
+      "co2": 428,
+      "temperature": 24.08942,
+      "humidity": 59.76654,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152530,
+    "sensors": {
+      "light": 397.5,
+      "co2": 429,
+      "temperature": 27.50744,
+      "humidity": 50.29679,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152554,
+    "sensors": {
+      "light": 62.5,
+      "co2": 419,
+      "temperature": 26.944,
+      "humidity": 55.1812,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152566,
+    "sensors": {
+      "light": 237.5,
+      "co2": 429,
+      "temperature": 24.01198,
+      "humidity": 60.03357,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152590,
+    "sensors": {
+      "light": 395.8333,
+      "co2": 428,
+      "temperature": 27.51545,
+      "humidity": 50.34256,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152614,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 420,
+      "temperature": 26.94133,
+      "humidity": 55.22087,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152626,
+    "sensors": {
+      "light": 236.6667,
+      "co2": 428,
+      "temperature": 23.96124,
+      "humidity": 60.19684,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152650,
+    "sensors": {
+      "light": 394.1667,
+      "co2": 427,
+      "temperature": 27.52079,
+      "humidity": 50.34256,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152674,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 420,
+      "temperature": 26.92798,
+      "humidity": 55.19036,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152686,
+    "sensors": {
+      "light": 236.6667,
+      "co2": 427,
+      "temperature": 23.94522,
+      "humidity": 60.35096,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152710,
+    "sensors": {
+      "light": 395,
+      "co2": 428,
+      "temperature": 27.52613,
+      "humidity": 50.33646,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152734,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 422,
+      "temperature": 26.92531,
+      "humidity": 55.2224,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152746,
+    "sensors": {
+      "light": 236.6667,
+      "co2": 426,
+      "temperature": 23.92386,
+      "humidity": 60.48371,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152770,
+    "sensors": {
+      "light": 395,
+      "co2": 428,
+      "temperature": 27.53948,
+      "humidity": 50.24491,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787152794,
+    "sensors": {
+      "light": 95.83333,
+      "co2": 428,
+      "temperature": 25.91859,
+      "humidity": 54.32517,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152794,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 421,
+      "temperature": 26.93332,
+      "humidity": 55.25292,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152806,
+    "sensors": {
+      "light": 238.3333,
+      "co2": 428,
+      "temperature": 23.89181,
+      "humidity": 60.60731,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152830,
+    "sensors": {
+      "light": 395,
+      "co2": 428,
+      "temperature": 27.56084,
+      "humidity": 50.29068,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787152854,
+    "sensors": {
+      "light": 95.83333,
+      "co2": 427,
+      "temperature": 25.93461,
+      "humidity": 54.36789,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152854,
+    "sensors": {
+      "light": 62.5,
+      "co2": 420,
+      "temperature": 26.93332,
+      "humidity": 55.22087,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152866,
+    "sensors": {
+      "light": 237.5,
+      "co2": 430,
+      "temperature": 23.87579,
+      "humidity": 60.73243,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152890,
+    "sensors": {
+      "light": 395,
+      "co2": 428,
+      "temperature": 27.57153,
+      "humidity": 50.26169,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787152914,
+    "sensors": {
+      "light": 95,
+      "co2": 426,
+      "temperature": 25.91592,
+      "humidity": 54.4152,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152914,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 417,
+      "temperature": 26.94133,
+      "humidity": 55.2285,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787152923,
+    "sensors": {
+      "light": 35,
+      "co2": 418,
+      "temperature": 29.19509,
+      "humidity": 40.6714,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787152924,
+    "sensors": {
+      "light": 395,
+      "co2": 424,
+      "temperature": 29.85199,
+      "humidity": 48.29633,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152926,
+    "sensors": {
+      "light": 240,
+      "co2": 429,
+      "temperature": 23.87312,
+      "humidity": 60.82399,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787152950,
+    "sensors": {
+      "light": 390.8333,
+      "co2": 428,
+      "temperature": 27.57954,
+      "humidity": 50.23117,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787152974,
+    "sensors": {
+      "light": 95,
+      "co2": 427,
+      "temperature": 25.90257,
+      "humidity": 54.40604,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787152974,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 417,
+      "temperature": 26.92798,
+      "humidity": 55.15221,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787152983,
+    "sensors": {
+      "light": 35,
+      "co2": 419,
+      "temperature": 29.2031,
+      "humidity": 40.68818,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787152984,
+    "sensors": {
+      "light": 395,
+      "co2": 426,
+      "temperature": 29.83864,
+      "humidity": 48.24598,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787152986,
+    "sensors": {
+      "light": 243.3333,
+      "co2": 427,
+      "temperature": 23.82773,
+      "humidity": 60.95369,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787153010,
+    "sensors": {
+      "light": 389.1667,
+      "co2": 429,
+      "temperature": 27.58488,
+      "humidity": 50.15641,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153034,
+    "sensors": {
+      "light": 94.16666,
+      "co2": 429,
+      "temperature": 25.93194,
+      "humidity": 54.43351,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153034,
+    "sensors": {
+      "light": 62.5,
+      "co2": 417,
+      "temperature": 26.93866,
+      "humidity": 55.11864,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153043,
+    "sensors": {
+      "light": 35,
+      "co2": 421,
+      "temperature": 29.20577,
+      "humidity": 40.62562,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153044,
+    "sensors": {
+      "light": 395,
+      "co2": 426,
+      "temperature": 29.86534,
+      "humidity": 48.31922,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153046,
+    "sensors": {
+      "light": 242.5,
+      "co2": 428,
+      "temperature": 23.80369,
+      "humidity": 61.07881,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787153070,
+    "sensors": {
+      "light": 389.1667,
+      "co2": 428,
+      "temperature": 27.61425,
+      "humidity": 50.19455,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153094,
+    "sensors": {
+      "light": 94.16666,
+      "co2": 431,
+      "temperature": 25.92927,
+      "humidity": 54.39994,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153094,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 417,
+      "temperature": 26.91463,
+      "humidity": 55.08354,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153103,
+    "sensors": {
+      "light": 35,
+      "co2": 420,
+      "temperature": 29.18707,
+      "humidity": 40.62715,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153104,
+    "sensors": {
+      "light": 394.1667,
+      "co2": 425,
+      "temperature": 29.85199,
+      "humidity": 48.31006,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153106,
+    "sensors": {
+      "light": 237.5,
+      "co2": 427,
+      "temperature": 23.80369,
+      "humidity": 61.17189,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787153130,
+    "sensors": {
+      "light": 390,
+      "co2": 427,
+      "temperature": 27.63294,
+      "humidity": 50.16404,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153154,
+    "sensors": {
+      "light": 94.16666,
+      "co2": 430,
+      "temperature": 25.92393,
+      "humidity": 54.44114,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153154,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 415,
+      "temperature": 26.9173,
+      "humidity": 54.98894,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153163,
+    "sensors": {
+      "light": 34.16666,
+      "co2": 421,
+      "temperature": 29.18173,
+      "humidity": 40.66835,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153164,
+    "sensors": {
+      "light": 391.6667,
+      "co2": 425,
+      "temperature": 29.86534,
+      "humidity": 48.27954,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153166,
+    "sensors": {
+      "light": 234.1667,
+      "co2": 428,
+      "temperature": 23.83841,
+      "humidity": 61.21614,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AB2-02",
+    "collected_at": 1787153190,
+    "sensors": {
+      "light": 386.6667,
+      "co2": 428,
+      "temperature": 27.60624,
+      "humidity": 50.11063,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153214,
+    "sensors": {
+      "light": 94.16666,
+      "co2": 431,
+      "temperature": 25.92126,
+      "humidity": 54.41673,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153214,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 416,
+      "temperature": 26.94667,
+      "humidity": 55.04692,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153223,
+    "sensors": {
+      "light": 34.16666,
+      "co2": 421,
+      "temperature": 29.1844,
+      "humidity": 40.59968,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153224,
+    "sensors": {
+      "light": 387.5,
+      "co2": 425,
+      "temperature": 29.87335,
+      "humidity": 48.26429,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153226,
+    "sensors": {
+      "light": 231.6667,
+      "co2": 428,
+      "temperature": 23.90516,
+      "humidity": 61.22835,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153274,
+    "sensors": {
+      "light": 93.33333,
+      "co2": 431,
+      "temperature": 25.92126,
+      "humidity": 54.39994,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153274,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 416,
+      "temperature": 26.93332,
+      "humidity": 54.97826,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153279,
+    "sensors": {
+      "light": 99.16666,
+      "co2": 415,
+      "temperature": 27.71305,
+      "humidity": 52.40406,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153283,
+    "sensors": {
+      "light": 33.33333,
+      "co2": 422,
+      "temperature": 29.16571,
+      "humidity": 40.63478,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153284,
+    "sensors": {
+      "light": 385.8333,
+      "co2": 424,
+      "temperature": 29.87068,
+      "humidity": 48.19867,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153286,
+    "sensors": {
+      "light": 229.1667,
+      "co2": 428,
+      "temperature": 23.98795,
+      "humidity": 61.1307,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153289,
+    "sensors": {
+      "light": 118.3333,
+      "co2": 420,
+      "temperature": 25.90524,
+      "humidity": 55.98688,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153334,
+    "sensors": {
+      "light": 92.5,
+      "co2": 430,
+      "temperature": 25.93461,
+      "humidity": 54.40147,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153334,
+    "sensors": {
+      "light": 60.83333,
+      "co2": 417,
+      "temperature": 26.93065,
+      "humidity": 54.963,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153339,
+    "sensors": {
+      "light": 98.33333,
+      "co2": 414,
+      "temperature": 27.77447,
+      "humidity": 52.35981,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153343,
+    "sensors": {
+      "light": 33.33333,
+      "co2": 423,
+      "temperature": 29.18173,
+      "humidity": 40.59205,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153344,
+    "sensors": {
+      "light": 381.6667,
+      "co2": 423,
+      "temperature": 29.87602,
+      "humidity": 48.27039,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153346,
+    "sensors": {
+      "light": 225,
+      "co2": 429,
+      "temperature": 24.05203,
+      "humidity": 61.03914,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153349,
+    "sensors": {
+      "light": 118.3333,
+      "co2": 420,
+      "temperature": 25.8999,
+      "humidity": 56.02808,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153394,
+    "sensors": {
+      "light": 91.66666,
+      "co2": 431,
+      "temperature": 25.93194,
+      "humidity": 54.4091,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153394,
+    "sensors": {
+      "light": 61.66666,
+      "co2": 418,
+      "temperature": 26.95735,
+      "humidity": 54.8516,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153399,
+    "sensors": {
+      "light": 98.33333,
+      "co2": 414,
+      "temperature": 27.73976,
+      "humidity": 52.25147,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153403,
+    "sensors": {
+      "light": 32.5,
+      "co2": 422,
+      "temperature": 29.1844,
+      "humidity": 40.61951,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153404,
+    "sensors": {
+      "light": 380.8333,
+      "co2": 426,
+      "temperature": 29.88403,
+      "humidity": 48.26886,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153406,
+    "sensors": {
+      "light": 225,
+      "co2": 429,
+      "temperature": 24.12146,
+      "humidity": 60.89418,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153409,
+    "sensors": {
+      "light": 118.3333,
+      "co2": 421,
+      "temperature": 25.92126,
+      "humidity": 56.04486,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153454,
+    "sensors": {
+      "light": 91.66666,
+      "co2": 432,
+      "temperature": 25.92393,
+      "humidity": 54.40757,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153454,
+    "sensors": {
+      "light": 62.5,
+      "co2": 418,
+      "temperature": 26.93065,
+      "humidity": 54.93248,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153459,
+    "sensors": {
+      "light": 98.33333,
+      "co2": 413,
+      "temperature": 27.77447,
+      "humidity": 52.15839,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153463,
+    "sensors": {
+      "light": 33.33333,
+      "co2": 422,
+      "temperature": 29.17105,
+      "humidity": 40.589,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153464,
+    "sensors": {
+      "light": 379.1667,
+      "co2": 426,
+      "temperature": 29.89471,
+      "humidity": 48.24598,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153466,
+    "sensors": {
+      "light": 225.8333,
+      "co2": 428,
+      "temperature": 24.14816,
+      "humidity": 60.69734,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153469,
+    "sensors": {
+      "light": 118.3333,
+      "co2": 421,
+      "temperature": 25.93461,
+      "humidity": 56.03723,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153514,
+    "sensors": {
+      "light": 91.66666,
+      "co2": 430,
+      "temperature": 25.95064,
+      "humidity": 54.41978,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153514,
+    "sensors": {
+      "light": 63.33333,
+      "co2": 418,
+      "temperature": 26.95468,
+      "humidity": 54.88976,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153519,
+    "sensors": {
+      "light": 98.33333,
+      "co2": 414,
+      "temperature": 27.77714,
+      "humidity": 52.0531,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153523,
+    "sensors": {
+      "light": 32.5,
+      "co2": 423,
+      "temperature": 29.16304,
+      "humidity": 40.57221,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153524,
+    "sensors": {
+      "light": 379.1667,
+      "co2": 426,
+      "temperature": 29.90806,
+      "humidity": 48.18952,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153526,
+    "sensors": {
+      "light": 224.1667,
+      "co2": 428,
+      "temperature": 24.19356,
+      "humidity": 60.62257,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153529,
+    "sensors": {
+      "light": 118.3333,
+      "co2": 421,
+      "temperature": 25.9266,
+      "humidity": 56.00366,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787153568,
+    "sensors": {
+      "light": 69.16666,
+      "co2": 450,
+      "temperature": 25.55543,
+      "humidity": 54.8516,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153574,
+    "sensors": {
+      "light": 90.83333,
+      "co2": 431,
+      "temperature": 25.91058,
+      "humidity": 54.43198,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153574,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 421,
+      "temperature": 26.93332,
+      "humidity": 54.88518,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153579,
+    "sensors": {
+      "light": 97.49999,
+      "co2": 415,
+      "temperature": 27.80384,
+      "humidity": 52.10193,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153583,
+    "sensors": {
+      "light": 32.5,
+      "co2": 422,
+      "temperature": 29.14969,
+      "humidity": 40.61036,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153584,
+    "sensors": {
+      "light": 376.6667,
+      "co2": 425,
+      "temperature": 29.90005,
+      "humidity": 48.22461,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153586,
+    "sensors": {
+      "light": 222.5,
+      "co2": 431,
+      "temperature": 24.20958,
+      "humidity": 60.44251,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153589,
+    "sensors": {
+      "light": 117.5,
+      "co2": 420,
+      "temperature": 25.9453,
+      "humidity": 55.97162,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787153591,
+    "sensors": {
+      "light": 56.66666,
+      "co2": 468,
+      "temperature": 24.44457,
+      "humidity": 55.78393,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787153628,
+    "sensors": {
+      "light": 69.16666,
+      "co2": 450,
+      "temperature": 25.53941,
+      "humidity": 54.7982,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153634,
+    "sensors": {
+      "light": 90,
+      "co2": 429,
+      "temperature": 25.95064,
+      "humidity": 54.42741,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153634,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 421,
+      "temperature": 26.93332,
+      "humidity": 54.83024,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153639,
+    "sensors": {
+      "light": 97.49999,
+      "co2": 415,
+      "temperature": 27.78248,
+      "humidity": 52.16449,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153643,
+    "sensors": {
+      "light": 31.66667,
+      "co2": 421,
+      "temperature": 29.16037,
+      "humidity": 40.57221,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153644,
+    "sensors": {
+      "light": 375,
+      "co2": 425,
+      "temperature": 29.90272,
+      "humidity": 48.18494,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153646,
+    "sensors": {
+      "light": 221.6667,
+      "co2": 429,
+      "temperature": 24.23362,
+      "humidity": 60.43793,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153649,
+    "sensors": {
+      "light": 117.5,
+      "co2": 420,
+      "temperature": 25.95064,
+      "humidity": 55.95483,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787153651,
+    "sensors": {
+      "light": 56.66666,
+      "co2": 465,
+      "temperature": 24.42054,
+      "humidity": 55.76562,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787153688,
+    "sensors": {
+      "light": 69.16666,
+      "co2": 449,
+      "temperature": 25.53139,
+      "humidity": 54.7631,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153694,
+    "sensors": {
+      "light": 90,
+      "co2": 426,
+      "temperature": 25.94263,
+      "humidity": 54.41062,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153694,
+    "sensors": {
+      "light": 64.16666,
+      "co2": 420,
+      "temperature": 26.94133,
+      "humidity": 54.86076,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153699,
+    "sensors": {
+      "light": 97.49999,
+      "co2": 417,
+      "temperature": 27.79049,
+      "humidity": 52.15686,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153703,
+    "sensors": {
+      "light": 31.66667,
+      "co2": 422,
+      "temperature": 29.16304,
+      "humidity": 40.57221,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153704,
+    "sensors": {
+      "light": 375.8333,
+      "co2": 425,
+      "temperature": 29.91875,
+      "humidity": 48.16053,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153706,
+    "sensors": {
+      "light": 222.5,
+      "co2": 428,
+      "temperature": 24.21492,
+      "humidity": 60.34333,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153709,
+    "sensors": {
+      "light": 117.5,
+      "co2": 421,
+      "temperature": 25.95865,
+      "humidity": 55.93042,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787153711,
+    "sensors": {
+      "light": 57.5,
+      "co2": 461,
+      "temperature": 24.40719,
+      "humidity": 55.72595,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787153748,
+    "sensors": {
+      "light": 69.16666,
+      "co2": 448,
+      "temperature": 25.51804,
+      "humidity": 54.73564,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153754,
+    "sensors": {
+      "light": 90,
+      "co2": 427,
+      "temperature": 25.92126,
+      "humidity": 54.37553,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153754,
+    "sensors": {
+      "light": 65,
+      "co2": 421,
+      "temperature": 26.944,
+      "humidity": 54.89128,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153759,
+    "sensors": {
+      "light": 97.49999,
+      "co2": 415,
+      "temperature": 27.76646,
+      "humidity": 52.27893,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153763,
+    "sensors": {
+      "light": 31.66667,
+      "co2": 421,
+      "temperature": 29.16037,
+      "humidity": 40.59205,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153764,
+    "sensors": {
+      "light": 375.8333,
+      "co2": 425,
+      "temperature": 29.9321,
+      "humidity": 48.21088,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153766,
+    "sensors": {
+      "light": 221.6667,
+      "co2": 428,
+      "temperature": 24.23629,
+      "humidity": 60.32044,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153769,
+    "sensors": {
+      "light": 117.5,
+      "co2": 420,
+      "temperature": 25.96666,
+      "humidity": 55.92279,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787153771,
+    "sensors": {
+      "light": 57.5,
+      "co2": 461,
+      "temperature": 24.41787,
+      "humidity": 55.73816,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787153808,
+    "sensors": {
+      "light": 69.16666,
+      "co2": 449,
+      "temperature": 25.55276,
+      "humidity": 54.72496,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153814,
+    "sensors": {
+      "light": 90,
+      "co2": 426,
+      "temperature": 25.93194,
+      "humidity": 54.39231,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153814,
+    "sensors": {
+      "light": 65,
+      "co2": 421,
+      "temperature": 26.96803,
+      "humidity": 54.92027,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153819,
+    "sensors": {
+      "light": 97.49999,
+      "co2": 413,
+      "temperature": 27.75311,
+      "humidity": 52.42237,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153823,
+    "sensors": {
+      "light": 31.66667,
+      "co2": 420,
+      "temperature": 29.14969,
+      "humidity": 40.57526,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153824,
+    "sensors": {
+      "light": 375.8333,
+      "co2": 424,
+      "temperature": 29.93477,
+      "humidity": 48.17731,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153826,
+    "sensors": {
+      "light": 220.8333,
+      "co2": 428,
+      "temperature": 24.19623,
+      "humidity": 60.39521,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153829,
+    "sensors": {
+      "light": 117.5,
+      "co2": 418,
+      "temperature": 25.972,
+      "humidity": 55.87243,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787153831,
+    "sensors": {
+      "light": 56.66666,
+      "co2": 461,
+      "temperature": 24.40719,
+      "humidity": 55.71679,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787153868,
+    "sensors": {
+      "light": 69.16666,
+      "co2": 450,
+      "temperature": 25.56611,
+      "humidity": 54.75242,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153874,
+    "sensors": {
+      "light": 90,
+      "co2": 425,
+      "temperature": 25.93194,
+      "humidity": 54.38468,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153874,
+    "sensors": {
+      "light": 65,
+      "co2": 421,
+      "temperature": 26.97337,
+      "humidity": 54.84855,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153879,
+    "sensors": {
+      "light": 97.49999,
+      "co2": 415,
+      "temperature": 27.71572,
+      "humidity": 52.71077,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153883,
+    "sensors": {
+      "light": 31.66667,
+      "co2": 422,
+      "temperature": 29.131,
+      "humidity": 40.58289,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153884,
+    "sensors": {
+      "light": 375.8333,
+      "co2": 425,
+      "temperature": 29.95613,
+      "humidity": 48.21088,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153886,
+    "sensors": {
+      "light": 221.6667,
+      "co2": 429,
+      "temperature": 24.1722,
+      "humidity": 60.33722,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153889,
+    "sensors": {
+      "light": 117.5,
+      "co2": 421,
+      "temperature": 25.96933,
+      "humidity": 55.89685,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787153891,
+    "sensors": {
+      "light": 57.5,
+      "co2": 461,
+      "temperature": 24.43389,
+      "humidity": 55.74426,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787153928,
+    "sensors": {
+      "light": 70,
+      "co2": 449,
+      "temperature": 25.55543,
+      "humidity": 54.70817,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153934,
+    "sensors": {
+      "light": 90,
+      "co2": 425,
+      "temperature": 25.93996,
+      "humidity": 54.41825,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153934,
+    "sensors": {
+      "light": 65.83333,
+      "co2": 421,
+      "temperature": 26.96269,
+      "humidity": 54.82719,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153939,
+    "sensors": {
+      "light": 96.66666,
+      "co2": 413,
+      "temperature": 27.74243,
+      "humidity": 52.83436,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787153943,
+    "sensors": {
+      "light": 30.83333,
+      "co2": 421,
+      "temperature": 29.14435,
+      "humidity": 40.52491,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787153944,
+    "sensors": {
+      "light": 375,
+      "co2": 427,
+      "temperature": 29.95613,
+      "humidity": 48.13916,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787153946,
+    "sensors": {
+      "light": 220.8333,
+      "co2": 429,
+      "temperature": 24.16686,
+      "humidity": 60.39979,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787153949,
+    "sensors": {
+      "light": 117.5,
+      "co2": 421,
+      "temperature": 25.95598,
+      "humidity": 55.93805,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787153951,
+    "sensors": {
+      "light": 56.66666,
+      "co2": 461,
+      "temperature": 24.45258,
+      "humidity": 55.76867,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787153988,
+    "sensors": {
+      "light": 70.83333,
+      "co2": 448,
+      "temperature": 25.53941,
+      "humidity": 54.68834,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787153994,
+    "sensors": {
+      "light": 89.16666,
+      "co2": 424,
+      "temperature": 25.93996,
+      "humidity": 54.50065,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787153994,
+    "sensors": {
+      "light": 66.66666,
+      "co2": 421,
+      "temperature": 26.96002,
+      "humidity": 54.81193,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787153999,
+    "sensors": {
+      "light": 95.83333,
+      "co2": 413,
+      "temperature": 27.76112,
+      "humidity": 52.87709,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787154003,
+    "sensors": {
+      "light": 30.83333,
+      "co2": 420,
+      "temperature": 29.12299,
+      "humidity": 40.56001,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787154004,
+    "sensors": {
+      "light": 373.3333,
+      "co2": 428,
+      "temperature": 29.95613,
+      "humidity": 48.19867,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787154006,
+    "sensors": {
+      "light": 219.1667,
+      "co2": 429,
+      "temperature": 24.15885,
+      "humidity": 60.4715,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787154009,
+    "sensors": {
+      "light": 117.5,
+      "co2": 421,
+      "temperature": 25.96132,
+      "humidity": 55.92279,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787154011,
+    "sensors": {
+      "light": 56.66666,
+      "co2": 461,
+      "temperature": 24.4873,
+      "humidity": 55.78851,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "AA1-02",
+    "collected_at": 1787154048,
+    "sensors": {
+      "light": 70.83333,
+      "co2": 447,
+      "temperature": 25.56344,
+      "humidity": 54.69291,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LA1-01",
+    "collected_at": 1787154054,
+    "sensors": {
+      "light": 88.33333,
+      "co2": 425,
+      "temperature": 25.9266,
+      "humidity": 54.49149,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "SalaRiunioni",
+    "collected_at": 1787154054,
+    "sensors": {
+      "light": 69.16666,
+      "co2": 421,
+      "temperature": 26.96536,
+      "humidity": 54.81041,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "LA1-02",
+    "collected_at": 1787154059,
+    "sensors": {
+      "light": 95.83333,
+      "co2": 414,
+      "temperature": 27.75578,
+      "humidity": 53.019,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "StanzaDocente",
+    "collected_at": 1787154063,
+    "sensors": {
+      "light": 30.83333,
+      "co2": 420,
+      "temperature": 29.11765,
+      "humidity": 40.61341,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "StanzaCulmone",
+    "collected_at": 1787154064,
+    "sensors": {
+      "light": 371.6667,
+      "co2": 428,
+      "temperature": 29.94278,
+      "humidity": 48.14222,
+      "tvoc": 0,
+      "eco2": 400,
+      "people_count": 0
+    }
+  },
+  {
+    "device_id": "B1-01",
+    "collected_at": 1787154066,
+    "sensors": {
+      "light": 218.3333,
+      "co2": 426,
+      "temperature": 24.13748,
+      "humidity": 60.56001,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  },
+  {
+    "device_id": "LB1-01",
+    "collected_at": 1787154069,
+    "sensors": {
+      "light": 117.5,
+      "co2": 421,
+      "temperature": 25.96666,
+      "humidity": 55.88922,
+      "tvoc": 60000,
+      "eco2": 57330
+    }
+  },
+  {
+    "device_id": "AA1-01",
+    "collected_at": 1787154071,
+    "sensors": {
+      "light": 56.66666,
+      "co2": 462,
+      "temperature": 24.52201,
+      "humidity": 55.80072,
+      "tvoc": 0,
+      "eco2": 400
+    }
+  }
+]
