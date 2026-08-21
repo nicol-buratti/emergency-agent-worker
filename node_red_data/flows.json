@@ -393,8 +393,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 1820,
+        "x": 420,
+        "y": 1940,
         "wires": [
             [
                 "eb83b9929a6b808d"
@@ -501,8 +501,8 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 630,
-        "y": 1820,
+        "x": 670,
+        "y": 1940,
         "wires": [
             []
         ]
@@ -1163,7 +1163,7 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "update danger",
-        "func": "// 1. Estraiamo i dati di input (assumendo che siano in msg.payload)\nconst hazardData = msg.payload;\n\n// 2. Dividiamo \"departmentA:AB2\" in dipartimento e stanza \n// (Se usi un identificativo singolo nel DB, puoi rimuovere lo split e usare solo $room_id)\nconst [department, roomName] = hazardData.room.split(':');\n\n// 3. Prepariamo i parametri\nmsg.params = {\n    department: department,\n    room: roomName,\n    type: hazardData.danger_type,\n    level: hazardData.danger,\n    score: hazardData.danger_score,\n    warning: hazardData.warning,\n    justification: hazardData.justification\n};\n\nmsg.database = \"memgraph\";\n\n// 4. Logica operativa: MERGE o DELETE\n// (Assumiamo che un danger_score <= 0 indichi l'assenza di pericolo)\nif (hazardData.danger_score > 0) {\n    // MERGE: Crea o aggiorna il nodo Hazard\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        // Effettuiamo il MERGE vincolando il nodo al \"type\" di pericolo.\n        // Questo permette la relazione 1:N se ci sono più tipi di pericolo per la stessa stanza.\n        MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        SET h.level = $level,\n            h.score = $score,\n            h.warning = $warning,\n            h.justification = $justification\n        RETURN p, h;\n    `;\n} else {\n    // DELETE: Elimina il nodo Hazard se il pericolo è rientrato\n    msg.query = `\n        MATCH (h:Hazard {type: $type})-[:AFFECTS]->(p:Place {department: $department, room: $room})\n        DETACH DELETE h\n        RETURN p;\n    `;\n}\n\n// 5. Pulizia e ritorno\nmsg.payload = null;\nreturn msg;",
+        "func": "// 1. Estraiamo i dati di input\nconst hazardData = msg.payload;\nconst [department, roomName] = hazardData.room.split(':');\n\n// 2. Definiamo i parametri del modello matematico\n// Puoi modificare questi valori in base alla taratura del tuo sistema\nconst ALPHA = 1.5;       // Sensibilità ai sensori di pericolo (\\alpha)\nconst BETA = 1.0;        // Sensibilità alla congestione (\\beta)\nconst Q = 0;             // Congestione attuale (Q(t)) - impostabile dinamicamente se hai sensori di affollamento\nconst ETA = 0.8;         // Soglia limite di pericolo (\\eta) per il blocco totale\nconst OMEGA = 999999;    // Penalità estrema (\\Omega) per segnalare il \"percorso bloccato\"\n\n// 3. Prepariamo i parametri da passare a Memgraph\nmsg.params = {\n    department: department,\n    room: roomName,\n    type: hazardData.danger_type,\n    level: hazardData.danger,\n    score: hazardData.danger_score, // Questo è il nostro H(t)\n    warning: hazardData.warning,\n    justification: hazardData.justification,\n    alpha: ALPHA,\n    beta: BETA,\n    q: Q,\n    eta: ETA,\n    omega: OMEGA\n};\n\nmsg.database = \"memgraph\";\n\n// 4. Logica Operativa: Modello di pathfinding dinamico\nif (hazardData.danger_score > 0) {\n    // MERGE del pericolo e ricalcolo del peso dinamico\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        \n        // Aggiungiamo o aggiorniamo il nodo Hazard\n        MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        SET h.level = $level,\n            h.score = $score,\n            h.warning = $warning,\n            h.justification = $justification\n            \n        // Calcolo dinamico w(t) = tau * [1 + alpha * H + beta * Q] + Penalità\n        WITH p, h, \n             coalesce(p.weight, 1.0) AS tau, // \\tau_{ij}: peso base (1.0 di default se manca)\n             $score AS H          // H_{ij}(t): hazard score\n             \n        // Calcoliamo la base moltiplicata e la penalità in base alla soglia eta\n        WITH p, h, tau, H,\n             tau * (1 + ($alpha * H) + ($beta * $q)) AS calcolo_base,\n             CASE WHEN H > $eta THEN $omega ELSE 0 END AS penalita\n             \n        // Salviamo il costo dinamico sulla stanza\n        SET p.dynamic_weight = calcolo_base + penalita\n        \n        RETURN p, h;\n    `;\n} else {\n    // Se il pericolo rientra, eliminiamo l'Hazard e ripristiniamo il peso a quello base\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        OPTIONAL MATCH (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        DETACH DELETE h\n        \n        // Ripristino del dynamic_weight al valore di base tau\n        WITH p, coalesce(p.weight, 1.0) AS tau\n        SET p.dynamic_weight = tau\n        \n        RETURN p;\n    `;\n}\n\nmsg.payload = null;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1286,7 +1286,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 800,
+        "x": 860,
         "y": 1680,
         "wires": []
     },
@@ -1347,8 +1347,7 @@
         "y": 1640,
         "wires": [
             [
-                "c1a49cde49eb5b80",
-                "d4eb6054a291814a"
+                "c1a49cde49eb5b80"
             ]
         ]
     },
@@ -1357,7 +1356,7 @@
         "type": "debug",
         "z": "e4842373559f1514",
         "name": "debug 15",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1619,24 +1618,6 @@
         "x": 3280,
         "y": 480,
         "wires": []
-    },
-    {
-        "id": "df5df3e9bd3e935a",
-        "type": "function",
-        "z": "e4842373559f1514",
-        "name": "update danger",
-        "func": "const [department, room] = msg.payload.room.split(\":\");\nconst type = msg.payload.danger_type;\ndelete msg.payload.justification\n\nconst alpha = 1.0;\nconst beta = 1.0;\nconst eta = 15.0;\nconst omega = 10000.0;\n\n// Estrazione parametrica completa dal nuovo payload\nlet to_save = {\n  warning: msg.payload.warning,\n  danger: msg.payload.danger,\n  danger_score: msg.payload.danger_score + 1,\n  justification: msg.payload.justification\n};\n\nmsg.query = `\n  MATCH (n:Place {department: $department, room: $room})\n  \n  // 1. Estrazione mappa esistente o inizializzazione a vuoto\n  WITH n, coalesce(n.danger, {}) AS d\n  \n  // 2. Map Projection: conserva il pregresso (.*) e inserisce dinamicamente la nuova proprietà\n  SET n.danger = d { .*, \\`${type}\\`: $danger_data }\n  \n  // 3. Estrazione peso, congestione e isolamento degli score escludendo valori nulli\n  WITH n, \n       coalesce(n.weight, 1.0) AS tau,\n       coalesce(n.congestion, 0.0) AS Q,\n       [k IN keys(n.danger) WHERE n.danger[k] IS NOT NULL | coalesce(toFloat(n.danger[k].danger_score), 0.0)] AS scores\n  \n  // 4. Somma cumulativa per H(t)\n  WITH n, tau, Q, reduce(h_sum = 0.0, s IN scores | h_sum + s) AS H\n  \n  // 5. Calcolo penalità estrema\n  WITH n, tau, Q, H,\n       CASE WHEN H >= $eta THEN $omega ELSE 0.0 END AS penalty\n  \n  // 6. Applicazione costo dinamico w_ij(t)\n  WITH n, H,\n       tau * (1.0 + ($alpha * H) + ($beta * Q)) + penalty AS w_ij\n  \n  // 7. Salvataggio stato\n  SET n.total_danger_score = H,\n      n.dynamic_weight = w_ij\n  \n  RETURN n;\n`;\n\nmsg.params = {\n  department: department,\n  room: room,\n  danger_data: to_save,\n  alpha: alpha,\n  beta: beta,\n  eta: eta,\n  omega: omega\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 160,
-        "y": 1760,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "9f334cea07f5104a",
