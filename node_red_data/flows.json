@@ -32,6 +32,14 @@
         "env": []
     },
     {
+        "id": "7d41b691517b8892",
+        "type": "tab",
+        "label": "Create json",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "19268c5a199e4927",
         "type": "mqtt-broker",
         "name": "thingsboard",
@@ -147,7 +155,7 @@
         "type": "function",
         "z": "61370204cb540a30",
         "name": "create query to create graph",
-        "func": "let data = msg.payload;\n\nif (Buffer.isBuffer(data)) {\n    data = data.toString('utf8');\n}\n\nif (typeof data === 'string') {\n    try {\n        data = JSON.parse(data);\n    } catch (e) {\n        node.error(\"Failed to parse JSON. Ensure the file is valid JSON.\", msg);\n        return null;\n    }\n}\n\nif (!Array.isArray(data)) {\n    node.error(\"Expected the JSON to be an array of objects.\", msg);\n    return null;\n}\n\nconst queryParts = [];\n\n// 2. Generate Nodes dynamically\nqueryParts.push(\"  // Creazione dei nodi\");\ndata.forEach(row => {\n    if (row.node_var) {\n        const properties = [];\n        for (const key in row) {\n            // Exclude control keys; add all others dynamically\n            if (key !== 'node_var' && key !== 'connected_to') {\n                const value = row[key];\n                if (typeof value === 'string') {\n                    properties.push(`${key}: '${value}'`);\n                } else {\n                    properties.push(`${key}: ${value}`);\n                }\n            }\n        }\n        const propsString = properties.join(', ');\n        queryParts.push(`  (${row.node_var}:Place {${propsString}})`);\n    }\n});\n\n// 3. Generate Relationships\ndata.forEach(row => {\n    const targets = row.connected_to;\n    \n    if (Array.isArray(targets) && targets.length > 0) {\n        const commentTargets = targets.map(t => t.toUpperCase()).join(', ');\n        queryParts.push(`\\n  // ${row.node_var} -> [${commentTargets}]`);\n        \n        targets.forEach(t => {\n            queryParts.push(`  (${row.node_var})-[:CONNECTED_TO]->(${t})`);\n        });\n    }\n});\n\n// 4. Build the final query string\nlet finalQuery = \"CREATE\\n\";\n\nfor (let i = 0; i < queryParts.length; i++) {\n    const part = queryParts[i];\n    \n    let isLastStatement = true;\n    for (let j = i + 1; j < queryParts.length; j++) {\n        if (!queryParts[j].trim().startsWith(\"//\")) {\n            isLastStatement = false;\n            break;\n        }\n    }\n        \n    if (part.trim().startsWith(\"//\")) {\n        finalQuery += part + \"\\n\";\n    } else {\n        finalQuery += part;\n        if (!isLastStatement) {\n            finalQuery += \",\\n\";\n        } else {\n            finalQuery += \";\\n\";\n        }\n    }\n}\n\nmsg.query = finalQuery;\nreturn msg;",
+        "func": "let data = msg.payload;\n\n\n\nif (Buffer.isBuffer(data)) {\n\n    data = data.toString('utf8');\n\n}\n\n\n\nif (typeof data === 'string') {\n\n    try {\n\n        data = JSON.parse(data);\n\n    } catch (e) {\n\n        node.error(\"Failed to parse JSON. Ensure the file is valid JSON.\", msg);\n\n        return null;\n\n    }\n\n}\n\n\n\nif (!Array.isArray(data)) {\n\n    node.error(\"Expected the JSON to be an array of objects.\", msg);\n\n    return null;\n\n}\n\n\n\nconst queryParts = [];\n\n\n\n// 2. Generate Nodes dynamically\n\nqueryParts.push(\" // Creazione dei nodi\");\n\ndata.forEach(row => {\n\n    if (row.node_var) {\n\n        const properties = [];\n\n        for (const key in row) {\n\n            // Exclude control keys; add all others dynamically\n\n            if (key !== 'node_var' && key !== 'connected_to') {\n\n                const value = row[key];\n\n                if (typeof value === 'string') {\n\n                    properties.push(`${key}: '${value}'`);\n\n                } else {\n\n                    properties.push(`${key}: ${value}`);\n\n                }\n\n            }\n\n        }\n\n        const propsString = properties.join(', ');\n\n        queryParts.push(` (${row.node_var}:Place {${propsString}})`);\n\n    }\n\n});\n\n\n\n// 3. Generate Relationships\n\ndata.forEach(row => {\n\n    const targets = row.connected_to;\n\n\n    if (Array.isArray(targets) && targets.length > 0) {\n\n        const commentTargets = targets.map(t => t.toUpperCase()).join(', ');\n\n        queryParts.push(`\\n // ${row.node_var} -> [${commentTargets}]`);\n\n\n        targets.forEach(t => {\n\n            queryParts.push(` (${row.node_var})-[:CONNECTED_TO]->(${t})`);\n\n        });\n\n    }\n\n});\n\n\n\n// 4. Build the final query string\n\nlet finalQuery = \"CREATE\\n\";\n\n\n\nfor (let i = 0; i < queryParts.length; i++) {\n\n    const part = queryParts[i];\n\n\n    let isLastStatement = true;\n\n    for (let j = i + 1; j < queryParts.length; j++) {\n\n        if (!queryParts[j].trim().startsWith(\"//\")) {\n\n            isLastStatement = false;\n\n            break;\n\n        }\n\n    }\n\n\n    if (part.trim().startsWith(\"//\")) {\n\n        finalQuery += part + \"\\n\";\n\n    } else {\n\n        finalQuery += part;\n\n        if (!isLastStatement) {\n\n            finalQuery += \",\\n\";\n\n        } else {\n\n            finalQuery += \";\\n\";\n\n        }\n\n    }\n\n}\n\n\n\nmsg.query = finalQuery;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -295,7 +303,7 @@
         "scope": null,
         "uncaught": false,
         "x": 140,
-        "y": 300,
+        "y": 240,
         "wires": [
             [
                 "1efd40b6092c4759",
@@ -317,7 +325,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 290,
-        "y": 260,
+        "y": 200,
         "wires": []
     },
     {
@@ -325,15 +333,15 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "filter danger data",
-        "func": "let cachingData = {};\nlet device_id = msg.payload.device_id;\n\ncachingData.device_id = device_id;\n// We assign the sensors object, keeping in mind JS objects are passed by reference\ncachingData.sensors = msg.payload.sensors;\n\n// Retrieve global settings from the context (fallback to an empty object if not found)\nlet global_settings = global.get(\"global_settings\") || {};\nlet excluded_sensors = global_settings.excluded_sensors || [];\n\n// Dynamically delete sensors based on the YAML configuration\nif (cachingData.sensors) {\n    for (let i = 0; i < excluded_sensors.length; i++) {\n        let sensorToRemove = excluded_sensors[i];\n        \n        // Check if the sensor exists before attempting to delete it\n        if (cachingData.sensors.hasOwnProperty(sensorToRemove)) {\n            delete cachingData.sensors[sensorToRemove];\n        }\n    }\n}\n\nreturn cachingData;",
+        "func": "let cachingData = {};\nlet device_id = msg.payload.device_id;\n\ncachingData.device_id = device_id;\n// We assign the sensors object, keeping in mind JS objects are passed by reference\ncachingData.sensors = msg.payload.sensors;\n\n// Retrieve global settings from the context (fallback to an empty object if not found)\nlet global_settings = global.get(\"global_settings\") || {};\nlet excluded_sensors = global_settings.excluded_sensors || [];\n\nif (cachingData.sensors) {\n    // 1. Dynamically delete sensors based on the YAML configuration\n    for (let i = 0; i < excluded_sensors.length; i++) {\n        let sensorToRemove = excluded_sensors[i];\n        \n        // Check if the sensor exists before attempting to delete it\n        if (cachingData.sensors.hasOwnProperty(sensorToRemove)) {\n            delete cachingData.sensors[sensorToRemove];\n        }\n    }\n}\n\nreturn cachingData;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 290,
-        "y": 620,
+        "x": 310,
+        "y": 960,
         "wires": [
             [
                 "a5f3392a2df577e8",
@@ -354,8 +362,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 110,
-        "y": 620,
+        "x": 130,
+        "y": 960,
         "wires": [
             [
                 "da13443e922e8a07"
@@ -369,8 +377,8 @@
         "z": "e4842373559f1514",
         "name": "if room telemetry changed\n then update the cache",
         "info": "",
-        "x": 1830,
-        "y": 760,
+        "x": 1850,
+        "y": 1100,
         "wires": []
     },
     {
@@ -385,8 +393,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 160,
-        "y": 1340,
+        "x": 400,
+        "y": 1820,
         "wires": [
             [
                 "eb83b9929a6b808d"
@@ -399,8 +407,8 @@
         "z": "e4842373559f1514",
         "name": "this priority queue is used to give priority to more dangerouse zones\n and more \"old\" updates",
         "info": "",
-        "x": 2000,
-        "y": 660,
+        "x": 2020,
+        "y": 1000,
         "wires": []
     },
     {
@@ -435,8 +443,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 620,
+        "x": 540,
+        "y": 960,
         "wires": [
             [
                 "2c341b2c6311f1c1",
@@ -450,8 +458,8 @@
         "z": "e4842373559f1514",
         "name": "if the sensors changed, update the place graph",
         "info": "",
-        "x": 2000,
-        "y": 400,
+        "x": 2020,
+        "y": 740,
         "wires": []
     },
     {
@@ -468,7 +476,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 300,
-        "y": 320,
+        "y": 260,
         "wires": []
     },
     {
@@ -493,8 +501,8 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 390,
-        "y": 1340,
+        "x": 630,
+        "y": 1820,
         "wires": [
             []
         ]
@@ -512,8 +520,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1620,
-        "y": 680,
+        "x": 1640,
+        "y": 1020,
         "wires": []
     },
     {
@@ -528,8 +536,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1190,
-        "y": 620,
+        "x": 1210,
+        "y": 960,
         "wires": [
             [
                 "3473323080c95541"
@@ -548,31 +556,13 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 1440,
-        "y": 620,
+        "x": 1460,
+        "y": 960,
         "wires": [
             [
                 "d98b5f86e8b84f04",
                 "917c1d5a9c9c598d"
             ]
-        ]
-    },
-    {
-        "id": "24dba38adca78fec",
-        "type": "function",
-        "z": "e4842373559f1514",
-        "name": "cache checking",
-        "func": "function strict_comparison(value1, value2){\n    return value1 !== value2\n}\n\n\nlet attributes_to_update = {}\n\nfor (let i = 0; i<msg.payload.length;i++ ){\n    let key = msg.sensor_attributes[i]\n    let cache = msg.payload[i]\n    let current = msg.current_data[key]\n\n    let to_update = strict_comparison(cache, current)\n    if (to_update){\n        attributes_to_update[key] = current\n    }\n}\nmsg.attributes_to_update = attributes_to_update\nmsg.current_data= null\nmsg.payload=null\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1740,
-        "y": 620,
-        "wires": [
-            []
         ]
     },
     {
@@ -587,8 +577,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1730,
-        "y": 580,
+        "x": 1750,
+        "y": 920,
         "wires": [
             [
                 "e85d67063fb4f8be"
@@ -610,8 +600,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1970,
-        "y": 620,
+        "x": 1990,
+        "y": 960,
         "wires": [
             [
                 "c8f8dbec3f6e50cb",
@@ -631,8 +621,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2220,
-        "y": 620,
+        "x": 2240,
+        "y": 960,
         "wires": [
             [
                 "e7fc37a47653ebe8",
@@ -652,8 +642,8 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 2410,
-        "y": 620,
+        "x": 2430,
+        "y": 960,
         "wires": [
             [
                 "a0aae69d588da9b5"
@@ -672,8 +662,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 740,
-        "y": 620,
+        "x": 760,
+        "y": 960,
         "wires": [
             [
                 "4539ed3d8641347d",
@@ -694,8 +684,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2400,
-        "y": 720,
+        "x": 2420,
+        "y": 1060,
         "wires": []
     },
     {
@@ -708,8 +698,8 @@
         "func": "local room_name = KEYS[1]\nlocal ttl = ARGV[1]\nlocal num_fields = #ARGV - 1\n\nreturn redis.call(\"HEXPIRE\", room_name, ttl, \"FIELDS\", num_fields, unpack(ARGV, 2))\n",
         "stored": false,
         "block": false,
-        "x": 2830,
-        "y": 620,
+        "x": 2850,
+        "y": 960,
         "wires": [
             [
                 "be5d8f5d10610bce",
@@ -729,8 +719,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2620,
-        "y": 620,
+        "x": 2640,
+        "y": 960,
         "wires": [
             [
                 "084be5df80c08944"
@@ -750,8 +740,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2980,
-        "y": 700,
+        "x": 3000,
+        "y": 1040,
         "wires": []
     },
     {
@@ -766,8 +756,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 3070,
-        "y": 620,
+        "x": 3090,
+        "y": 960,
         "wires": [
             [
                 "27a9284abc91c540"
@@ -786,8 +776,8 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 3270,
-        "y": 620,
+        "x": 3290,
+        "y": 960,
         "wires": [
             []
         ]
@@ -797,15 +787,15 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "update danger",
-        "func": "// 1. Write the query using placeholders (names starting with $)\nmsg.query = `\n  MATCH (n:Place {department: $department, room: $room})\n  SET n += $sensors\n  RETURN n;\n`;\n\n// 2. Pass the actual parameters in msg.params\n// (The database will automatically map $room to params.room)\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\n\nmsg.payload = null\nreturn msg;",
+        "func": "// 1. Write the query using placeholders (names starting with $)\nmsg.query = `\n  MATCH (p:Place {department: $department, room: $room})\n  // Cerca la relazione e il nodo di stato; se non esistono, li crea (relazione 1:1)\n  MERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\n  // L'operatore += aggiunge/aggiorna solo le chiavi presenti in $sensors \n  // senza cancellare i vecchi valori presenti in 'e'\n  SET e += $sensors\n  RETURN p, e;\n`;\n\n// 2. Pass the actual parameters in msg.params\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2180,
-        "y": 540,
+        "x": 2200,
+        "y": 880,
         "wires": [
             [
                 "53aa612513bc05aa"
@@ -821,13 +811,15 @@
         "query": "",
         "sessions": 10,
         "database": "",
-        "x": 2400,
-        "y": 540,
+        "x": 2420,
+        "y": 880,
         "wires": [
             [
-                "e08ade7d50a3332f"
+                "e1481f7c737be05b"
             ],
-            [],
+            [
+                "e1481f7c737be05b"
+            ],
             []
         ]
     },
@@ -862,8 +854,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1160,
-        "y": 680,
+        "x": 1180,
+        "y": 1020,
         "wires": []
     },
     {
@@ -883,8 +875,8 @@
                 "module": "simple-statistics"
             }
         ],
-        "x": 950,
-        "y": 620,
+        "x": 970,
+        "y": 960,
         "wires": [
             [
                 "6fb9e4f3b63d2d67",
@@ -906,8 +898,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 460,
-        "y": 700,
+        "x": 480,
+        "y": 1040,
         "wires": []
     },
     {
@@ -923,8 +915,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 880,
-        "y": 700,
+        "x": 900,
+        "y": 1040,
         "wires": []
     },
     {
@@ -937,8 +929,8 @@
         "func": "-- Keys and arguments\nlocal topic = KEYS[1]\nlocal json_payload = ARGV[1]\n\n-- Retrieve the dynamic retention value passed as the second argument\nlocal retention_ms = tonumber(ARGV[2])\n\n-- Get current time directly from the Redis server\n-- TIME returns an array: [1] = seconds, [2] = microseconds\nlocal server_time = redis.call('TIME')\nlocal current_timestamp_ms = (tonumber(server_time[1]) * 1000) + math.floor(tonumber(server_time[2]) / 1000)\n\n-- Calculate the cutoff timestamp dynamically based on the YAML configuration\nlocal cutoff_timestamp_ms = current_timestamp_ms - retention_ms\n\n-- 1. Insert the new data into the Priority Queue\nredis.call('ZADD', topic, current_timestamp_ms, json_payload)\n\n-- 2. Remove all elements older than the calculated cutoff\nlocal removed_count = redis.call('ZREMRANGEBYSCORE', topic, '-inf', cutoff_timestamp_ms)\n\n-- Return the number of removed elements\nreturn removed_count",
         "stored": false,
         "block": false,
-        "x": 1320,
-        "y": 560,
+        "x": 1340,
+        "y": 900,
         "wires": [
             []
         ]
@@ -955,8 +947,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1140,
-        "y": 560,
+        "x": 1160,
+        "y": 900,
         "wires": [
             [
                 "12aaaeac13df91bb"
@@ -976,8 +968,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 700,
-        "y": 680,
+        "x": 720,
+        "y": 1020,
         "wires": []
     },
     {
@@ -1132,8 +1124,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 120,
-        "y": 1220,
+        "x": 360,
+        "y": 1700,
         "wires": [
             [
                 "c1a49cde49eb5b80"
@@ -1157,8 +1149,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 330,
-        "y": 1220,
+        "x": 570,
+        "y": 1700,
         "wires": [
             [
                 "680ec5f0682fa080",
@@ -1171,15 +1163,15 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "update danger",
-        "func": "const [department, room] = msg.payload.room.split(\":\");\n\nlet to_save = {\n  [\"danger_\" + msg.payload.danger_type]: msg.payload.danger,\n  [msg.payload.danger_type + \"_danger_score\"]: msg.payload.danger_score\n};\n\nmsg.query = `\n  MATCH (n:Place {department: $department, room: $room})\n  \n  // 1. Aggiorna il nodo\n  SET n += $danger_data\n  \n  // 2. Estrai gli score e il weight\n  WITH n, \n       [k IN keys(n) WHERE k ENDS WITH \"_danger_score\" | n[k]] AS scores,\n       coalesce(n.weight, 1.0) AS db_weight\n  \n  // 3. Calcola e salva il totale per la stanza n\n  WITH n, reduce(total = toFloat(db_weight), s IN scores | total * toFloat(s)) AS aggregated_score\n  SET n.total_danger_score = aggregated_score\n  \n  // --- 4. NUOVA PARTE: AGGIORNAMENTO ARCHI ---\n  // Trova tutte le stanze (m) collegate a questa stanza (n) tramite CONNECTED_TO in qualsiasi direzione\n  WITH n\n  MATCH (n)-[r:CONNECTED_TO]-(m:Place)\n  \n  // Calcola la media tra il punteggio di n e quello di m.\n  // Uso coalesce(..., 0.0) perché la stanza m potrebbe non aver ancora mai ricevuto \n  // un alert, e quindi la proprietà total_danger_score potrebbe non esistere ancora.\n  SET r.avg_danger_score = (n.total_danger_score + coalesce(m.total_danger_score, 0.0)) / 2.0\n  \n  // Raggruppa i risultati per restituire il nodo 'n' una sola volta a Node-RED\n  WITH DISTINCT n\n  RETURN n;\n`;\n\nmsg.params = {\n  department: department,\n  room: room,\n  danger_data: to_save\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "func": "// 1. Estraiamo i dati di input (assumendo che siano in msg.payload)\nconst hazardData = msg.payload;\n\n// 2. Dividiamo \"departmentA:AB2\" in dipartimento e stanza \n// (Se usi un identificativo singolo nel DB, puoi rimuovere lo split e usare solo $room_id)\nconst [department, roomName] = hazardData.room.split(':');\n\n// 3. Prepariamo i parametri\nmsg.params = {\n    department: department,\n    room: roomName,\n    type: hazardData.danger_type,\n    level: hazardData.danger,\n    score: hazardData.danger_score,\n    warning: hazardData.warning,\n    justification: hazardData.justification\n};\n\nmsg.database = \"memgraph\";\n\n// 4. Logica operativa: MERGE o DELETE\n// (Assumiamo che un danger_score <= 0 indichi l'assenza di pericolo)\nif (hazardData.danger_score > 0) {\n    // MERGE: Crea o aggiorna il nodo Hazard\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        // Effettuiamo il MERGE vincolando il nodo al \"type\" di pericolo.\n        // Questo permette la relazione 1:N se ci sono più tipi di pericolo per la stessa stanza.\n        MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        SET h.level = $level,\n            h.score = $score,\n            h.warning = $warning,\n            h.justification = $justification\n        RETURN p, h;\n    `;\n} else {\n    // DELETE: Elimina il nodo Hazard se il pericolo è rientrato\n    msg.query = `\n        MATCH (h:Hazard {type: $type})-[:AFFECTS]->(p:Place {department: $department, room: $room})\n        DETACH DELETE h\n        RETURN p;\n    `;\n}\n\n// 5. Pulizia e ritorno\nmsg.payload = null;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 140,
-        "y": 1280,
+        "x": 380,
+        "y": 1760,
         "wires": [
             [
                 "4466a297c464e7f9"
@@ -1195,8 +1187,8 @@
         "query": "",
         "sessions": 10,
         "database": "",
-        "x": 380,
-        "y": 1280,
+        "x": 620,
+        "y": 1760,
         "wires": [
             [
                 "d4eb6054a291814a"
@@ -1224,8 +1216,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 3190,
-        "y": 540,
+        "x": 3210,
+        "y": 880,
         "wires": [
             [
                 "de8a92f54521c47f"
@@ -1237,15 +1229,15 @@
         "type": "file in",
         "z": "e4842373559f1514",
         "name": "",
-        "filename": "/data/host_files/agent_data.json",
+        "filename": "/data/host_files/json_fake_data/agent_data.json",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 390,
-        "y": 1020,
+        "x": 680,
+        "y": 1500,
         "wires": [
             [
                 "3b8391f55a084504"
@@ -1273,8 +1265,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 140,
-        "y": 1020,
+        "x": 380,
+        "y": 1500,
         "wires": [
             [
                 "feb7d3d117d2ad49"
@@ -1290,11 +1282,12 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 560,
-        "y": 1200,
+        "x": 800,
+        "y": 1680,
         "wires": []
     },
     {
@@ -1305,8 +1298,8 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 590,
-        "y": 1040,
+        "x": 950,
+        "y": 1520,
         "wires": [
             [
                 "689c4b36ae888b14"
@@ -1325,8 +1318,8 @@
         "stream": false,
         "addname": "",
         "property": "payload",
-        "x": 390,
-        "y": 1100,
+        "x": 630,
+        "y": 1580,
         "wires": [
             [
                 "1e088006d2ad21b5"
@@ -1350,8 +1343,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 240,
-        "y": 1160,
+        "x": 480,
+        "y": 1640,
         "wires": [
             [
                 "c1a49cde49eb5b80",
@@ -1372,8 +1365,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2540,
-        "y": 440,
+        "x": 2560,
+        "y": 680,
         "wires": []
     },
     {
@@ -1382,8 +1375,8 @@
         "z": "e4842373559f1514",
         "name": "simulated agent output",
         "info": "",
-        "x": 220,
-        "y": 980,
+        "x": 460,
+        "y": 1460,
         "wires": []
     },
     {
@@ -1391,20 +1384,17 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "sensor room aggregation",
-        "func": "const payload = msg.attributes_to_update;\n\ndelete payload.people_count\n\n// 1. Isola solo i dati numerici dei sensori (escludendo stringhe o ID)\nconst sensorData = {};\nconst sensorKeys = [];\n\nfor (let key in payload) {\n    if (typeof payload[key] === \"number\") {\n        sensorData[key] = payload[key];\n        sensorKeys.push(key);\n    }\n}\n\n// 2. Crea dinamicamente le istruzioni Cypher per i dati REALI\n// Es: source.co2 = $sensorData.co2\nconst setRealClauses = sensorKeys\n    .map(k => `source.${k} = $sensorData.${k}`)\n    .join(\",\\n    \");\n\n// 3. Crea dinamicamente le istruzioni Cypher per i dati STIMATI\n// Es: blind.co2_estimated = coalesce(closest.s.co2, 0.0) * (0.8 ^ closest.d)\nconst setEstimatedClauses = sensorKeys\n    .map(k => `blind.${k}_estimated = coalesce(closest.s.${k}, 0.0) * (0.8 ^ closest.d)`)\n    .join(\",\\n    \");\n\n// 4. Costruiamo la query finale\nmsg.query = `\n  // A. Trova e aggiorna la stanza sorgente\n  MATCH (source:Place {department: $department, room: $room})\n  SET ${setRealClauses}\n  SET source.has_sensor = true\n  \n  // B. Trova le stanze cieche nel raggio di 2 salti\n  WITH source\n  MATCH (source)-[:CONNECTED_TO*1..2]-(blind:Place)\n  WHERE coalesce(blind.has_sensor, false) = false\n  WITH DISTINCT blind\n  \n  // C. Trova il sensore più vicino per ciascuna stanza cieca\n  MATCH path = (blind)-[:CONNECTED_TO*1..3]-(sensor:Place {has_sensor: true})\n  WITH blind, sensor, length(path) AS dist\n  ORDER BY dist ASC\n  WITH blind, collect({s: sensor, d: toFloat(dist)})[0] AS closest\n  \n  // D. Applica il decadimento (0.8) a TUTTI i parametri dinamici\n  SET ${setEstimatedClauses}\n  \n  RETURN blind.room_name AS updated_room;\n`;\n\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensorData: sensorData\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "func": "const payload = msg.attributes_to_update;\ndelete payload.people_count;\n\nconst sensorData = {};\nconst sensorKeys = [];\n\nfor (let key in payload) {\n    if (typeof payload[key] === \"number\") {\n        sensorData[key] = payload[key];\n        sensorKeys.push(key);\n    }\n}\n\n// Creiamo le righe per la map projection, solo se ci sono sensori da aggiornare\nlet estimatedMapEntries = \"\";\nif (sensorKeys.length > 0) {\n    estimatedMapEntries = \",\\n          \" + sensorKeys\n        .map(k => `${k}_estimated: CASE WHEN currMap.${k} IS NULL THEN coalesce(closest.s.sensors.${k}, 0.0) * (0.8 ^ closest.d) ELSE currMap.${k}_estimated END`)\n        .join(\",\\n          \");\n}\n\nmsg.query = `\n  // A. Trova e aggiorna la stanza sorgente\n  MATCH (source:Place {department: $department, room: $room})\n  SET source.sensors = $sensorData\n  SET source.has_sensor = true\n  \n  // B. Trova le stanze cieche nel raggio di 2 salti\n  WITH source\n  MATCH (source)-[:CONNECTED_TO*1..2]-(blind:Place)\n  WHERE coalesce(blind.has_sensor, false) = false\n  WITH DISTINCT blind\n  \n  // C. Trova il sensore più vicino per ciascuna stanza cieca\n  MATCH path = (blind)-[:CONNECTED_TO*1..3]-(sensor:Place {has_sensor: true})\n  WITH blind, sensor, length(path) AS dist\n  ORDER BY dist ASC\n  WITH blind, collect({s: sensor, d: toFloat(dist)})[0] AS closest\n  \n  // D. Estrai la mappa attuale (o una vuota se non esiste) mettendola in una variabile sicura\n  WITH blind, closest, coalesce(blind.sensors, {}) AS currMap\n  \n  // E. Crea una NUOVA mappa copiando le vecchie chiavi (.*) e aggiungendo le nuove condizionali.\n  //    Assegnando direttamente l'oggetto interno, Memgraph non va in crash.\n  SET blind.sensors = currMap {\n      .*${estimatedMapEntries}\n  }\n  \n  RETURN blind.room AS updated_room;\n`;\n\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensorData: sensorData\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2630,
-        "y": 540,
+        "x": 3150,
+        "y": 620,
         "wires": [
-            [
-                "de2166cf1bee0391",
-                "e1481f7c737be05b"
-            ]
+            []
         ]
     },
     {
@@ -1416,11 +1406,235 @@
         "query": "",
         "sessions": 10,
         "database": "",
-        "x": 2840,
-        "y": 540,
+        "x": 3480,
+        "y": 620,
         "wires": [
-            [],
-            [],
+            [
+                "8abd9ab4d4274707"
+            ],
+            [
+                "8abd9ab4d4274707"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d31bdee94aa5a56f",
+        "type": "file in",
+        "z": "e4842373559f1514",
+        "name": "",
+        "filename": "/data/host_files/json_fake_data/iot_data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 450,
+        "y": 1220,
+        "wires": [
+            [
+                "15994951338c97ae"
+            ]
+        ]
+    },
+    {
+        "id": "dfec812fc0a019c0",
+        "type": "inject",
+        "z": "e4842373559f1514",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 1220,
+        "wires": [
+            [
+                "d31bdee94aa5a56f"
+            ]
+        ]
+    },
+    {
+        "id": "15994951338c97ae",
+        "type": "json",
+        "z": "e4842373559f1514",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 730,
+        "y": 1220,
+        "wires": [
+            [
+                "5f148903c48d5049"
+            ]
+        ]
+    },
+    {
+        "id": "5f148903c48d5049",
+        "type": "split",
+        "z": "e4842373559f1514",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 210,
+        "y": 1120,
+        "wires": [
+            [
+                "d4f01b3d8e12b7af"
+            ]
+        ]
+    },
+    {
+        "id": "d4f01b3d8e12b7af",
+        "type": "delay",
+        "z": "e4842373559f1514",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 220,
+        "y": 1040,
+        "wires": [
+            [
+                "da13443e922e8a07"
+            ]
+        ]
+    },
+    {
+        "id": "1caf2091f3af2186",
+        "type": "inject",
+        "z": "e4842373559f1514",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "32935090cc76ff68"
+            ]
+        ]
+    },
+    {
+        "id": "32935090cc76ff68",
+        "type": "redis-command",
+        "z": "e4842373559f1514",
+        "server": "a12b266a42104227",
+        "command": "FLUSHDB",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 300,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8abd9ab4d4274707",
+        "type": "debug",
+        "z": "e4842373559f1514",
+        "name": "debug 16",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3580,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "a26a1b52b1b771c2",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "sensor room aggregation",
+        "func": "const payload = msg.attributes_to_update;\ndelete payload.people_count;\n\nconst sensorData = {};\nconst sensorKeys = [];\n\nfor (let key in payload) {\n    if (typeof payload[key] === \"number\") {\n        sensorData[key] = payload[key];\n        sensorKeys.push(key);\n    }\n}\n\n// 1. Righe per aggiornare la mappa reale mantenendo lo storico\nlet realMapEntries = \"\";\nif (sensorKeys.length > 0) {\n    realMapEntries = \",\\n          \" + sensorKeys\n        .map(k => `${k}: $sensorData.${k}`) // Prende il nuovo valore dal parametro\n        .join(\",\\n          \");\n}\n\n// 2. Righe per creare la mappa stimata\nlet estimatedMapEntries = \"\";\nif (sensorKeys.length > 0) {\n    estimatedMapEntries = \",\\n          \" + sensorKeys\n        .map(k => `${k}: CASE WHEN currMap.${k} IS NULL THEN coalesce(closest.s.sensors.${k}, 0.0) * (0.8 ^ closest.d) ELSE currMap.${k} END`)\n        .join(\",\\n          \");\n}\n\nmsg.query = `\n  // A. Trova la stanza sorgente ed estrai i suoi vecchi sensori\n  MATCH (source:Place {department: $department, room: $room})\n  WITH source, coalesce(source.sensors, {}) AS currSourceMap\n  \n  // Aggiorna la sorgente con la Map Projection (fonde vecchio e nuovo)\n  SET source.sensors = currSourceMap {\n      .*${realMapEntries}\n  }\n  SET source.has_sensor = true\n  REMOVE source.sensors_estimated\n  \n  // B. Trova le stanze cieche nel raggio di 2 salti\n  WITH source\n  MATCH (source)-[:CONNECTED_TO*1..2]-(blind:Place)\n  WHERE coalesce(blind.has_sensor, false) = false\n  WITH DISTINCT blind\n  \n  // C. Trova il sensore più vicino per ciascuna stanza cieca\n  MATCH path = (blind)-[:CONNECTED_TO*1..3]-(sensor:Place {has_sensor: true})\n  WITH blind, sensor, length(path) AS dist\n  ORDER BY dist ASC\n  WITH blind, collect({s: sensor, d: toFloat(dist)})[0] AS closest\n  \n  // D. Estrai la mappa delle STIME attuale (o una vuota se non esiste)\n  WITH blind, closest, coalesce(blind.sensors_estimated, {}) AS currMap\n  \n  // E. Crea/Aggiorna la mappa sensors_estimated per le stanze cieche\n  SET blind.sensors_estimated = currMap {\n      .*${estimatedMapEntries}\n  }\n  \n  RETURN blind.room AS updated_room;\n`;\n\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensorData: sensorData\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3150,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bcca77d54c37e007",
+        "type": "comment",
+        "z": "e4842373559f1514",
+        "name": "se i valori dei sensori provengono dalla stanza, viene salvato su .sensors\\n se invece sono stimati da stanze vicine, su .sensors_estimated\\n non possono esistere contemporaneamente, .sensors ha la priorità",
+        "info": "",
+        "x": 3280,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "df5df3e9bd3e935a",
+        "type": "function",
+        "z": "e4842373559f1514",
+        "name": "update danger",
+        "func": "const [department, room] = msg.payload.room.split(\":\");\nconst type = msg.payload.danger_type;\ndelete msg.payload.justification\n\nconst alpha = 1.0;\nconst beta = 1.0;\nconst eta = 15.0;\nconst omega = 10000.0;\n\n// Estrazione parametrica completa dal nuovo payload\nlet to_save = {\n  warning: msg.payload.warning,\n  danger: msg.payload.danger,\n  danger_score: msg.payload.danger_score + 1,\n  justification: msg.payload.justification\n};\n\nmsg.query = `\n  MATCH (n:Place {department: $department, room: $room})\n  \n  // 1. Estrazione mappa esistente o inizializzazione a vuoto\n  WITH n, coalesce(n.danger, {}) AS d\n  \n  // 2. Map Projection: conserva il pregresso (.*) e inserisce dinamicamente la nuova proprietà\n  SET n.danger = d { .*, \\`${type}\\`: $danger_data }\n  \n  // 3. Estrazione peso, congestione e isolamento degli score escludendo valori nulli\n  WITH n, \n       coalesce(n.weight, 1.0) AS tau,\n       coalesce(n.congestion, 0.0) AS Q,\n       [k IN keys(n.danger) WHERE n.danger[k] IS NOT NULL | coalesce(toFloat(n.danger[k].danger_score), 0.0)] AS scores\n  \n  // 4. Somma cumulativa per H(t)\n  WITH n, tau, Q, reduce(h_sum = 0.0, s IN scores | h_sum + s) AS H\n  \n  // 5. Calcolo penalità estrema\n  WITH n, tau, Q, H,\n       CASE WHEN H >= $eta THEN $omega ELSE 0.0 END AS penalty\n  \n  // 6. Applicazione costo dinamico w_ij(t)\n  WITH n, H,\n       tau * (1.0 + ($alpha * H) + ($beta * Q)) + penalty AS w_ij\n  \n  // 7. Salvataggio stato\n  SET n.total_danger_score = H,\n      n.dynamic_weight = w_ij\n  \n  RETURN n;\n`;\n\nmsg.params = {\n  department: department,\n  room: room,\n  danger_data: to_save,\n  alpha: alpha,\n  beta: beta,\n  eta: eta,\n  omega: omega\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 1760,
+        "wires": [
             []
         ]
     },
@@ -2364,6 +2578,197 @@
         "wires": [
             [
                 "1a3b13fe692adabc"
+            ]
+        ]
+    },
+    {
+        "id": "ad8291b3ff19e65d",
+        "type": "mqtt in",
+        "z": "7d41b691517b8892",
+        "name": "iot data",
+        "topic": "sensors/+/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "19268c5a199e4927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 420,
+        "wires": [
+            [
+                "f60b23e41370d087"
+            ]
+        ],
+        "info": "thingsboard has the Shared Subscriptions feature that allows to define a group of clients that will share the same topic\n\nthis allows to have multiple deployed agents where each one dynamically handle the telemetry of a room/area\n"
+    },
+    {
+        "id": "f60b23e41370d087",
+        "type": "function",
+        "z": "7d41b691517b8892",
+        "name": "mapping department",
+        "func": "// 1. Fetch maps from the global context (populated by the YAML loader)\nmsg.original_msg = msg\n\nlet roomToDepartment = global.get(\"roomToDepartment\") || {};\nlet sensorToRoom = global.get(\"sensorToRoom\") || {};\n\nlet sensor = msg.device_id;\n\n// 2. Ensure the incoming message actually has a device_id\nif (!sensor) {\n    node.warn(\"Missing msg.device_id. Cannot map room.\");\n    return null; // Halts the flow for this message\n}\n\nlet room = sensorToRoom[sensor];\n\n// 3. Ensure the sensor is actually mapped to a room\nif (!room) {\n    node.warn(`No room mapping found for sensor ID: ${sensor}`);\n    return null;\n}\n\n// 4. Get department, providing a fallback if the room isn't categorized\nlet department = roomToDepartment[room] || \"UnknownDepartment\";\n\n// 5. Attach the mapped values to the message object\nmsg.room = room;\nmsg.department = department;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 420,
+        "wires": [
+            [
+                "d3f465156d32ce03"
+            ]
+        ]
+    },
+    {
+        "id": "d3f465156d32ce03",
+        "type": "switch",
+        "z": "7d41b691517b8892",
+        "name": "",
+        "property": "department",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "departmentA",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 590,
+        "y": 420,
+        "wires": [
+            [
+                "e6d0f184e2896764"
+            ]
+        ]
+    },
+    {
+        "id": "e6d0f184e2896764",
+        "type": "change",
+        "z": "7d41b691517b8892",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "original_msg",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 420,
+        "wires": [
+            [
+                "3a401804f2a3c43a"
+            ]
+        ]
+    },
+    {
+        "id": "3a401804f2a3c43a",
+        "type": "function",
+        "z": "7d41b691517b8892",
+        "name": "agg",
+        "func": "// 1. Recupera la lista esistente dalla memoria persistente (context) o crea un array vuoto\nlet listaDati = flow.get(\"lista_mqtt\") || [];\n\n// 3. Aggiunge il nuovo elemento in coda alla lista\nlistaDati.push(msg.payload);\n\n// 4. Salva nuovamente la lista aggiornata in memoria\nflow.set(\"lista_mqtt\", listaDati);\n\n// 5. Prepara il payload per il file: converte l'intero array in una stringa JSON leggibile\nmsg.payload = JSON.stringify(listaDati, null, 2);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 420,
+        "wires": [
+            [
+                "7f140d810a1c6a8d"
+            ]
+        ]
+    },
+    {
+        "id": "7f140d810a1c6a8d",
+        "type": "file in",
+        "z": "7d41b691517b8892",
+        "name": "",
+        "filename": "/data/host_files/json_fake_data/iot_data_test.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1210,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd1db7b1d3fdc303",
+        "type": "function",
+        "z": "7d41b691517b8892",
+        "name": "agg",
+        "func": "// 1. Recupera la lista esistente dalla memoria persistente (context) o crea un array vuoto\nlet listaDati = flow.get(\"lista_agente\") || [];\n\n// 3. Aggiunge il nuovo elemento in coda alla lista\nlistaDati.push(msg.payload);\n\n// 4. Salva nuovamente la lista aggiornata in memoria\nflow.set(\"lista_agente\", listaDati);\n\n// 5. Prepara il payload per il file: converte l'intero array in una stringa JSON leggibile\nmsg.payload = JSON.stringify(listaDati, null, 2);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 560,
+        "wires": [
+            [
+                "3c012c235396f5d1"
+            ]
+        ]
+    },
+    {
+        "id": "3c012c235396f5d1",
+        "type": "file in",
+        "z": "7d41b691517b8892",
+        "name": "",
+        "filename": "/data/host_files/json_fake_data/agent_data_test.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 780,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dbfa7a75331cd681",
+        "type": "mqtt in",
+        "z": "7d41b691517b8892",
+        "name": "",
+        "topic": "emergency/agent/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "19268c5a199e4927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 560,
+        "wires": [
+            [
+                "cd1db7b1d3fdc303"
             ]
         ]
     }
