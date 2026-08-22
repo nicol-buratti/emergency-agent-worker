@@ -35,7 +35,7 @@
         "id": "7d41b691517b8892",
         "type": "tab",
         "label": "Create json",
-        "disabled": true,
+        "disabled": false,
         "info": "",
         "env": []
     },
@@ -362,7 +362,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 130,
+        "x": 110,
         "y": 960,
         "wires": [
             [
@@ -458,8 +458,8 @@
         "z": "e4842373559f1514",
         "name": "if the sensors changed, update the place graph",
         "info": "",
-        "x": 2020,
-        "y": 740,
+        "x": 1780,
+        "y": 820,
         "wires": []
     },
     {
@@ -787,7 +787,7 @@
         "type": "function",
         "z": "e4842373559f1514",
         "name": "update danger",
-        "func": "// 1. Write the query using placeholders (names starting with $)\nmsg.query = `\n  MATCH (p:Place {department: $department, room: $room})\n  // Cerca la relazione e il nodo di stato; se non esistono, li crea (relazione 1:1)\n  MERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\n  // L'operatore += aggiunge/aggiorna solo le chiavi presenti in $sensors \n  // senza cancellare i vecchi valori presenti in 'e'\n  SET e += $sensors\n  RETURN p, e;\n`;\n\n// 2. Pass the actual parameters in msg.params\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "func": "// 1. Write the query using placeholders (names starting with $)\nmsg.query = `\nMATCH (p:Place {department: $department, room: $room})\nMERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\nSET e += $sensors\nSET e.is_real = true\nWITH p, e AS source_state\n\n// ---------------------------------------------------------\n// Propagazione dei dati ai Place adiacenti\n// ---------------------------------------------------------\n\nOPTIONAL MATCH (p)-[:CONNECTED_TO*1..2]-(neighbor:Place)\nWITH DISTINCT neighbor, source_state, p\nWHERE neighbor IS NOT NULL AND neighbor <> p\nMERGE (neighbor)-[:HAS_STATE]->(neighbor_state:EnvironmentState)\nWITH neighbor, neighbor_state, source_state\nWHERE coalesce(neighbor_state.is_real, false) = false\nSET neighbor_state += properties(source_state)\nSET neighbor_state.is_real = false\nRETURN source_state, collect(neighbor) AS updated_neighbors;\n`;\n\n// 2. Pass the actual parameters in msg.params\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1265,7 +1265,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 380,
+        "x": 360,
         "y": 1500,
         "wires": [
             [
@@ -1278,7 +1278,7 @@
         "type": "debug",
         "z": "e4842373559f1514",
         "name": "debug 7",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1356,7 +1356,7 @@
         "type": "debug",
         "z": "e4842373559f1514",
         "name": "debug 15",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1364,8 +1364,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2560,
-        "y": 680,
+        "x": 2620,
+        "y": 880,
         "wires": []
     },
     {
@@ -1377,45 +1377,6 @@
         "x": 460,
         "y": 1460,
         "wires": []
-    },
-    {
-        "id": "e08ade7d50a3332f",
-        "type": "function",
-        "z": "e4842373559f1514",
-        "name": "sensor room aggregation",
-        "func": "const payload = msg.attributes_to_update;\ndelete payload.people_count;\n\nconst sensorData = {};\nconst sensorKeys = [];\n\nfor (let key in payload) {\n    if (typeof payload[key] === \"number\") {\n        sensorData[key] = payload[key];\n        sensorKeys.push(key);\n    }\n}\n\n// Creiamo le righe per la map projection, solo se ci sono sensori da aggiornare\nlet estimatedMapEntries = \"\";\nif (sensorKeys.length > 0) {\n    estimatedMapEntries = \",\\n          \" + sensorKeys\n        .map(k => `${k}_estimated: CASE WHEN currMap.${k} IS NULL THEN coalesce(closest.s.sensors.${k}, 0.0) * (0.8 ^ closest.d) ELSE currMap.${k}_estimated END`)\n        .join(\",\\n          \");\n}\n\nmsg.query = `\n  // A. Trova e aggiorna la stanza sorgente\n  MATCH (source:Place {department: $department, room: $room})\n  SET source.sensors = $sensorData\n  SET source.has_sensor = true\n  \n  // B. Trova le stanze cieche nel raggio di 2 salti\n  WITH source\n  MATCH (source)-[:CONNECTED_TO*1..2]-(blind:Place)\n  WHERE coalesce(blind.has_sensor, false) = false\n  WITH DISTINCT blind\n  \n  // C. Trova il sensore più vicino per ciascuna stanza cieca\n  MATCH path = (blind)-[:CONNECTED_TO*1..3]-(sensor:Place {has_sensor: true})\n  WITH blind, sensor, length(path) AS dist\n  ORDER BY dist ASC\n  WITH blind, collect({s: sensor, d: toFloat(dist)})[0] AS closest\n  \n  // D. Estrai la mappa attuale (o una vuota se non esiste) mettendola in una variabile sicura\n  WITH blind, closest, coalesce(blind.sensors, {}) AS currMap\n  \n  // E. Crea una NUOVA mappa copiando le vecchie chiavi (.*) e aggiungendo le nuove condizionali.\n  //    Assegnando direttamente l'oggetto interno, Memgraph non va in crash.\n  SET blind.sensors = currMap {\n      .*${estimatedMapEntries}\n  }\n  \n  RETURN blind.room AS updated_room;\n`;\n\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensorData: sensorData\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 3150,
-        "y": 620,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "de2166cf1bee0391",
-        "type": "neo4j-bolt",
-        "z": "e4842373559f1514",
-        "server": "d9d1b2e046e79011",
-        "name": "",
-        "query": "",
-        "sessions": 10,
-        "database": "",
-        "x": 3480,
-        "y": 620,
-        "wires": [
-            [
-                "8abd9ab4d4274707"
-            ],
-            [
-                "8abd9ab4d4274707"
-            ],
-            []
-        ]
     },
     {
         "id": "d31bdee94aa5a56f",
@@ -1575,48 +1536,23 @@
         ]
     },
     {
-        "id": "8abd9ab4d4274707",
-        "type": "debug",
+        "id": "7c5fd1387f525311",
+        "type": "comment",
         "z": "e4842373559f1514",
-        "name": "debug 16",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3580,
-        "y": 540,
+        "name": "since currently we are testing on the departmentA, departmentB is removed",
+        "info": "",
+        "x": 3380,
+        "y": 780,
         "wires": []
     },
     {
-        "id": "a26a1b52b1b771c2",
-        "type": "function",
-        "z": "e4842373559f1514",
-        "name": "sensor room aggregation",
-        "func": "const payload = msg.attributes_to_update;\ndelete payload.people_count;\n\nconst sensorData = {};\nconst sensorKeys = [];\n\nfor (let key in payload) {\n    if (typeof payload[key] === \"number\") {\n        sensorData[key] = payload[key];\n        sensorKeys.push(key);\n    }\n}\n\n// 1. Righe per aggiornare la mappa reale mantenendo lo storico\nlet realMapEntries = \"\";\nif (sensorKeys.length > 0) {\n    realMapEntries = \",\\n          \" + sensorKeys\n        .map(k => `${k}: $sensorData.${k}`) // Prende il nuovo valore dal parametro\n        .join(\",\\n          \");\n}\n\n// 2. Righe per creare la mappa stimata\nlet estimatedMapEntries = \"\";\nif (sensorKeys.length > 0) {\n    estimatedMapEntries = \",\\n          \" + sensorKeys\n        .map(k => `${k}: CASE WHEN currMap.${k} IS NULL THEN coalesce(closest.s.sensors.${k}, 0.0) * (0.8 ^ closest.d) ELSE currMap.${k} END`)\n        .join(\",\\n          \");\n}\n\nmsg.query = `\n  // A. Trova la stanza sorgente ed estrai i suoi vecchi sensori\n  MATCH (source:Place {department: $department, room: $room})\n  WITH source, coalesce(source.sensors, {}) AS currSourceMap\n  \n  // Aggiorna la sorgente con la Map Projection (fonde vecchio e nuovo)\n  SET source.sensors = currSourceMap {\n      .*${realMapEntries}\n  }\n  SET source.has_sensor = true\n  REMOVE source.sensors_estimated\n  \n  // B. Trova le stanze cieche nel raggio di 2 salti\n  WITH source\n  MATCH (source)-[:CONNECTED_TO*1..2]-(blind:Place)\n  WHERE coalesce(blind.has_sensor, false) = false\n  WITH DISTINCT blind\n  \n  // C. Trova il sensore più vicino per ciascuna stanza cieca\n  MATCH path = (blind)-[:CONNECTED_TO*1..3]-(sensor:Place {has_sensor: true})\n  WITH blind, sensor, length(path) AS dist\n  ORDER BY dist ASC\n  WITH blind, collect({s: sensor, d: toFloat(dist)})[0] AS closest\n  \n  // D. Estrai la mappa delle STIME attuale (o una vuota se non esiste)\n  WITH blind, closest, coalesce(blind.sensors_estimated, {}) AS currMap\n  \n  // E. Crea/Aggiorna la mappa sensors_estimated per le stanze cieche\n  SET blind.sensors_estimated = currMap {\n      .*${estimatedMapEntries}\n  }\n  \n  RETURN blind.room AS updated_room;\n`;\n\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensorData: sensorData\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 3150,
-        "y": 560,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "bcca77d54c37e007",
+        "id": "b9a2f8869a9b5840",
         "type": "comment",
         "z": "e4842373559f1514",
-        "name": "se i valori dei sensori provengono dalla stanza, viene salvato su .sensors\\n se invece sono stimati da stanze vicine, su .sensors_estimated\\n non possono esistere contemporaneamente, .sensors ha la priorità",
+        "name": "TODO thesis: update this, now saves iot data in EnvironmìentState\\n and is propageted in rooms two hops, to confirm the approach",
         "info": "",
-        "x": 3280,
-        "y": 480,
+        "x": 2260,
+        "y": 780,
         "wires": []
     },
     {
@@ -2579,119 +2515,31 @@
         "y": 420,
         "wires": [
             [
-                "f60b23e41370d087"
+                "d6be08c820c7833a",
+                "3a401804f2a3c43a"
             ]
         ],
         "info": "thingsboard has the Shared Subscriptions feature that allows to define a group of clients that will share the same topic\n\nthis allows to have multiple deployed agents where each one dynamically handle the telemetry of a room/area\n"
-    },
-    {
-        "id": "f60b23e41370d087",
-        "type": "function",
-        "z": "7d41b691517b8892",
-        "name": "mapping department",
-        "func": "// 1. Fetch maps from the global context (populated by the YAML loader)\nmsg.original_msg = msg\n\nlet roomToDepartment = global.get(\"roomToDepartment\") || {};\nlet sensorToRoom = global.get(\"sensorToRoom\") || {};\n\nlet sensor = msg.device_id;\n\n// 2. Ensure the incoming message actually has a device_id\nif (!sensor) {\n    node.warn(\"Missing msg.device_id. Cannot map room.\");\n    return null; // Halts the flow for this message\n}\n\nlet room = sensorToRoom[sensor];\n\n// 3. Ensure the sensor is actually mapped to a room\nif (!room) {\n    node.warn(`No room mapping found for sensor ID: ${sensor}`);\n    return null;\n}\n\n// 4. Get department, providing a fallback if the room isn't categorized\nlet department = roomToDepartment[room] || \"UnknownDepartment\";\n\n// 5. Attach the mapped values to the message object\nmsg.room = room;\nmsg.department = department;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 420,
-        "wires": [
-            [
-                "d3f465156d32ce03"
-            ]
-        ]
-    },
-    {
-        "id": "d3f465156d32ce03",
-        "type": "switch",
-        "z": "7d41b691517b8892",
-        "name": "",
-        "property": "department",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "departmentA",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 590,
-        "y": 420,
-        "wires": [
-            [
-                "e6d0f184e2896764"
-            ]
-        ]
-    },
-    {
-        "id": "e6d0f184e2896764",
-        "type": "change",
-        "z": "7d41b691517b8892",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "original_msg",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 760,
-        "y": 420,
-        "wires": [
-            [
-                "3a401804f2a3c43a"
-            ]
-        ]
     },
     {
         "id": "3a401804f2a3c43a",
         "type": "function",
         "z": "7d41b691517b8892",
         "name": "agg",
-        "func": "// 1. Recupera la lista esistente dalla memoria persistente (context) o crea un array vuoto\nlet listaDati = flow.get(\"lista_mqtt\") || [];\n\n// 3. Aggiunge il nuovo elemento in coda alla lista\nlistaDati.push(msg.payload);\n\n// 4. Salva nuovamente la lista aggiornata in memoria\nflow.set(\"lista_mqtt\", listaDati);\n\n// 5. Prepara il payload per il file: converte l'intero array in una stringa JSON leggibile\nmsg.payload = JSON.stringify(listaDati, null, 2);\n\nreturn msg;",
+        "func": "// 1. Recupera la lista esistente dalla memoria persistente (context) o crea un array vuoto\n\nlet listaDati = flow.get(\"lista_mqtt\") || [];\n\n\n\n// 3. Aggiunge il nuovo elemento in coda alla lista\n\nlistaDati.push(msg.payload);\n\n\n\n// 4. Salva nuovamente la lista aggiornata in memoria\n\nflow.set(\"lista_mqtt\", listaDati);\n\n\n\n// 5. Prepara il payload per il file: converte l'intero array in una stringa JSON leggibile\n\nmsg.payload = JSON.stringify(listaDati, null, 2);\n\n\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 930,
+        "x": 410,
         "y": 420,
         "wires": [
             [
-                "7f140d810a1c6a8d"
+                "d6be08c820c7833a",
+                "faa005d708f09146"
             ]
-        ]
-    },
-    {
-        "id": "7f140d810a1c6a8d",
-        "type": "file in",
-        "z": "7d41b691517b8892",
-        "name": "",
-        "filename": "/data/host_files/json_fake_data/iot_data_test.json",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 1210,
-        "y": 420,
-        "wires": [
-            []
         ]
     },
     {
@@ -2710,26 +2558,8 @@
         "y": 560,
         "wires": [
             [
-                "3c012c235396f5d1"
+                "ef9f1dfdd73bf509"
             ]
-        ]
-    },
-    {
-        "id": "3c012c235396f5d1",
-        "type": "file in",
-        "z": "7d41b691517b8892",
-        "name": "",
-        "filename": "/data/host_files/json_fake_data/agent_data_test.json",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 780,
-        "y": 560,
-        "wires": [
-            []
         ]
     },
     {
@@ -2751,6 +2581,72 @@
             [
                 "cd1db7b1d3fdc303"
             ]
+        ]
+    },
+    {
+        "id": "d6be08c820c7833a",
+        "type": "debug",
+        "z": "7d41b691517b8892",
+        "name": "debug 17",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "190466f5b57d48bb",
+        "type": "debug",
+        "z": "7d41b691517b8892",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "faa005d708f09146",
+        "type": "file",
+        "z": "7d41b691517b8892",
+        "name": "",
+        "filename": "/data/host_files/json_fake_data/iot_data_test.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 770,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ef9f1dfdd73bf509",
+        "type": "file",
+        "z": "7d41b691517b8892",
+        "name": "",
+        "filename": "/data/host_files/json_fake_data/agent_data_test.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 780,
+        "y": 560,
+        "wires": [
+            []
         ]
     }
 ]
