@@ -1,222 +1,676 @@
-[
-    {
-        "node_var": "cisco",
-        "department": "departmentA",
-        "room": "cisco",
-        "weight": 4,
-        "connected_to": [
-            "c1"
-        ]
-    },
-    {
-        "node_var": "la1",
-        "department": "departmentA",
-        "room": "LA1",
-        "weight": 10,
-        "connected_to": [
-            "c1",
-            "e1"
-        ]
-    },
-    {
-        "node_var": "tlab",
-        "department": "departmentA",
-        "room": "TeamLab",
-        "weight": 8,
-        "connected_to": [
-            "e3",
-            "c1",
-            "c2"
-        ]
-    },
-    {
-        "node_var": "aa1",
-        "department": "departmentA",
-        "room": "AA1",
-        "weight": 10,
-        "connected_to": [
-            "c1",
-            "c2",
-            "e1"
-        ]
-    },
-    {
-        "node_var": "ab1",
-        "department": "departmentA",
-        "room": "AB1",
-        "weight": 8,
-        "connected_to": [
-            "c3",
-            "e5"
-        ]
-    },
-    {
-        "node_var": "ab2",
-        "department": "departmentA",
-        "room": "AB2",
-        "weight": 8,
-        "connected_to": [
-            "c3",
-            "e5"
-        ]
-    },
-    {
-        "node_var": "ab3",
-        "department": "departmentA",
-        "room": "AB3",
-        "weight": 7,
-        "connected_to": [
-            "c3",
-            "e6"
-        ]
-    },
-    {
-        "node_var": "aric",
-        "department": "departmentA",
-        "room": "AulaRicercatori",
-        "weight": 5,
-        "connected_to": [
-            "c3"
-        ]
-    },
-    {
-        "node_var": "sriunioni",
-        "department": "departmentA",
-        "room": "SalaRiunioni",
-        "weight": 5,
-        "connected_to": [
-            "c3",
-            "e7"
-        ]
-    },
-    {
-        "node_var": "uprof",
-        "department": "departmentA",
-        "room": "UfficiProf",
-        "weight": 9,
-        "connected_to": [
-            "c3"
-        ]
-    },
-    {
-        "node_var": "scale",
-        "department": "departmentA",
-        "room": "scale",
-        "weight": 3,
-        "connected_to": [
-            "c1",
-            "c3"
-        ]
-    },
-    {
-        "node_var": "c1",
-        "department": "departmentA",
-        "room": "C1",
-        "weight": 7,
-        "connected_to": [
-            "tlab",
-            "aa1",
-            "la1",
-            "cisco",
-            "scale",
-            "e1",
-            "e3",
-            "e4"
-        ]
-    },
-    {
-        "node_var": "c2",
-        "department": "departmentA",
-        "room": "C2",
-        "weight": 2,
-        "connected_to": [
-            "tlab",
-            "aa1",
-            "e2"
-        ]
-    },
-    {
-        "node_var": "c3",
-        "department": "departmentA",
-        "room": "C3",
-        "weight": 9,
-        "connected_to": [
-            "ab1",
-            "ab2",
-            "ab3",
-            "aric",
-            "sriunioni",
-            "uprof",
-            "scale",
-            "e5"
-        ]
-    },
-    {
-        "node_var": "e1",
-        "department": "departmentA",
-        "room": "E1",
-        "weight": 4,
-        "connected_to": [
-            "la1",
-            "aa1",
-            "c1"
-        ]
-    },
-    {
-        "node_var": "e2",
-        "department": "departmentA",
-        "room": "E2",
-        "weight": 2,
-        "connected_to": [
-            "c2"
-        ]
-    },
-    {
-        "node_var": "e3",
-        "department": "departmentA",
-        "room": "E3",
-        "weight": 4,
-        "connected_to": [
-            "tlab",
-            "c1"
-        ]
-    },
-    {
-        "node_var": "e4",
-        "department": "departmentA",
-        "room": "E4",
-        "weight": 2,
-        "connected_to": [
-            "c1"
-        ]
-    },
-    {
-        "node_var": "e5",
-        "department": "departmentA",
-        "room": "E5",
-        "weight": 4,
-        "connected_to": [
-            "c3",
-            "ab1",
-            "ab2"
-        ]
-    },
-    {
-        "node_var": "e6",
-        "department": "departmentA",
-        "room": "E6",
-        "weight": 2,
-        "connected_to": [
-            "ab3"
-        ]
-    },
-    {
-        "node_var": "e7",
-        "department": "departmentA",
-        "room": "E7",
-        "weight": 2,
-        "connected_to": [
-            "sriunioni"
-        ]
-    }
-]
+{
+    "places": [
+        {
+            "id": "cisco",
+            "name": "cisco",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 4,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "la1",
+            "name": "LA1",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 10,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "tlab",
+            "name": "TeamLab",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 8,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "aa1",
+            "name": "AA1",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 10,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "ab1",
+            "name": "AB1",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 8,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "ab2",
+            "name": "AB2",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 8,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "ab3",
+            "name": "AB3",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 7,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "aric",
+            "name": "AulaRicercatori",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 5,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "sriunioni",
+            "name": "SalaRiunioni",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 5,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "uprof",
+            "name": "UfficiProf",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 9,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "scale",
+            "name": "scale",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 3,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "c1",
+            "name": "C1",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 7,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "c2",
+            "name": "C2",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 2,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "c3",
+            "name": "C3",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 9,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "e1",
+            "name": "E1",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 4,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "e2",
+            "name": "E2",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 2,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "e3",
+            "name": "E3",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 4,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "e4",
+            "name": "E4",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 2,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "e5",
+            "name": "E5",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 4,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "e6",
+            "name": "E6",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 2,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        },
+        {
+            "id": "e7",
+            "name": "E7",
+            "coordinates": [],
+            "attributes": {
+                "department": "departmentA",
+                "weight": 2,
+                "occupied": null,
+                "light": null,
+                "state": "unchecked"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "edge1",
+            "name": "cisco to c1",
+            "source": "cisco",
+            "target": "c1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge2",
+            "name": "la1 to c1",
+            "source": "la1",
+            "target": "c1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge3",
+            "name": "la1 to e1",
+            "source": "la1",
+            "target": "e1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge4",
+            "name": "tlab to e3",
+            "source": "tlab",
+            "target": "e3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge5",
+            "name": "tlab to c1",
+            "source": "tlab",
+            "target": "c1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge6",
+            "name": "tlab to c2",
+            "source": "tlab",
+            "target": "c2",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge7",
+            "name": "aa1 to c1",
+            "source": "aa1",
+            "target": "c1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge8",
+            "name": "aa1 to c2",
+            "source": "aa1",
+            "target": "c2",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge9",
+            "name": "aa1 to e1",
+            "source": "aa1",
+            "target": "e1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge10",
+            "name": "ab1 to c3",
+            "source": "ab1",
+            "target": "c3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge11",
+            "name": "ab1 to e5",
+            "source": "ab1",
+            "target": "e5",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge12",
+            "name": "ab2 to c3",
+            "source": "ab2",
+            "target": "c3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge13",
+            "name": "ab2 to e5",
+            "source": "ab2",
+            "target": "e5",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge14",
+            "name": "ab3 to c3",
+            "source": "ab3",
+            "target": "c3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge15",
+            "name": "ab3 to e6",
+            "source": "ab3",
+            "target": "e6",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge16",
+            "name": "aric to c3",
+            "source": "aric",
+            "target": "c3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge17",
+            "name": "sriunioni to c3",
+            "source": "sriunioni",
+            "target": "c3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge18",
+            "name": "sriunioni to e7",
+            "source": "sriunioni",
+            "target": "e7",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge19",
+            "name": "uprof to c3",
+            "source": "uprof",
+            "target": "c3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge20",
+            "name": "scale to c1",
+            "source": "scale",
+            "target": "c1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge21",
+            "name": "scale to c3",
+            "source": "scale",
+            "target": "c3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge22",
+            "name": "c1 to tlab",
+            "source": "c1",
+            "target": "tlab",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge23",
+            "name": "c1 to aa1",
+            "source": "c1",
+            "target": "aa1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge24",
+            "name": "c1 to la1",
+            "source": "c1",
+            "target": "la1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge25",
+            "name": "c1 to cisco",
+            "source": "c1",
+            "target": "cisco",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge26",
+            "name": "c1 to scale",
+            "source": "c1",
+            "target": "scale",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge27",
+            "name": "c1 to e1",
+            "source": "c1",
+            "target": "e1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge28",
+            "name": "c1 to e3",
+            "source": "c1",
+            "target": "e3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge29",
+            "name": "c1 to e4",
+            "source": "c1",
+            "target": "e4",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge30",
+            "name": "c2 to tlab",
+            "source": "c2",
+            "target": "tlab",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge31",
+            "name": "c2 to aa1",
+            "source": "c2",
+            "target": "aa1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge32",
+            "name": "c2 to e2",
+            "source": "c2",
+            "target": "e2",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge33",
+            "name": "c3 to ab1",
+            "source": "c3",
+            "target": "ab1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge34",
+            "name": "c3 to ab2",
+            "source": "c3",
+            "target": "ab2",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge35",
+            "name": "c3 to ab3",
+            "source": "c3",
+            "target": "ab3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge36",
+            "name": "c3 to aric",
+            "source": "c3",
+            "target": "aric",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge37",
+            "name": "c3 to sriunioni",
+            "source": "c3",
+            "target": "sriunioni",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge38",
+            "name": "c3 to uprof",
+            "source": "c3",
+            "target": "uprof",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge39",
+            "name": "c3 to scale",
+            "source": "c3",
+            "target": "scale",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge40",
+            "name": "c3 to e5",
+            "source": "c3",
+            "target": "e5",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge41",
+            "name": "e1 to la1",
+            "source": "e1",
+            "target": "la1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge42",
+            "name": "e1 to aa1",
+            "source": "e1",
+            "target": "aa1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge43",
+            "name": "e1 to c1",
+            "source": "e1",
+            "target": "c1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge44",
+            "name": "e2 to c2",
+            "source": "e2",
+            "target": "c2",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge45",
+            "name": "e3 to tlab",
+            "source": "e3",
+            "target": "tlab",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge46",
+            "name": "e3 to c1",
+            "source": "e3",
+            "target": "c1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge47",
+            "name": "e4 to c1",
+            "source": "e4",
+            "target": "c1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge48",
+            "name": "e5 to c3",
+            "source": "e5",
+            "target": "c3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge49",
+            "name": "e5 to ab1",
+            "source": "e5",
+            "target": "ab1",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge50",
+            "name": "e5 to ab2",
+            "source": "e5",
+            "target": "ab2",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge51",
+            "name": "e6 to ab3",
+            "source": "e6",
+            "target": "ab3",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        },
+        {
+            "id": "edge52",
+            "name": "e7 to sriunioni",
+            "source": "e7",
+            "target": "sriunioni",
+            "type": "CONNECTED_TO",
+            "attributes": {}
+        }
+    ],
+    "logicalPlaces": [],
+    "views": []
+}
