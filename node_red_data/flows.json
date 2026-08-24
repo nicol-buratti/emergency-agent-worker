@@ -11,7 +11,7 @@
         "id": "e4842373559f1514",
         "type": "tab",
         "label": "iot caching local computation",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -27,7 +27,7 @@
         "id": "1a10bef68b9ba5b6",
         "type": "tab",
         "label": "Camunda",
-        "disabled": true,
+        "disabled": false,
         "info": "",
         "env": []
     },
@@ -38,6 +38,66 @@
         "disabled": true,
         "info": "",
         "env": []
+    },
+    {
+        "id": "ab3011493b867143",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6305c5b377893d03",
+        "type": "tab",
+        "label": "iot caching local computation",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "group_places",
+        "type": "group",
+        "z": "61370204cb540a30",
+        "name": "1. Elaborazione Nodi (Places)",
+        "style": {
+            "stroke": "#999999",
+            "fill": "#e3f3d3",
+            "fill-opacity": "0.5"
+        },
+        "nodes": [
+            "split_places",
+            "delay_places",
+            "change_params_places",
+            "template_cypher_places",
+            "neo4j_places"
+        ],
+        "x": 694,
+        "y": 339,
+        "w": 932,
+        "h": 149.5
+    },
+    {
+        "id": "group_edges",
+        "type": "group",
+        "z": "61370204cb540a30",
+        "name": "2. Elaborazione Archi (Edges)",
+        "style": {
+            "stroke": "#999999",
+            "fill": "#ffe6cc",
+            "fill-opacity": "0.5"
+        },
+        "nodes": [
+            "split_edges",
+            "delay_edges",
+            "change_params_edges",
+            "template_cypher_edges",
+            "neo4j_edges"
+        ],
+        "x": 694,
+        "y": 519,
+        "w": 932,
+        "h": 149.5
     },
     {
         "id": "19268c5a199e4927",
@@ -117,7 +177,7 @@
         "id": "02578f1494a40ed0",
         "type": "debug",
         "z": "61370204cb540a30",
-        "name": "debug 23",
+        "name": "Errors",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -126,150 +186,27 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 340,
+        "x": 330,
         "y": 100,
         "wires": []
     },
     {
-        "id": "3930b524260164cb",
-        "type": "function",
-        "z": "61370204cb540a30",
-        "name": "flush graph",
-        "func": "msg.query = `MATCH (n) DETACH DELETE n`\nmsg.database = \"memgraph\"\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 430,
-        "y": 440,
-        "wires": [
-            [
-                "cbc88b2b5dff0fe9"
-            ]
-        ]
-    },
-    {
-        "id": "f23b46eb9a3a6d60",
-        "type": "function",
-        "z": "61370204cb540a30",
-        "name": "create query to create graph",
-        "func": "let data = msg.payload;\n\nif (Buffer.isBuffer(data)) {\n    data = data.toString('utf8');\n}\n\nif (typeof data === 'string') {\n    try {\n        data = JSON.parse(data);\n    } catch (e) {\n        node.error(\"Failed to parse JSON. Ensure the file is valid JSON.\", msg);\n        return null;\n    }\n}\n\n// 1. Validate the new JSON structure\nif (!data || typeof data !== 'object' || Array.isArray(data) || !Array.isArray(data.places) || !Array.isArray(data.edges)) {\n    node.error(\"Expected the JSON to be an object containing 'places' and 'edges' arrays.\", msg);\n    return null;\n}\n\nconst queryParts = [];\n\n// 2. Generate Nodes dynamically from data.places\nqueryParts.push(\" // Creazione dei nodi\");\ndata.places.forEach(place => {\n    if (place.id) {\n        const properties = [];\n        \n        // Aggiungi le proprietà base\n        properties.push(`id: '${place.id}'`);\n        if (place.name) {\n            properties.push(`name: '${place.name}'`);\n        }\n        \n        // Aggiungi gli attributi dinamicamente (ignorando i valori null)\n        if (place.attributes) {\n            for (const key in place.attributes) {\n                const value = place.attributes[key];\n                if (value !== null && value !== undefined) {\n                    if (typeof value === 'string') {\n                        properties.push(`${key}: '${value}'`);\n                    } else {\n                        properties.push(`${key}: ${value}`);\n                    }\n                }\n            }\n        }\n\n        // Gestione opzionale delle coordinate (salvate come stringa JSON)\n        if (place.coordinates && place.coordinates.length > 0) {\n             properties.push(`coordinates: '${JSON.stringify(place.coordinates)}'`);\n        }\n\n        const propsString = properties.join(', ');\n        queryParts.push(` (${place.id}:Place {${propsString}})`);\n    }\n});\n\n// 3. Generate Relationships from data.edges\n// 3. Generate Relationships from data.edges\nqueryParts.push(\"\\n // Creazione delle relazioni\");\ndata.edges.forEach(edge => {\n    if (edge.source && edge.target) {\n        // Estrai il tipo di relazione, formattalo in maiuscolo (standard Cypher) o usa un default\n        const relType = edge.type ? edge.type.toUpperCase().replace(/\\s+/g, '_') : 'CONNECTED_TO';\n        \n        // Estrai le proprietà della relazione (se presenti)\n        let edgePropsString = \"\";\n        if (edge.attributes && Object.keys(edge.attributes).length > 0) {\n            const edgeProps = [];\n            for (const key in edge.attributes) {\n                const value = edge.attributes[key];\n                if (value !== null && value !== undefined) {\n                    if (typeof value === 'string') {\n                        edgeProps.push(`${key}: '${value}'`);\n                    } else {\n                        edgeProps.push(`${key}: ${value}`);\n                    }\n                }\n            }\n            if (edgeProps.length > 0) {\n                edgePropsString = ` {${edgeProps.join(', ')}}`;\n            }\n        }\n\n        // Genera la stringa Cypher per la relazione con le eventuali proprietà\n        queryParts.push(`\\n // ${edge.source} -[${relType}]-> ${edge.target}`);\n        queryParts.push(` (${edge.source})-[:${relType}${edgePropsString}]->(${edge.target})`);\n    }\n});\n\n// 4. Build the final query string\nlet finalQuery = \"CREATE\\n\";\n\nfor (let i = 0; i < queryParts.length; i++) {\n    const part = queryParts[i];\n\n    let isLastStatement = true;\n    for (let j = i + 1; j < queryParts.length; j++) {\n        if (!queryParts[j].trim().startsWith(\"//\")) {\n            isLastStatement = false;\n            break;\n        }\n    }\n\n    if (part.trim().startsWith(\"//\")) {\n        finalQuery += part + \"\\n\";\n    } else {\n        finalQuery += part;\n        if (!isLastStatement) {\n            finalQuery += \",\\n\";\n        } else {\n            finalQuery += \";\\n\";\n        }\n    }\n}\n\nmsg.query = finalQuery;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 240,
-        "y": 560,
-        "wires": [
-            [
-                "5ca84ef9764b925e"
-            ]
-        ]
-    },
-    {
-        "id": "4e12b832230d1c12",
-        "type": "file in",
-        "z": "61370204cb540a30",
-        "name": "",
-        "filename": "/data/host_files/place_graph.json",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 420,
-        "y": 500,
-        "wires": [
-            [
-                "f23b46eb9a3a6d60"
-            ]
-        ]
-    },
-    {
-        "id": "5ca84ef9764b925e",
-        "type": "neo4j-bolt",
-        "z": "61370204cb540a30",
-        "server": "d9d1b2e046e79011",
-        "name": "",
-        "query": "",
-        "sessions": 10,
-        "database": "memgraph",
-        "x": 480,
-        "y": 560,
-        "wires": [
-            [
-                "7d5a638830a319d8"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "cbc88b2b5dff0fe9",
-        "type": "neo4j-bolt",
-        "z": "61370204cb540a30",
-        "server": "d9d1b2e046e79011",
-        "name": "",
-        "query": "",
-        "sessions": 10,
-        "database": "memgraph",
-        "x": 180,
-        "y": 500,
-        "wires": [
-            [
-                "4e12b832230d1c12"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "7bf231e26484ad73",
+        "id": "4a69db7ebaba6d31",
         "type": "watch",
         "z": "61370204cb540a30",
         "name": "",
         "files": "/data/host_files/place_graph.json",
         "recursive": "",
-        "x": 170,
-        "y": 380,
+        "x": 230,
+        "y": 240,
         "wires": [
             [
-                "91b4253e9faf1525"
+                "67f93e4ede3e4e93"
             ]
         ]
     },
     {
-        "id": "91b4253e9faf1525",
-        "type": "delay",
-        "z": "61370204cb540a30",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 430,
-        "y": 380,
-        "wires": [
-            [
-                "3930b524260164cb"
-            ]
-        ]
-    },
-    {
-        "id": "85e43fa2842d066c",
+        "id": "3da550b9440e5d11",
         "type": "inject",
         "z": "61370204cb540a30",
         "name": "",
@@ -289,44 +226,218 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 190,
-        "y": 440,
+        "x": 170,
+        "y": 300,
         "wires": [
             [
-                "91b4253e9faf1525"
+                "67f93e4ede3e4e93"
             ]
         ]
     },
     {
-        "id": "7d5a638830a319d8",
-        "type": "neo4j-bolt",
+        "id": "67f93e4ede3e4e93",
+        "type": "delay",
         "z": "61370204cb540a30",
-        "server": "d9d1b2e046e79011",
         "name": "",
-        "query": "CREATE INDEX ON :Place(room)",
-        "sessions": 10,
-        "database": "memgraph",
-        "x": 160,
-        "y": 640,
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 350,
+        "y": 300,
         "wires": [
             [
-                "12848861ba5b7aec"
-            ],
-            [],
-            []
+                "d9038d877b4bebec"
+            ]
         ]
     },
     {
-        "id": "12848861ba5b7aec",
+        "id": "d9038d877b4bebec",
+        "type": "file in",
+        "z": "61370204cb540a30",
+        "name": "",
+        "filename": "/data/host_files/place_graph.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 240,
+        "y": 380,
+        "wires": [
+            [
+                "6860574c680552d4"
+            ]
+        ]
+    },
+    {
+        "id": "6860574c680552d4",
+        "type": "json",
+        "z": "61370204cb540a30",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 550,
+        "y": 380,
+        "wires": [
+            [
+                "split_places",
+                "split_edges"
+            ]
+        ]
+    },
+    {
+        "id": "split_places",
+        "type": "split",
+        "z": "61370204cb540a30",
+        "g": "group_places",
+        "name": "Itera Places",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload.places",
+        "x": 790,
+        "y": 380,
+        "wires": [
+            [
+                "delay_places"
+            ]
+        ]
+    },
+    {
+        "id": "delay_places",
+        "type": "delay",
+        "z": "61370204cb540a30",
+        "g": "group_places",
+        "name": "Limita a 5/sec",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "5",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 940,
+        "y": 380,
+        "wires": [
+            [
+                "change_params_places"
+            ]
+        ]
+    },
+    {
+        "id": "change_params_places",
+        "type": "change",
+        "z": "61370204cb540a30",
+        "g": "group_places",
+        "name": "Mapping Parametri Place",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "params.id",
+                "pt": "msg",
+                "to": "payload.places.id",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.name",
+                "pt": "msg",
+                "to": "payload.places.name",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.attributes",
+                "pt": "msg",
+                "to": "payload.places.attributes",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.coordinates",
+                "pt": "msg",
+                "to": "$string(payload.places.coordinates)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1130,
+        "y": 380,
+        "wires": [
+            [
+                "template_cypher_places"
+            ]
+        ]
+    },
+    {
+        "id": "template_cypher_places",
+        "type": "template",
+        "z": "61370204cb540a30",
+        "g": "group_places",
+        "name": "Query Cypher Place",
+        "field": "query",
+        "fieldType": "msg",
+        "format": "text",
+        "syntax": "mustache",
+        "template": "MERGE (p:Place {id: $id})\nSET p += $attributes,\n    p.name = $name,\n    p.coordinates = $coordinates\nRETURN p;",
+        "output": "str",
+        "x": 1350,
+        "y": 380,
+        "wires": [
+            [
+                "neo4j_places"
+            ]
+        ]
+    },
+    {
+        "id": "neo4j_places",
         "type": "neo4j-bolt",
         "z": "61370204cb540a30",
+        "g": "group_places",
         "server": "d9d1b2e046e79011",
-        "name": "",
-        "query": "CREATE INDEX ON :Place(department, room);",
+        "name": "Salva Place",
+        "query": "",
         "sessions": 10,
-        "database": "memgraph",
-        "x": 300,
-        "y": 640,
+        "database": "",
+        "x": 1530,
+        "y": 440,
         "wires": [
             [],
             [],
@@ -334,14 +445,152 @@
         ]
     },
     {
-        "id": "beb62212b0456293",
-        "type": "comment",
+        "id": "split_edges",
+        "type": "split",
         "z": "61370204cb540a30",
-        "name": "creates indexes, nodes dont support multiple queries",
-        "info": "",
-        "x": 250,
-        "y": 700,
-        "wires": []
+        "g": "group_edges",
+        "name": "Itera Edges",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload.edges",
+        "x": 790,
+        "y": 560,
+        "wires": [
+            [
+                "delay_edges"
+            ]
+        ]
+    },
+    {
+        "id": "delay_edges",
+        "type": "delay",
+        "z": "61370204cb540a30",
+        "g": "group_edges",
+        "name": "Limita a 5/sec",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "5",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 940,
+        "y": 560,
+        "wires": [
+            [
+                "change_params_edges"
+            ]
+        ]
+    },
+    {
+        "id": "change_params_edges",
+        "type": "change",
+        "z": "61370204cb540a30",
+        "g": "group_edges",
+        "name": "Mapping Parametri Edge",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "params.source",
+                "pt": "msg",
+                "to": "payload.edges.source",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.target",
+                "pt": "msg",
+                "to": "payload.edges.target",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.attributes",
+                "pt": "msg",
+                "to": "payload.edges.attributes",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "edge_type",
+                "pt": "msg",
+                "to": "$exists(payload.edges.type) ? $replace($uppercase(payload.edges.type), /\\s+/, \"_\") : \"CONNECTED_TO\"",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1130,
+        "y": 560,
+        "wires": [
+            [
+                "template_cypher_edges"
+            ]
+        ]
+    },
+    {
+        "id": "template_cypher_edges",
+        "type": "template",
+        "z": "61370204cb540a30",
+        "g": "group_edges",
+        "name": "Query Cypher Edge",
+        "field": "query",
+        "fieldType": "msg",
+        "format": "text",
+        "syntax": "mustache",
+        "template": "MATCH (s:Place {id: $source})\nMATCH (t:Place {id: $target})\nMERGE (s)-[r:{{{edge_type}}}]->(t)\nSET r += $attributes\nRETURN r;",
+        "output": "str",
+        "x": 1350,
+        "y": 560,
+        "wires": [
+            [
+                "neo4j_edges"
+            ]
+        ]
+    },
+    {
+        "id": "neo4j_edges",
+        "type": "neo4j-bolt",
+        "z": "61370204cb540a30",
+        "g": "group_edges",
+        "server": "d9d1b2e046e79011",
+        "name": "Salva Edge",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 1530,
+        "y": 620,
+        "wires": [
+            [],
+            [],
+            []
+        ]
     },
     {
         "id": "89418cdd0e562402",
@@ -2240,7 +2489,6 @@
         "y": 540,
         "wires": [
             [
-                "bb230141cbe0fcf2",
                 "a6bf7a9114fdd9a3"
             ]
         ]
@@ -2327,22 +2575,6 @@
                 "38ead71f.e78928"
             ]
         ]
-    },
-    {
-        "id": "bb230141cbe0fcf2",
-        "type": "debug",
-        "z": "1a10bef68b9ba5b6",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 900,
-        "y": 480,
-        "wires": []
     },
     {
         "id": "74cd16f8a43b81f7",
@@ -2514,7 +2746,8 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
         "x": 380,
@@ -2550,7 +2783,7 @@
         "type": "file in",
         "z": "1a10bef68b9ba5b6",
         "name": "bpmn file",
-        "filename": "/data/host_files/diagram_semplificato.bpmn",
+        "filename": "/data/host_files/diagram_2.bpmn",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
@@ -2560,7 +2793,9 @@
         "x": 520,
         "y": 320,
         "wires": [
-            []
+            [
+                "f65be93a.5651c8"
+            ]
         ]
     },
     {
@@ -2597,9 +2832,9 @@
         "type": "watch",
         "z": "1a10bef68b9ba5b6",
         "name": "",
-        "files": "/data/host_files/diagram_semplificato.bpmn",
+        "files": "/data/host_files/diagram_2.bpmn",
         "recursive": "",
-        "x": 260,
+        "x": 230,
         "y": 260,
         "wires": [
             [
@@ -2669,6 +2904,224 @@
                 "1a3b13fe692adabc"
             ]
         ]
+    },
+    {
+        "id": "9baddaf3cc910f86",
+        "type": "function",
+        "z": "1a10bef68b9ba5b6",
+        "name": "get hot rooms",
+        "func": "msg.query = `\nMATCH (p:Place)-[:HAS_STATE]-(e:EnvironmentState)\nWHERE e.temperature > 25\nRETURN DISTINCT p.name\n`;\n\nmsg.database = \"memgraph\";\nmsg.payload = null\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1320,
+        "wires": [
+            [
+                "b055ca04b25f3097"
+            ]
+        ]
+    },
+    {
+        "id": "b055ca04b25f3097",
+        "type": "neo4j-bolt",
+        "z": "1a10bef68b9ba5b6",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 780,
+        "y": 1320,
+        "wires": [
+            [
+                "dcd99ff050aca07c"
+            ],
+            [
+                "dcd99ff050aca07c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "dcd99ff050aca07c",
+        "type": "function",
+        "z": "1a10bef68b9ba5b6",
+        "name": "format output",
+        "func": "// Se msg.payload è già un array lo teniamo com'è, \n// altrimenti lo chiudiamo dentro parentesi quadre.\nlet hotRooms = Array.isArray(msg.payload) ? msg.payload : [msg.payload];\n\n// Ricreiamo il payload con la struttura desiderata\nmsg.payload = {\n    variables: {\n        hotRooms: hotRooms\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 1320,
+        "wires": [
+            [
+                "72bfe70c487ab809"
+            ]
+        ]
+    },
+    {
+        "id": "11257f91c1a8edec",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "cfd8959870dbfd83",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 1320,
+        "wires": [
+            [
+                "9baddaf3cc910f86"
+            ]
+        ]
+    },
+    {
+        "id": "86aa0a99ad36e0c1",
+        "type": "complete-task",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "x": 1500,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "72bfe70c487ab809",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.job",
+                "pt": "msg",
+                "to": "job",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1220,
+        "y": 1320,
+        "wires": [
+            [
+                "11257f91c1a8edec",
+                "86aa0a99ad36e0c1"
+            ]
+        ]
+    },
+    {
+        "id": "dcbdea2d36864dc1",
+        "type": "task-worker",
+        "z": "1a10bef68b9ba5b6",
+        "name": "task query",
+        "camunda": "cc7538c088cd1d8b",
+        "taskType": "calc-query",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 180,
+        "y": 1320,
+        "wires": [
+            [
+                "cfd8959870dbfd83",
+                "9442444e91ebc723"
+            ]
+        ]
+    },
+    {
+        "id": "c8dd9a06650ea86e",
+        "type": "task-worker",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "camunda": "cc7538c088cd1d8b",
+        "taskType": "air-conditioning",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 210,
+        "y": 1580,
+        "wires": [
+            [
+                "dac0a933cb42dfcc"
+            ]
+        ]
+    },
+    {
+        "id": "859f0a629f73f74d",
+        "type": "complete-task",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "x": 420,
+        "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "dac0a933cb42dfcc",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "9442444e91ebc723",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "name": "debug 20",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 1400,
+        "wires": []
     },
     {
         "id": "ad8291b3ff19e65d",
@@ -2819,6 +3272,2389 @@
         "y": 560,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "split_sensors",
+        "type": "split",
+        "z": "ab3011493b867143",
+        "name": "Split Sensor Data",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "sensor_name",
+        "property": "payload",
+        "x": 430,
+        "y": 1340,
+        "wires": [
+            [
+                "get_sensor_config"
+            ]
+        ]
+    },
+    {
+        "id": "get_sensor_config",
+        "type": "change",
+        "z": "ab3011493b867143",
+        "name": "Load Strategy Config",
+        "rules": [
+            {
+                "t": "set",
+                "p": "agg_strategy",
+                "pt": "msg",
+                "to": "$globalContext(\"sensor_configs\")[msg.parts.key].agg_type",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 1340,
+        "wires": [
+            [
+                "route_strategy"
+            ]
+        ]
+    },
+    {
+        "id": "route_strategy",
+        "type": "switch",
+        "z": "ab3011493b867143",
+        "name": "Route Strategy",
+        "property": "agg_strategy",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "mean",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "max",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 850,
+        "y": 1340,
+        "wires": [
+            [
+                "buffer_mean"
+            ],
+            [
+                "buffer_max"
+            ]
+        ]
+    },
+    {
+        "id": "buffer_mean",
+        "type": "join",
+        "z": "ab3011493b867143",
+        "name": "60s Buffer Mean",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "60",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1050,
+        "y": 1300,
+        "wires": [
+            [
+                "calc_mean"
+            ]
+        ]
+    },
+    {
+        "id": "buffer_max",
+        "type": "join",
+        "z": "ab3011493b867143",
+        "name": "60s Buffer Max",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "60",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1050,
+        "y": 1380,
+        "wires": [
+            [
+                "calc_max"
+            ]
+        ]
+    },
+    {
+        "id": "calc_mean",
+        "type": "change",
+        "z": "ab3011493b867143",
+        "name": "Calculate Mean",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$average(msg.payload)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1250,
+        "y": 1300,
+        "wires": [
+            [
+                "rebuild_object"
+            ]
+        ]
+    },
+    {
+        "id": "calc_max",
+        "type": "change",
+        "z": "ab3011493b867143",
+        "name": "Calculate Max",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$max(msg.payload)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1250,
+        "y": 1380,
+        "wires": [
+            [
+                "rebuild_object"
+            ]
+        ]
+    },
+    {
+        "id": "rebuild_object",
+        "type": "join",
+        "z": "ab3011493b867143",
+        "name": "Rebuild Sensor Object",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "parts.key",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "2",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1450,
+        "y": 1340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d22553de10103b9",
+        "type": "catch",
+        "z": "ab3011493b867143",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 1140,
+        "y": 1680,
+        "wires": [
+            [
+                "f7ac575e8479d54a",
+                "6eb841efcf858104"
+            ]
+        ]
+    },
+    {
+        "id": "f7ac575e8479d54a",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "Errors",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error.message",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "f18cfff34833a9b6",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "filter danger data",
+        "func": "let cachingData = {};\nlet device_id = msg.payload.device_id;\n\ncachingData.device_id = device_id;\n// We assign the sensors object, keeping in mind JS objects are passed by reference\ncachingData.sensors = msg.payload.sensors;\n\n// Retrieve global settings from the context (fallback to an empty object if not found)\nlet global_settings = global.get(\"global_settings\") || {};\nlet excluded_sensors = global_settings.excluded_sensors || [];\n\nif (cachingData.sensors) {\n    // 1. Dynamically delete sensors based on the YAML configuration\n    for (let i = 0; i < excluded_sensors.length; i++) {\n        let sensorToRemove = excluded_sensors[i];\n        \n        // Check if the sensor exists before attempting to delete it\n        if (cachingData.sensors.hasOwnProperty(sensorToRemove)) {\n            delete cachingData.sensors[sensorToRemove];\n        }\n    }\n}\n\nreturn cachingData;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1310,
+        "y": 2400,
+        "wires": [
+            [
+                "5ac9fafc3101ed84",
+                "340d8e1c37f7e025"
+            ]
+        ]
+    },
+    {
+        "id": "629ae743805d5fa5",
+        "type": "mqtt in",
+        "z": "ab3011493b867143",
+        "name": "iot data",
+        "topic": "sensors/+/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "19268c5a199e4927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1110,
+        "y": 2400,
+        "wires": [
+            [
+                "f18cfff34833a9b6"
+            ]
+        ],
+        "info": "thingsboard has the Shared Subscriptions feature that allows to define a group of clients that will share the same topic\n\nthis allows to have multiple deployed agents where each one dynamically handle the telemetry of a room/area\n"
+    },
+    {
+        "id": "ad1f649232802e0e",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "if room telemetry changed\n then update the cache",
+        "info": "",
+        "x": 2920,
+        "y": 2660,
+        "wires": []
+    },
+    {
+        "id": "f14b22c15c62240f",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "format message redis",
+        "func": "msg.topic = msg.payload.room\n\nmsg.payload = [\n    \"danger_\" + msg.payload.danger_type, msg.payload.danger\n]\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1420,
+        "y": 3380,
+        "wires": [
+            [
+                "fc1e96813eddf9a4"
+            ]
+        ]
+    },
+    {
+        "id": "466a20084e60b486",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "this priority queue is used to give priority to more dangerouse zones\n and more \"old\" updates",
+        "info": "",
+        "x": 4430,
+        "y": 2560,
+        "wires": []
+    },
+    {
+        "id": "c978333277f37a8e",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "TODO nei casi in cui c'è una ridondanza di sensori \n nella stessa stanza, unirli.\n unire anche i sensori del tipo AA1-01 e  AA1-02 in uno unico",
+        "info": "",
+        "x": 1630,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "3eca9f7dc3baff45",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "In the upper flow, a \"snapshot\" of the room is created\n it is used to avoid that the agents analyze similar telemetries multiple times",
+        "info": "",
+        "x": 2210,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "5ac9fafc3101ed84",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "mapping department",
+        "func": "// 1. Fetch maps from the global context (populated by the YAML loader)\nlet roomToDepartment = global.get(\"roomToDepartment\") || {};\nlet sensorToRoom = global.get(\"sensorToRoom\") || {};\n\nlet sensor = msg.device_id;\n\n// 2. Ensure the incoming message actually has a device_id\nif (!sensor) {\n    node.warn(\"Missing msg.device_id. Cannot map room.\");\n    return null; // Halts the flow for this message\n}\n\nlet room = sensorToRoom[sensor];\n\n// 3. Ensure the sensor is actually mapped to a room\nif (!room) {\n    node.warn(`No room mapping found for sensor ID: ${sensor}`);\n    return null;\n}\n\n// 4. Get department, providing a fallback if the room isn't categorized\nlet department = roomToDepartment[room] || \"UnknownDepartment\";\n\n// 5. Attach the mapped values to the message object\nmsg.room = room;\nmsg.department = department;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1540,
+        "y": 2400,
+        "wires": [
+            [
+                "6f4d934d5711d56b",
+                "ed6c0483648a5024"
+            ]
+        ]
+    },
+    {
+        "id": "9c6e32666f8e6da9",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "if the sensors changed, update the place graph",
+        "info": "",
+        "x": 2800,
+        "y": 2160,
+        "wires": []
+    },
+    {
+        "id": "6eb841efcf858104",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 22",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "5ec9f34e00952fdc",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "Since Redis couldn't handle the high volume of requests,\n the aggregation computation was moved to Node-RED",
+        "info": "",
+        "x": 2160,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "fc1e96813eddf9a4",
+        "type": "redis-command",
+        "z": "ab3011493b867143",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 1670,
+        "y": 3380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5c28e856bd93833a",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 23",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3260,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "ee75e4f4a1a877e5",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "ttl and format redis get message",
+        "func": "let sensor_keys = Object.keys(msg.payload)\n\nmsg.current_data = msg.payload\nmsg.payload = sensor_keys\nmsg.sensor_attributes = sensor_keys\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2830,
+        "y": 2420,
+        "wires": [
+            [
+                "d4c694b9ee9e0630"
+            ]
+        ]
+    },
+    {
+        "id": "d4c694b9ee9e0630",
+        "type": "redis-command",
+        "z": "ab3011493b867143",
+        "server": "a12b266a42104227",
+        "command": "HMGET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 3080,
+        "y": 2420,
+        "wires": [
+            [
+                "5c28e856bd93833a",
+                "8abcebbc9f0a8b71"
+            ]
+        ]
+    },
+    {
+        "id": "8abcebbc9f0a8b71",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "cache checking threshold",
+        "func": "// 1. Define threshold evaluation strategies\n// Each function returns true if the value should be updated, false otherwise.\nconst thresholdStrategies = {\n    percentage: function(newValue, oldValue, threshold) {\n        if (oldValue === 0) return newValue !== 0;\n        let percentageChange = Math.abs(newValue - oldValue) / Math.abs(oldValue);\n        return percentageChange >= threshold;\n    },\n    absolute: function(newValue, oldValue, threshold) {\n        let diff = Math.abs(newValue - oldValue);\n        return diff >= threshold;\n    },\n    always: function(newValue, oldValue, threshold) {\n        return newValue !== oldValue; // Updates whenever it's not strictly equal\n    }\n    // Add new strategies here in the future (e.g., 'moving_average', 'time_based')\n};\n\n// 2. Fetch configurations from global context\nlet sensor_parameters = global.get(\"sensor_parameters\") || global.get(\"sensor_configs\") || {};\n\n// 3. Fallback if the cache is completely empty\nif (!msg.cached_snapshot || Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\n// 4. Compare current data against the cached snapshot\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    // If the sensor is entirely new to the cache, force an update\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    // Handle numeric values using the dynamic strategies\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        \n        let sensorConfig = sensor_parameters[key] || {};\n        let thresholdType = sensorConfig.threshold_type || \"percentage\";\n        let thresholdValue = (sensorConfig.threshold_value !== undefined) ? sensorConfig.threshold_value : 0.05;\n\n        // Select the evaluation function, fallback to 'percentage' if the type is unrecognized\n        let evaluateThreshold = thresholdStrategies[thresholdType] || thresholdStrategies[\"percentage\"];\n\n        // Execute the strategy\n        if (evaluateThreshold(value, old_value, thresholdValue)) {\n            attributes_to_update[key] = value;\n        }\n        \n    } \n    // Handle non-numeric values (e.g., strings, booleans)\n    else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\n// 5. Prepare the output message\nmsg.attributes_to_update = attributes_to_update;\n\n// Clean up memory payload\nmsg.current_data = null;\nmsg.cached_snapshot = null;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3370,
+        "y": 2380,
+        "wires": [
+            [
+                "e3b3b3c520109924"
+            ]
+        ]
+    },
+    {
+        "id": "e3b3b3c520109924",
+        "type": "switch",
+        "z": "ab3011493b867143",
+        "name": "",
+        "property": "attributes_to_update",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 3610,
+        "y": 2420,
+        "wires": [
+            [
+                "6de60352007024dd",
+                "7cfc2549a88d35f6"
+            ]
+        ]
+    },
+    {
+        "id": "6de60352007024dd",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "format message",
+        "func": "msg.payload = Object.entries(msg.attributes_to_update).flat()\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3860,
+        "y": 2420,
+        "wires": [
+            [
+                "120f2364745624c7",
+                "df9e79c490edcc21"
+            ]
+        ]
+    },
+    {
+        "id": "120f2364745624c7",
+        "type": "redis-command",
+        "z": "ab3011493b867143",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 4050,
+        "y": 2420,
+        "wires": [
+            [
+                "4452fbccaa9672fa"
+            ]
+        ]
+    },
+    {
+        "id": "938eddc7f3fc46c5",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "format message",
+        "func": "msg.payload = msg.sensors\nmsg.topic = msg.department + \":\" + msg.room\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1780,
+        "y": 2400,
+        "wires": [
+            [
+                "899c75e58d89258f",
+                "5071041d4c47e7e1"
+            ]
+        ]
+    },
+    {
+        "id": "df9e79c490edcc21",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 24",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4040,
+        "y": 2520,
+        "wires": []
+    },
+    {
+        "id": "b4efb15ebb6285a6",
+        "type": "redis-lua-script",
+        "z": "ab3011493b867143",
+        "server": "a12b266a42104227",
+        "name": "Apply TTL",
+        "keyval": "1",
+        "func": "local room_name = KEYS[1]\nlocal ttl = ARGV[1]\nlocal num_fields = #ARGV - 1\n\nreturn redis.call(\"HEXPIRE\", room_name, ttl, \"FIELDS\", num_fields, unpack(ARGV, 2))\n",
+        "stored": false,
+        "block": false,
+        "x": 4470,
+        "y": 2420,
+        "wires": [
+            [
+                "701df2e57f4035da",
+                "a78e2792ba9b5e52"
+            ]
+        ]
+    },
+    {
+        "id": "4452fbccaa9672fa",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "tormat TTL message",
+        "func": "// Retrieve the previously saved global settings, with a fallback to an empty object\nlet global_settings = global.get(\"global_settings\") || {};\n\n// Get ttl_seconds from the YAML file; if it doesn't exist or isn't loaded yet, use 300 as the default (5 minutes)\nlet ttl = global_settings.ttl_seconds || 300; \n\n// Format the message for the Lua/Redis node\nmsg.payload = [msg.topic, ttl, ...msg.sensor_attributes];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4260,
+        "y": 2420,
+        "wires": [
+            [
+                "b4efb15ebb6285a6"
+            ]
+        ]
+    },
+    {
+        "id": "a78e2792ba9b5e52",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 25",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4620,
+        "y": 2500,
+        "wires": []
+    },
+    {
+        "id": "701df2e57f4035da",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "format data",
+        "func": "// Retrieve the danger tiers from the global context.\n// If it hasn't been loaded yet, fall back to the default values.\nconst dangerTiers = global.get(\"danger_tiers\") || {\n    'high': 1,\n    'medium': 2,\n    'low': 3\n};\n\n// Default to tier 3 (lowest priority)\nlet tier = 3;\n\nif (msg.danger !== undefined) {\n    let dangerLevel = msg.danger.toLowerCase();\n    \n    // Assign the tier based on the YAML mapping.\n    // If the danger level isn't found in the mapping, it defaults to 3.\n    tier = dangerTiers[dangerLevel] || 3;\n}\n\n// Calculate priority based on the tier and the current timestamp\nlet priority = parseFloat(`${tier}.${Date.now()}`);\n\n// Format the payload for the Redis Priority Queue (ZADD command)\nmsg.payload = [\"room_pq\", priority, msg.topic];\n\nmsg.topic = null;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4710,
+        "y": 2420,
+        "wires": [
+            [
+                "c145089e532ddc33"
+            ]
+        ]
+    },
+    {
+        "id": "c145089e532ddc33",
+        "type": "redis-command",
+        "z": "ab3011493b867143",
+        "server": "a12b266a42104227",
+        "command": "ZADD",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 4910,
+        "y": 2420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7cfc2549a88d35f6",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "update danger",
+        "func": "msg.query = `\nMATCH (p:Place {department: $department, name: $room})\nMERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\nSET e += $sensors\nSET e.is_real = true\nRETURN p, e\n`;\n\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3820,
+        "y": 2340,
+        "wires": [
+            [
+                "f3ad8026e83abcbd"
+            ]
+        ]
+    },
+    {
+        "id": "f3ad8026e83abcbd",
+        "type": "neo4j-bolt",
+        "z": "ab3011493b867143",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 4040,
+        "y": 2340,
+        "wires": [
+            [
+                "de6e38c1ca070101"
+            ],
+            [
+                "de6e38c1ca070101"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "97ca47736b146cd6",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "Save to global context",
+        "func": "if (msg.payload) {\n    // 1. Save aggregation configurations (used by the aggregator node)\n    if (msg.payload.sensor_configs) {\n        global.set('sensor_configs', msg.payload.sensor_configs);\n    }\n\n    // 2. Save global settings (thresholds, ttl, excluded sensors)\n    if (msg.payload.global_settings) {\n        global.set('global_settings', msg.payload.global_settings);\n    }\n\n    // 3. Save danger tiers\n    if (msg.payload.danger_tiers) {\n        global.set('danger_tiers', msg.payload.danger_tiers);\n    }\n\n    // 4. Save departments and create reverse maps for sensor mapping\n    if (msg.payload.departments) {\n        global.set('departments', msg.payload.departments);\n        \n        let roomMap = {};\n        let sensorMap = {};\n        \n        // Loop through the structure to create O(1) fast-read dictionaries\n        for (const [deptName, rooms] of Object.entries(msg.payload.departments)) {\n            for (const roomObj of rooms) {\n                // Map Room -> Department\n                roomMap[roomObj.name] = deptName;\n                \n                // Map Sensor -> Room\n                if (Array.isArray(roomObj.sensors)) {\n                    for (const sensor of roomObj.sensors) {\n                        sensorMap[sensor] = roomObj.name;\n                    }\n                }\n            }\n        }\n        \n        // Save the maps ready for the \"mapping department\" node\n        global.set('roomToDepartment', roomMap);\n        global.set('sensorToRoom', sensorMap);\n    }\n\n    node.warn(\"YAML configurations loaded and saved in the global context.\");\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2220,
+        "y": 1880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0468fa53b49ac32e",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 26",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2800,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "340d8e1c37f7e025",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 27",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1480,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "899c75e58d89258f",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 28",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1900,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "2e97d11ebdccacd9",
+        "type": "redis-lua-script",
+        "z": "ab3011493b867143",
+        "server": "a12b266a42104227",
+        "name": "",
+        "keyval": "1",
+        "func": "-- Keys and arguments\nlocal topic = KEYS[1]\nlocal json_payload = ARGV[1]\n\n-- Retrieve the dynamic retention value passed as the second argument\nlocal retention_ms = tonumber(ARGV[2])\n\n-- Get current time directly from the Redis server\n-- TIME returns an array: [1] = seconds, [2] = microseconds\nlocal server_time = redis.call('TIME')\nlocal current_timestamp_ms = (tonumber(server_time[1]) * 1000) + math.floor(tonumber(server_time[2]) / 1000)\n\n-- Calculate the cutoff timestamp dynamically based on the YAML configuration\nlocal cutoff_timestamp_ms = current_timestamp_ms - retention_ms\n\n-- 1. Insert the new data into the Priority Queue\nredis.call('ZADD', topic, current_timestamp_ms, json_payload)\n\n-- 2. Remove all elements older than the calculated cutoff\nlocal removed_count = redis.call('ZREMRANGEBYSCORE', topic, '-inf', cutoff_timestamp_ms)\n\n-- Return the number of removed elements\nreturn removed_count",
+        "stored": false,
+        "block": false,
+        "x": 2960,
+        "y": 2360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1aae902b3c036de1",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "format message",
+        "func": "// Retrieve global settings from the context, defaulting to 300000 ms if missing\nlet globalSettings = global.get(\"global_settings\") || {};\nlet retention_ms = globalSettings.retention_ms || 300000;\n\nlet sensor_data = JSON.stringify(msg.payload);\nlet ts_key = msg.topic + \":ts\";\n\n// msg.payload array mapping for the Redis node (keyval is set to \"1\"):\n// [0] -> KEYS[1] (ts_key)\n// [1] -> ARGV[1] (sensor_data)\n// [2] -> ARGV[2] (retention_ms)\nmsg.payload = [ts_key, sensor_data, retention_ms];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2780,
+        "y": 2360,
+        "wires": [
+            [
+                "2e97d11ebdccacd9"
+            ]
+        ]
+    },
+    {
+        "id": "6f4d934d5711d56b",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 29",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1720,
+        "y": 2460,
+        "wires": []
+    },
+    {
+        "id": "0fcb42e2e02d8f9b",
+        "type": "file in",
+        "z": "ab3011493b867143",
+        "name": "",
+        "filename": "/data/host_files/nodered_config.yml",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1740,
+        "y": 1880,
+        "wires": [
+            [
+                "7a423653dada910f"
+            ]
+        ]
+    },
+    {
+        "id": "7a423653dada910f",
+        "type": "yaml",
+        "z": "ab3011493b867143",
+        "property": "payload",
+        "name": "",
+        "x": 2010,
+        "y": 1880,
+        "wires": [
+            [
+                "cb77c509173b3928",
+                "97ca47736b146cd6"
+            ]
+        ]
+    },
+    {
+        "id": "99dd1a33d0957591",
+        "type": "watch",
+        "z": "ab3011493b867143",
+        "name": "",
+        "files": "/data/host_files/nodered_config.yml",
+        "recursive": "",
+        "x": 1200,
+        "y": 1880,
+        "wires": [
+            [
+                "da87bff7ee57adb7",
+                "281025bdf1983567"
+            ]
+        ]
+    },
+    {
+        "id": "da87bff7ee57adb7",
+        "type": "delay",
+        "z": "ab3011493b867143",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1470,
+        "y": 1880,
+        "wires": [
+            [
+                "0fcb42e2e02d8f9b"
+            ]
+        ]
+    },
+    {
+        "id": "281025bdf1983567",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 30",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1500,
+        "y": 1940,
+        "wires": []
+    },
+    {
+        "id": "4c93d3add74a25b6",
+        "type": "inject",
+        "z": "ab3011493b867143",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1310,
+        "y": 1820,
+        "wires": [
+            [
+                "da87bff7ee57adb7"
+            ]
+        ]
+    },
+    {
+        "id": "cb77c509173b3928",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 31",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2140,
+        "y": 1940,
+        "wires": []
+    },
+    {
+        "id": "be33dd302108c340",
+        "type": "mqtt in",
+        "z": "ab3011493b867143",
+        "name": "",
+        "topic": "emergency/agent/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "19268c5a199e4927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1360,
+        "y": 3140,
+        "wires": [
+            [
+                "19a75d519e75529d"
+            ]
+        ]
+    },
+    {
+        "id": "19a75d519e75529d",
+        "type": "switch",
+        "z": "ab3011493b867143",
+        "name": "",
+        "property": "payload.danger_type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "none",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1570,
+        "y": 3140,
+        "wires": [
+            [
+                "f14b22c15c62240f",
+                "9c5713e84da7ac45"
+            ]
+        ]
+    },
+    {
+        "id": "9c5713e84da7ac45",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "update danger simple",
+        "func": "const data = msg.payload;\nconst [department, room] = data.room.split(':');\nconst isHazard = data.danger_score > 0;\n\n// 1. Parametri ridotti al minimo\nmsg.params = {\n    department, room,\n    type: data.danger_type,\n    level: data.danger,\n    score: data.danger_score,\n    warning: data.warning,\n    justification: data.justification,\n    \n    // k: Costante moltiplicativa per scalare il peso del pericolo.\n    // Esempio: se score=0.5 e k=10, il peso della stanza aumenterà di 5 volte.\n    k: 10 \n};\n\nmsg.database = \"memgraph\";\n\n// 2. Logica Operativa\nif (isHazard) {\n    // Calcolo semplificato direttamente in Cypher\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        \n        MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        SET h += { level: $level, score: $score, warning: $warning, justification: $justification },\n            p.dynamic_weight = coalesce(p.weight, 1.0) * (1 + ($score * $k))\n                               \n        RETURN p, h;\n    `;\n} else {\n    // Ripristino e pulizia se il pericolo è a 0\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        OPTIONAL MATCH (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        DETACH DELETE h\n        \n        SET p.dynamic_weight = coalesce(p.weight, 1.0)\n        \n        RETURN p;\n    `;\n}\n\nmsg.payload = null;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 3200,
+        "wires": [
+            [
+                "e15333ca47640cff"
+            ]
+        ]
+    },
+    {
+        "id": "e15333ca47640cff",
+        "type": "neo4j-bolt",
+        "z": "ab3011493b867143",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 1620,
+        "y": 3200,
+        "wires": [
+            [
+                "16308463196c8854",
+                "b674994b1583cc89"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4faa6851ae7fcdf4",
+        "type": "file in",
+        "z": "ab3011493b867143",
+        "name": "",
+        "filename": "/data/host_files/json_fake_data/agent_data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1680,
+        "y": 2940,
+        "wires": [
+            [
+                "7b18ac0b567eb0b3"
+            ]
+        ]
+    },
+    {
+        "id": "a0a3b312405db78b",
+        "type": "inject",
+        "z": "ab3011493b867143",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1360,
+        "y": 2940,
+        "wires": [
+            [
+                "4faa6851ae7fcdf4"
+            ]
+        ]
+    },
+    {
+        "id": "16308463196c8854",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 32",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1820,
+        "y": 3100,
+        "wires": []
+    },
+    {
+        "id": "7b18ac0b567eb0b3",
+        "type": "json",
+        "z": "ab3011493b867143",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1950,
+        "y": 2960,
+        "wires": [
+            [
+                "40c5e01d3971bc30"
+            ]
+        ]
+    },
+    {
+        "id": "40c5e01d3971bc30",
+        "type": "split",
+        "z": "ab3011493b867143",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 1630,
+        "y": 3020,
+        "wires": [
+            [
+                "a48e68875f3e1e0e"
+            ]
+        ]
+    },
+    {
+        "id": "a48e68875f3e1e0e",
+        "type": "delay",
+        "z": "ab3011493b867143",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1480,
+        "y": 3080,
+        "wires": [
+            [
+                "19a75d519e75529d"
+            ]
+        ]
+    },
+    {
+        "id": "de6e38c1ca070101",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 33",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4240,
+        "y": 2340,
+        "wires": []
+    },
+    {
+        "id": "a6682d0036952920",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "simulated agent output",
+        "info": "",
+        "x": 1460,
+        "y": 2900,
+        "wires": []
+    },
+    {
+        "id": "5c5a655e412c5268",
+        "type": "file in",
+        "z": "ab3011493b867143",
+        "name": "",
+        "filename": "/data/host_files/json_fake_data/iot_data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1450,
+        "y": 2660,
+        "wires": [
+            [
+                "22b208e5a2be68a3"
+            ]
+        ]
+    },
+    {
+        "id": "90621078f09a25f3",
+        "type": "inject",
+        "z": "ab3011493b867143",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1160,
+        "y": 2660,
+        "wires": [
+            [
+                "5c5a655e412c5268"
+            ]
+        ]
+    },
+    {
+        "id": "22b208e5a2be68a3",
+        "type": "json",
+        "z": "ab3011493b867143",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1730,
+        "y": 2660,
+        "wires": [
+            [
+                "6baeb8855a1a624e"
+            ]
+        ]
+    },
+    {
+        "id": "6baeb8855a1a624e",
+        "type": "split",
+        "z": "ab3011493b867143",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 1210,
+        "y": 2560,
+        "wires": [
+            [
+                "8f4c61744b7038bd"
+            ]
+        ]
+    },
+    {
+        "id": "8f4c61744b7038bd",
+        "type": "delay",
+        "z": "ab3011493b867143",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1220,
+        "y": 2480,
+        "wires": [
+            [
+                "f18cfff34833a9b6"
+            ]
+        ]
+    },
+    {
+        "id": "e87fd70f2b0ba007",
+        "type": "inject",
+        "z": "ab3011493b867143",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1140,
+        "y": 1760,
+        "wires": [
+            [
+                "91bcfabc5957c52f"
+            ]
+        ]
+    },
+    {
+        "id": "91bcfabc5957c52f",
+        "type": "redis-command",
+        "z": "ab3011493b867143",
+        "server": "a12b266a42104227",
+        "command": "FLUSHDB",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 1300,
+        "y": 1760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c0c328612ce39510",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "TODO thesis: update this, now saves iot data in EnvironmìentState\\n and is propageted in rooms two hops, to confirm the approach",
+        "info": "",
+        "x": 3260,
+        "y": 2180,
+        "wires": []
+    },
+    {
+        "id": "b674994b1583cc89",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "create and update shortest path",
+        "func": "// 1. Write the query using placeholders (names starting with $)\nconst roomName = msg.payload.p.properties.room;\nconst department = msg.payload.p.properties.department;\n\nmsg.query = `\n// 1. Trova sorgente e target\nMATCH (source:Place {department: $department, room: $room})\nMATCH (target:Place) \nWHERE target.room IN ['E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7']\n\n// 2. Calcola i percorsi\nMATCH path = (source)-[:CONNECTED_TO *WSHORTEST (edge, node | coalesce(node.dynamic_weight, node.weight)) total_weight]->(target)\n\n// 3. Salva i risultati temporaneamente per non perderli a causa del DELETE\nWITH collect({Destination: target.room, path: path, weight: total_weight}) AS all_paths, path\n\n// 4. Estrai i nodi di partenza in modo UNIVOCO per pulirli\nUNWIND relationships(path) AS rel\nWITH DISTINCT startNode(rel) AS start_node, all_paths\n\n// 5. Pulisci i vecchi archi (eseguito una sola volta per nodo)\nOPTIONAL MATCH (start_node)-[old:SHORTEST_PATH]->()\nDELETE old\n\n// 6. Ricrea i nuovi archi usando i dati salvati prima\nWITH all_paths\nUNWIND all_paths AS res\nUNWIND relationships(res.path) AS rel\nWITH startNode(rel) AS start_node, endNode(rel) AS end_node, res\nMERGE (start_node)-[:SHORTEST_PATH]->(end_node)\n\n// 7. Ritorna i risultati\nRETURN DISTINCT \n    res.Destination AS Destination, \n    res.path AS path, \n    res.weight AS total_weight;\n    `;\n\n// 2. Pass the actual parameters in msg.params\nmsg.params = {\n    department: department,\n    room: roomName,\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1870,
+        "y": 3200,
+        "wires": [
+            [
+                "0921ba158be0bd50",
+                "3edad752e9c8de75"
+            ]
+        ]
+    },
+    {
+        "id": "0921ba158be0bd50",
+        "type": "neo4j-bolt",
+        "z": "ab3011493b867143",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 2100,
+        "y": 3200,
+        "wires": [
+            [
+                "3edad752e9c8de75"
+            ],
+            [
+                "3edad752e9c8de75"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3edad752e9c8de75",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 34",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2280,
+        "y": 3140,
+        "wires": []
+    },
+    {
+        "id": "a9fe75028234af1d",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "TODO se shortest path è corretto aggiungere in tesi",
+        "info": "",
+        "x": 1930,
+        "y": 3280,
+        "wires": []
+    },
+    {
+        "id": "ed6c0483648a5024",
+        "type": "switch",
+        "z": "ab3011493b867143",
+        "name": "",
+        "property": "department",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "departmentB",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1670,
+        "y": 2340,
+        "wires": [
+            [
+                "938eddc7f3fc46c5"
+            ]
+        ]
+    },
+    {
+        "id": "ad0f92620a333941",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "since currently we are testing on the departmentA, departmentB is removed",
+        "info": "",
+        "x": 1680,
+        "y": 2260,
+        "wires": []
+    },
+    {
+        "id": "aeea4537d97714d2",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "TODO fix\\n Neo4jError: Cannot resolve conflicting transactions. Retry this transaction when the conflicting transaction is finished. For more details, visit https://memgraph.com/docs",
+        "info": "",
+        "x": 3310,
+        "y": 2100,
+        "wires": []
+    },
+    {
+        "id": "8bf72a17c6174b68",
+        "type": "comment",
+        "z": "ab3011493b867143",
+        "name": "sarebbe meglio usare K weighted shortest path ma devo farlo custom\\n visto che in letteratura usano dijkstra posso inserirlo come future work",
+        "info": "",
+        "x": 2010,
+        "y": 3340,
+        "wires": []
+    },
+    {
+        "id": "13af39c2a2cc03df",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "update danger",
+        "func": "// 1. Write the query using placeholders (names starting with $)\nmsg.query = `\nMATCH (p:Place {department: $department, room: $room})\nMERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\nSET e += $sensors\nSET e.is_real = true\nWITH p, e AS source_state\n\n// ---------------------------------------------------------\n// Propagazione dei dati ai Place adiacenti\n// ---------------------------------------------------------\n\nOPTIONAL MATCH (p)-[:CONNECTED_TO*1..2]-(neighbor:Place)\nWITH DISTINCT neighbor, source_state, p\nWHERE neighbor IS NOT NULL AND neighbor <> p\nMERGE (neighbor)-[:HAS_STATE]->(neighbor_state:EnvironmentState)\nWITH neighbor, neighbor_state, source_state\nWHERE coalesce(neighbor_state.is_real, false) = false\nSET neighbor_state += properties(source_state)\nSET neighbor_state.is_real = false\nRETURN source_state, collect(neighbor) AS updated_neighbors;\n`;\n\n// 2. Pass the actual parameters in msg.params\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3200,
+        "y": 2240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd6ddc9dbb2f8bcc",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "update danger",
+        "func": "// 1. Estraiamo i dati di input\nconst hazardData = msg.payload;\nconst [department, roomName] = hazardData.room.split(':');\n\n// 2. Definiamo i parametri del modello matematico\n// Puoi modificare questi valori in base alla taratura del tuo sistema\nconst ALPHA = 1.5;       // Sensibilità ai sensori di pericolo (\\alpha)\nconst BETA = 1.0;        // Sensibilità alla congestione (\\beta)\nconst Q = 0;             // Congestione attuale (Q(t)) - impostabile dinamicamente se hai sensori di affollamento\nconst ETA = 0.8;         // Soglia limite di pericolo (\\eta) per il blocco totale\nconst OMEGA = 999999;    // Penalità estrema (\\Omega) per segnalare il \"percorso bloccato\"\n\n// 3. Prepariamo i parametri da passare a Memgraph\nmsg.params = {\n    department: department,\n    room: roomName,\n    type: hazardData.danger_type,\n    level: hazardData.danger,\n    score: hazardData.danger_score, // Questo è il nostro H(t)\n    warning: hazardData.warning,\n    justification: hazardData.justification,\n    alpha: ALPHA,\n    beta: BETA,\n    q: Q,\n    eta: ETA,\n    omega: OMEGA\n};\n\nmsg.database = \"memgraph\";\n\n// 4. Logica Operativa: Modello di pathfinding dinamico\nif (hazardData.danger_score > 0) {\n    // MERGE del pericolo e ricalcolo del peso dinamico\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        \n        // Aggiungiamo o aggiorniamo il nodo Hazard\n        MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        SET h.level = $level,\n            h.score = $score,\n            h.warning = $warning,\n            h.justification = $justification\n            \n        // Calcolo dinamico w(t) = tau * [1 + alpha * H + beta * Q] + Penalità\n        WITH p, h, \n             coalesce(p.weight, 1.0) AS tau, // \\tau_{ij}: peso base (1.0 di default se manca)\n             $score AS H          // H_{ij}(t): hazard score\n             \n        // Calcoliamo la base moltiplicata e la penalità in base alla soglia eta\n        WITH p, h, tau, H,\n             tau * (1 + ($alpha * H) + ($beta * $q)) AS calcolo_base,\n             CASE WHEN H > $eta THEN $omega ELSE 0 END AS penalita\n             \n        // Salviamo il costo dinamico sulla stanza\n        SET p.dynamic_weight = calcolo_base + penalita\n        \n        RETURN p, h;\n    `;\n} else {\n    // Se il pericolo rientra, eliminiamo l'Hazard e ripristiniamo il peso a quello base\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        OPTIONAL MATCH (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        DETACH DELETE h\n        \n        // Ripristino del dynamic_weight al valore di base tau\n        WITH p, coalesce(p.weight, 1.0) AS tau\n        SET p.dynamic_weight = tau\n        \n        RETURN p;\n    `;\n}\n\nmsg.payload = null;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1127.7647094726562,
+        "y": 3184.058837890625,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5071041d4c47e7e1",
+        "type": "split",
+        "z": "ab3011493b867143",
+        "name": "Split Sensors",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "key",
+        "property": "payload",
+        "x": 2010,
+        "y": 2400,
+        "wires": [
+            [
+                "c5389ab2dc57c3de",
+                "df400d02a5962659"
+            ]
+        ]
+    },
+    {
+        "id": "c5389ab2dc57c3de",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "Aggregator (Mean)",
+        "func": "let vals = context.get('win_' + msg.parts.key) || [];\nvals.push(msg.payload);\ncontext.set('win_' + msg.parts.key, vals);\nmsg.payload = vals.reduce((a, b) => a + b, 0) / vals.length;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2250,
+        "y": 2300,
+        "wires": [
+            [
+                "442a028e1774c0b0",
+                "4a356d7170b11a86"
+            ]
+        ]
+    },
+    {
+        "id": "df400d02a5962659",
+        "type": "function",
+        "z": "ab3011493b867143",
+        "name": "Aggregator (Max)",
+        "func": "let vals = context.get('win_' + msg.parts.key) || [];\nvals.push(msg.payload);\ncontext.set('win_' + msg.parts.key, vals);\nmsg.payload = Math.max(...vals);\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2250,
+        "y": 2360,
+        "wires": [
+            [
+                "442a028e1774c0b0"
+            ]
+        ]
+    },
+    {
+        "id": "442a028e1774c0b0",
+        "type": "join",
+        "z": "ab3011493b867143",
+        "name": "Join Aggregates",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 2480,
+        "y": 2400,
+        "wires": [
+            [
+                "ee75e4f4a1a877e5",
+                "1aae902b3c036de1",
+                "56627cfc295b41f3"
+            ]
+        ]
+    },
+    {
+        "id": "27ac1cea6fc5f10f",
+        "type": "inject",
+        "z": "ab3011493b867143",
+        "name": "Load Static Config",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1250,
+        "y": 2040,
+        "wires": [
+            [
+                "35072871ea94b314"
+            ]
+        ]
+    },
+    {
+        "id": "35072871ea94b314",
+        "type": "change",
+        "z": "ab3011493b867143",
+        "name": "Set Global Settings",
+        "rules": [
+            {
+                "t": "set",
+                "p": "sensor_configs",
+                "pt": "global",
+                "to": "{\"temperature\": {\"bucket_ms\": 60000, \"agg_type\": \"mean\", \"threshold_type\": \"always\"}, \"co2\": {\"bucket_ms\": 60000, \"agg_type\": \"max\", \"threshold_type\": \"always\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "global_settings",
+                "pt": "global",
+                "to": "{\"cache_threshold_percent\": 0.05, \"ttl_seconds\": 300, \"retention_ms\": 300000, \"excluded_sensors\": [\"light\"]}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "danger_tiers",
+                "pt": "global",
+                "to": "{\"high\": 1, \"medium\": 2, \"low\": 3}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "roomToDepartment",
+                "pt": "global",
+                "to": "{\"AA1\": \"departmentA\", \"B1\": \"departmentB\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1490,
+        "y": 2040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "56627cfc295b41f3",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 36",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2680,
+        "y": 2300,
+        "wires": []
+    },
+    {
+        "id": "4a356d7170b11a86",
+        "type": "debug",
+        "z": "ab3011493b867143",
+        "name": "debug 37",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2500,
+        "y": 2240,
+        "wires": []
+    },
+    {
+        "id": "0a62f15a2f4bfa89",
+        "type": "mqtt in",
+        "z": "6305c5b377893d03",
+        "name": "iot data",
+        "topic": "sensors/+/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "19268c5a199e4927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 960,
+        "wires": [
+            [
+                "49d07e7f2b57a6e4"
+            ]
+        ]
+    },
+    {
+        "id": "49d07e7f2b57a6e4",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "filter danger data",
+        "func": "let cachingData = {};\nreturn cachingData;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 960,
+        "wires": [
+            [
+                "1c298108c48cbd53"
+            ]
+        ]
+    },
+    {
+        "id": "1c298108c48cbd53",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "mapping department",
+        "func": "msg.room = \"StanzaDocente\";\nmsg.department = \"departmentA\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 1020,
+        "wires": [
+            [
+                "78b42669d51b712b"
+            ]
+        ]
+    },
+    {
+        "id": "78b42669d51b712b",
+        "type": "switch",
+        "z": "6305c5b377893d03",
+        "name": "",
+        "property": "department",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "departmentB",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 230,
+        "y": 1080,
+        "wires": [
+            [
+                "fa14ce1ef590a49b"
+            ]
+        ]
+    },
+    {
+        "id": "fa14ce1ef590a49b",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "format message",
+        "func": "msg.payload = msg.sensors\nmsg.topic = msg.department + \":\" + msg.room\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 1140,
+        "wires": [
+            [
+                "0a5d75ea6f52c693"
+            ]
+        ]
+    },
+    {
+        "id": "1c8a3a4c3a8a1bd6",
+        "type": "inject",
+        "z": "6305c5b377893d03",
+        "name": "Load Static Config",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 440,
+        "wires": [
+            [
+                "bc071fb152e1f923"
+            ]
+        ]
+    },
+    {
+        "id": "bc071fb152e1f923",
+        "type": "change",
+        "z": "6305c5b377893d03",
+        "name": "Set Global Settings",
+        "rules": [
+            {
+                "t": "set",
+                "p": "sensor_configs",
+                "pt": "global",
+                "to": "{\"temperature\": {\"bucket_ms\": 60000, \"agg_type\": \"mean\", \"threshold_type\": \"always\"}, \"co2\": {\"bucket_ms\": 60000, \"agg_type\": \"max\", \"threshold_type\": \"always\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "global_settings",
+                "pt": "global",
+                "to": "{\"cache_threshold_percent\": 0.05, \"ttl_seconds\": 300, \"retention_ms\": 300000, \"excluded_sensors\": [\"light\"]}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "danger_tiers",
+                "pt": "global",
+                "to": "{\"high\": 1, \"medium\": 2, \"low\": 3}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "roomToDepartment",
+                "pt": "global",
+                "to": "{\"AA1\": \"departmentA\", \"B1\": \"departmentB\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0a5d75ea6f52c693",
+        "type": "split",
+        "z": "6305c5b377893d03",
+        "name": "Split Sensors",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "key",
+        "property": "payload",
+        "x": 250,
+        "y": 1200,
+        "wires": [
+            [
+                "68d7ed90c93c75c4"
+            ]
+        ]
+    },
+    {
+        "id": "68d7ed90c93c75c4",
+        "type": "switch",
+        "z": "6305c5b377893d03",
+        "name": "Route by Sensor Type",
+        "property": "parts.key",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "temperature",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 280,
+        "y": 1260,
+        "wires": [
+            [
+                "ddcbc8ec717f38d2"
+            ],
+            [
+                "9efbbeee4c8bd3bc"
+            ]
+        ]
+    },
+    {
+        "id": "bdec7423437843a3",
+        "type": "join",
+        "z": "6305c5b377893d03",
+        "name": "Join Aggregates",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 740,
+        "y": 1260,
+        "wires": [
+            [
+                "f41b558eb108c583",
+                "a748655dbcfcfe52"
+            ]
+        ]
+    },
+    {
+        "id": "f41b558eb108c583",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "ttl and format redis get message",
+        "func": "let sensor_keys = Object.keys(msg.payload)\nmsg.current_data = msg.payload\nmsg.payload = sensor_keys\nmsg.sensor_attributes = sensor_keys\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 1440,
+        "wires": [
+            [
+                "82182b986d2d351e"
+            ]
+        ]
+    },
+    {
+        "id": "82182b986d2d351e",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "ttl and format redis get message",
+        "func": "let sensor_keys = Object.keys(msg.payload)\n\nmsg.current_data = msg.payload\nmsg.payload = sensor_keys\nmsg.sensor_attributes = sensor_keys\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 1500,
+        "wires": [
+            [
+                "944abb42f0eb84e1"
+            ]
+        ]
+    },
+    {
+        "id": "a748655dbcfcfe52",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "format message",
+        "func": "// Retrieve global settings from the context, defaulting to 300000 ms if missing\nlet globalSettings = global.get(\"global_settings\") || {};\nlet retention_ms = globalSettings.retention_ms || 300000;\n\nlet sensor_data = JSON.stringify(msg.payload);\nlet ts_key = msg.topic + \":ts\";\n\n// msg.payload array mapping for the Redis node (keyval is set to \"1\"):\n// [0] -> KEYS[1] (ts_key)\n// [1] -> ARGV[1] (sensor_data)\n// [2] -> ARGV[2] (retention_ms)\nmsg.payload = [ts_key, sensor_data, retention_ms];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 1360,
+        "wires": [
+            [
+                "3942caec21384573"
+            ]
+        ]
+    },
+    {
+        "id": "3942caec21384573",
+        "type": "redis-lua-script",
+        "z": "6305c5b377893d03",
+        "server": "a12b266a42104227",
+        "name": "",
+        "keyval": "1",
+        "func": "-- Keys and arguments\nlocal topic = KEYS[1]\nlocal json_payload = ARGV[1]\n\n-- Retrieve the dynamic retention value passed as the second argument\nlocal retention_ms = tonumber(ARGV[2])\n\n-- Get current time directly from the Redis server\n-- TIME returns an array: [1] = seconds, [2] = microseconds\nlocal server_time = redis.call('TIME')\nlocal current_timestamp_ms = (tonumber(server_time[1]) * 1000) + math.floor(tonumber(server_time[2]) / 1000)\n\n-- Calculate the cutoff timestamp dynamically based on the YAML configuration\nlocal cutoff_timestamp_ms = current_timestamp_ms - retention_ms\n\n-- 1. Insert the new data into the Priority Queue\nredis.call('ZADD', topic, current_timestamp_ms, json_payload)\n\n-- 2. Remove all elements older than the calculated cutoff\nlocal removed_count = redis.call('ZREMRANGEBYSCORE', topic, '-inf', cutoff_timestamp_ms)\n\n-- Return the number of removed elements\nreturn removed_count",
+        "stored": false,
+        "block": false,
+        "x": 440,
+        "y": 1360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "944abb42f0eb84e1",
+        "type": "redis-command",
+        "z": "6305c5b377893d03",
+        "server": "a12b266a42104227",
+        "command": "HMGET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 540,
+        "y": 1500,
+        "wires": [
+            [
+                "c8096981a99647b1"
+            ]
+        ]
+    },
+    {
+        "id": "c8096981a99647b1",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "cache checking threshold",
+        "func": "// 1. Define threshold evaluation strategies\n// Each function returns true if the value should be updated, false otherwise.\nconst thresholdStrategies = {\n    percentage: function(newValue, oldValue, threshold) {\n        if (oldValue === 0) return newValue !== 0;\n        let percentageChange = Math.abs(newValue - oldValue) / Math.abs(oldValue);\n        return percentageChange >= threshold;\n    },\n    absolute: function(newValue, oldValue, threshold) {\n        let diff = Math.abs(newValue - oldValue);\n        return diff >= threshold;\n    },\n    always: function(newValue, oldValue, threshold) {\n        return newValue !== oldValue; // Updates whenever it's not strictly equal\n    }\n    // Add new strategies here in the future (e.g., 'moving_average', 'time_based')\n};\n\n// 2. Fetch configurations from global context\nlet sensor_parameters = global.get(\"sensor_parameters\") || global.get(\"sensor_configs\") || {};\n\n// 3. Fallback if the cache is completely empty\nif (!msg.cached_snapshot || Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\n// 4. Compare current data against the cached snapshot\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    // If the sensor is entirely new to the cache, force an update\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    // Handle numeric values using the dynamic strategies\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        \n        let sensorConfig = sensor_parameters[key] || {};\n        let thresholdType = sensorConfig.threshold_type || \"percentage\";\n        let thresholdValue = (sensorConfig.threshold_value !== undefined) ? sensorConfig.threshold_value : 0.05;\n\n        // Select the evaluation function, fallback to 'percentage' if the type is unrecognized\n        let evaluateThreshold = thresholdStrategies[thresholdType] || thresholdStrategies[\"percentage\"];\n\n        // Execute the strategy\n        if (evaluateThreshold(value, old_value, thresholdValue)) {\n            attributes_to_update[key] = value;\n        }\n        \n    } \n    // Handle non-numeric values (e.g., strings, booleans)\n    else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\n// 5. Prepare the output message\nmsg.attributes_to_update = attributes_to_update;\n\n// Clean up memory payload\nmsg.current_data = null;\nmsg.cached_snapshot = null;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 1560,
+        "wires": [
+            [
+                "7dbf9b8bde6b5255"
+            ]
+        ]
+    },
+    {
+        "id": "7dbf9b8bde6b5255",
+        "type": "switch",
+        "z": "6305c5b377893d03",
+        "name": "",
+        "property": "attributes_to_update",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 470,
+        "y": 1560,
+        "wires": [
+            [
+                "a3ba8dd499a33d7e",
+                "18105eb971aac72b"
+            ]
+        ]
+    },
+    {
+        "id": "a3ba8dd499a33d7e",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "format message",
+        "func": "msg.payload = Object.entries(msg.attributes_to_update).flat()\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 1600,
+        "wires": [
+            [
+                "c911f9b755e61d3b"
+            ]
+        ]
+    },
+    {
+        "id": "18105eb971aac72b",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "update danger",
+        "func": "msg.query = `\nMATCH (p:Place {department: $department, name: $room})\nMERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\nSET e += $sensors\nSET e.is_real = true\nRETURN p, e\n`;\n\nmsg.params = {\n    department: msg.department,\n    room: msg.room,\n    sensors: msg.attributes_to_update\n};\n\nmsg.database = \"memgraph\";\nmsg.payload = null;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 1560,
+        "wires": [
+            [
+                "eee442da9796f646"
+            ]
+        ]
+    },
+    {
+        "id": "c911f9b755e61d3b",
+        "type": "redis-command",
+        "z": "6305c5b377893d03",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 850,
+        "y": 1620,
+        "wires": [
+            [
+                "6259f0fa2921042e"
+            ]
+        ]
+    },
+    {
+        "id": "eee442da9796f646",
+        "type": "neo4j-bolt",
+        "z": "6305c5b377893d03",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 840,
+        "y": 1560,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6259f0fa2921042e",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "tormat TTL message",
+        "func": "// Retrieve the previously saved global settings, with a fallback to an empty object\nlet global_settings = global.get(\"global_settings\") || {};\n\n// Get ttl_seconds from the YAML file; if it doesn't exist or isn't loaded yet, use 300 as the default (5 minutes)\nlet ttl = global_settings.ttl_seconds || 300; \n\n// Format the message for the Lua/Redis node\nmsg.payload = [msg.topic, ttl, ...msg.sensor_attributes];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 1680,
+        "wires": [
+            [
+                "2f39d561fcfb8f0f"
+            ]
+        ]
+    },
+    {
+        "id": "436d0db4d3f03bc6",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "format data",
+        "func": "// Retrieve the danger tiers from the global context.\n// If it hasn't been loaded yet, fall back to the default values.\nconst dangerTiers = global.get(\"danger_tiers\") || {\n    'high': 1,\n    'medium': 2,\n    'low': 3\n};\n\n// Default to tier 3 (lowest priority)\nlet tier = 3;\n\nif (msg.danger !== undefined) {\n    let dangerLevel = msg.danger.toLowerCase();\n    \n    // Assign the tier based on the YAML mapping.\n    // If the danger level isn't found in the mapping, it defaults to 3.\n    tier = dangerTiers[dangerLevel] || 3;\n}\n\n// Calculate priority based on the tier and the current timestamp\nlet priority = parseFloat(`${tier}.${Date.now()}`);\n\n// Format the payload for the Redis Priority Queue (ZADD command)\nmsg.payload = [\"room_pq\", priority, msg.topic];\n\nmsg.topic = null;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 1680,
+        "wires": [
+            [
+                "efac02acbcf5c010"
+            ]
+        ]
+    },
+    {
+        "id": "2f39d561fcfb8f0f",
+        "type": "redis-lua-script",
+        "z": "6305c5b377893d03",
+        "server": "a12b266a42104227",
+        "name": "Apply TTL",
+        "keyval": "1",
+        "func": "local room_name = KEYS[1]\nlocal ttl = ARGV[1]\nlocal num_fields = #ARGV - 1\n\nreturn redis.call(\"HEXPIRE\", room_name, ttl, \"FIELDS\", num_fields, unpack(ARGV, 2))\n",
+        "stored": false,
+        "block": false,
+        "x": 490,
+        "y": 1680,
+        "wires": [
+            [
+                "436d0db4d3f03bc6"
+            ]
+        ]
+    },
+    {
+        "id": "efac02acbcf5c010",
+        "type": "redis-command",
+        "z": "6305c5b377893d03",
+        "server": "a12b266a42104227",
+        "command": "ZADD",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 930,
+        "y": 1680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ddcbc8ec717f38d2",
+        "type": "aggregator",
+        "z": "6305c5b377893d03",
+        "name": "average",
+        "topic": "",
+        "intervalCount": 1,
+        "intervalUnits": "m",
+        "submitIncompleteInterval": true,
+        "submitPerTopic": false,
+        "aggregationType": "mean",
+        "x": 500,
+        "y": 1220,
+        "wires": [
+            [
+                "bdec7423437843a3"
+            ]
+        ]
+    },
+    {
+        "id": "12e4f962fe5fb2ba",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "Aggregator (Max)",
+        "func": "let vals = context.get('win_' + msg.parts.key) || [];\nvals.push(msg.payload);\ncontext.set('win_' + msg.parts.key, vals);\nmsg.payload = Math.max(...vals);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1270,
+        "y": 1280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0116e082ec700540",
+        "type": "function",
+        "z": "6305c5b377893d03",
+        "name": "Aggregator (Mean)",
+        "func": "let vals = context.get('win_' + msg.parts.key) || [];\nvals.push(msg.payload);\ncontext.set('win_' + msg.parts.key, vals);\nmsg.payload = vals.reduce((a, b) => a + b, 0) / vals.length;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1270,
+        "y": 1240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9efbbeee4c8bd3bc",
+        "type": "aggregator",
+        "z": "6305c5b377893d03",
+        "name": "maximum",
+        "topic": "",
+        "intervalCount": 1,
+        "intervalUnits": "m",
+        "submitIncompleteInterval": true,
+        "submitPerTopic": false,
+        "aggregationType": "max",
+        "x": 500,
+        "y": 1260,
+        "wires": [
+            [
+                "bdec7423437843a3"
+            ]
         ]
     }
 ]
