@@ -117,7 +117,7 @@ class HazardWorker:
                 logger.error("An error occurred: %s", e)
                 await asyncio.sleep(2)
             except aiomqtt.MqttError as error:
-                print(f"MQTT error: {error}")
+                logger.error("MQTT error: %s", error)
             except asyncio.CancelledError:
                 print("Async task cancelled")
 
