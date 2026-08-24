@@ -35,7 +35,7 @@ class ThreatAssessment(BaseModel):
         Field(description="Type of danger identified, if any.")
     )
     danger_score: float = Field(
-        description="Severity score on a scale from 0.0 to 1.0."
+        description="Severity score on a scale from 0.0 to 1.0.", ge=0.0, le=1.0
     )
     justification: str = Field(
         description="Brief justification for the assigned danger level."
@@ -151,7 +151,7 @@ Formulate a clear diagnosis based on the telemetry and the building's structural
 
         triage_agent = create_agent(
             self.model,
-            # tools=tools,
+            tools=tools,
             response_format=TriageOutput,
             system_prompt=triage_sys,
             name="Triage",
@@ -172,17 +172,10 @@ Formulate a clear diagnosis based on the telemetry and the building's structural
         )
 
         async def run_triage(state: GraphState) -> dict[str, Any]:
-            messages: list[AnyMessage] = [
-                triage_sys,
-                HumanMessage(content=self.prompt_template.format(data=state["data"])),
-            ]
-
             invocation_result: dict[str, Any] = await triage_agent.ainvoke(
-                {"messages": messages}
+                {"messages": self.prompt_template.format(data=state["data"])}
             )
             triage_result: TriageOutput = invocation_result.get("structured_response")
-
-            print(f"\n\n\nTriage result: {triage_result}")
 
             if triage_result.action == "escalate":
                 return {
@@ -213,7 +206,7 @@ Formulate a clear diagnosis based on the telemetry and the building's structural
                             f"{expert_lower}_node",
                             {
                                 "messages": [input_prompt],
-                                "data": state["data"],
+                                # "data": state["data"],
                             },
                         )
                     )
