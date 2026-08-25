@@ -1200,6 +1200,13 @@
                 "pt": "msg",
                 "to": "memgraph",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "job.variables",
+                "tot": "msg"
             }
         ],
         "action": "",
@@ -1273,23 +1280,6 @@
         "wires": []
     },
     {
-        "id": "0726b5c649ea7770",
-        "type": "task-worker",
-        "z": "1a10bef68b9ba5b6",
-        "name": "",
-        "camunda": "cc7538c088cd1d8b",
-        "taskType": "move-colder-room",
-        "maxActiveJobs": 32,
-        "timeout": 1000,
-        "x": 150,
-        "y": 840,
-        "wires": [
-            [
-                "443613823a838abb"
-            ]
-        ]
-    },
-    {
         "id": "f8191c49a25089a9",
         "type": "task-worker",
         "z": "1a10bef68b9ba5b6",
@@ -1346,6 +1336,23 @@
         "wires": [
             [
                 "9cb3dc75ba50a9f2"
+            ]
+        ]
+    },
+    {
+        "id": "0857c89b21b117ef",
+        "type": "task-worker",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "camunda": "cc7538c088cd1d8b",
+        "taskType": "move-colder-room",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 150,
+        "y": 840,
+        "wires": [
+            [
+                "443613823a838abb"
             ]
         ]
     },

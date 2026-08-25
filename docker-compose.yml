@@ -5,6 +5,10 @@ services:
     container_name: nodered
     environment:
       - FLOWS=flows.json
+      # Forza l'indirizzo con il protocollo in chiaro
+      - ZEEBE_GRPC_ADDRESS=grpc://127.0.0.1:26500
+      # Disabilita esplicitamente la richiesta di certificati TLS/SSL
+      - ZEEBE_INSECURE_CONNECTION=true
     ports:
       - "1880:1880"
     volumes:
