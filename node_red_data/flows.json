@@ -153,36 +153,6 @@
         "h": 82
     },
     {
-        "id": "8760e37f98dbbce9",
-        "type": "group",
-        "z": "1a10bef68b9ba5b6",
-        "style": {
-            "stroke": "#555555",
-            "stroke-opacity": "1",
-            "fill": "rgba(255, 255, 255, 0.03)",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#f0f0f0"
-        },
-        "nodes": [
-            "38ead71f.e78928",
-            "ec749d70.07711",
-            "757de494.6c4784",
-            "f65be93a.5651c8",
-            "74cd16f8a43b81f7",
-            "cb5aee829fac2d62",
-            "a6bf7a9114fdd9a3",
-            "565ec2f4d7ed5b7c",
-            "9cb3dc75ba50a9f2",
-            "965fc702dc74be21"
-        ],
-        "x": 174,
-        "y": 219,
-        "w": 912,
-        "h": 302
-    },
-    {
         "id": "7c0664c35f16aa57",
         "type": "group",
         "z": "61370204cb540a30",
@@ -264,20 +234,81 @@
             "13646924a28ce935",
             "03e3ab6a200654c3",
             "ca2e66978130794f",
-            "c99fb2ac3bc16c29",
             "ae7ef502090ce27a",
             "1b9f25a76032d212",
             "1c3a8bcd5716a8c7",
             "342c7c9833a6ca48",
-            "804a225e5a273d91",
-            "0323b76129d486ec",
-            "a7a629d979f0c7e6",
-            "33d7ed5a66dd5b8e"
+            "804a225e5a273d91"
         ],
         "x": 14,
         "y": 399,
-        "w": 1292,
-        "h": 802
+        "w": 932,
+        "h": 542
+    },
+    {
+        "id": "c6472bd832318f7a",
+        "type": "group",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Emergency Evacuation Process Deployment",
+        "style": {
+            "stroke": "#555555",
+            "stroke-opacity": "1",
+            "fill": "rgba(255, 255, 255, 0.03)",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#f0f0f0"
+        },
+        "nodes": [
+            "d803bb3bbe2f5777",
+            "706fd991f39a5701",
+            "f065f5a0a8d90a68",
+            "68533f57d301487f",
+            "c19935798deffa4c",
+            "b717febec774155a",
+            "066e19c9e9ef9f40",
+            "42722b2633b405cf",
+            "3010f59d01d9da26",
+            "0d3598999fb8a402"
+        ],
+        "x": 294,
+        "y": 239,
+        "w": 992,
+        "h": 302
+    },
+    {
+        "id": "8e2850966c0b89d7",
+        "type": "group",
+        "z": "742c3f66713f865c",
+        "name": "Emergency Routing & Hazard Updates",
+        "style": {
+            "stroke": "#555555",
+            "stroke-opacity": "1",
+            "fill": "rgba(255, 255, 255, 0.03)",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#f0f0f0"
+        },
+        "nodes": [
+            "cf3f4a20ba0b1203",
+            "5b955beefaf1d116",
+            "91886eb340dc4077",
+            "84ceab574e8c8f47",
+            "2f8dfcdc5ca3a50e",
+            "c534e4279e6b138a",
+            "5fb32ecb529864e5",
+            "7f799e3602838918",
+            "3fd69808d7399f15",
+            "3d9b871f0650ec9f",
+            "81df18b794830640",
+            "6cb989c77f8338df",
+            "f54637d910e71779"
+        ],
+        "x": 224,
+        "y": 1399,
+        "w": 842,
+        "h": 454
     },
     {
         "id": "19268c5a199e4927",
@@ -907,187 +938,10 @@
         ]
     },
     {
-        "id": "38ead71f.e78928",
-        "type": "deploy",
-        "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "",
-        "camunda": "cc7538c088cd1d8b",
-        "x": 550,
-        "y": 400,
-        "wires": [
-            [
-                "a6bf7a9114fdd9a3"
-            ]
-        ]
-    },
-    {
-        "id": "ec749d70.07711",
-        "type": "file in",
-        "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "bpmn file",
-        "filename": "/data/host_files/diagram_emergency.bpmn",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 560,
-        "y": 320,
-        "wires": [
-            [
-                "f65be93a.5651c8"
-            ]
-        ]
-    },
-    {
-        "id": "757de494.6c4784",
-        "type": "inject",
-        "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "str",
-        "x": 410,
-        "y": 320,
-        "wires": [
-            [
-                "ec749d70.07711"
-            ]
-        ]
-    },
-    {
-        "id": "f65be93a.5651c8",
+        "id": "32615ba03a4d358f",
         "type": "change",
         "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "prepare",
-        "rules": [
-            {
-                "t": "move",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.definition",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload.resourceName",
-                "pt": "msg",
-                "to": "filename",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 740,
-        "y": 320,
-        "wires": [
-            [
-                "38ead71f.e78928"
-            ]
-        ]
-    },
-    {
-        "id": "74cd16f8a43b81f7",
-        "type": "process-instance",
-        "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "",
-        "camunda": "cc7538c088cd1d8b",
-        "x": 370,
-        "y": 480,
-        "wires": [
-            [
-                "965fc702dc74be21"
-            ]
-        ]
-    },
-    {
-        "id": "cb5aee829fac2d62",
-        "type": "debug",
-        "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "debug 8",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 980,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "a6bf7a9114fdd9a3",
-        "type": "change",
-        "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.processId",
-                "pt": "msg",
-                "to": "payload.deployments[0].process",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 780,
-        "y": 400,
-        "wires": [
-            [
-                "74cd16f8a43b81f7"
-            ]
-        ]
-    },
-    {
-        "id": "565ec2f4d7ed5b7c",
-        "type": "watch",
-        "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "",
-        "files": "/data/host_files/diagram_emergency.bpmn",
-        "recursive": "",
-        "x": 360,
-        "y": 260,
-        "wires": [
-            [
-                "ec749d70.07711"
-            ]
-        ]
-    },
-    {
-        "id": "4cb771753a668310",
-        "type": "change",
-        "z": "1a10bef68b9ba5b6",
-        "name": "",
+        "name": "Prepare Hot Rooms Query",
         "rules": [
             {
                 "t": "set",
@@ -1116,55 +970,55 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 340,
-        "y": 700,
+        "x": 690,
+        "y": 720,
         "wires": [
             [
-                "3beccb6643dffb98"
+                "502e520271176ccb"
             ]
         ]
     },
     {
-        "id": "3beccb6643dffb98",
+        "id": "502e520271176ccb",
         "type": "neo4j-bolt",
         "z": "1a10bef68b9ba5b6",
         "server": "d9d1b2e046e79011",
-        "name": "",
+        "name": "Memgraph: Get Hot Rooms",
         "query": "",
         "sessions": 10,
         "database": "",
-        "x": 520,
-        "y": 700,
+        "x": 950,
+        "y": 720,
         "wires": [
             [
-                "52b706df7d8734c4"
+                "255525b10b0c74f9"
             ],
             [
-                "52b706df7d8734c4"
+                "255525b10b0c74f9"
             ],
             []
         ]
     },
     {
-        "id": "013de76e53ec9256",
+        "id": "bdfec77bcfb7f3c2",
         "type": "complete-task",
         "z": "1a10bef68b9ba5b6",
-        "name": "",
-        "x": 880,
-        "y": 700,
+        "name": "Complete check-hot-rooms",
+        "x": 1450,
+        "y": 720,
         "wires": []
     },
     {
-        "id": "52b706df7d8734c4",
+        "id": "255525b10b0c74f9",
         "type": "change",
         "z": "1a10bef68b9ba5b6",
-        "name": "format output",
+        "name": "Format Output: hotRooms",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\t    \"variables\": {\t        \"hotRooms\": [payload.`name`]\t    },\t    \"job\": job\t}",
+                "to": "{\t  \"variables\": {\t    \"hotRooms\": [payload.`name`]\t  },\t  \"job\": job\t}",
                 "tot": "jsonata"
             }
         ],
@@ -1173,19 +1027,19 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
-        "y": 700,
+        "x": 1200,
+        "y": 720,
         "wires": [
             [
-                "013de76e53ec9256"
+                "bdfec77bcfb7f3c2"
             ]
         ]
     },
     {
-        "id": "443613823a838abb",
+        "id": "bee157fae70f0381",
         "type": "change",
         "z": "1a10bef68b9ba5b6",
-        "name": "",
+        "name": "Prepare Cold Room Search",
         "rules": [
             {
                 "t": "set",
@@ -1214,46 +1068,46 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 340,
-        "y": 840,
+        "x": 690,
+        "y": 860,
         "wires": [
             [
-                "4b65bd38924a6a94"
+                "fd72455f0ea7a33f"
             ]
         ]
     },
     {
-        "id": "4b65bd38924a6a94",
+        "id": "fd72455f0ea7a33f",
         "type": "neo4j-bolt",
         "z": "1a10bef68b9ba5b6",
         "server": "d9d1b2e046e79011",
-        "name": "",
+        "name": "Memgraph: BFS Closest Cold Room",
         "query": "// Partendo da p1, espanditi a raggiera (BFS) fino a trovare gli altri Place\nMATCH path = (p1:Place {name: $room})-[:CONNECTED_TO * BFS]->(p2:Place)\nWHERE p1 <> p2\nMATCH (p2)-[:HAS_STATE]->(e2:EnvironmentState)\nWHERE e2.temperature <= 25\nRETURN DISTINCT p2.name AS closest_place, \n                e2.temperature AS closest_temp, \n                length(path) AS distance_in_hops\nORDER BY distance_in_hops ASC\nLIMIT 1",
         "sessions": 10,
         "database": "",
-        "x": 520,
-        "y": 840,
+        "x": 980,
+        "y": 860,
         "wires": [
             [
-                "cd2a4e20651fe056"
+                "69d102e5e6540f0b"
             ],
             [
-                "cd2a4e20651fe056"
+                "69d102e5e6540f0b"
             ],
             []
         ]
     },
     {
-        "id": "cd2a4e20651fe056",
+        "id": "69d102e5e6540f0b",
         "type": "change",
         "z": "1a10bef68b9ba5b6",
-        "name": "format output",
+        "name": "Format Output: closest_place",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\t    \"variables\": {\t        \"room\": payload[0].closest_place\t    },\t    \"job\": job\t}",
+                "to": "{\t  \"variables\": {\t    \"room\": payload[0].closest_place\t  },\t  \"job\": job\t}",
                 "tot": "jsonata"
             }
         ],
@@ -1262,61 +1116,255 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
-        "y": 840,
+        "x": 1270,
+        "y": 860,
         "wires": [
             [
-                "fb0ed9811fce8dcb"
+                "e7ebaef8d819485a"
             ]
         ]
     },
     {
-        "id": "fb0ed9811fce8dcb",
+        "id": "e7ebaef8d819485a",
         "type": "complete-task",
         "z": "1a10bef68b9ba5b6",
-        "name": "",
-        "x": 880,
-        "y": 840,
+        "name": "Complete move-colder-room",
+        "x": 1530,
+        "y": 860,
         "wires": []
     },
     {
-        "id": "f8191c49a25089a9",
+        "id": "d61b42ef79355f7d",
         "type": "task-worker",
         "z": "1a10bef68b9ba5b6",
-        "name": "",
+        "name": "Worker: check-hot-rooms",
         "camunda": "cc7538c088cd1d8b",
         "taskType": "check-hot-rooms",
         "maxActiveJobs": 32,
         "timeout": 1000,
-        "x": 150,
-        "y": 700,
+        "x": 430,
+        "y": 720,
         "wires": [
             [
-                "4cb771753a668310"
+                "32615ba03a4d358f"
             ]
         ]
     },
     {
-        "id": "9cb3dc75ba50a9f2",
-        "type": "set-variables",
+        "id": "52400c4ff0e40490",
+        "type": "task-worker",
         "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "",
+        "name": "Worker: move-colder-room",
         "camunda": "cc7538c088cd1d8b",
-        "x": 810,
-        "y": 480,
+        "taskType": "move-colder-room",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 430,
+        "y": 860,
         "wires": [
             [
-                "cb5aee829fac2d62"
+                "bee157fae70f0381"
             ]
         ]
     },
     {
-        "id": "965fc702dc74be21",
+        "id": "d803bb3bbe2f5777",
+        "type": "deploy",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c6472bd832318f7a",
+        "name": "Deploy Emergency BPMN",
+        "camunda": "cc7538c088cd1d8b",
+        "x": 620,
+        "y": 420,
+        "wires": [
+            [
+                "066e19c9e9ef9f40"
+            ]
+        ]
+    },
+    {
+        "id": "706fd991f39a5701",
+        "type": "file in",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c6472bd832318f7a",
+        "name": "Read diagram_emergency.bpmn",
+        "filename": "/data/host_files/diagram_emergency.bpmn",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 770,
+        "y": 340,
+        "wires": [
+            [
+                "68533f57d301487f"
+            ]
+        ]
+    },
+    {
+        "id": "f065f5a0a8d90a68",
+        "type": "inject",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c6472bd832318f7a",
+        "name": "Trigger Deployment",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "706fd991f39a5701"
+            ]
+        ]
+    },
+    {
+        "id": "68533f57d301487f",
         "type": "change",
         "z": "1a10bef68b9ba5b6",
-        "g": "8760e37f98dbbce9",
-        "name": "",
+        "g": "c6472bd832318f7a",
+        "name": "Prepare Deployment Payload",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.definition",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.resourceName",
+                "pt": "msg",
+                "to": "filename",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 340,
+        "wires": [
+            [
+                "d803bb3bbe2f5777"
+            ]
+        ]
+    },
+    {
+        "id": "c19935798deffa4c",
+        "type": "process-instance",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c6472bd832318f7a",
+        "name": "Start Emergency Process Instance",
+        "camunda": "cc7538c088cd1d8b",
+        "x": 470,
+        "y": 500,
+        "wires": [
+            [
+                "0d3598999fb8a402"
+            ]
+        ]
+    },
+    {
+        "id": "b717febec774155a",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c6472bd832318f7a",
+        "name": "Debug: Process Variables",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "066e19c9e9ef9f40",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c6472bd832318f7a",
+        "name": "Extract Process ID",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.processId",
+                "pt": "msg",
+                "to": "payload.deployments[0].process",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 420,
+        "wires": [
+            [
+                "c19935798deffa4c"
+            ]
+        ]
+    },
+    {
+        "id": "42722b2633b405cf",
+        "type": "watch",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c6472bd832318f7a",
+        "name": "Watch for BPMN updates",
+        "files": "/data/host_files/diagram_emergency.bpmn",
+        "recursive": "",
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "706fd991f39a5701"
+            ]
+        ]
+    },
+    {
+        "id": "3010f59d01d9da26",
+        "type": "set-variables",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c6472bd832318f7a",
+        "name": "Set Initial Variables",
+        "camunda": "cc7538c088cd1d8b",
+        "x": 910,
+        "y": 500,
+        "wires": [
+            [
+                "b717febec774155a"
+            ]
+        ]
+    },
+    {
+        "id": "0d3598999fb8a402",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c6472bd832318f7a",
+        "name": "Set room to AA1",
         "rules": [
             {
                 "t": "set",
@@ -1331,28 +1379,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 610,
-        "y": 480,
+        "x": 720,
+        "y": 500,
         "wires": [
             [
-                "9cb3dc75ba50a9f2"
-            ]
-        ]
-    },
-    {
-        "id": "0857c89b21b117ef",
-        "type": "task-worker",
-        "z": "1a10bef68b9ba5b6",
-        "name": "",
-        "camunda": "cc7538c088cd1d8b",
-        "taskType": "move-colder-room",
-        "maxActiveJobs": 32,
-        "timeout": 1000,
-        "x": 150,
-        "y": 840,
-        "wires": [
-            [
-                "443613823a838abb"
+                "3010f59d01d9da26"
             ]
         ]
     },
@@ -1508,16 +1539,9 @@
         "rules": [
             {
                 "t": "set",
-                "p": "sensor_configs",
-                "pt": "global",
-                "to": "{\"temperature\": {\"bucket_ms\": 60000, \"agg_type\": \"mean\", \"threshold_type\": \"always\"}, \"co2\": {\"bucket_ms\": 60000, \"agg_type\": \"max\", \"threshold_type\": \"always\"}}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
                 "p": "global_settings",
                 "pt": "global",
-                "to": "{\"cache_threshold_percent\": 0.05, \"ttl_seconds\": 300, \"retention_ms\": 300000, \"excluded_sensors\": [\"light\"]}",
+                "to": "{\"cache_threshold_percent\":0.05,\"ttl_seconds\":300,\"retention_ms\":300000,\"excluded_sensors\":[\"light\"]}",
                 "tot": "json"
             },
             {
@@ -1606,8 +1630,8 @@
         "func": "local room_name = KEYS[1]\nlocal ttl = ARGV[1]\nlocal num_fields = #ARGV - 1\n\nreturn redis.call(\"HEXPIRE\", room_name, ttl, \"FIELDS\", num_fields, unpack(ARGV, 2))\n",
         "stored": false,
         "block": false,
-        "x": 450,
-        "y": 1100,
+        "x": 150,
+        "y": 900,
         "wires": [
             [
                 "03e3ab6a200654c3"
@@ -1625,7 +1649,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "$append([topic, $global.global_settings.ttl_seconds ? $global.global_settings.ttl_seconds : 300], sensor_attributes ? sensor_attributes : [])",
+                "to": "$append([topic, $global.global_settings.ttl_seconds ? $global.global_settings.ttl_seconds : 300], $keys(attributes_to_update))",
                 "tot": "jsonata"
             }
         ],
@@ -1634,8 +1658,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 220,
-        "y": 1100,
+        "x": 660,
+        "y": 840,
         "wires": [
             [
                 "06f1aefb4d6cd161"
@@ -1655,8 +1679,8 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 430,
-        "y": 1040,
+        "x": 410,
+        "y": 840,
         "wires": [
             [
                 "5c8754c8f270c398"
@@ -1676,8 +1700,8 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 430,
-        "y": 1160,
+        "x": 590,
+        "y": 900,
         "wires": [
             []
         ]
@@ -1702,8 +1726,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 200,
-        "y": 1040,
+        "x": 160,
+        "y": 840,
         "wires": [
             [
                 "3f3eb299ef1b064f"
@@ -1726,8 +1750,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 190,
-        "y": 980,
+        "x": 150,
+        "y": 780,
         "wires": [
             [
                 "25bc46c7bc17b79a",
@@ -1748,12 +1772,11 @@
         "paramsType": "json",
         "payloadType": "json",
         "block": false,
-        "x": 480,
-        "y": 900,
+        "x": 420,
+        "y": 720,
         "wires": [
             [
-                "13646924a28ce935",
-                "33d7ed5a66dd5b8e"
+                "13646924a28ce935"
             ]
         ]
     },
@@ -1767,8 +1790,8 @@
         "query": "MATCH (p:Place)\nWHERE toLower(p.department) = toLower($department) \n  AND toLower(p.name) = toLower($room)\nMERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\nSET e += $sensors\nSET e.is_real = true\nRETURN p, e",
         "sessions": 10,
         "database": "",
-        "x": 670,
-        "y": 980,
+        "x": 650,
+        "y": 780,
         "wires": [
             [],
             [],
@@ -1787,8 +1810,8 @@
         "submitIncompleteInterval": true,
         "submitPerTopic": true,
         "aggregationType": "max",
-        "x": 410,
-        "y": 780,
+        "x": 590,
+        "y": 600,
         "wires": [
             [
                 "1b9f25a76032d212"
@@ -1816,8 +1839,8 @@
         "checkall": "false",
         "repair": false,
         "outputs": 2,
-        "x": 200,
-        "y": 740,
+        "x": 400,
+        "y": 580,
         "wires": [
             [
                 "cef44aa08098d42f"
@@ -1840,8 +1863,8 @@
         "stream": false,
         "addname": "key",
         "property": "payload",
-        "x": 200,
-        "y": 680,
+        "x": 800,
+        "y": 500,
         "wires": [
             [
                 "8b55422067a50b42"
@@ -1868,8 +1891,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 620,
+        "x": 580,
+        "y": 500,
         "wires": [
             [
                 "bb989a1409f9fd81"
@@ -1894,8 +1917,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 190,
-        "y": 620,
+        "x": 370,
+        "y": 500,
         "wires": [
             [
                 "aaa8a294c3b1164c"
@@ -1921,8 +1944,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 500,
-        "y": 560,
+        "x": 160,
+        "y": 500,
         "wires": [
             [
                 "f82be83ed638874b"
@@ -1957,8 +1980,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 230,
-        "y": 560,
+        "x": 800,
+        "y": 440,
         "wires": [
             [
                 "0c98fd9989fdb37d"
@@ -1984,8 +2007,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 480,
-        "y": 500,
+        "x": 580,
+        "y": 440,
         "wires": [
             [
                 "8419e9aa26b3ef94"
@@ -2013,8 +2036,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 200,
-        "y": 500,
+        "x": 370,
+        "y": 440,
         "wires": [
             [
                 "f3dffb87b8ce513e"
@@ -2055,8 +2078,8 @@
         "submitIncompleteInterval": true,
         "submitPerTopic": true,
         "aggregationType": "mean",
-        "x": 410,
-        "y": 740,
+        "x": 590,
+        "y": 560,
         "wires": [
             [
                 "1b9f25a76032d212"
@@ -2083,8 +2106,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 450,
-        "y": 680,
+        "x": 170,
+        "y": 580,
         "wires": [
             [
                 "cd5c5b8cd88ea491"
@@ -2104,12 +2127,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 740,
-        "y": 900,
+        "x": 660,
+        "y": 720,
         "wires": [
             [
-                "145c3241913c1fda",
-                "33d7ed5a66dd5b8e"
+                "145c3241913c1fda"
             ]
         ]
     },
@@ -2138,8 +2160,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 210,
-        "y": 1160,
+        "x": 370,
+        "y": 900,
         "wires": [
             [
                 "1bf7106513290e43"
@@ -2194,24 +2216,13 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 440,
-        "y": 980,
+        "x": 400,
+        "y": 780,
         "wires": [
             [
                 "ee6f59312474d332"
             ]
         ]
-    },
-    {
-        "id": "c99fb2ac3bc16c29",
-        "type": "comment",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "queste tre chiamate redis potrei unirle",
-        "info": "",
-        "x": 750,
-        "y": 1060,
-        "wires": []
     },
     {
         "id": "ae7ef502090ce27a",
@@ -2235,8 +2246,8 @@
         "reduceInit": "",
         "reduceInitType": "num",
         "reduceFixup": "",
-        "x": 210,
-        "y": 840,
+        "x": 170,
+        "y": 660,
         "wires": [
             [
                 "1c3a8bcd5716a8c7",
@@ -2271,8 +2282,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 600,
-        "y": 740,
+        "x": 780,
+        "y": 580,
         "wires": [
             [
                 "ae7ef502090ce27a"
@@ -2299,8 +2310,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 500,
-        "y": 840,
+        "x": 420,
+        "y": 660,
         "wires": [
             [
                 "342c7c9833a6ca48"
@@ -2318,8 +2329,8 @@
         "func": "-- Keys and arguments\nlocal topic = KEYS[1]\nlocal json_payload = ARGV[1]\n\n-- Retrieve the dynamic retention value passed as the second argument\nlocal retention_ms = tonumber(ARGV[2])\n\n-- Get current time directly from the Redis server\n-- TIME returns an array: [1] = seconds, [2] = microseconds\nlocal server_time = redis.call('TIME')\nlocal current_timestamp_ms = (tonumber(server_time[1]) * 1000) + math.floor(tonumber(server_time[2]) / 1000)\n\n-- Calculate the cutoff timestamp dynamically based on the YAML configuration\nlocal cutoff_timestamp_ms = current_timestamp_ms - retention_ms\n\n-- 1. Insert the new data into the Priority Queue\nredis.call('ZADD', topic, current_timestamp_ms, json_payload)\n\n-- 2. Remove all elements older than the calculated cutoff\nlocal removed_count = redis.call('ZREMRANGEBYSCORE', topic, '-inf', cutoff_timestamp_ms)\n\n-- Return the number of removed elements\nreturn removed_count",
         "stored": false,
         "block": false,
-        "x": 800,
-        "y": 840,
+        "x": 680,
+        "y": 660,
         "wires": [
             []
         ]
@@ -2358,12 +2369,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 210,
-        "y": 900,
+        "x": 170,
+        "y": 720,
         "wires": [
             [
-                "c4b593a83b644c6c",
-                "33d7ed5a66dd5b8e"
+                "c4b593a83b644c6c"
             ]
         ]
     },
@@ -2371,40 +2381,511 @@
         "id": "0323b76129d486ec",
         "type": "comment",
         "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
         "name": "visto che aggregator rende lowercase department e room,\\n la query confronta usando lower, sistemare",
         "info": "",
-        "x": 1070,
-        "y": 980,
+        "x": 1170,
+        "y": 700,
         "wires": []
     },
     {
         "id": "a7a629d979f0c7e6",
         "type": "comment",
         "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
         "name": "mapping si potrebbe fare su thingsboard",
         "info": "",
-        "x": 810,
-        "y": 560,
+        "x": 1210,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "33d7ed5a66dd5b8e",
-        "type": "debug",
+        "id": "c99fb2ac3bc16c29",
+        "type": "comment",
         "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 780,
-        "y": 860,
+        "name": "queste tre chiamate redis potrei unirle",
+        "info": "",
+        "x": 1130,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "c9b03ec1c7b980d4",
+        "type": "file in",
+        "z": "742c3f66713f865c",
+        "name": "",
+        "filename": "/data/host_files/json_fake_data/agent_data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 660,
+        "y": 1160,
+        "wires": [
+            [
+                "5ae96ce51b4c0d43"
+            ]
+        ]
+    },
+    {
+        "id": "c2cf4553f1bfc32f",
+        "type": "inject",
+        "z": "742c3f66713f865c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 1160,
+        "wires": [
+            [
+                "c9b03ec1c7b980d4"
+            ]
+        ]
+    },
+    {
+        "id": "5ae96ce51b4c0d43",
+        "type": "json",
+        "z": "742c3f66713f865c",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 930,
+        "y": 1180,
+        "wires": [
+            [
+                "7630d12ac3128387"
+            ]
+        ]
+    },
+    {
+        "id": "7630d12ac3128387",
+        "type": "split",
+        "z": "742c3f66713f865c",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 610,
+        "y": 1240,
+        "wires": [
+            [
+                "49aa7b5ec9b4b807"
+            ]
+        ]
+    },
+    {
+        "id": "49aa7b5ec9b4b807",
+        "type": "delay",
+        "z": "742c3f66713f865c",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 460,
+        "y": 1300,
+        "wires": [
+            [
+                "91886eb340dc4077"
+            ]
+        ]
+    },
+    {
+        "id": "75b6830230cc0ac9",
+        "type": "comment",
+        "z": "742c3f66713f865c",
+        "name": "simulated agent output",
+        "info": "",
+        "x": 440,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "03acb9f1e2891ea4",
+        "type": "function",
+        "z": "742c3f66713f865c",
+        "name": "update danger",
+        "func": "// 1. Estraiamo i dati di input\nconst hazardData = msg.payload;\nconst [department, roomName] = hazardData.room.split(':');\n\n// 2. Definiamo i parametri del modello matematico\n// Puoi modificare questi valori in base alla taratura del tuo sistema\nconst ALPHA = 1.5;       // Sensibilità ai sensori di pericolo (\\alpha)\nconst BETA = 1.0;        // Sensibilità alla congestione (\\beta)\nconst Q = 0;             // Congestione attuale (Q(t)) - impostabile dinamicamente se hai sensori di affollamento\nconst ETA = 0.8;         // Soglia limite di pericolo (\\eta) per il blocco totale\nconst OMEGA = 999999;    // Penalità estrema (\\Omega) per segnalare il \"percorso bloccato\"\n\n// 3. Prepariamo i parametri da passare a Memgraph\nmsg.params = {\n    department: department,\n    room: roomName,\n    type: hazardData.danger_type,\n    level: hazardData.danger,\n    score: hazardData.danger_score, // Questo è il nostro H(t)\n    warning: hazardData.warning,\n    justification: hazardData.justification,\n    alpha: ALPHA,\n    beta: BETA,\n    q: Q,\n    eta: ETA,\n    omega: OMEGA\n};\n\nmsg.database = \"memgraph\";\n\n// 4. Logica Operativa: Modello di pathfinding dinamico\nif (hazardData.danger_score > 0) {\n    // MERGE del pericolo e ricalcolo del peso dinamico\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        \n        // Aggiungiamo o aggiorniamo il nodo Hazard\n        MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        SET h.level = $level,\n            h.score = $score,\n            h.warning = $warning,\n            h.justification = $justification\n            \n        // Calcolo dinamico w(t) = tau * [1 + alpha * H + beta * Q] + Penalità\n        WITH p, h, \n             coalesce(p.weight, 1.0) AS tau, // \\tau_{ij}: peso base (1.0 di default se manca)\n             $score AS H          // H_{ij}(t): hazard score\n             \n        // Calcoliamo la base moltiplicata e la penalità in base alla soglia eta\n        WITH p, h, tau, H,\n             tau * (1 + ($alpha * H) + ($beta * $q)) AS calcolo_base,\n             CASE WHEN H > $eta THEN $omega ELSE 0 END AS penalita\n             \n        // Salviamo il costo dinamico sulla stanza\n        SET p.dynamic_weight = calcolo_base + penalita\n        \n        RETURN p, h;\n    `;\n} else {\n    // Se il pericolo rientra, eliminiamo l'Hazard e ripristiniamo il peso a quello base\n    msg.query = `\n        MATCH (p:Place {department: $department, room: $room})\n        OPTIONAL MATCH (h:Hazard {type: $type})-[:AFFECTS]->(p)\n        DETACH DELETE h\n        \n        // Ripristino del dynamic_weight al valore di base tau\n        WITH p, coalesce(p.weight, 1.0) AS tau\n        SET p.dynamic_weight = tau\n        \n        RETURN p;\n    `;\n}\n\nmsg.payload = null;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 107.76470947265625,
+        "y": 1404.058837890625,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b955beefaf1d116",
+        "type": "mqtt in",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "Receive Emergency Data",
+        "topic": "emergency/agent/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "19268c5a199e4927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 360,
+        "y": 1460,
+        "wires": [
+            [
+                "91886eb340dc4077"
+            ]
+        ]
+    },
+    {
+        "id": "91886eb340dc4077",
+        "type": "switch",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "Is Valid Danger?",
+        "property": "payload.danger_type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "none",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 560,
+        "y": 1460,
+        "wires": [
+            [
+                "7f799e3602838918",
+                "3fd69808d7399f15"
+            ]
+        ]
+    },
+    {
+        "id": "7f799e3602838918",
+        "type": "change",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "Format Redis HSET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.room",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[\"danger_\" & payload.danger_type, payload.danger]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 1440,
+        "wires": [
+            [
+                "cf3f4a20ba0b1203"
+            ]
+        ]
+    },
+    {
+        "id": "cf3f4a20ba0b1203",
+        "type": "redis-command",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "Save to Redis",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 960,
+        "y": 1440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3fd69808d7399f15",
+        "type": "change",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "Extract Neo4j Params",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{\t    \"department\": $split(payload.room, ':')[0],\t    \"room\": $split(payload.room, ':')[1],\t    \"type\": payload.danger_type,\t    \"level\": payload.danger,\t    \"score\": payload.danger_score,\t    \"warning\": payload.warning,\t    \"justification\": payload.justification,\t    \"k\": 10\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 1480,
+        "wires": [
+            [
+                "3d9b871f0650ec9f"
+            ]
+        ]
+    },
+    {
+        "id": "3d9b871f0650ec9f",
+        "type": "switch",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "Route by Danger Score",
+        "property": "payload.danger_score",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 380,
+        "y": 1600,
+        "wires": [
+            [
+                "81df18b794830640"
+            ],
+            [
+                "6cb989c77f8338df"
+            ]
+        ]
+    },
+    {
+        "id": "81df18b794830640",
+        "type": "change",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "Cypher: Update Hazard",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (p:Place {department: $department, room: $room})MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)SET h += { level: $level, score: $score, warning: $warning, justification: $justification }, p.dynamic_weight = coalesce(p.weight, 1.0) * (1 + ($score * $k))RETURN p, h;",
+                "tot": "str"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 1580,
+        "wires": [
+            [
+                "84ceab574e8c8f47"
+            ]
+        ]
+    },
+    {
+        "id": "6cb989c77f8338df",
+        "type": "change",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "Cypher: Remove Hazard",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (p:Place {department: $department, room: $room})\nOPTIONAL MATCH (h:Hazard {type: $type})-[:AFFECTS]->(p)\nDETACH DELETE h\nSET p.dynamic_weight = coalesce(p.weight, 1.0)\nRETURN p;",
+                "tot": "str"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 1620,
+        "wires": [
+            [
+                "84ceab574e8c8f47"
+            ]
+        ]
+    },
+    {
+        "id": "84ceab574e8c8f47",
+        "type": "neo4j-bolt",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "server": "d9d1b2e046e79011",
+        "name": "DB: Update Room Weights",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 910,
+        "y": 1600,
+        "wires": [
+            [
+                "f54637d910e71779"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f54637d910e71779",
+        "type": "change",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "Cypher: Recalculate Evacuation Path",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{\t    \"department\": payload.p ? payload.p.properties.department : payload[0].p.properties.department,\t    \"room\": payload.p ? payload.p.properties.room : payload[0].p.properties.room\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "// 1. Trova sorgente e target\nMATCH (source:Place {department: $department, room: $room})\nMATCH (target:Place) \nWHERE target.room IN ['E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7']\n\n// 2. Calcola i percorsi\nMATCH path = (source)-[:CONNECTED_TO *WSHORTEST (edge, node | coalesce(node.dynamic_weight, node.weight)) total_weight]->(target)\n\n// 3. Salva i risultati temporaneamente per non perderli a causa del DELETE\nWITH collect({Destination: target.room, path: path, weight: total_weight}) AS all_paths, path\n\n// 4. Estrai i nodi di partenza in modo UNIVOCO per pulirli\nUNWIND relationships(path) AS rel\nWITH DISTINCT startNode(rel) AS start_node, all_paths\n\n// 5. Pulisci i vecchi archi (eseguito una sola volta per nodo)\nOPTIONAL MATCH (start_node)-[old:SHORTEST_PATH]->()\nDELETE old\n\n// 6. Ricrea i nuovi archi usando i dati salvati prima\nWITH all_paths\nUNWIND all_paths AS res\nUNWIND relationships(res.path) AS rel\nWITH startNode(rel) AS start_node, endNode(rel) AS end_node, res\nMERGE (start_node)-[:SHORTEST_PATH]->(end_node)\n\n// 7. Ritorna i risultati\nRETURN DISTINCT \n    res.Destination AS Destination, \n    res.path AS path, \n    res.weight AS total_weight;",
+                "tot": "str"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 1680,
+        "wires": [
+            [
+                "2f8dfcdc5ca3a50e"
+            ]
+        ]
+    },
+    {
+        "id": "2f8dfcdc5ca3a50e",
+        "type": "neo4j-bolt",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "server": "d9d1b2e046e79011",
+        "name": "DB: Update Shortest Path",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 720,
+        "y": 1680,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c534e4279e6b138a",
+        "type": "comment",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "TODO se shortest path è corretto aggiungere in tesi",
+        "info": "",
+        "x": 760,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "5fb32ecb529864e5",
+        "type": "comment",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "sarebbe meglio usare K weighted shortest path ma devo farlo custom\\n visto che in letteratura usano dijkstra posso inserirlo come future work",
+        "info": "",
+        "x": 760,
+        "y": 1800,
         "wires": []
     },
     {
