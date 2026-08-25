@@ -64,6 +64,215 @@
         "env": []
     },
     {
+        "id": "e1861ddff91fe985",
+        "type": "subflow",
+        "name": "Sensor Aggregator",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 160,
+                "y": 360,
+                "wires": [
+                    {
+                        "id": "9e85068ca9d7245c"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 980,
+                "y": 360,
+                "wires": [
+                    {
+                        "id": "d957a191bd7fca10",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "58f18eb3ecf48522",
+        "type": "subflow",
+        "name": "Ingestion & Data Enrichment",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 300,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "db9541baa5aa6911"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 460,
+                "y": 460,
+                "wires": [
+                    {
+                        "id": "8b55422067a50b42",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "aff3e93ce0e38714",
+        "type": "subflow",
+        "name": "Evaluate Thresholds",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 140,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "48287360225b5717"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 460,
+                "y": 360,
+                "wires": [
+                    {
+                        "id": "3a9fa834b54f9fd5",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "6bf237a7a76370e9",
+        "type": "subflow",
+        "name": "Save state on Redis",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "996f9930d3408faa"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 840,
+                "y": 380,
+                "wires": [
+                    {
+                        "id": "bb07831ce4fa3b96",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "43cc147402d11042",
+        "type": "subflow",
+        "name": "Cache Hazard State",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 400,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "7f799e3602838918"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "49df7fbfa1735b3d",
+        "type": "subflow",
+        "name": "Manage Graph Hazards",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 500,
+                "y": 300,
+                "wires": [
+                    {
+                        "id": "7ab4a1269e0fe412"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1000,
+                "y": 420,
+                "wires": [
+                    {
+                        "id": "d6520757a852f64a",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "6e3d39d123c8fd3a",
+        "type": "subflow",
+        "name": "Recalculate Evacuation Path",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 340,
+                "y": 400,
+                "wires": [
+                    {
+                        "id": "f54637d910e71779"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "73e25c91ea4204fa",
         "type": "group",
         "z": "6305c5b377893d03",
@@ -211,39 +420,21 @@
             "color": "#f0f0f0"
         },
         "nodes": [
-            "06f1aefb4d6cd161",
-            "5c8754c8f270c398",
-            "3f3eb299ef1b064f",
-            "1bf7106513290e43",
-            "25bc46c7bc17b79a",
-            "145c3241913c1fda",
-            "c4b593a83b644c6c",
             "ee6f59312474d332",
-            "44926fe009a157ab",
-            "cd5c5b8cd88ea491",
-            "bb989a1409f9fd81",
-            "aaa8a294c3b1164c",
-            "f82be83ed638874b",
-            "0c98fd9989fdb37d",
-            "8419e9aa26b3ef94",
-            "f3dffb87b8ce513e",
-            "db9541baa5aa6911",
             "0c4a1faa281a16bc",
-            "cef44aa08098d42f",
-            "8b55422067a50b42",
-            "13646924a28ce935",
-            "03e3ab6a200654c3",
             "ca2e66978130794f",
             "ae7ef502090ce27a",
-            "1b9f25a76032d212",
             "1c3a8bcd5716a8c7",
             "342c7c9833a6ca48",
-            "804a225e5a273d91"
+            "f6a2eff97c9e5967",
+            "e4c02c6ad3faca1a",
+            "d42bfc72df84e8b9",
+            "d22bea9ba6a2eefe"
         ],
         "x": 14,
         "y": 399,
-        "w": 932,
-        "h": 542
+        "w": 632,
+        "h": 382
     },
     {
         "id": "c6472bd832318f7a",
@@ -291,23 +482,17 @@
             "color": "#f0f0f0"
         },
         "nodes": [
-            "cf3f4a20ba0b1203",
             "5b955beefaf1d116",
             "91886eb340dc4077",
-            "84ceab574e8c8f47",
-            "2f8dfcdc5ca3a50e",
             "c534e4279e6b138a",
             "5fb32ecb529864e5",
-            "7f799e3602838918",
-            "3fd69808d7399f15",
-            "3d9b871f0650ec9f",
-            "81df18b794830640",
-            "6cb989c77f8338df",
-            "f54637d910e71779"
+            "f581fb7a0701bc6d",
+            "0f0812a17f0b33de",
+            "b6d306df011358a8"
         ],
         "x": 224,
         "y": 1399,
-        "w": 842,
+        "w": 812,
         "h": 454
     },
     {
@@ -368,6 +553,905 @@
         "oAuthUrl": "",
         "clientId": "",
         "clientSecret": ""
+    },
+    {
+        "id": "9e85068ca9d7245c",
+        "type": "switch",
+        "z": "e1861ddff91fe985",
+        "name": "Route by Sensor Type",
+        "property": "parts.key",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "temperature",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "humidity",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "tvoc",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "eco2",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 340,
+        "y": 360,
+        "wires": [
+            [
+                "0271f7dd94740084"
+            ],
+            [
+                "0271f7dd94740084"
+            ],
+            [
+                "0271f7dd94740084"
+            ],
+            [
+                "0271f7dd94740084"
+            ],
+            [
+                "e1abe26676bc6185"
+            ]
+        ]
+    },
+    {
+        "id": "e1abe26676bc6185",
+        "type": "aggregator",
+        "z": "e1861ddff91fe985",
+        "name": "Avg",
+        "topic": "",
+        "intervalCount": "1",
+        "intervalUnits": "m",
+        "submitIncompleteInterval": true,
+        "submitPerTopic": true,
+        "aggregationType": "mean",
+        "x": 570,
+        "y": 280,
+        "wires": [
+            [
+                "d957a191bd7fca10"
+            ]
+        ]
+    },
+    {
+        "id": "0271f7dd94740084",
+        "type": "aggregator",
+        "z": "e1861ddff91fe985",
+        "name": "Max",
+        "topic": "",
+        "intervalCount": 1,
+        "intervalUnits": "m",
+        "submitIncompleteInterval": true,
+        "submitPerTopic": true,
+        "aggregationType": "max",
+        "x": 570,
+        "y": 320,
+        "wires": [
+            [
+                "d957a191bd7fca10"
+            ]
+        ]
+    },
+    {
+        "id": "d957a191bd7fca10",
+        "type": "change",
+        "z": "e1861ddff91fe985",
+        "name": "Map Topic & Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ $split(topic, \":\")[2]: payload }",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "$split(topic, \":\")[0] & \":\" & $split(topic, \":\")[1]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9481333c9ee23d03",
+        "type": "aggregator",
+        "z": "e1861ddff91fe985",
+        "name": "Min",
+        "topic": "",
+        "intervalCount": "1",
+        "intervalUnits": "m",
+        "submitIncompleteInterval": true,
+        "submitPerTopic": true,
+        "aggregationType": "min",
+        "x": 570,
+        "y": 360,
+        "wires": [
+            [
+                "d957a191bd7fca10"
+            ]
+        ]
+    },
+    {
+        "id": "40122d1e02a678ae",
+        "type": "aggregator",
+        "z": "e1861ddff91fe985",
+        "name": "Median",
+        "topic": "",
+        "intervalCount": "1",
+        "intervalUnits": "m",
+        "submitIncompleteInterval": true,
+        "submitPerTopic": true,
+        "aggregationType": "median",
+        "x": 580,
+        "y": 400,
+        "wires": [
+            [
+                "d957a191bd7fca10"
+            ]
+        ]
+    },
+    {
+        "id": "d03459d0547b2b18",
+        "type": "aggregator",
+        "z": "e1861ddff91fe985",
+        "name": "Sum",
+        "topic": "",
+        "intervalCount": "1",
+        "intervalUnits": "m",
+        "submitIncompleteInterval": true,
+        "submitPerTopic": true,
+        "aggregationType": "sum",
+        "x": 570,
+        "y": 440,
+        "wires": [
+            [
+                "d957a191bd7fca10"
+            ]
+        ]
+    },
+    {
+        "id": "aaa8a294c3b1164c",
+        "type": "change",
+        "z": "58f18eb3ecf48522",
+        "name": "Extract Sensors Array",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "sensors",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 360,
+        "wires": [
+            [
+                "bb989a1409f9fd81"
+            ]
+        ]
+    },
+    {
+        "id": "db9541baa5aa6911",
+        "type": "change",
+        "z": "58f18eb3ecf48522",
+        "name": "Drop Excluded Sensors",
+        "rules": [
+            {
+                "t": "set",
+                "p": "sensors",
+                "pt": "msg",
+                "to": "payload.sensors ~> | $ | {}, $globalContext(\"global_settings\").excluded_sensors |",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 300,
+        "wires": [
+            [
+                "f3dffb87b8ce513e"
+            ]
+        ]
+    },
+    {
+        "id": "f3dffb87b8ce513e",
+        "type": "switch",
+        "z": "58f18eb3ecf48522",
+        "name": "Has device_id?",
+        "property": "payload.device_id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 680,
+        "y": 300,
+        "wires": [
+            [
+                "8419e9aa26b3ef94"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8419e9aa26b3ef94",
+        "type": "change",
+        "z": "58f18eb3ecf48522",
+        "name": "Map Room and Department",
+        "rules": [
+            {
+                "t": "set",
+                "p": "room",
+                "pt": "msg",
+                "to": "$lookup($globalContext(\"sensorToRoom\"), msg.payload.device_id)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "department",
+                "pt": "msg",
+                "to": "$lookup($globalContext(\"roomToDepartment\"), msg.room) ? $lookup($globalContext(\"roomToDepartment\"), msg.room) : \"UnknownDepartment\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 300,
+        "wires": [
+            [
+                "0c98fd9989fdb37d"
+            ]
+        ]
+    },
+    {
+        "id": "bb989a1409f9fd81",
+        "type": "split",
+        "z": "58f18eb3ecf48522",
+        "name": "Split by Sensor Type",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "key",
+        "property": "payload",
+        "x": 900,
+        "y": 360,
+        "wires": [
+            [
+                "8b55422067a50b42"
+            ]
+        ]
+    },
+    {
+        "id": "f82be83ed638874b",
+        "type": "switch",
+        "z": "58f18eb3ecf48522",
+        "name": "Is Department A?",
+        "property": "department",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "departmentA",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 470,
+        "y": 360,
+        "wires": [
+            [
+                "aaa8a294c3b1164c"
+            ]
+        ]
+    },
+    {
+        "id": "0c98fd9989fdb37d",
+        "type": "switch",
+        "z": "58f18eb3ecf48522",
+        "name": "Has Room Mapping?",
+        "property": "room",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 260,
+        "y": 360,
+        "wires": [
+            [
+                "f82be83ed638874b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8b55422067a50b42",
+        "type": "change",
+        "z": "58f18eb3ecf48522",
+        "name": "Set Topic: dept:room:key",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "department & \":\" & room & \":\" & key",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "48287360225b5717",
+        "type": "change",
+        "z": "aff3e93ce0e38714",
+        "name": "Prepare Redis HMGET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "current_data",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$keys(current_data)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "sensor_attributes",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 280,
+        "wires": [
+            [
+                "01539c2ffbe2626a"
+            ]
+        ]
+    },
+    {
+        "id": "01539c2ffbe2626a",
+        "type": "redis-command",
+        "z": "aff3e93ce0e38714",
+        "server": "a12b266a42104227",
+        "command": "HMGET",
+        "name": "Redis: HMGET Old Values",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 560,
+        "y": 280,
+        "wires": [
+            [
+                "691c8df5b9d7ff30"
+            ]
+        ]
+    },
+    {
+        "id": "691c8df5b9d7ff30",
+        "type": "function",
+        "z": "aff3e93ce0e38714",
+        "name": "Evaluate Thresholds",
+        "func": "// 1. Reconstruct cached_snapshot from Redis HMGET output\n// HMGET returns an array of values in msg.payload that maps 1:1 with msg.sensor_attributes\nmsg.cached_snapshot = {};\nif (Array.isArray(msg.payload) && Array.isArray(msg.sensor_attributes)) {\n    msg.sensor_attributes.forEach((key, index) => {\n        let val = msg.payload[index];\n        // Redis returns null if the key doesn't exist in the hash yet\n        if (val !== null) {\n            // Redis returns strings; convert back to numbers if applicable\n            msg.cached_snapshot[key] = isNaN(val) ? val : Number(val);\n        }\n    });\n}\n\n// 2. Define threshold evaluation strategies\nconst thresholdStrategies = {\n    percentage: function(newValue, oldValue, threshold) {\n        if (oldValue === 0) return newValue !== 0;\n        let percentageChange = Math.abs(newValue - oldValue) / Math.abs(oldValue);\n        return percentageChange >= threshold;\n    },\n    absolute: function(newValue, oldValue, threshold) {\n        let diff = Math.abs(newValue - oldValue);\n        return diff >= threshold;\n    },\n    always: function(newValue, oldValue, threshold) {\n        return newValue !== oldValue;\n    }\n};\n\n// 3. Fetch configurations from global context\nlet sensor_parameters = global.get(\"sensor_parameters\") || global.get(\"sensor_configs\") || {};\n\n// 4. Fallback if the cache is completely empty (e.g., brand new room)\nif (Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\n// 5. Compare current data against the cached snapshot\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    // If this specific sensor is entirely new to the cache, force an update\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    // Handle numeric values using the dynamic strategies\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        \n        let sensorConfig = sensor_parameters[key] || {};\n        let thresholdType = sensorConfig.threshold_type || \"percentage\";\n        let thresholdValue = (sensorConfig.threshold_value !== undefined) ? sensorConfig.threshold_value : 0.05;\n\n        // Select the evaluation function, fallback to 'percentage' if unrecognized\n        let evaluateThreshold = thresholdStrategies[thresholdType] || thresholdStrategies[\"percentage\"];\n\n        // Execute the strategy\n        if (evaluateThreshold(value, old_value, thresholdValue)) {\n            attributes_to_update[key] = value;\n        }\n        \n    } \n    // Handle non-numeric values (e.g., strings, booleans - update if strictly different)\n    else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\n// 6. Prepare the output message\nmsg.attributes_to_update = attributes_to_update;\n\n// 7. Clean up memory payload to keep the message lightweight for downstream nodes\nmsg.current_data = null;\nmsg.cached_snapshot = null;\nmsg.sensor_attributes = null; \nmsg.payload = null; \n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 280,
+        "wires": [
+            [
+                "3a9fa834b54f9fd5"
+            ]
+        ]
+    },
+    {
+        "id": "3a9fa834b54f9fd5",
+        "type": "switch",
+        "z": "aff3e93ce0e38714",
+        "name": "Requires Update?",
+        "property": "attributes_to_update",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 290,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "996f9930d3408faa",
+        "type": "change",
+        "z": "6bf237a7a76370e9",
+        "name": "Format HSET Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$each(attributes_to_update, function($v, $k) {[$k, $v]}) ~> $reduce(function($a, $b) {$append($a, $b)}, [])",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 300,
+        "wires": [
+            [
+                "69ec9b49a6a079e9"
+            ]
+        ]
+    },
+    {
+        "id": "69ec9b49a6a079e9",
+        "type": "redis-command",
+        "z": "6bf237a7a76370e9",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "Redis: HSET New Values",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 530,
+        "y": 300,
+        "wires": [
+            [
+                "b8168f13c889a4a4"
+            ]
+        ]
+    },
+    {
+        "id": "b8168f13c889a4a4",
+        "type": "change",
+        "z": "6bf237a7a76370e9",
+        "name": "Prepare HEXPIRE Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$append([topic, $global.global_settings.ttl_seconds ? $global.global_settings.ttl_seconds : 300], $keys(attributes_to_update))",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 300,
+        "wires": [
+            [
+                "bf36bac55961c209"
+            ]
+        ]
+    },
+    {
+        "id": "bb07831ce4fa3b96",
+        "type": "redis-command",
+        "z": "6bf237a7a76370e9",
+        "server": "a12b266a42104227",
+        "command": "ZADD",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 710,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a255671e169a57ce",
+        "type": "change",
+        "z": "6bf237a7a76370e9",
+        "name": "Prepare ZADD Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "(   $tiers := $globalContext(\"danger_tiers\") ? $globalContext(\"danger_tiers\") : {\"high\": 1, \"medium\": 2, \"low\": 3};   $dangerLevel := $exists(danger) ? $lowercase($string(danger)) : \"\";   $tier := $lookup($tiers, $dangerLevel);   $finalTier := $exists($tier) ? $tier : 3;   $priority := $number($string($finalTier) & \".\" & $string($millis()));   [\"room_pq\", $priority, topic])",
+                "tot": "jsonata"
+            },
+            {
+                "t": "delete",
+                "p": "topic",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 360,
+        "wires": [
+            [
+                "bb07831ce4fa3b96"
+            ]
+        ]
+    },
+    {
+        "id": "bf36bac55961c209",
+        "type": "redis-lua-script",
+        "z": "6bf237a7a76370e9",
+        "server": "a12b266a42104227",
+        "name": "Redis Lua: Set TTL",
+        "keyval": "1",
+        "func": "local room_name = KEYS[1]\nlocal ttl = ARGV[1]\nlocal num_fields = #ARGV - 1\n\nreturn redis.call(\"HEXPIRE\", room_name, ttl, \"FIELDS\", num_fields, unpack(ARGV, 2))\n",
+        "stored": false,
+        "block": false,
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "a255671e169a57ce"
+            ]
+        ]
+    },
+    {
+        "id": "7f799e3602838918",
+        "type": "change",
+        "z": "43cc147402d11042",
+        "name": "Format Redis HSET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.room",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[\"danger_\" & payload.danger_type, payload.danger]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550.5565185546875,
+        "y": 345.12310791015625,
+        "wires": [
+            [
+                "cf3f4a20ba0b1203"
+            ]
+        ]
+    },
+    {
+        "id": "cf3f4a20ba0b1203",
+        "type": "redis-command",
+        "z": "43cc147402d11042",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "Save to Redis",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 730.5565185546875,
+        "y": 345.12310791015625,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7ab4a1269e0fe412",
+        "type": "change",
+        "z": "49df7fbfa1735b3d",
+        "name": "Extract Neo4j Params",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{\t    \"department\": $split(payload.room, ':')[0],\t    \"room\": $split(payload.room, ':')[1],\t    \"type\": payload.danger_type,\t    \"level\": payload.danger,\t    \"score\": payload.danger_score,\t    \"warning\": payload.warning,\t    \"justification\": payload.justification,\t    \"k\": 10\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 300,
+        "wires": [
+            [
+                "0a2d16f985a4d7bc"
+            ]
+        ]
+    },
+    {
+        "id": "0a2d16f985a4d7bc",
+        "type": "switch",
+        "z": "49df7fbfa1735b3d",
+        "name": "Route by Danger Score",
+        "property": "payload.danger_score",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 300,
+        "y": 420,
+        "wires": [
+            [
+                "bb2b00bdaacabb96"
+            ],
+            [
+                "5014c11861f0978f"
+            ]
+        ]
+    },
+    {
+        "id": "bb2b00bdaacabb96",
+        "type": "change",
+        "z": "49df7fbfa1735b3d",
+        "name": "Cypher: Update Hazard",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (p:Place {department: $department, room: $room})MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)SET h += { level: $level, score: $score, warning: $warning, justification: $justification }, p.dynamic_weight = coalesce(p.weight, 1.0) * (1 + ($score * $k))RETURN p, h;",
+                "tot": "str"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 400,
+        "wires": [
+            [
+                "d6520757a852f64a"
+            ]
+        ]
+    },
+    {
+        "id": "5014c11861f0978f",
+        "type": "change",
+        "z": "49df7fbfa1735b3d",
+        "name": "Cypher: Remove Hazard",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (p:Place {department: $department, room: $room})\nOPTIONAL MATCH (h:Hazard {type: $type})-[:AFFECTS]->(p)\nDETACH DELETE h\nSET p.dynamic_weight = coalesce(p.weight, 1.0)\nRETURN p;",
+                "tot": "str"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 440,
+        "wires": [
+            [
+                "d6520757a852f64a"
+            ]
+        ]
+    },
+    {
+        "id": "d6520757a852f64a",
+        "type": "neo4j-bolt",
+        "z": "49df7fbfa1735b3d",
+        "server": "d9d1b2e046e79011",
+        "name": "DB: Update Room Weights",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 830,
+        "y": 420,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f54637d910e71779",
+        "type": "change",
+        "z": "6e3d39d123c8fd3a",
+        "name": "Cypher: Recalculate Evacuation Path",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{\t    \"department\": payload.p ? payload.p.properties.department : payload[0].p.properties.department,\t    \"room\": payload.p ? payload.p.properties.room : payload[0].p.properties.room\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "// 1. Trova sorgente e targetMATCH (source:Place {department: $department, room: $room})MATCH (target:Place) WHERE target.room IN ['E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7']// 2. Calcola i percorsiMATCH path = (source)-[:CONNECTED_TO *WSHORTEST (edge, node | coalesce(node.dynamic_weight, node.weight)) total_weight]->(target)// 3. Salva i risultati temporaneamente per non perderli a causa del DELETEWITH collect({Destination: target.room, path: path, weight: total_weight}) AS all_paths, path// 4. Estrai i nodi di partenza in modo UNIVOCO per pulirliUNWIND relationships(path) AS relWITH DISTINCT startNode(rel) AS start_node, all_paths// 5. Pulisci i vecchi archi (eseguito una sola volta per nodo)OPTIONAL MATCH (start_node)-[old:SHORTEST_PATH]->()DELETE old// 6. Ricrea i nuovi archi usando i dati salvati primaWITH all_pathsUNWIND all_paths AS resUNWIND relationships(res.path) AS relWITH startNode(rel) AS start_node, endNode(rel) AS end_node, resMERGE (start_node)-[:SHORTEST_PATH]->(end_node)// 7. Ritorna i risultatiRETURN DISTINCT     res.Destination AS Destination,     res.path AS path,     res.weight AS total_weight;",
+                "tot": "str"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 380,
+        "wires": [
+            [
+                "2f8dfcdc5ca3a50e"
+            ]
+        ]
+    },
+    {
+        "id": "2f8dfcdc5ca3a50e",
+        "type": "neo4j-bolt",
+        "z": "6e3d39d123c8fd3a",
+        "server": "d9d1b2e046e79011",
+        "name": "DB: Update Shortest Path",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 850,
+        "y": 380,
+        "wires": [
+            [],
+            [],
+            []
+        ]
     },
     {
         "id": "27c801e912b2bd2c",
@@ -1493,8 +2577,7 @@
         "y": 160,
         "wires": [
             [
-                "3fd3a49e0178d3db",
-                "db9541baa5aa6911"
+                "3fd3a49e0178d3db"
             ]
         ]
     },
@@ -1620,167 +2703,6 @@
         "wires": []
     },
     {
-        "id": "06f1aefb4d6cd161",
-        "type": "redis-lua-script",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "server": "a12b266a42104227",
-        "name": "Redis Lua: Set TTL",
-        "keyval": "1",
-        "func": "local room_name = KEYS[1]\nlocal ttl = ARGV[1]\nlocal num_fields = #ARGV - 1\n\nreturn redis.call(\"HEXPIRE\", room_name, ttl, \"FIELDS\", num_fields, unpack(ARGV, 2))\n",
-        "stored": false,
-        "block": false,
-        "x": 150,
-        "y": 900,
-        "wires": [
-            [
-                "03e3ab6a200654c3"
-            ]
-        ]
-    },
-    {
-        "id": "5c8754c8f270c398",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Prepare HEXPIRE Payload",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$append([topic, $global.global_settings.ttl_seconds ? $global.global_settings.ttl_seconds : 300], $keys(attributes_to_update))",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 660,
-        "y": 840,
-        "wires": [
-            [
-                "06f1aefb4d6cd161"
-            ]
-        ]
-    },
-    {
-        "id": "3f3eb299ef1b064f",
-        "type": "redis-command",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "server": "a12b266a42104227",
-        "command": "HSET",
-        "name": "Redis: HSET New Values",
-        "topic": "",
-        "params": "[]",
-        "paramsType": "json",
-        "payloadType": "json",
-        "block": false,
-        "x": 410,
-        "y": 840,
-        "wires": [
-            [
-                "5c8754c8f270c398"
-            ]
-        ]
-    },
-    {
-        "id": "1bf7106513290e43",
-        "type": "redis-command",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "server": "a12b266a42104227",
-        "command": "ZADD",
-        "name": "",
-        "topic": "",
-        "params": "[]",
-        "paramsType": "json",
-        "payloadType": "json",
-        "block": false,
-        "x": 590,
-        "y": 900,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "25bc46c7bc17b79a",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Format HSET Payload",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$each(attributes_to_update, function($v, $k) {[$k, $v]}) ~> $reduce(function($a, $b) {$append($a, $b)}, [])",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 160,
-        "y": 840,
-        "wires": [
-            [
-                "3f3eb299ef1b064f"
-            ]
-        ]
-    },
-    {
-        "id": "145c3241913c1fda",
-        "type": "switch",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Requires Update?",
-        "property": "attributes_to_update",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nempty"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 150,
-        "y": 780,
-        "wires": [
-            [
-                "25bc46c7bc17b79a",
-                "ca2e66978130794f"
-            ]
-        ]
-    },
-    {
-        "id": "c4b593a83b644c6c",
-        "type": "redis-command",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "server": "a12b266a42104227",
-        "command": "HMGET",
-        "name": "Redis: HMGET Old Values",
-        "topic": "",
-        "params": "[]",
-        "paramsType": "json",
-        "payloadType": "json",
-        "block": false,
-        "x": 420,
-        "y": 720,
-        "wires": [
-            [
-                "13646924a28ce935"
-            ]
-        ]
-    },
-    {
         "id": "ee6f59312474d332",
         "type": "neo4j-bolt",
         "z": "742c3f66713f865c",
@@ -1790,258 +2712,12 @@
         "query": "MATCH (p:Place)\nWHERE toLower(p.department) = toLower($department) \n  AND toLower(p.name) = toLower($room)\nMERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\nSET e += $sensors\nSET e.is_real = true\nRETURN p, e",
         "sessions": 10,
         "database": "",
-        "x": 650,
-        "y": 780,
+        "x": 490,
+        "y": 720,
         "wires": [
             [],
             [],
             []
-        ]
-    },
-    {
-        "id": "44926fe009a157ab",
-        "type": "aggregator",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Max",
-        "topic": "",
-        "intervalCount": 1,
-        "intervalUnits": "m",
-        "submitIncompleteInterval": true,
-        "submitPerTopic": true,
-        "aggregationType": "max",
-        "x": 590,
-        "y": 600,
-        "wires": [
-            [
-                "1b9f25a76032d212"
-            ]
-        ]
-    },
-    {
-        "id": "cd5c5b8cd88ea491",
-        "type": "switch",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Route by Sensor Type",
-        "property": "parts.key",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "temperature",
-                "vt": "str"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 400,
-        "y": 580,
-        "wires": [
-            [
-                "cef44aa08098d42f"
-            ],
-            [
-                "44926fe009a157ab"
-            ]
-        ]
-    },
-    {
-        "id": "bb989a1409f9fd81",
-        "type": "split",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Split by Sensor Type",
-        "splt": "\\n",
-        "spltType": "str",
-        "arraySplt": 1,
-        "arraySpltType": "len",
-        "stream": false,
-        "addname": "key",
-        "property": "payload",
-        "x": 800,
-        "y": 500,
-        "wires": [
-            [
-                "8b55422067a50b42"
-            ]
-        ]
-    },
-    {
-        "id": "aaa8a294c3b1164c",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Extract Sensors Array",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "sensors",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 580,
-        "y": 500,
-        "wires": [
-            [
-                "bb989a1409f9fd81"
-            ]
-        ]
-    },
-    {
-        "id": "f82be83ed638874b",
-        "type": "switch",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Is Department A?",
-        "property": "department",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "departmentA",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 370,
-        "y": 500,
-        "wires": [
-            [
-                "aaa8a294c3b1164c"
-            ]
-        ]
-    },
-    {
-        "id": "0c98fd9989fdb37d",
-        "type": "switch",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Has Room Mapping?",
-        "property": "room",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nnull"
-            },
-            {
-                "t": "null"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 160,
-        "y": 500,
-        "wires": [
-            [
-                "f82be83ed638874b"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "8419e9aa26b3ef94",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Map Room and Department",
-        "rules": [
-            {
-                "t": "set",
-                "p": "room",
-                "pt": "msg",
-                "to": "$lookup($globalContext(\"sensorToRoom\"), msg.payload.device_id)",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "department",
-                "pt": "msg",
-                "to": "$lookup($globalContext(\"roomToDepartment\"), msg.room) ? $lookup($globalContext(\"roomToDepartment\"), msg.room) : \"UnknownDepartment\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 800,
-        "y": 440,
-        "wires": [
-            [
-                "0c98fd9989fdb37d"
-            ]
-        ]
-    },
-    {
-        "id": "f3dffb87b8ce513e",
-        "type": "switch",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Has device_id?",
-        "property": "payload.device_id",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nnull"
-            },
-            {
-                "t": "null"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 580,
-        "y": 440,
-        "wires": [
-            [
-                "8419e9aa26b3ef94"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "db9541baa5aa6911",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Drop Excluded Sensors",
-        "rules": [
-            {
-                "t": "set",
-                "p": "sensors",
-                "pt": "msg",
-                "to": "payload.sensors ~> | $ | {}, $globalContext(\"global_settings\").excluded_sensors |",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 370,
-        "y": 440,
-        "wires": [
-            [
-                "f3dffb87b8ce513e"
-            ]
         ]
     },
     {
@@ -2062,109 +2738,7 @@
         "y": 440,
         "wires": [
             [
-                "db9541baa5aa6911"
-            ]
-        ]
-    },
-    {
-        "id": "cef44aa08098d42f",
-        "type": "aggregator",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Avg",
-        "topic": "",
-        "intervalCount": "1",
-        "intervalUnits": "m",
-        "submitIncompleteInterval": true,
-        "submitPerTopic": true,
-        "aggregationType": "mean",
-        "x": 590,
-        "y": 560,
-        "wires": [
-            [
-                "1b9f25a76032d212"
-            ]
-        ]
-    },
-    {
-        "id": "8b55422067a50b42",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Set Topic: dept:room:key",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "department & \":\" & room & \":\" & key",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 170,
-        "y": 580,
-        "wires": [
-            [
-                "cd5c5b8cd88ea491"
-            ]
-        ]
-    },
-    {
-        "id": "13646924a28ce935",
-        "type": "function",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Evaluate Thresholds",
-        "func": "// 1. Reconstruct cached_snapshot from Redis HMGET output\n// HMGET returns an array of values in msg.payload that maps 1:1 with msg.sensor_attributes\nmsg.cached_snapshot = {};\nif (Array.isArray(msg.payload) && Array.isArray(msg.sensor_attributes)) {\n    msg.sensor_attributes.forEach((key, index) => {\n        let val = msg.payload[index];\n        // Redis returns null if the key doesn't exist in the hash yet\n        if (val !== null) {\n            // Redis returns strings; convert back to numbers if applicable\n            msg.cached_snapshot[key] = isNaN(val) ? val : Number(val);\n        }\n    });\n}\n\n// 2. Define threshold evaluation strategies\nconst thresholdStrategies = {\n    percentage: function(newValue, oldValue, threshold) {\n        if (oldValue === 0) return newValue !== 0;\n        let percentageChange = Math.abs(newValue - oldValue) / Math.abs(oldValue);\n        return percentageChange >= threshold;\n    },\n    absolute: function(newValue, oldValue, threshold) {\n        let diff = Math.abs(newValue - oldValue);\n        return diff >= threshold;\n    },\n    always: function(newValue, oldValue, threshold) {\n        return newValue !== oldValue;\n    }\n};\n\n// 3. Fetch configurations from global context\nlet sensor_parameters = global.get(\"sensor_parameters\") || global.get(\"sensor_configs\") || {};\n\n// 4. Fallback if the cache is completely empty (e.g., brand new room)\nif (Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\n// 5. Compare current data against the cached snapshot\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    // If this specific sensor is entirely new to the cache, force an update\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    // Handle numeric values using the dynamic strategies\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        \n        let sensorConfig = sensor_parameters[key] || {};\n        let thresholdType = sensorConfig.threshold_type || \"percentage\";\n        let thresholdValue = (sensorConfig.threshold_value !== undefined) ? sensorConfig.threshold_value : 0.05;\n\n        // Select the evaluation function, fallback to 'percentage' if unrecognized\n        let evaluateThreshold = thresholdStrategies[thresholdType] || thresholdStrategies[\"percentage\"];\n\n        // Execute the strategy\n        if (evaluateThreshold(value, old_value, thresholdValue)) {\n            attributes_to_update[key] = value;\n        }\n        \n    } \n    // Handle non-numeric values (e.g., strings, booleans - update if strictly different)\n    else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\n// 6. Prepare the output message\nmsg.attributes_to_update = attributes_to_update;\n\n// 7. Clean up memory payload to keep the message lightweight for downstream nodes\nmsg.current_data = null;\nmsg.cached_snapshot = null;\nmsg.sensor_attributes = null; \nmsg.payload = null; \n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 660,
-        "y": 720,
-        "wires": [
-            [
-                "145c3241913c1fda"
-            ]
-        ]
-    },
-    {
-        "id": "03e3ab6a200654c3",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Prepare ZADD Payload",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "(   $tiers := $globalContext(\"danger_tiers\") ? $globalContext(\"danger_tiers\") : {\"high\": 1, \"medium\": 2, \"low\": 3};   $dangerLevel := $exists(danger) ? $lowercase($string(danger)) : \"\";   $tier := $lookup($tiers, $dangerLevel);   $finalTier := $exists($tier) ? $tier : 3;   $priority := $number($string($finalTier) & \".\" & $string($millis()));   [\"room_pq\", $priority, topic])",
-                "tot": "jsonata"
-            },
-            {
-                "t": "delete",
-                "p": "topic",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 370,
-        "y": 900,
-        "wires": [
-            [
-                "1bf7106513290e43"
+                "e4c02c6ad3faca1a"
             ]
         ]
     },
@@ -2216,8 +2790,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 780,
+        "x": 480,
+        "y": 660,
         "wires": [
             [
                 "ee6f59312474d332"
@@ -2246,47 +2820,12 @@
         "reduceInit": "",
         "reduceInitType": "num",
         "reduceFixup": "",
-        "x": 170,
-        "y": 660,
+        "x": 190,
+        "y": 620,
         "wires": [
             [
                 "1c3a8bcd5716a8c7",
-                "804a225e5a273d91"
-            ]
-        ]
-    },
-    {
-        "id": "1b9f25a76032d212",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Map Topic & Payload",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{ $split(topic, \":\")[2]: payload }",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "$split(topic, \":\")[0] & \":\" & $split(topic, \":\")[1]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 780,
-        "y": 580,
-        "wires": [
-            [
-                "ae7ef502090ce27a"
+                "d42bfc72df84e8b9"
             ]
         ]
     },
@@ -2310,8 +2849,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 420,
-        "y": 660,
+        "x": 500,
+        "y": 540,
         "wires": [
             [
                 "342c7c9833a6ca48"
@@ -2329,52 +2868,10 @@
         "func": "-- Keys and arguments\nlocal topic = KEYS[1]\nlocal json_payload = ARGV[1]\n\n-- Retrieve the dynamic retention value passed as the second argument\nlocal retention_ms = tonumber(ARGV[2])\n\n-- Get current time directly from the Redis server\n-- TIME returns an array: [1] = seconds, [2] = microseconds\nlocal server_time = redis.call('TIME')\nlocal current_timestamp_ms = (tonumber(server_time[1]) * 1000) + math.floor(tonumber(server_time[2]) / 1000)\n\n-- Calculate the cutoff timestamp dynamically based on the YAML configuration\nlocal cutoff_timestamp_ms = current_timestamp_ms - retention_ms\n\n-- 1. Insert the new data into the Priority Queue\nredis.call('ZADD', topic, current_timestamp_ms, json_payload)\n\n-- 2. Remove all elements older than the calculated cutoff\nlocal removed_count = redis.call('ZREMRANGEBYSCORE', topic, '-inf', cutoff_timestamp_ms)\n\n-- Return the number of removed elements\nreturn removed_count",
         "stored": false,
         "block": false,
-        "x": 680,
-        "y": 660,
+        "x": 500,
+        "y": 600,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "804a225e5a273d91",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Prepare Redis HMGET",
-        "rules": [
-            {
-                "t": "set",
-                "p": "current_data",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$keys(current_data)",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "sensor_attributes",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 170,
-        "y": 720,
-        "wires": [
-            [
-                "c4b593a83b644c6c"
-            ]
         ]
     },
     {
@@ -2539,8 +3036,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 107.76470947265625,
-        "y": 1404.058837890625,
+        "x": 100,
+        "y": 1620,
         "wires": [
             []
         ]
@@ -2589,281 +3086,9 @@
         "y": 1460,
         "wires": [
             [
-                "7f799e3602838918",
-                "3fd69808d7399f15"
+                "f581fb7a0701bc6d",
+                "0f0812a17f0b33de"
             ]
-        ]
-    },
-    {
-        "id": "7f799e3602838918",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "Format Redis HSET",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "payload.room",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "[\"danger_\" & payload.danger_type, payload.danger]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 760,
-        "y": 1440,
-        "wires": [
-            [
-                "cf3f4a20ba0b1203"
-            ]
-        ]
-    },
-    {
-        "id": "cf3f4a20ba0b1203",
-        "type": "redis-command",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "server": "a12b266a42104227",
-        "command": "HSET",
-        "name": "Save to Redis",
-        "topic": "",
-        "params": "[]",
-        "paramsType": "json",
-        "payloadType": "json",
-        "block": false,
-        "x": 960,
-        "y": 1440,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "3fd69808d7399f15",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "Extract Neo4j Params",
-        "rules": [
-            {
-                "t": "set",
-                "p": "params",
-                "pt": "msg",
-                "to": "{\t    \"department\": $split(payload.room, ':')[0],\t    \"room\": $split(payload.room, ':')[1],\t    \"type\": payload.danger_type,\t    \"level\": payload.danger,\t    \"score\": payload.danger_score,\t    \"warning\": payload.warning,\t    \"justification\": payload.justification,\t    \"k\": 10\t}",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "database",
-                "pt": "msg",
-                "to": "memgraph",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 760,
-        "y": 1480,
-        "wires": [
-            [
-                "3d9b871f0650ec9f"
-            ]
-        ]
-    },
-    {
-        "id": "3d9b871f0650ec9f",
-        "type": "switch",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "Route by Danger Score",
-        "property": "payload.danger_score",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gt",
-                "v": "0",
-                "vt": "num"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 380,
-        "y": 1600,
-        "wires": [
-            [
-                "81df18b794830640"
-            ],
-            [
-                "6cb989c77f8338df"
-            ]
-        ]
-    },
-    {
-        "id": "81df18b794830640",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "Cypher: Update Hazard",
-        "rules": [
-            {
-                "t": "set",
-                "p": "query",
-                "pt": "msg",
-                "to": "MATCH (p:Place {department: $department, room: $room})MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)SET h += { level: $level, score: $score, warning: $warning, justification: $justification }, p.dynamic_weight = coalesce(p.weight, 1.0) * (1 + ($score * $k))RETURN p, h;",
-                "tot": "str"
-            },
-            {
-                "t": "delete",
-                "p": "payload",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 640,
-        "y": 1580,
-        "wires": [
-            [
-                "84ceab574e8c8f47"
-            ]
-        ]
-    },
-    {
-        "id": "6cb989c77f8338df",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "Cypher: Remove Hazard",
-        "rules": [
-            {
-                "t": "set",
-                "p": "query",
-                "pt": "msg",
-                "to": "MATCH (p:Place {department: $department, room: $room})\nOPTIONAL MATCH (h:Hazard {type: $type})-[:AFFECTS]->(p)\nDETACH DELETE h\nSET p.dynamic_weight = coalesce(p.weight, 1.0)\nRETURN p;",
-                "tot": "str"
-            },
-            {
-                "t": "delete",
-                "p": "payload",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 640,
-        "y": 1620,
-        "wires": [
-            [
-                "84ceab574e8c8f47"
-            ]
-        ]
-    },
-    {
-        "id": "84ceab574e8c8f47",
-        "type": "neo4j-bolt",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "server": "d9d1b2e046e79011",
-        "name": "DB: Update Room Weights",
-        "query": "",
-        "sessions": 10,
-        "database": "",
-        "x": 910,
-        "y": 1600,
-        "wires": [
-            [
-                "f54637d910e71779"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "f54637d910e71779",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "Cypher: Recalculate Evacuation Path",
-        "rules": [
-            {
-                "t": "set",
-                "p": "params",
-                "pt": "msg",
-                "to": "{\t    \"department\": payload.p ? payload.p.properties.department : payload[0].p.properties.department,\t    \"room\": payload.p ? payload.p.properties.room : payload[0].p.properties.room\t}",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "database",
-                "pt": "msg",
-                "to": "memgraph",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "query",
-                "pt": "msg",
-                "to": "// 1. Trova sorgente e target\nMATCH (source:Place {department: $department, room: $room})\nMATCH (target:Place) \nWHERE target.room IN ['E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7']\n\n// 2. Calcola i percorsi\nMATCH path = (source)-[:CONNECTED_TO *WSHORTEST (edge, node | coalesce(node.dynamic_weight, node.weight)) total_weight]->(target)\n\n// 3. Salva i risultati temporaneamente per non perderli a causa del DELETE\nWITH collect({Destination: target.room, path: path, weight: total_weight}) AS all_paths, path\n\n// 4. Estrai i nodi di partenza in modo UNIVOCO per pulirli\nUNWIND relationships(path) AS rel\nWITH DISTINCT startNode(rel) AS start_node, all_paths\n\n// 5. Pulisci i vecchi archi (eseguito una sola volta per nodo)\nOPTIONAL MATCH (start_node)-[old:SHORTEST_PATH]->()\nDELETE old\n\n// 6. Ricrea i nuovi archi usando i dati salvati prima\nWITH all_paths\nUNWIND all_paths AS res\nUNWIND relationships(res.path) AS rel\nWITH startNode(rel) AS start_node, endNode(rel) AS end_node, res\nMERGE (start_node)-[:SHORTEST_PATH]->(end_node)\n\n// 7. Ritorna i risultati\nRETURN DISTINCT \n    res.Destination AS Destination, \n    res.path AS path, \n    res.weight AS total_weight;",
-                "tot": "str"
-            },
-            {
-                "t": "delete",
-                "p": "payload",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 420,
-        "y": 1680,
-        "wires": [
-            [
-                "2f8dfcdc5ca3a50e"
-            ]
-        ]
-    },
-    {
-        "id": "2f8dfcdc5ca3a50e",
-        "type": "neo4j-bolt",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "server": "d9d1b2e046e79011",
-        "name": "DB: Update Shortest Path",
-        "query": "",
-        "sessions": 10,
-        "database": "",
-        "x": 720,
-        "y": 1680,
-        "wires": [
-            [],
-            [],
-            []
         ]
     },
     {
@@ -2886,6 +3111,95 @@
         "info": "",
         "x": 760,
         "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "f6a2eff97c9e5967",
+        "type": "subflow:e1861ddff91fe985",
+        "z": "742c3f66713f865c",
+        "g": "779fc989ebbe1d72",
+        "name": "",
+        "x": 170,
+        "y": 560,
+        "wires": [
+            [
+                "ae7ef502090ce27a"
+            ]
+        ]
+    },
+    {
+        "id": "e4c02c6ad3faca1a",
+        "type": "subflow:58f18eb3ecf48522",
+        "z": "742c3f66713f865c",
+        "g": "779fc989ebbe1d72",
+        "name": "",
+        "x": 200,
+        "y": 500,
+        "wires": [
+            [
+                "f6a2eff97c9e5967"
+            ]
+        ]
+    },
+    {
+        "id": "d42bfc72df84e8b9",
+        "type": "subflow:aff3e93ce0e38714",
+        "z": "742c3f66713f865c",
+        "g": "779fc989ebbe1d72",
+        "name": "",
+        "x": 170,
+        "y": 680,
+        "wires": [
+            [
+                "ca2e66978130794f",
+                "d22bea9ba6a2eefe"
+            ]
+        ]
+    },
+    {
+        "id": "d22bea9ba6a2eefe",
+        "type": "subflow:6bf237a7a76370e9",
+        "z": "742c3f66713f865c",
+        "g": "779fc989ebbe1d72",
+        "name": "",
+        "x": 170,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f581fb7a0701bc6d",
+        "type": "subflow:43cc147402d11042",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "",
+        "x": 750,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "0f0812a17f0b33de",
+        "type": "subflow:49df7fbfa1735b3d",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "",
+        "x": 660,
+        "y": 1580,
+        "wires": [
+            [
+                "b6d306df011358a8"
+            ]
+        ]
+    },
+    {
+        "id": "b6d306df011358a8",
+        "type": "subflow:6e3d39d123c8fd3a",
+        "z": "742c3f66713f865c",
+        "g": "8e2850966c0b89d7",
+        "name": "",
+        "x": 660,
+        "y": 1660,
         "wires": []
     },
     {
