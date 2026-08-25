@@ -109,8 +109,8 @@
             }
         },
         {
-            "id": "uprof",
-            "name": "UfficiProf",
+            "id": "sculmone",
+            "name": "StanzaCulmone",
             "coordinates": [],
             "attributes": {
                 "department": "departmentA",
@@ -400,8 +400,8 @@
         },
         {
             "id": "edge19",
-            "name": "uprof to c3",
-            "source": "uprof",
+            "name": "sculmone to c3",
+            "source": "sculmone",
             "target": "c3",
             "type": "CONNECTED_TO",
             "attributes": {}
@@ -552,9 +552,9 @@
         },
         {
             "id": "edge38",
-            "name": "c3 to uprof",
+            "name": "c3 to sculmone",
             "source": "c3",
-            "target": "uprof",
+            "target": "sculmone",
             "type": "CONNECTED_TO",
             "attributes": {}
         },
@@ -671,6 +671,30 @@
             "attributes": {}
         }
     ],
-    "logicalPlaces": [],
-    "views": []
+    "logicalPlaces": [
+        {
+            "id": "set1",
+            "name": "Rooms with high temperature",
+            "query": "MATCH (p:Place)-[:HAS_STATE] - (e:EnvironmentState) WHERE e.temperature > 25 RETURN DISTINCT p.name AS name",
+            "conditions": [
+                {
+                    "attribute": "temperature",
+                    "operator": ">",
+                    "value": 25
+                }
+            ],
+            "expression": "temperature > 25",
+            "place": "n"
+        }
+    ],
+    "views": [
+        {
+            "id": "view1",
+            "name": "HotRooms",
+            "logicalPlaces": [
+                "set1"
+            ],
+            "attributes": {}
+        }
+    ]
 }
