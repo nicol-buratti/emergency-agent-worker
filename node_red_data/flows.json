@@ -271,7 +271,8 @@
             "342c7c9833a6ca48",
             "804a225e5a273d91",
             "0323b76129d486ec",
-            "a7a629d979f0c7e6"
+            "a7a629d979f0c7e6",
+            "33d7ed5a66dd5b8e"
         ],
         "x": 14,
         "y": 399,
@@ -1744,7 +1745,8 @@
         "y": 900,
         "wires": [
             [
-                "13646924a28ce935"
+                "13646924a28ce935",
+                "33d7ed5a66dd5b8e"
             ]
         ]
     },
@@ -2088,7 +2090,7 @@
         "z": "742c3f66713f865c",
         "g": "779fc989ebbe1d72",
         "name": "Evaluate Thresholds",
-        "func": "// 1. Define threshold evaluation strategies\n// Each function returns true if the value should be updated, false otherwise.\nconst thresholdStrategies = {\n    percentage: function(newValue, oldValue, threshold) {\n        if (oldValue === 0) return newValue !== 0;\n        let percentageChange = Math.abs(newValue - oldValue) / Math.abs(oldValue);\n        return percentageChange >= threshold;\n    },\n    absolute: function(newValue, oldValue, threshold) {\n        let diff = Math.abs(newValue - oldValue);\n        return diff >= threshold;\n    },\n    always: function(newValue, oldValue, threshold) {\n        return newValue !== oldValue; // Updates whenever it's not strictly equal\n    }\n    // Add new strategies here in the future (e.g., 'moving_average', 'time_based')\n};\n\n// 2. Fetch configurations from global context\nlet sensor_parameters = global.get(\"sensor_parameters\") || global.get(\"sensor_configs\") || {};\n\n// 3. Fallback if the cache is completely empty\nif (!msg.cached_snapshot || Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\n// 4. Compare current data against the cached snapshot\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    // If the sensor is entirely new to the cache, force an update\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    // Handle numeric values using the dynamic strategies\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        \n        let sensorConfig = sensor_parameters[key] || {};\n        let thresholdType = sensorConfig.threshold_type || \"percentage\";\n        let thresholdValue = (sensorConfig.threshold_value !== undefined) ? sensorConfig.threshold_value : 0.05;\n\n        // Select the evaluation function, fallback to 'percentage' if the type is unrecognized\n        let evaluateThreshold = thresholdStrategies[thresholdType] || thresholdStrategies[\"percentage\"];\n\n        // Execute the strategy\n        if (evaluateThreshold(value, old_value, thresholdValue)) {\n            attributes_to_update[key] = value;\n        }\n        \n    } \n    // Handle non-numeric values (e.g., strings, booleans)\n    else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\n// 5. Prepare the output message\nmsg.attributes_to_update = attributes_to_update;\n\n// Clean up memory payload\nmsg.current_data = null;\nmsg.cached_snapshot = null;\n\nreturn msg;",
+        "func": "// 1. Reconstruct cached_snapshot from Redis HMGET output\n// HMGET returns an array of values in msg.payload that maps 1:1 with msg.sensor_attributes\nmsg.cached_snapshot = {};\nif (Array.isArray(msg.payload) && Array.isArray(msg.sensor_attributes)) {\n    msg.sensor_attributes.forEach((key, index) => {\n        let val = msg.payload[index];\n        // Redis returns null if the key doesn't exist in the hash yet\n        if (val !== null) {\n            // Redis returns strings; convert back to numbers if applicable\n            msg.cached_snapshot[key] = isNaN(val) ? val : Number(val);\n        }\n    });\n}\n\n// 2. Define threshold evaluation strategies\nconst thresholdStrategies = {\n    percentage: function(newValue, oldValue, threshold) {\n        if (oldValue === 0) return newValue !== 0;\n        let percentageChange = Math.abs(newValue - oldValue) / Math.abs(oldValue);\n        return percentageChange >= threshold;\n    },\n    absolute: function(newValue, oldValue, threshold) {\n        let diff = Math.abs(newValue - oldValue);\n        return diff >= threshold;\n    },\n    always: function(newValue, oldValue, threshold) {\n        return newValue !== oldValue;\n    }\n};\n\n// 3. Fetch configurations from global context\nlet sensor_parameters = global.get(\"sensor_parameters\") || global.get(\"sensor_configs\") || {};\n\n// 4. Fallback if the cache is completely empty (e.g., brand new room)\nif (Object.keys(msg.cached_snapshot).length === 0) {\n    msg.attributes_to_update = msg.current_data;\n    return msg;\n}\n\nlet attributes_to_update = {};\n\n// 5. Compare current data against the cached snapshot\nfor (const [key, value] of Object.entries(msg.current_data)) {\n    let old_value = msg.cached_snapshot[key];\n\n    // If this specific sensor is entirely new to the cache, force an update\n    if (old_value === undefined) {\n        attributes_to_update[key] = value;\n        continue;\n    }\n\n    // Handle numeric values using the dynamic strategies\n    if (typeof value === 'number' && typeof old_value === 'number') {\n        \n        let sensorConfig = sensor_parameters[key] || {};\n        let thresholdType = sensorConfig.threshold_type || \"percentage\";\n        let thresholdValue = (sensorConfig.threshold_value !== undefined) ? sensorConfig.threshold_value : 0.05;\n\n        // Select the evaluation function, fallback to 'percentage' if unrecognized\n        let evaluateThreshold = thresholdStrategies[thresholdType] || thresholdStrategies[\"percentage\"];\n\n        // Execute the strategy\n        if (evaluateThreshold(value, old_value, thresholdValue)) {\n            attributes_to_update[key] = value;\n        }\n        \n    } \n    // Handle non-numeric values (e.g., strings, booleans - update if strictly different)\n    else if (old_value !== value) {\n        attributes_to_update[key] = value;\n    }\n}\n\n// 6. Prepare the output message\nmsg.attributes_to_update = attributes_to_update;\n\n// 7. Clean up memory payload to keep the message lightweight for downstream nodes\nmsg.current_data = null;\nmsg.cached_snapshot = null;\nmsg.sensor_attributes = null; \nmsg.payload = null; \n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2099,7 +2101,8 @@
         "y": 900,
         "wires": [
             [
-                "145c3241913c1fda"
+                "145c3241913c1fda",
+                "33d7ed5a66dd5b8e"
             ]
         ]
     },
@@ -2352,7 +2355,8 @@
         "y": 900,
         "wires": [
             [
-                "c4b593a83b644c6c"
+                "c4b593a83b644c6c",
+                "33d7ed5a66dd5b8e"
             ]
         ]
     },
@@ -2376,6 +2380,24 @@
         "info": "",
         "x": 810,
         "y": 560,
+        "wires": []
+    },
+    {
+        "id": "33d7ed5a66dd5b8e",
+        "type": "debug",
+        "z": "742c3f66713f865c",
+        "g": "779fc989ebbe1d72",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 860,
         "wires": []
     },
     {
