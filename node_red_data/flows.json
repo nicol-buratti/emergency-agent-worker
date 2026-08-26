@@ -317,6 +317,39 @@
         "color": "#DDAA99"
     },
     {
+        "id": "9c4d83cc2c29aa19",
+        "type": "subflow",
+        "name": "get Logical Places & Conclude task",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "e072efec9c0cf261"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1040,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "1b6ea6c7e721b687",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "73e25c91ea4204fa",
         "type": "group",
         "z": "6305c5b377893d03",
@@ -505,7 +538,7 @@
         ],
         "x": 294,
         "y": 239,
-        "w": 992,
+        "w": 1072,
         "h": 302
     },
     {
@@ -625,11 +658,16 @@
             },
             {
                 "t": "else"
+            },
+            {
+                "t": "eq",
+                "v": "accelerometer",
+                "vt": "str"
             }
         ],
         "checkall": "false",
         "repair": false,
-        "outputs": 5,
+        "outputs": 6,
         "x": 340,
         "y": 360,
         "wires": [
@@ -647,6 +685,9 @@
             ],
             [
                 "e1abe26676bc6185"
+            ],
+            [
+                "d03459d0547b2b18"
             ]
         ]
     },
@@ -1639,6 +1680,236 @@
         ]
     },
     {
+        "id": "0323b76129d486ec",
+        "type": "comment",
+        "z": "eb8bbd730a415b4e",
+        "name": "visto che aggregator rende lowercase department e room,\\n la query confronta usando lower, sistemare",
+        "info": "",
+        "x": 630,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "bdfec77bcfb7f3c2",
+        "type": "complete-task",
+        "z": "9c4d83cc2c29aa19",
+        "name": "Complete",
+        "x": 920,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e072efec9c0cf261",
+        "type": "change",
+        "z": "9c4d83cc2c29aa19",
+        "name": "Prepare data for DB",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "queries",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 80,
+        "wires": [
+            [
+                "52a3ba0a3af28e90"
+            ]
+        ]
+    },
+    {
+        "id": "52a3ba0a3af28e90",
+        "type": "split",
+        "z": "9c4d83cc2c29aa19",
+        "name": "Split Queries",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 430,
+        "y": 80,
+        "wires": [
+            [
+                "cb2096b6dfeedea2"
+            ]
+        ]
+    },
+    {
+        "id": "cb2096b6dfeedea2",
+        "type": "change",
+        "z": "9c4d83cc2c29aa19",
+        "name": "Set msg.query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 80,
+        "wires": [
+            [
+                "197444d046c1cc69"
+            ]
+        ]
+    },
+    {
+        "id": "197444d046c1cc69",
+        "type": "neo4j-bolt",
+        "z": "9c4d83cc2c29aa19",
+        "server": "d9d1b2e046e79011",
+        "name": "Memgraph: Execute query",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 270,
+        "y": 200,
+        "wires": [
+            [
+                "3c8529e137d0d2b1"
+            ],
+            [
+                "3c8529e137d0d2b1"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3c8529e137d0d2b1",
+        "type": "change",
+        "z": "9c4d83cc2c29aa19",
+        "name": "Extract Names",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.(name ? name : n.properties.name)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 200,
+        "wires": [
+            [
+                "29a822933630ec6a"
+            ]
+        ]
+    },
+    {
+        "id": "29a822933630ec6a",
+        "type": "join",
+        "z": "9c4d83cc2c29aa19",
+        "name": "Join Results",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 690,
+        "y": 200,
+        "wires": [
+            [
+                "1b6ea6c7e721b687"
+            ]
+        ]
+    },
+    {
+        "id": "1b6ea6c7e721b687",
+        "type": "change",
+        "z": "9c4d83cc2c29aa19",
+        "name": "Format Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "flatNames",
+                "pt": "msg",
+                "to": "$reduce(payload, function($acc, $v) { $append($acc, $v) }, [])",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "cleanNames",
+                "pt": "msg",
+                "to": "$distinct(flatNames[ $ != null ])",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "keyName",
+                "pt": "msg",
+                "to": "job.variables.logicalPlaces ? job.variables.logicalPlaces : \"logicalPlaces\"",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"variables\": {\t        $$.keyName: $$.cleanNames\t    },\t    \"job\": job\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "27c801e912b2bd2c",
         "type": "catch",
         "z": "61370204cb540a30",
@@ -1677,7 +1948,7 @@
         "name": "Watch place_graph.json",
         "files": "/data/host_files/place_graph.json",
         "recursive": "",
-        "x": 280,
+        "x": 260,
         "y": 320,
         "wires": [
             [
@@ -1891,6 +2162,13 @@
                 "pt": "msg",
                 "to": "places.name",
                 "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "places.attributes.danger",
+                "pt": "msg",
+                "to": "$type(places.attributes.danger) = \"null\" ? \"null\" : places.attributes.danger",
+                "tot": "jsonata"
             },
             {
                 "t": "set",
@@ -2178,54 +2456,11 @@
         ]
     },
     {
-        "id": "5ed7be2e99de0bbd",
-        "type": "inject",
-        "z": "61370204cb540a30",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 380,
-        "y": 560,
-        "wires": [
-            [
-                "d4160a0a7b4f03c0"
-            ]
-        ]
-    },
-    {
         "id": "32615ba03a4d358f",
         "type": "change",
         "z": "1a10bef68b9ba5b6",
         "name": "Prepare Hot Rooms Query",
         "rules": [
-            {
-                "t": "set",
-                "p": "job",
-                "pt": "msg",
-                "to": "payload.job",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "database",
-                "pt": "msg",
-                "to": "memgraph",
-                "tot": "str"
-            },
             {
                 "t": "set",
                 "p": "query",
@@ -2239,68 +2474,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
-        "y": 720,
+        "x": 680,
+        "y": 1640,
         "wires": [
             [
-                "502e520271176ccb"
-            ]
-        ]
-    },
-    {
-        "id": "502e520271176ccb",
-        "type": "neo4j-bolt",
-        "z": "1a10bef68b9ba5b6",
-        "server": "d9d1b2e046e79011",
-        "name": "Memgraph: Get Hot Rooms",
-        "query": "",
-        "sessions": 10,
-        "database": "",
-        "x": 950,
-        "y": 720,
-        "wires": [
-            [
-                "255525b10b0c74f9"
-            ],
-            [
-                "255525b10b0c74f9"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "bdfec77bcfb7f3c2",
-        "type": "complete-task",
-        "z": "1a10bef68b9ba5b6",
-        "name": "Complete check-hot-rooms",
-        "x": 1450,
-        "y": 720,
-        "wires": []
-    },
-    {
-        "id": "255525b10b0c74f9",
-        "type": "change",
-        "z": "1a10bef68b9ba5b6",
-        "name": "Format Output: hotRooms",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t  \"variables\": {\t    \"hotRooms\": [payload.`name`]\t  },\t  \"job\": job\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1200,
-        "y": 720,
-        "wires": [
-            [
-                "bdfec77bcfb7f3c2"
+                "2469965601714074"
             ]
         ]
     },
@@ -2337,8 +2515,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
-        "y": 860,
+        "x": 640,
+        "y": 1900,
         "wires": [
             [
                 "fd72455f0ea7a33f"
@@ -2351,11 +2529,11 @@
         "z": "1a10bef68b9ba5b6",
         "server": "d9d1b2e046e79011",
         "name": "Memgraph: BFS Closest Cold Room",
-        "query": "// Partendo da p1, espanditi a raggiera (BFS) fino a trovare gli altri Place\nMATCH path = (p1:Place {name: $room})-[:CONNECTED_TO * BFS]->(p2:Place)\nWHERE p1 <> p2\nMATCH (p2)-[:HAS_STATE]->(e2:EnvironmentState)\nWHERE e2.temperature <= 25\nRETURN DISTINCT p2.name AS closest_place, \n                e2.temperature AS closest_temp, \n                length(path) AS distance_in_hops\nORDER BY distance_in_hops ASC\nLIMIT 1",
+        "query": "// Partendo da p1, espanditi a raggiera (BFS) fino a trovare gli altri Place\nMATCH path = (p1:Place {name: $room})-[:CONNECTED_TO * BFS]->(p2:Place)\nWHERE p1 <> p2\nMATCH (p2)-[:HAS_STATE]->(e2:EnvironmentState)\nWHERE e2.temperature <= 25\nRETURN DISTINCT P.name\nORDER BY distance_in_hops ASC\nLIMIT 1",
         "sessions": 10,
         "database": "",
-        "x": 980,
-        "y": 860,
+        "x": 930,
+        "y": 1900,
         "wires": [
             [
                 "69d102e5e6540f0b"
@@ -2385,8 +2563,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1270,
-        "y": 860,
+        "x": 1220,
+        "y": 1900,
         "wires": [
             [
                 "e7ebaef8d819485a"
@@ -2398,8 +2576,8 @@
         "type": "complete-task",
         "z": "1a10bef68b9ba5b6",
         "name": "Complete move-colder-room",
-        "x": 1530,
-        "y": 860,
+        "x": 1480,
+        "y": 1900,
         "wires": []
     },
     {
@@ -2411,11 +2589,12 @@
         "taskType": "check-hot-rooms",
         "maxActiveJobs": 32,
         "timeout": 1000,
-        "x": 430,
-        "y": 720,
+        "x": 410,
+        "y": 1640,
         "wires": [
             [
-                "32615ba03a4d358f"
+                "32615ba03a4d358f",
+                "f687383bbea38878"
             ]
         ]
     },
@@ -2428,8 +2607,8 @@
         "taskType": "move-colder-room",
         "maxActiveJobs": 32,
         "timeout": 1000,
-        "x": 430,
-        "y": 860,
+        "x": 380,
+        "y": 1900,
         "wires": [
             [
                 "bee157fae70f0381"
@@ -2489,12 +2668,12 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": true,
+        "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "str",
-        "x": 480,
+        "x": 470,
         "y": 340,
         "wires": [
             [
@@ -2565,7 +2744,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1130,
+        "x": 1210,
         "y": 500,
         "wires": []
     },
@@ -2620,7 +2799,7 @@
         "g": "c6472bd832318f7a",
         "name": "Set Initial Variables",
         "camunda": "cc7538c088cd1d8b",
-        "x": 910,
+        "x": 990,
         "y": 500,
         "wires": [
             [
@@ -2633,7 +2812,7 @@
         "type": "change",
         "z": "1a10bef68b9ba5b6",
         "g": "c6472bd832318f7a",
-        "name": "Set room to AA1",
+        "name": "Initialize process variables",
         "rules": [
             {
                 "t": "set",
@@ -2648,11 +2827,477 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
+        "x": 750,
         "y": 500,
         "wires": [
             [
                 "3010f59d01d9da26"
+            ]
+        ]
+    },
+    {
+        "id": "3d48b537d98daf79",
+        "type": "task-worker",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Worker: check-cold-rooms",
+        "camunda": "cc7538c088cd1d8b",
+        "taskType": "check-cold-rooms",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 410,
+        "y": 1720,
+        "wires": [
+            [
+                "94dea1395e6dc4dc"
+            ]
+        ]
+    },
+    {
+        "id": "94dea1395e6dc4dc",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Prepare Cold Rooms Query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "logicalPlaces[1].query",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 1720,
+        "wires": [
+            [
+                "2469965601714074"
+            ]
+        ]
+    },
+    {
+        "id": "2469965601714074",
+        "type": "subflow:9c4d83cc2c29aa19",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "x": 1080,
+        "y": 1680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "73329c24bf358e93",
+        "type": "comment",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Security System",
+        "info": "",
+        "x": 420,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "3196d4575c4ce548",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Prepare  Query Safezone",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (n:Place)  WHERE n.danger = \"low\" OR n.danger IS NULL SET n.lights = \"on\"  RETURN n",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 740,
+        "wires": [
+            [
+                "90ce3646c9870fd0"
+            ]
+        ]
+    },
+    {
+        "id": "90ce3646c9870fd0",
+        "type": "neo4j-bolt",
+        "z": "1a10bef68b9ba5b6",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 880,
+        "y": 740,
+        "wires": [
+            [
+                "e55f556ecb3be1ae"
+            ],
+            [
+                "e55f556ecb3be1ae"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "750827ce84e7d061",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1280,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "fadcc4fa78ed6897",
+        "type": "inject",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 440,
+        "y": 760,
+        "wires": [
+            [
+                "3196d4575c4ce548",
+                "9873e0b7eb3611cc"
+            ]
+        ]
+    },
+    {
+        "id": "e55f556ecb3be1ae",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Format Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t  \"SafeZones\": [payload],\t  \"job\": job\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 740,
+        "wires": [
+            [
+                "750827ce84e7d061"
+            ]
+        ]
+    },
+    {
+        "id": "9873e0b7eb3611cc",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Prepare  Query DangerZone",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (n:Place) WHERE n.danger = \"low\" OR n.danger IS NULL RETURN n",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 820,
+        "wires": [
+            [
+                "5ce0da0838192ce0"
+            ]
+        ]
+    },
+    {
+        "id": "5ce0da0838192ce0",
+        "type": "neo4j-bolt",
+        "z": "1a10bef68b9ba5b6",
+        "server": "d9d1b2e046e79011",
+        "name": "",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 880,
+        "y": 820,
+        "wires": [
+            [
+                "53a70604dc6fa888"
+            ],
+            [
+                "53a70604dc6fa888"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "53a70604dc6fa888",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Format Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t  \"DangerZones\": [payload],\t  \"job\": job\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 820,
+        "wires": [
+            [
+                "750827ce84e7d061"
+            ]
+        ]
+    },
+    {
+        "id": "ccf9dbf19baf9933",
+        "type": "comment",
+        "z": "1a10bef68b9ba5b6",
+        "name": "A: Assign\\n G:Guard\\n D: Destination?\\n P: Place (current)?",
+        "info": "",
+        "x": 730,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "dda3488cfd460322",
+        "type": "comment",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Assign uso SET",
+        "info": "",
+        "x": 660,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "adf1aee5ceea2b0f",
+        "type": "comment",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Guard uso WHERE",
+        "info": "",
+        "x": 670,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "dfce073e5451b435",
+        "type": "comment",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Destination uso BFS/Shortestpath tra place",
+        "info": "",
+        "x": 740,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "27e3b277655661a7",
+        "type": "comment",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Place uso WHERE",
+        "info": "",
+        "x": 670,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "5982a6ee2c7bd484",
+        "type": "comment",
+        "z": "1a10bef68b9ba5b6",
+        "name": "per ognuno di questi dovrei definire un interfaccia, input e output\\n se mettiamo un ",
+        "info": "",
+        "x": 1130,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "73cf04c6d36b5a62",
+        "type": "subflow:9c4d83cc2c29aa19",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "x": 860,
+        "y": 1220,
+        "wires": [
+            [
+                "e70d6e4023787b56"
+            ]
+        ]
+    },
+    {
+        "id": "494280d239bf9b2a",
+        "type": "inject",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"job\":{\"variables\":{\"viewName\":\"SafeZones\"}}}",
+        "payloadType": "json",
+        "x": 350,
+        "y": 1220,
+        "wires": [
+            [
+                "5b8696403e7e273b"
+            ]
+        ]
+    },
+    {
+        "id": "f687383bbea38878",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "e70d6e4023787b56",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "5b8696403e7e273b",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Get query from views",
+        "rules": [
+            {
+                "t": "set",
+                "p": "currentViewName",
+                "pt": "msg",
+                "to": "payload.job.variables.viewName",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "viewObject",
+                "pt": "msg",
+                "to": "$globalContext(\"views\")[name = $$.currentViewName]",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "queries",
+                "pt": "msg",
+                "to": "$globalContext(\"logicalPlaces\")[id in $$.viewObject.logicalPlaces].query",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 1220,
+        "wires": [
+            [
+                "73cf04c6d36b5a62"
             ]
         ]
     },
@@ -2908,16 +3553,6 @@
                 "e4c02c6ad3faca1a"
             ]
         ]
-    },
-    {
-        "id": "0323b76129d486ec",
-        "type": "comment",
-        "z": "742c3f66713f865c",
-        "name": "visto che aggregator rende lowercase department e room,\\n la query confronta usando lower, sistemare",
-        "info": "",
-        "x": 1170,
-        "y": 700,
-        "wires": []
     },
     {
         "id": "a7a629d979f0c7e6",
@@ -3254,8 +3889,8 @@
         "z": "742c3f66713f865c",
         "g": "779fc989ebbe1d72",
         "name": "Update Place Graph",
-        "x": 460,
-        "y": 660,
+        "x": 440,
+        "y": 620,
         "wires": []
     },
     {
