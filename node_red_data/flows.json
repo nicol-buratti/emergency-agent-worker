@@ -82,11 +82,11 @@
         ],
         "out": [
             {
-                "x": 980,
+                "x": 1180,
                 "y": 360,
                 "wires": [
                     {
-                        "id": "d957a191bd7fca10",
+                        "id": "ae7ef502090ce27a",
                         "port": 0
                     }
                 ]
@@ -273,6 +273,50 @@
         "color": "#DDAA99"
     },
     {
+        "id": "40eb59643ffd1130",
+        "type": "subflow",
+        "name": "Save timeseries on Redis",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "1c3a8bcd5716a8c7"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "eb8bbd730a415b4e",
+        "type": "subflow",
+        "name": "Update Place Graph",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "ca2e66978130794f"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "73e25c91ea4204fa",
         "type": "group",
         "z": "6305c5b377893d03",
@@ -420,21 +464,18 @@
             "color": "#f0f0f0"
         },
         "nodes": [
-            "ee6f59312474d332",
             "0c4a1faa281a16bc",
-            "ca2e66978130794f",
-            "ae7ef502090ce27a",
-            "1c3a8bcd5716a8c7",
-            "342c7c9833a6ca48",
             "f6a2eff97c9e5967",
             "e4c02c6ad3faca1a",
             "d42bfc72df84e8b9",
-            "d22bea9ba6a2eefe"
+            "d22bea9ba6a2eefe",
+            "1dd539870b095daa",
+            "9fa13db2d48fb18b"
         ],
         "x": 14,
         "y": 399,
-        "w": 632,
-        "h": 382
+        "w": 572,
+        "h": 322
     },
     {
         "id": "c6472bd832318f7a",
@@ -491,9 +532,9 @@
             "b6d306df011358a8"
         ],
         "x": 224,
-        "y": 1399,
+        "y": 1419,
         "w": 812,
-        "h": 454
+        "h": 434
     },
     {
         "id": "19268c5a199e4927",
@@ -676,7 +717,9 @@
         "x": 800,
         "y": 360,
         "wires": [
-            []
+            [
+                "ae7ef502090ce27a"
+            ]
         ]
     },
     {
@@ -734,6 +777,33 @@
             [
                 "d957a191bd7fca10"
             ]
+        ]
+    },
+    {
+        "id": "ae7ef502090ce27a",
+        "type": "join",
+        "z": "e1861ddff91fe985",
+        "name": "Batch Sensors by Room",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "1",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1030,
+        "y": 360,
+        "wires": [
+            []
         ]
     },
     {
@@ -1447,6 +1517,121 @@
         "database": "",
         "x": 850,
         "y": 380,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1c3a8bcd5716a8c7",
+        "type": "change",
+        "z": "40eb59643ffd1130",
+        "name": "Prepare Timeseries Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[\t    topic & \":ts\",\t    $string(payload),\t    $globalContext(\"global_settings\").retention_ms ? $globalContext(\"global_settings\").retention_ms : 300000\t]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 80,
+        "wires": [
+            [
+                "342c7c9833a6ca48"
+            ]
+        ]
+    },
+    {
+        "id": "342c7c9833a6ca48",
+        "type": "redis-lua-script",
+        "z": "40eb59643ffd1130",
+        "server": "a12b266a42104227",
+        "name": "Redis Lua: Enforce Retention",
+        "keyval": "1",
+        "func": "-- Keys and arguments\nlocal topic = KEYS[1]\nlocal json_payload = ARGV[1]\n\n-- Retrieve the dynamic retention value passed as the second argument\nlocal retention_ms = tonumber(ARGV[2])\n\n-- Get current time directly from the Redis server\n-- TIME returns an array: [1] = seconds, [2] = microseconds\nlocal server_time = redis.call('TIME')\nlocal current_timestamp_ms = (tonumber(server_time[1]) * 1000) + math.floor(tonumber(server_time[2]) / 1000)\n\n-- Calculate the cutoff timestamp dynamically based on the YAML configuration\nlocal cutoff_timestamp_ms = current_timestamp_ms - retention_ms\n\n-- 1. Insert the new data into the Priority Queue\nredis.call('ZADD', topic, current_timestamp_ms, json_payload)\n\n-- 2. Remove all elements older than the calculated cutoff\nlocal removed_count = redis.call('ZREMRANGEBYSCORE', topic, '-inf', cutoff_timestamp_ms)\n\n-- Return the number of removed elements\nreturn removed_count",
+        "stored": false,
+        "block": false,
+        "x": 260,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ca2e66978130794f",
+        "type": "change",
+        "z": "eb8bbd730a415b4e",
+        "name": "Prepare Cypher Query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "department",
+                "pt": "msg",
+                "to": "$split(topic, \":\")[0]",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "room",
+                "pt": "msg",
+                "to": "$split(topic, \":\")[1]",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{\"department\": department, \"room\": room, \"sensors\": attributes_to_update}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "null",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 80,
+        "wires": [
+            [
+                "ee6f59312474d332"
+            ]
+        ]
+    },
+    {
+        "id": "ee6f59312474d332",
+        "type": "neo4j-bolt",
+        "z": "eb8bbd730a415b4e",
+        "server": "d9d1b2e046e79011",
+        "name": "Memgraph: MERGE State",
+        "query": "MATCH (p:Place)\nWHERE toLower(p.department) = toLower($department) \n  AND toLower(p.name) = toLower($room)\nMERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\nSET e += $sensors\nSET e.is_real = true\nRETURN p, e",
+        "sessions": 10,
+        "database": "",
+        "x": 250,
+        "y": 140,
         "wires": [
             [],
             [],
@@ -2703,24 +2888,6 @@
         "wires": []
     },
     {
-        "id": "ee6f59312474d332",
-        "type": "neo4j-bolt",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "server": "d9d1b2e046e79011",
-        "name": "Memgraph: MERGE State",
-        "query": "MATCH (p:Place)\nWHERE toLower(p.department) = toLower($department) \n  AND toLower(p.name) = toLower($room)\nMERGE (p)-[:HAS_STATE]->(e:EnvironmentState)\nSET e += $sensors\nSET e.is_real = true\nRETURN p, e",
-        "sessions": 10,
-        "database": "",
-        "x": 490,
-        "y": 720,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
         "id": "0c4a1faa281a16bc",
         "type": "mqtt in",
         "z": "742c3f66713f865c",
@@ -2740,138 +2907,6 @@
             [
                 "e4c02c6ad3faca1a"
             ]
-        ]
-    },
-    {
-        "id": "ca2e66978130794f",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Prepare Cypher Query",
-        "rules": [
-            {
-                "t": "set",
-                "p": "department",
-                "pt": "msg",
-                "to": "$split(topic, \":\")[0]",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "room",
-                "pt": "msg",
-                "to": "$split(topic, \":\")[1]",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "params",
-                "pt": "msg",
-                "to": "{\"department\": department, \"room\": room, \"sensors\": attributes_to_update}",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "database",
-                "pt": "msg",
-                "to": "memgraph",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "null",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 480,
-        "y": 660,
-        "wires": [
-            [
-                "ee6f59312474d332"
-            ]
-        ]
-    },
-    {
-        "id": "ae7ef502090ce27a",
-        "type": "join",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Batch Sensors by Room",
-        "mode": "custom",
-        "build": "merged",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "useparts": true,
-        "accumulate": false,
-        "timeout": "1",
-        "count": "",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "num",
-        "reduceFixup": "",
-        "x": 190,
-        "y": 620,
-        "wires": [
-            [
-                "1c3a8bcd5716a8c7",
-                "d42bfc72df84e8b9"
-            ]
-        ]
-    },
-    {
-        "id": "1c3a8bcd5716a8c7",
-        "type": "change",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Prepare Timeseries Payload",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "[\t    topic & \":ts\",\t    $string(payload),\t    $globalContext(\"global_settings\").retention_ms ? $globalContext(\"global_settings\").retention_ms : 300000\t]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 500,
-        "y": 540,
-        "wires": [
-            [
-                "342c7c9833a6ca48"
-            ]
-        ]
-    },
-    {
-        "id": "342c7c9833a6ca48",
-        "type": "redis-lua-script",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "server": "a12b266a42104227",
-        "name": "Redis Lua: Enforce Retention",
-        "keyval": "1",
-        "func": "-- Keys and arguments\nlocal topic = KEYS[1]\nlocal json_payload = ARGV[1]\n\n-- Retrieve the dynamic retention value passed as the second argument\nlocal retention_ms = tonumber(ARGV[2])\n\n-- Get current time directly from the Redis server\n-- TIME returns an array: [1] = seconds, [2] = microseconds\nlocal server_time = redis.call('TIME')\nlocal current_timestamp_ms = (tonumber(server_time[1]) * 1000) + math.floor(tonumber(server_time[2]) / 1000)\n\n-- Calculate the cutoff timestamp dynamically based on the YAML configuration\nlocal cutoff_timestamp_ms = current_timestamp_ms - retention_ms\n\n-- 1. Insert the new data into the Priority Queue\nredis.call('ZADD', topic, current_timestamp_ms, json_payload)\n\n-- 2. Remove all elements older than the calculated cutoff\nlocal removed_count = redis.call('ZREMRANGEBYSCORE', topic, '-inf', cutoff_timestamp_ms)\n\n-- Return the number of removed elements\nreturn removed_count",
-        "stored": false,
-        "block": false,
-        "x": 500,
-        "y": 600,
-        "wires": [
-            []
         ]
     },
     {
@@ -3082,8 +3117,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 560,
-        "y": 1460,
+        "x": 360,
+        "y": 1520,
         "wires": [
             [
                 "f581fb7a0701bc6d",
@@ -3123,7 +3158,8 @@
         "y": 560,
         "wires": [
             [
-                "ae7ef502090ce27a"
+                "d42bfc72df84e8b9",
+                "1dd539870b095daa"
             ]
         ]
     },
@@ -3147,12 +3183,12 @@
         "z": "742c3f66713f865c",
         "g": "779fc989ebbe1d72",
         "name": "",
-        "x": 170,
-        "y": 680,
+        "x": 180,
+        "y": 620,
         "wires": [
             [
-                "ca2e66978130794f",
-                "d22bea9ba6a2eefe"
+                "d22bea9ba6a2eefe",
+                "9fa13db2d48fb18b"
             ]
         ]
     },
@@ -3162,8 +3198,8 @@
         "z": "742c3f66713f865c",
         "g": "779fc989ebbe1d72",
         "name": "",
-        "x": 170,
-        "y": 740,
+        "x": 180,
+        "y": 680,
         "wires": [
             []
         ]
@@ -3174,8 +3210,8 @@
         "z": "742c3f66713f865c",
         "g": "8e2850966c0b89d7",
         "name": "",
-        "x": 750,
-        "y": 1440,
+        "x": 600,
+        "y": 1520,
         "wires": []
     },
     {
@@ -3184,7 +3220,7 @@
         "z": "742c3f66713f865c",
         "g": "8e2850966c0b89d7",
         "name": "",
-        "x": 660,
+        "x": 610,
         "y": 1580,
         "wires": [
             [
@@ -3198,8 +3234,28 @@
         "z": "742c3f66713f865c",
         "g": "8e2850966c0b89d7",
         "name": "",
-        "x": 660,
-        "y": 1660,
+        "x": 620,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "1dd539870b095daa",
+        "type": "subflow:40eb59643ffd1130",
+        "z": "742c3f66713f865c",
+        "g": "779fc989ebbe1d72",
+        "name": "Save timeseries for Agent",
+        "x": 450,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "9fa13db2d48fb18b",
+        "type": "subflow:eb8bbd730a415b4e",
+        "z": "742c3f66713f865c",
+        "g": "779fc989ebbe1d72",
+        "name": "Update Place Graph",
+        "x": 460,
+        "y": 660,
         "wires": []
     },
     {
