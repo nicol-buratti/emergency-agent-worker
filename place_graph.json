@@ -5,11 +5,13 @@
             "name": "cisco",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 4,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 4
             }
         },
         {
@@ -17,11 +19,13 @@
             "name": "LA1",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 10,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 10
             }
         },
         {
@@ -29,11 +33,13 @@
             "name": "TeamLab",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 8,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 8
             }
         },
         {
@@ -41,11 +47,13 @@
             "name": "AA1",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 10,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 10
             }
         },
         {
@@ -53,11 +61,13 @@
             "name": "AB1",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 8,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 8
             }
         },
         {
@@ -65,11 +75,13 @@
             "name": "AB2",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 8,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 8
             }
         },
         {
@@ -77,11 +89,13 @@
             "name": "AB3",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 7,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 7
             }
         },
         {
@@ -89,11 +103,13 @@
             "name": "AulaRicercatori",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 5,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 5
             }
         },
         {
@@ -101,11 +117,13 @@
             "name": "SalaRiunioni",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 5,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 5
             }
         },
         {
@@ -113,11 +131,13 @@
             "name": "StanzaCulmone",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 9,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 9
             }
         },
         {
@@ -125,11 +145,13 @@
             "name": "scale",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 3,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 3
             }
         },
         {
@@ -137,11 +159,13 @@
             "name": "C1",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 7,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 7
             }
         },
         {
@@ -149,11 +173,13 @@
             "name": "C2",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 2,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 2
             }
         },
         {
@@ -161,11 +187,13 @@
             "name": "C3",
             "coordinates": [],
             "attributes": {
+                "amenity": "university",
+                "danger": null,
                 "department": "departmentA",
-                "weight": 9,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 9
             }
         },
         {
@@ -173,11 +201,12 @@
             "name": "E1",
             "coordinates": [],
             "attributes": {
+                "danger": null,
                 "department": "departmentA",
-                "weight": 4,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 4
             }
         },
         {
@@ -185,11 +214,12 @@
             "name": "E2",
             "coordinates": [],
             "attributes": {
+                "danger": null,
                 "department": "departmentA",
-                "weight": 2,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 2
             }
         },
         {
@@ -197,11 +227,12 @@
             "name": "E3",
             "coordinates": [],
             "attributes": {
+                "danger": null,
                 "department": "departmentA",
-                "weight": 4,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 4
             }
         },
         {
@@ -209,11 +240,12 @@
             "name": "E4",
             "coordinates": [],
             "attributes": {
+                "danger": null,
                 "department": "departmentA",
-                "weight": 2,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 2
             }
         },
         {
@@ -221,11 +253,12 @@
             "name": "E5",
             "coordinates": [],
             "attributes": {
+                "danger": null,
                 "department": "departmentA",
-                "weight": 4,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 4
             }
         },
         {
@@ -233,11 +266,12 @@
             "name": "E6",
             "coordinates": [],
             "attributes": {
+                "danger": null,
                 "department": "departmentA",
-                "weight": 2,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 2
             }
         },
         {
@@ -245,11 +279,12 @@
             "name": "E7",
             "coordinates": [],
             "attributes": {
+                "danger": null,
                 "department": "departmentA",
-                "weight": 2,
-                "occupied": null,
-                "light": null,
-                "state": "unchecked"
+                "lights": false,
+                "occupancy": 0,
+                "signalled": false,
+                "weight": 2
             }
         }
     ],
@@ -685,6 +720,68 @@
             ],
             "expression": "temperature > 25",
             "place": "n"
+        },
+        {
+            "id": "set2",
+            "name": "Places with low danger",
+            "conditions": [
+                {
+                    "attribute": "danger",
+                    "operator": "==",
+                    "value": "low"
+                },
+                {
+                    "attribute": "danger",
+                    "operator": "==",
+                    "value": null
+                }
+            ],
+            "expression": "danger == 'low' || danger == null",
+            "query": ""
+        },
+        {
+            "id": "set3",
+            "name": "Places with high danger",
+            "conditions": [
+                {
+                    "attribute": "danger",
+                    "operator": "==",
+                    "value": "high"
+                },
+                {
+                    "attribute": "danger",
+                    "operator": "==",
+                    "value": "medium"
+                }
+            ],
+            "expression": "danger == 'high' || danger == 'medium'",
+            "query": ""
+        },
+        {
+            "id": "set4",
+            "name": "Places inside university",
+            "conditions": [
+                {
+                    "attribute": "amenity",
+                    "operator": "==",
+                    "value": "university"
+                }
+            ],
+            "expression": "amenity == 'university'",
+            "query": ""
+        },
+        {
+            "id": "set5",
+            "name": "Gathering points",
+            "conditions": [
+                {
+                    "attribute": "amenity",
+                    "operator": "==",
+                    "value": "gatheringPoint"
+                }
+            ],
+            "expression": "amenity == 'gatheringPoint'",
+            "query": ""
         }
     ],
     "views": [
@@ -693,6 +790,38 @@
             "name": "HotRooms",
             "logicalPlaces": [
                 "set1"
+            ],
+            "attributes": {}
+        },
+        {
+            "id": "view2",
+            "name": "SafeZones",
+            "logicalPlaces": [
+                "set2"
+            ],
+            "attributes": {}
+        },
+        {
+            "id": "view3",
+            "name": "DangerZones",
+            "logicalPlaces": [
+                "set3"
+            ],
+            "attributes": {}
+        },
+        {
+            "id": "view4",
+            "name": "Building",
+            "logicalPlaces": [
+                "set4"
+            ],
+            "attributes": {}
+        },
+        {
+            "id": "view5",
+            "name": "GatheringPoints",
+            "logicalPlaces": [
+                "set5"
             ],
             "attributes": {}
         }
