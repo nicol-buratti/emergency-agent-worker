@@ -201,6 +201,7 @@
             "name": "E1",
             "coordinates": [],
             "attributes": {
+                "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
                 "lights": false,
@@ -214,6 +215,7 @@
             "name": "E2",
             "coordinates": [],
             "attributes": {
+                "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
                 "lights": false,
@@ -227,6 +229,7 @@
             "name": "E3",
             "coordinates": [],
             "attributes": {
+                "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
                 "lights": false,
@@ -240,6 +243,7 @@
             "name": "E4",
             "coordinates": [],
             "attributes": {
+                "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
                 "lights": false,
@@ -253,6 +257,7 @@
             "name": "E5",
             "coordinates": [],
             "attributes": {
+                "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
                 "lights": false,
@@ -266,6 +271,7 @@
             "name": "E6",
             "coordinates": [],
             "attributes": {
+                "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
                 "lights": false,
@@ -279,6 +285,7 @@
             "name": "E7",
             "coordinates": [],
             "attributes": {
+                "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
                 "lights": false,
@@ -710,7 +717,7 @@
         {
             "id": "set1",
             "name": "Rooms with high temperature",
-            "query": "MATCH (p:Place)-[:HAS_STATE] - (e:EnvironmentState) WHERE e.temperature > 25 RETURN DISTINCT p.name AS name",
+            "query": "MATCH (p:Place)-[:HAS_STATE] - (e:EnvironmentState) WHERE e.temperature > 25 RETURN DISTINCT p",
             "conditions": [
                 {
                     "attribute": "temperature",
@@ -733,11 +740,11 @@
                 {
                     "attribute": "danger",
                     "operator": "==",
-                    "value": null
+                    "value": "null"
                 }
             ],
-            "expression": "danger == 'low' || danger == null",
-            "query": ""
+            "expression": "danger == 'low' || danger == 'null'",
+            "query": "MATCH (p:Place)-[:AFFECTS]-(h:Hazard) WHERE h.level = 'low' OR h.level = 'none' RETURN DISTINCT p;"
         },
         {
             "id": "set3",
@@ -755,7 +762,7 @@
                 }
             ],
             "expression": "danger == 'high' || danger == 'medium'",
-            "query": ""
+            "query": "MATCH (p:Place)-[:AFFECTS]-(h:Hazard) WHERE h.level = 'high' OR h.level = 'medium' RETURN DISTINCT p;"
         },
         {
             "id": "set4",
@@ -768,7 +775,7 @@
                 }
             ],
             "expression": "amenity == 'university'",
-            "query": ""
+            "query": "MATCH (p:Place) WHERE p.amenity = 'university' RETURN DISTINCT p;"
         },
         {
             "id": "set5",
@@ -781,7 +788,7 @@
                 }
             ],
             "expression": "amenity == 'gatheringPoint'",
-            "query": ""
+            "query": "MATCH (p:Place) WHERE p.amenity = 'gatheringPoint' RETURN DISTINCT p;"
         }
     ],
     "views": [
