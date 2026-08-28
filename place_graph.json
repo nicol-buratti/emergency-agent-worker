@@ -8,7 +8,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 4
@@ -22,7 +22,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 10
@@ -36,7 +36,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 8
@@ -50,7 +50,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 10
@@ -64,7 +64,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 8
@@ -78,7 +78,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 8
@@ -92,7 +92,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 7
@@ -106,7 +106,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 5
@@ -120,7 +120,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 5
@@ -134,7 +134,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 9
@@ -148,7 +148,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 3
@@ -162,7 +162,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 7
@@ -176,7 +176,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 2
@@ -190,7 +190,7 @@
                 "amenity": "university",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 9
@@ -204,7 +204,7 @@
                 "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 4
@@ -218,7 +218,7 @@
                 "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 2
@@ -232,7 +232,7 @@
                 "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 4
@@ -246,7 +246,7 @@
                 "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 2
@@ -260,7 +260,7 @@
                 "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 4
@@ -274,7 +274,7 @@
                 "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 2
@@ -288,7 +288,7 @@
                 "amenity": "gatheringPoint",
                 "danger": null,
                 "department": "departmentA",
-                "lights": false,
+                "lights": "off",
                 "occupancy": 0,
                 "signalled": false,
                 "weight": 2
