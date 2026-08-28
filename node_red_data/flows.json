@@ -317,39 +317,6 @@
         "color": "#DDAA99"
     },
     {
-        "id": "9c4d83cc2c29aa19",
-        "type": "subflow",
-        "name": "get Logical Places",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 60,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "4cf96511a4563822"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 1080,
-                "y": 200,
-                "wires": [
-                    {
-                        "id": "b78afc8aeb9b0476",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [],
-        "meta": {},
-        "color": "#DDAA99"
-    },
-    {
         "id": "df8d344bd7233279",
         "type": "subflow",
         "name": "Conditional start event trigger",
@@ -374,7 +341,7 @@
     {
         "id": "33089873be7dbdab",
         "type": "subflow",
-        "name": "get Logical Places (1)",
+        "name": "get Logical Places",
         "info": "",
         "category": "",
         "in": [
@@ -390,7 +357,7 @@
         ],
         "out": [
             {
-                "x": 1080,
+                "x": 880,
                 "y": 200,
                 "wires": [
                     {
@@ -494,6 +461,72 @@
                 "wires": [
                     {
                         "id": "93e250ab08344188",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "3ce796bb05c5f05d",
+        "type": "subflow",
+        "name": "get Logical Places (2)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "55c54f7d5f1a3d95"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1080,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "7ea712f8149d1070",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "026242798f0a45db",
+        "type": "subflow",
+        "name": "get Logical Places Name",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 80,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "9b1d03c69d7855e9"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 620,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "6b4e8a27fc4ad608",
                         "port": 0
                     }
                 ]
@@ -743,12 +776,15 @@
             "090163aaf01af501",
             "96eee6d8fd5e5489",
             "cb2fcd1e54bf2cee",
-            "9d6c7c71b09424bc"
+            "9d6c7c71b09424bc",
+            "eb1b82ca97e5c86b",
+            "3a1b0d4815fe84f1",
+            "143031ca17af2b69"
         ],
         "x": 294,
         "y": 1119,
         "w": 1012,
-        "h": 222
+        "h": 302
     },
     {
         "id": "7da1513389e5cc02",
@@ -789,15 +825,16 @@
             "color": "#f0f0f0"
         },
         "nodes": [
-            "73cf04c6d36b5a62",
-            "9f2f7dbf7ddcc2e4",
             "a7c9b69bc11a2e58",
             "3d426a592c883321",
-            "7244596203b52f57"
+            "7244596203b52f57",
+            "e91536d432b2676f",
+            "715e478cbbe56de8",
+            "f63345f4b2fd6c9f"
         ],
         "x": 294,
         "y": 879,
-        "w": 712,
+        "w": 912,
         "h": 202
     },
     {
@@ -1907,262 +1944,6 @@
         "wires": []
     },
     {
-        "id": "4cf96511a4563822",
-        "type": "change",
-        "z": "9c4d83cc2c29aa19",
-        "name": "Get query from views",
-        "rules": [
-            {
-                "t": "set",
-                "p": "viewObject",
-                "pt": "msg",
-                "to": "$globalContext(\"views\")[name = $$.currentViewName]",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "queries",
-                "pt": "msg",
-                "to": "$globalContext(\"logicalPlaces\")[id in $$.viewObject.logicalPlaces].query",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 220,
-        "y": 80,
-        "wires": [
-            [
-                "f8b3deb47c1aec64"
-            ]
-        ]
-    },
-    {
-        "id": "f8b3deb47c1aec64",
-        "type": "change",
-        "z": "9c4d83cc2c29aa19",
-        "name": "Prepare data for DB",
-        "rules": [
-            {
-                "t": "set",
-                "p": "database",
-                "pt": "msg",
-                "to": "memgraph",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "queries",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 440,
-        "y": 80,
-        "wires": [
-            [
-                "e2f9283f76237abf"
-            ]
-        ]
-    },
-    {
-        "id": "e2f9283f76237abf",
-        "type": "split",
-        "z": "9c4d83cc2c29aa19",
-        "name": "Split Queries",
-        "splt": "\\n",
-        "spltType": "str",
-        "arraySplt": 1,
-        "arraySpltType": "len",
-        "stream": false,
-        "addname": "",
-        "property": "payload",
-        "x": 650,
-        "y": 80,
-        "wires": [
-            [
-                "68b214e54e035b0d"
-            ]
-        ]
-    },
-    {
-        "id": "68b214e54e035b0d",
-        "type": "change",
-        "z": "9c4d83cc2c29aa19",
-        "name": "Set msg.query",
-        "rules": [
-            {
-                "t": "set",
-                "p": "query",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 840,
-        "y": 80,
-        "wires": [
-            [
-                "9f21ff6ac55c222d"
-            ]
-        ]
-    },
-    {
-        "id": "9f21ff6ac55c222d",
-        "type": "neo4j-bolt",
-        "z": "9c4d83cc2c29aa19",
-        "server": "d9d1b2e046e79011",
-        "name": "Memgraph: Execute query",
-        "query": "",
-        "sessions": 10,
-        "database": "",
-        "x": 240,
-        "y": 180,
-        "wires": [
-            [
-                "39e7bf6d9279e1a3"
-            ],
-            [
-                "39e7bf6d9279e1a3"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "39e7bf6d9279e1a3",
-        "type": "change",
-        "z": "9c4d83cc2c29aa19",
-        "name": "Extract Nodes",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "[ payload.p ]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 500,
-        "y": 180,
-        "wires": [
-            [
-                "26a849f7c10cef70"
-            ]
-        ]
-    },
-    {
-        "id": "26a849f7c10cef70",
-        "type": "join",
-        "z": "9c4d83cc2c29aa19",
-        "name": "Join Results",
-        "mode": "custom",
-        "build": "array",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "useparts": true,
-        "accumulate": false,
-        "timeout": "",
-        "count": "",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "",
-        "reduceFixup": "",
-        "x": 730,
-        "y": 180,
-        "wires": [
-            [
-                "b78afc8aeb9b0476"
-            ]
-        ]
-    },
-    {
-        "id": "b78afc8aeb9b0476",
-        "type": "change",
-        "z": "9c4d83cc2c29aa19",
-        "name": "Format Output",
-        "rules": [
-            {
-                "t": "set",
-                "p": "flatNames",
-                "pt": "msg",
-                "to": "$reduce(payload, function($acc, $v) { $append($acc, $v) }, [])",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "keyName",
-                "pt": "msg",
-                "to": "job.variables.logicalPlaces ? job.variables.logicalPlaces : \"logicalPlaces\"",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t    \"variables\": {\t        $$.viewObject.name: $$.flatNames\t    },\t    \"job\": job\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 920,
-        "y": 180,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "69147ee693d9ef09",
-        "type": "change",
-        "z": "9c4d83cc2c29aa19",
-        "name": "Extract Names",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "[ payload.(name ? name : p.properties.name) ]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 520,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "dc19b9df1af8d1c3",
         "type": "http request",
         "z": "df8d344bd7233279",
@@ -2313,33 +2094,6 @@
         ]
     },
     {
-        "id": "6b4e8a27fc4ad608",
-        "type": "change",
-        "z": "33089873be7dbdab",
-        "name": "Extract Names",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "[ payload.(name ? name : p.properties.name) ]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 500,
-        "y": 180,
-        "wires": [
-            [
-                "068120a732a3f51f"
-            ]
-        ]
-    },
-    {
         "id": "068120a732a3f51f",
         "type": "join",
         "z": "33089873be7dbdab",
@@ -2360,7 +2114,7 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 670,
+        "x": 470,
         "y": 180,
         "wires": [
             [
@@ -2381,10 +2135,10 @@
         "y": 180,
         "wires": [
             [
-                "6b4e8a27fc4ad608"
+                "068120a732a3f51f"
             ],
             [
-                "6b4e8a27fc4ad608"
+                "068120a732a3f51f"
             ],
             []
         ]
@@ -2422,7 +2176,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 860,
+        "x": 660,
         "y": 180,
         "wires": [
             []
@@ -3393,6 +3147,300 @@
         ]
     },
     {
+        "id": "55c54f7d5f1a3d95",
+        "type": "change",
+        "z": "3ce796bb05c5f05d",
+        "name": "Get query from views",
+        "rules": [
+            {
+                "t": "set",
+                "p": "viewObject",
+                "pt": "msg",
+                "to": "$globalContext(\"views\")[name = $$.currentViewName]",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "queries",
+                "pt": "msg",
+                "to": "$globalContext(\"logicalPlaces\")[id in $$.viewObject.logicalPlaces].query",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 80,
+        "wires": [
+            [
+                "632b04160a531702"
+            ]
+        ]
+    },
+    {
+        "id": "632b04160a531702",
+        "type": "change",
+        "z": "3ce796bb05c5f05d",
+        "name": "Prepare data for DB",
+        "rules": [
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "queries",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 80,
+        "wires": [
+            [
+                "d165ea041fab4ba3"
+            ]
+        ]
+    },
+    {
+        "id": "d165ea041fab4ba3",
+        "type": "split",
+        "z": "3ce796bb05c5f05d",
+        "name": "Split Queries",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 650,
+        "y": 80,
+        "wires": [
+            [
+                "9b89f11b1eb28603"
+            ]
+        ]
+    },
+    {
+        "id": "9b89f11b1eb28603",
+        "type": "change",
+        "z": "3ce796bb05c5f05d",
+        "name": "Set msg.query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 80,
+        "wires": [
+            [
+                "53796e0671992042"
+            ]
+        ]
+    },
+    {
+        "id": "53796e0671992042",
+        "type": "neo4j-bolt",
+        "z": "3ce796bb05c5f05d",
+        "server": "d9d1b2e046e79011",
+        "name": "Memgraph: Execute query",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 240,
+        "y": 180,
+        "wires": [
+            [
+                "ad5b87850895dea2"
+            ],
+            [
+                "ad5b87850895dea2"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ad5b87850895dea2",
+        "type": "change",
+        "z": "3ce796bb05c5f05d",
+        "name": "Extract Nodes",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[ payload.p ]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "4030ce8cf361e312"
+            ]
+        ]
+    },
+    {
+        "id": "4030ce8cf361e312",
+        "type": "join",
+        "z": "3ce796bb05c5f05d",
+        "name": "Join Results",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 730,
+        "y": 180,
+        "wires": [
+            [
+                "7ea712f8149d1070"
+            ]
+        ]
+    },
+    {
+        "id": "7ea712f8149d1070",
+        "type": "change",
+        "z": "3ce796bb05c5f05d",
+        "name": "Format Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "flatNames",
+                "pt": "msg",
+                "to": "$reduce(payload, function($acc, $v) { $append($acc, $v) }, [])",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "keyName",
+                "pt": "msg",
+                "to": "job.variables.logicalPlaces ? job.variables.logicalPlaces : \"logicalPlaces\"",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"variables\": {\t        $$.viewObject.name: $$.flatNames\t    },\t    \"job\": job\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "caf7ce170267bb37",
+        "type": "change",
+        "z": "3ce796bb05c5f05d",
+        "name": "Extract Names",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[ payload.(name ? name : p.properties.name) ]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9b1d03c69d7855e9",
+        "type": "subflow:33089873be7dbdab",
+        "z": "026242798f0a45db",
+        "name": "",
+        "x": 230,
+        "y": 80,
+        "wires": [
+            [
+                "6b4e8a27fc4ad608"
+            ]
+        ]
+    },
+    {
+        "id": "6b4e8a27fc4ad608",
+        "type": "change",
+        "z": "026242798f0a45db",
+        "name": "Extract Names",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[ payload.(name ? name : p.properties.name) ]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "27c801e912b2bd2c",
         "type": "catch",
         "z": "61370204cb540a30",
@@ -4223,20 +4271,6 @@
         "wires": []
     },
     {
-        "id": "73cf04c6d36b5a62",
-        "type": "subflow:9c4d83cc2c29aa19",
-        "z": "1a10bef68b9ba5b6",
-        "g": "7de68c24d01878fd",
-        "name": "",
-        "x": 690,
-        "y": 1040,
-        "wires": [
-            [
-                "a7c9b69bc11a2e58"
-            ]
-        ]
-    },
-    {
         "id": "1ca457d757ed3358",
         "type": "inject",
         "z": "1a10bef68b9ba5b6",
@@ -4288,47 +4322,12 @@
         "wires": []
     },
     {
-        "id": "9f2f7dbf7ddcc2e4",
-        "type": "change",
-        "z": "1a10bef68b9ba5b6",
-        "g": "7de68c24d01878fd",
-        "name": "Save Camunda job on msg & PREPARE VIEWS",
-        "rules": [
-            {
-                "t": "set",
-                "p": "job",
-                "pt": "msg",
-                "to": "payload.job",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "currentViewName",
-                "pt": "msg",
-                "to": "payload.job.variables.ViewName",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 800,
-        "y": 980,
-        "wires": [
-            [
-                "73cf04c6d36b5a62"
-            ]
-        ]
-    },
-    {
         "id": "a7c9b69bc11a2e58",
         "type": "complete-task",
         "z": "1a10bef68b9ba5b6",
         "g": "7de68c24d01878fd",
         "name": "Complete",
-        "x": 880,
+        "x": 1120,
         "y": 1040,
         "wires": []
     },
@@ -4365,16 +4364,16 @@
         "type": "task-worker",
         "z": "1a10bef68b9ba5b6",
         "g": "7de68c24d01878fd",
-        "name": "Worker: check-building-occupancy",
+        "name": "Worker: get-building-occupancy",
         "camunda": "cc7538c088cd1d8b",
-        "taskType": "check-building-occupancy",
+        "taskType": "get-building-occupancy",
         "maxActiveJobs": 32,
         "timeout": 1000,
-        "x": 460,
+        "x": 450,
         "y": 980,
         "wires": [
             [
-                "9f2f7dbf7ddcc2e4"
+                "f63345f4b2fd6c9f"
             ]
         ]
     },
@@ -4581,7 +4580,8 @@
         "y": 1260,
         "wires": [
             [
-                "cb2fcd1e54bf2cee"
+                "cb2fcd1e54bf2cee",
+                "143031ca17af2b69"
             ]
         ]
     },
@@ -4611,9 +4611,9 @@
         "type": "comment",
         "z": "1a10bef68b9ba5b6",
         "g": "7de68c24d01878fd",
-        "name": "GET logical place flow",
+        "name": "GET (Guard) logical place flow",
         "info": "",
-        "x": 420,
+        "x": 440,
         "y": 920,
         "wires": []
     },
@@ -4627,6 +4627,163 @@
         "x": 470,
         "y": 700,
         "wires": []
+    },
+    {
+        "id": "eb1b82ca97e5c86b",
+        "type": "task-worker",
+        "z": "1a10bef68b9ba5b6",
+        "g": "a7285a611bd878d4",
+        "name": "Worker: adjust-lights",
+        "camunda": "cc7538c088cd1d8b",
+        "taskType": "shut-off-emergency-lights",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 410,
+        "y": 1380,
+        "wires": [
+            [
+                "3a1b0d4815fe84f1"
+            ]
+        ]
+    },
+    {
+        "id": "3a1b0d4815fe84f1",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "a7285a611bd878d4",
+        "name": "Configure Assignments DangerZones",
+        "rules": [
+            {
+                "t": "set",
+                "p": "assignments",
+                "pt": "msg",
+                "to": "{\t    \"views\": [\"DangerZones\", \"SafeZones\"],\t    \"assignments\": [\t        {\t            \"parameter\": \"lights\",\t            \"state\": \"off\"\t        }\t    ]\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 1380,
+        "wires": [
+            [
+                "96eee6d8fd5e5489"
+            ]
+        ]
+    },
+    {
+        "id": "143031ca17af2b69",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "a7285a611bd878d4",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "e91536d432b2676f",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "7de68c24d01878fd",
+        "name": "Calculate Total Occupancy",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.variables.buildingOccupancy",
+                "pt": "msg",
+                "to": "$sum(payload.variables.Building.p.properties.occupancy)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "delete",
+                "p": "payload.variables.Building",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 1040,
+        "wires": [
+            [
+                "a7c9b69bc11a2e58"
+            ]
+        ]
+    },
+    {
+        "id": "715e478cbbe56de8",
+        "type": "subflow:33089873be7dbdab",
+        "z": "1a10bef68b9ba5b6",
+        "g": "7de68c24d01878fd",
+        "name": "",
+        "x": 650,
+        "y": 1040,
+        "wires": [
+            [
+                "e91536d432b2676f"
+            ]
+        ]
+    },
+    {
+        "id": "f63345f4b2fd6c9f",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "7de68c24d01878fd",
+        "name": "Save Camunda job on msg & PREPARE VIEWS",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "currentViewNames",
+                "pt": "msg",
+                "to": "[ \"Building\" ]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 980,
+        "wires": [
+            [
+                "715e478cbbe56de8"
+            ]
+        ]
+    },
+    {
+        "id": "96776d7de0c9c3b8",
+        "type": "subflow:026242798f0a45db",
+        "z": "1a10bef68b9ba5b6",
+        "name": "get Logical Places",
+        "x": 730,
+        "y": 1560,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "8c477e52b06d4456",
