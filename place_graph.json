@@ -744,7 +744,7 @@
                 }
             ],
             "expression": "danger == 'low' || danger == 'null'",
-            "query": "MATCH (p:Place)-[:AFFECTS]-(h:Hazard) WHERE h.level = 'low' OR h.level = 'none' RETURN DISTINCT p;"
+            "query": "MATCH (p:Place) OPTIONAL MATCH (p)-[:AFFECTS]-(h:Hazard) WHERE h IS NULL OR h.level IN ['low', 'none'] RETURN DISTINCT p;"
         },
         {
             "id": "set3",

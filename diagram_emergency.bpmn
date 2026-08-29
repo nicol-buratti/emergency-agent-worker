@@ -69,17 +69,9 @@ P: SafeZones</bpmn:text>
     <bpmn:association id="Association_1devbir" associationDirection="None" sourceRef="Event_0aqhfta" targetRef="TextAnnotation_0hxtq89" />
   </bpmn:collaboration>
   <bpmn:process id="Process_Emergency_Warden" isExecutable="true">
-    <bpmn:task id="Activity_1n9n9dl" name="Rescue occupant">
-      <bpmn:incoming>Flow_044bdqr</bpmn:incoming>
-      <bpmn:outgoing>Flow_15l9ztx</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:task id="Activity_1jq3s9s" name="Move to gathering point">
       <bpmn:incoming>Flow_15l9ztx</bpmn:incoming>
       <bpmn:outgoing>Flow_1lhfq0z</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Activity_0m3m1yv" name="Leave &#10;occupant">
-      <bpmn:incoming>Flow_1lhfq0z</bpmn:incoming>
-      <bpmn:outgoing>Flow_1c1a5lt</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="Gateway_1h3x2hh">
       <bpmn:incoming>Flow_0qwiyn8</bpmn:incoming>
@@ -123,6 +115,20 @@ P: SafeZones</bpmn:text>
       <bpmn:incoming>Flow_1osji9s</bpmn:incoming>
       <bpmn:outgoing>Flow_044bdqr</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sendTask id="Activity_1n9n9dl" name="Rescue occupant">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="rescue-occupant" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_044bdqr</bpmn:incoming>
+      <bpmn:outgoing>Flow_15l9ztx</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="Activity_0m3m1yv" name="Leave &#10;occupant">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="leave-occupant" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1lhfq0z</bpmn:incoming>
+      <bpmn:outgoing>Flow_1c1a5lt</bpmn:outgoing>
+    </bpmn:sendTask>
   </bpmn:process>
   <bpmn:process id="Process_SecSys" isExecutable="true">
     <bpmn:exclusiveGateway id="Gateway_0ets6td">
@@ -199,18 +205,6 @@ P: SafeZones</bpmn:text>
     <bpmn:endEvent id="Event_17ny5dy">
       <bpmn:incoming>Flow_1x41zn7</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:task id="Activity_0mktwid" name="Leave security warden">
-      <bpmn:incoming>Flow_008f714</bpmn:incoming>
-      <bpmn:outgoing>Flow_1x41zn7</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Activity_1m4lfju" name="Wait for security warden">
-      <bpmn:incoming>Flow_1mqslpx</bpmn:incoming>
-      <bpmn:outgoing>Flow_008f714</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Activity_0nnuss2" name="Signal area">
-      <bpmn:incoming>Flow_0yy6qq9</bpmn:incoming>
-      <bpmn:outgoing>Flow_1mqslpx</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:endEvent id="Event_0o6mont">
       <bpmn:incoming>Flow_0117h9c</bpmn:incoming>
     </bpmn:endEvent>
@@ -237,12 +231,41 @@ P: SafeZones</bpmn:text>
       <bpmn:outgoing>Flow_0yy6qq9</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0pykx0n" />
     </bpmn:boundaryEvent>
+    <bpmn:receiveTask id="Activity_1m4lfju" name="Wait for security warden" messageRef="Message_3dp3rim">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=WardenID" target="warden_session_id" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mqslpx</bpmn:incoming>
+      <bpmn:outgoing>Flow_008f714</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:receiveTask id="Activity_0mktwid" name="Leave security warden" messageRef="Message_02ggve9">
+      <bpmn:incoming>Flow_008f714</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x41zn7</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:serviceTask id="Activity_0nnuss2" name="Signal area">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="signal-area" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0yy6qq9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mqslpx</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:message id="Message_2972ft0" name="Message_2972ft0" />
-  <bpmn:message id="Message_3dp3rim" name="start" />
+  <bpmn:message id="Message_3dp3rim" name="WardenArrived">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=MyPlace.name" />
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmn:message id="Message_309b1c0" name="danger-spotted">
     <bpmn:extensionElements>
       <zeebe:subscription correlationKey="=&#34;danger-spotted&#34;" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_02ggve9" name="RescueCompleted">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=WardenID" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -251,16 +274,8 @@ P: SafeZones</bpmn:text>
         <dc:Bounds x="160" y="720" width="1110" height="240" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_08zm1mh" bpmnElement="Activity_1n9n9dl">
-        <dc:Bounds x="600" y="810" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0dozo7s" bpmnElement="Activity_1jq3s9s">
         <dc:Bounds x="760" y="810" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0f13mp3" bpmnElement="Activity_0m3m1yv">
-        <dc:Bounds x="920" y="810" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1053nn5" bpmnElement="Gateway_1h3x2hh" isMarkerVisible="true">
@@ -283,6 +298,12 @@ P: SafeZones</bpmn:text>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0umki2g_di" bpmnElement="Activity_1qm61wx">
         <dc:Bounds x="430" y="810" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ikxqcm_di" bpmnElement="Activity_1n9n9dl">
+        <dc:Bounds x="600" y="810" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dpogn6_di" bpmnElement="Activity_0m3m1yv">
+        <dc:Bounds x="920" y="810" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_1brg857" bpmnElement="Flow_044bdqr">
         <di:waypoint x="530" y="850" />
@@ -421,18 +442,6 @@ P: SafeZones</bpmn:text>
       <bpmndi:BPMNShape id="BPMNShape_1asg0u4" bpmnElement="Event_17ny5dy">
         <dc:Bounds x="1012" y="1102" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0hut3is" bpmnElement="Activity_0mktwid">
-        <dc:Bounds x="860" y="1080" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1itw7ja" bpmnElement="Activity_1m4lfju">
-        <dc:Bounds x="710" y="1080" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0k5x4k0" bpmnElement="Activity_0nnuss2">
-        <dc:Bounds x="560" y="1080" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1ilfm2y" bpmnElement="Event_0o6mont">
         <dc:Bounds x="472" y="1102" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -444,6 +453,15 @@ P: SafeZones</bpmn:text>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_11zr0bc_di" bpmnElement="Activity_10obiin">
         <dc:Bounds x="320" y="1080" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e70kbe_di" bpmnElement="Activity_1m4lfju">
+        <dc:Bounds x="710" y="1080" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01y9h9q_di" bpmnElement="Activity_0mktwid">
+        <dc:Bounds x="860" y="1080" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13o80ms_di" bpmnElement="Activity_0nnuss2">
+        <dc:Bounds x="560" y="1080" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0abh04c" bpmnElement="Event_0natkg0">
         <dc:Bounds x="352" y="1142" width="36" height="36" />

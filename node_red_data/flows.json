@@ -439,39 +439,6 @@
         "color": "#DDAA99"
     },
     {
-        "id": "026242798f0a45db",
-        "type": "subflow",
-        "name": "get Logical Places Name",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 80,
-                "y": 60,
-                "wires": [
-                    {
-                        "id": "9b1d03c69d7855e9"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 620,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "6b4e8a27fc4ad608",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [],
-        "meta": {},
-        "color": "#DDAA99"
-    },
-    {
         "id": "e8aef35ab083c2f1",
         "type": "subflow",
         "name": "Simulated agent output",
@@ -528,6 +495,105 @@
                 "wires": [
                     {
                         "id": "dae3c0535c758a32",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "e1a7114c610e953f",
+        "type": "subflow",
+        "name": "Resolve Target Places",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "3c90fb175ee0425a"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 880,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "2d30fa11bbc4605b",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#87A980"
+    },
+    {
+        "id": "1e334d5e38044a33",
+        "type": "subflow",
+        "name": "Assign Path Logic",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 50,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "be39cc16c5f1cb6c"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1000,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "11b7044fac2837fa",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#87A980"
+    },
+    {
+        "id": "bdb60e75c804bf59",
+        "type": "subflow",
+        "name": "Calculate Route Path",
+        "info": "Elabora i percorsi attraversabili verso l'uscita definita.",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "0012fd352c0ce258"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1080,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "45f703bebf1064b1",
                         "port": 0
                     }
                 ]
@@ -850,6 +916,85 @@
         "y": 2159,
         "w": 512,
         "h": 142
+    },
+    {
+        "id": "c643b2bd69088014",
+        "type": "group",
+        "z": "1a10bef68b9ba5b6",
+        "style": {
+            "stroke": "#555555",
+            "stroke-opacity": "1",
+            "fill": "rgba(255, 255, 255, 0.03)",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#f0f0f0"
+        },
+        "nodes": [
+            "f826475f7ed34e80",
+            "246bb3a9caba877f",
+            "f9ba76c5cf495b49",
+            "351ec3e0ec705167",
+            "8d32cb2922256e3d",
+            "7f6711853f9230d1",
+            "3fda76198dafeb1d",
+            "eb627453f595862e",
+            "1bd9a0a8b6125170",
+            "5c323e8e7b36a5e1"
+        ],
+        "x": 294,
+        "y": 2659,
+        "w": 1052,
+        "h": 242
+    },
+    {
+        "id": "eebb8a9fccbfa553",
+        "type": "group",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Manual start Warden process",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "92857f1bf7410593",
+            "1085422a7aea65f0",
+            "c968c501e43330d8"
+        ],
+        "x": 834,
+        "y": 2159,
+        "w": 512,
+        "h": 142
+    },
+    {
+        "id": "047df9d275c966b7",
+        "type": "group",
+        "z": "1a10bef68b9ba5b6",
+        "style": {
+            "stroke": "#555555",
+            "stroke-opacity": "1",
+            "fill": "rgba(255, 255, 255, 0.03)",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#f0f0f0"
+        },
+        "nodes": [
+            "1f6462ea3db68534",
+            "1f2bc83bb6889e6d",
+            "7256c58f6d7e498c",
+            "3dfef2f147f66ec9",
+            "1d73f9b0a89aa022",
+            "9dd2f99a4cc318d1",
+            "eefa509433ddba2f",
+            "a128b891590b4d75",
+            "a46823a955034c15",
+            "417c8a0daed26cca",
+            "aeca90174de1c13e"
+        ],
+        "x": 294,
+        "y": 2339,
+        "w": 1592,
+        "h": 282
     },
     {
         "id": "19268c5a199e4927",
@@ -3103,44 +3248,6 @@
         ]
     },
     {
-        "id": "9b1d03c69d7855e9",
-        "type": "subflow:33089873be7dbdab",
-        "z": "026242798f0a45db",
-        "name": "",
-        "x": 230,
-        "y": 80,
-        "wires": [
-            [
-                "6b4e8a27fc4ad608"
-            ]
-        ]
-    },
-    {
-        "id": "6b4e8a27fc4ad608",
-        "type": "change",
-        "z": "026242798f0a45db",
-        "name": "Extract Names",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "[ payload.(name ? name : p.properties.name) ]",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 460,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "aa035a7c7edf7842",
         "type": "delay",
         "z": "e8aef35ab083c2f1",
@@ -3297,6 +3404,616 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "3c90fb175ee0425a",
+        "type": "change",
+        "z": "e1a7114c610e953f",
+        "name": "Get queries from views",
+        "rules": [
+            {
+                "t": "set",
+                "p": "viewObject",
+                "pt": "msg",
+                "to": "$globalContext(\"views\")[name in $$.currentViewNames]",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "queries",
+                "pt": "msg",
+                "to": "$globalContext(\"logicalPlaces\")[id in $$.viewObject.logicalPlaces].query",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 80,
+        "wires": [
+            [
+                "d8208dc7d23c9c3c"
+            ]
+        ]
+    },
+    {
+        "id": "d8208dc7d23c9c3c",
+        "type": "change",
+        "z": "e1a7114c610e953f",
+        "name": "Prepare data for DB",
+        "rules": [
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "queries",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 80,
+        "wires": [
+            [
+                "a386f33505824467"
+            ]
+        ]
+    },
+    {
+        "id": "a386f33505824467",
+        "type": "split",
+        "z": "e1a7114c610e953f",
+        "name": "Split Queries",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 650,
+        "y": 80,
+        "wires": [
+            [
+                "4799a336b396afb5"
+            ]
+        ]
+    },
+    {
+        "id": "4799a336b396afb5",
+        "type": "change",
+        "z": "e1a7114c610e953f",
+        "name": "Set msg.query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 80,
+        "wires": [
+            [
+                "224b06105fdfe8bb"
+            ]
+        ]
+    },
+    {
+        "id": "224b06105fdfe8bb",
+        "type": "neo4j-bolt",
+        "z": "e1a7114c610e953f",
+        "server": "d9d1b2e046e79011",
+        "name": "Memgraph: Execute query",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 240,
+        "y": 180,
+        "wires": [
+            [
+                "c5e487fd22a72586"
+            ],
+            [
+                "c5e487fd22a72586"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c5e487fd22a72586",
+        "type": "join",
+        "z": "e1a7114c610e953f",
+        "name": "Join Results",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 470,
+        "y": 180,
+        "wires": [
+            [
+                "2d30fa11bbc4605b"
+            ]
+        ]
+    },
+    {
+        "id": "2d30fa11bbc4605b",
+        "type": "change",
+        "z": "e1a7114c610e953f",
+        "name": "Format Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "flatNames",
+                "pt": "msg",
+                "to": "$reduce(payload, function($acc, $v) { $append($acc, $v) }, [])",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"variables\": {\t        $$.viewObject.name: $$.flatNames\t    },\t    \"job\": job\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "be39cc16c5f1cb6c",
+        "type": "change",
+        "z": "1e334d5e38044a33",
+        "name": "Store Path & PREPARE VIEWS",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "currentViewNames",
+                "pt": "msg",
+                "to": "[ msg.traversable_place, msg.exit_place ]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 60,
+        "wires": [
+            [
+                "13cc9752431257f8"
+            ]
+        ]
+    },
+    {
+        "id": "13cc9752431257f8",
+        "type": "subflow:e1a7114c610e953f",
+        "z": "1e334d5e38044a33",
+        "name": "",
+        "x": 230,
+        "y": 140,
+        "wires": [
+            [
+                "5881bd257392e2e8"
+            ]
+        ]
+    },
+    {
+        "id": "5881bd257392e2e8",
+        "type": "change",
+        "z": "1e334d5e38044a33",
+        "name": "Prepare Path Query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{   \"traversable\": msg.traversable_place,   \"exit\": msg.exit_place}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (t:Place {name: $traversable}) SET t.isTraversable = true WITH count(t) as t_count MATCH (e:Place {name: $exit}) SET e.isExit = true RETURN t_count, count(e) as e_count",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 200,
+        "wires": [
+            [
+                "6390e2bc50e2e0f6"
+            ]
+        ]
+    },
+    {
+        "id": "6390e2bc50e2e0f6",
+        "type": "neo4j-bolt",
+        "z": "1e334d5e38044a33",
+        "server": "d9d1b2e046e79011",
+        "name": "Update Path Nodes",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 510,
+        "y": 200,
+        "wires": [
+            [
+                "11b7044fac2837fa"
+            ],
+            [
+                "11b7044fac2837fa"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "11b7044fac2837fa",
+        "type": "change",
+        "z": "1e334d5e38044a33",
+        "name": "Restore Job & Clean Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"job\": $$.job}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ba6fa6333236f96",
+        "type": "neo4j-bolt",
+        "z": "bdb60e75c804bf59",
+        "server": "d9d1b2e046e79011",
+        "name": "Memgraph: Execute Route Query",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 640,
+        "y": 260,
+        "wires": [
+            [
+                "45f703bebf1064b1",
+                "d77a0b55dbd2f358"
+            ],
+            [
+                "45f703bebf1064b1",
+                "d77a0b55dbd2f358"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "45f703bebf1064b1",
+        "type": "change",
+        "z": "bdb60e75c804bf59",
+        "name": "Format Route Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"variables\": {\t        \"RoutePaths\": payload\t    },\t    \"job\": job\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 260,
+        "wires": [
+            [
+                "1b598d2610d4ae9f"
+            ]
+        ]
+    },
+    {
+        "id": "079bc9a023d58ddd",
+        "type": "change",
+        "z": "bdb60e75c804bf59",
+        "name": "Prepare Query & DB Params",
+        "rules": [
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (start) WHERE start.name = $start_name MATCH path = (start)-[*BFS (e, v | id(v) IN $allowed_ids)]->(target) WHERE id(target) IN $target_ids RETURN target AS target_id, path",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{\t    \"start_name\": $$.startRoom,\t    \"allowed_ids\": $$.traverseIds,\t    \"target_ids\": $$.targetIds\t    }",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 260,
+        "wires": [
+            [
+                "4ba6fa6333236f96"
+            ]
+        ]
+    },
+    {
+        "id": "0012fd352c0ce258",
+        "type": "change",
+        "z": "bdb60e75c804bf59",
+        "name": "Save Camunda job on msg & PREPARE VIEWS",
+        "rules": [
+            {
+                "t": "set",
+                "p": "currentViewNames",
+                "pt": "msg",
+                "to": "[ $$.traverseLogicalRooms ]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 120,
+        "wires": [
+            [
+                "761b6cf1f5fb8db2"
+            ]
+        ]
+    },
+    {
+        "id": "3de08dbccaac6986",
+        "type": "change",
+        "z": "bdb60e75c804bf59",
+        "name": "Save Camunda job on msg & PREPARE VIEWS",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "currentViewNames",
+                "pt": "msg",
+                "to": "[ $$.targetLogicalRooms ]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 180,
+        "wires": [
+            [
+                "2924e9aa80f8551e"
+            ]
+        ]
+    },
+    {
+        "id": "37230c04567a2016",
+        "type": "change",
+        "z": "bdb60e75c804bf59",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "traverseIds",
+                "pt": "msg",
+                "to": "payload.variables.SafeZones.p.identity",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 120,
+        "wires": [
+            [
+                "3de08dbccaac6986"
+            ]
+        ]
+    },
+    {
+        "id": "8268225af792ac52",
+        "type": "change",
+        "z": "bdb60e75c804bf59",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "targetIds",
+                "pt": "msg",
+                "to": "payload.variables.GatheringPoints.p.identity",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 180,
+        "wires": [
+            [
+                "079bc9a023d58ddd"
+            ]
+        ]
+    },
+    {
+        "id": "761b6cf1f5fb8db2",
+        "type": "subflow:33089873be7dbdab",
+        "z": "bdb60e75c804bf59",
+        "name": "",
+        "x": 690,
+        "y": 120,
+        "wires": [
+            [
+                "37230c04567a2016"
+            ]
+        ]
+    },
+    {
+        "id": "2924e9aa80f8551e",
+        "type": "subflow:33089873be7dbdab",
+        "z": "bdb60e75c804bf59",
+        "name": "",
+        "x": 690,
+        "y": 180,
+        "wires": [
+            [
+                "8268225af792ac52"
+            ]
+        ]
+    },
+    {
+        "id": "9430de5369146093",
+        "type": "comment",
+        "z": "bdb60e75c804bf59",
+        "name": "questi change sono hardcoded, da adattare",
+        "info": "",
+        "x": 1140,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d77a0b55dbd2f358",
+        "type": "debug",
+        "z": "bdb60e75c804bf59",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "1b598d2610d4ae9f",
+        "type": "debug",
+        "z": "bdb60e75c804bf59",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "f66d2f87998d0fb7",
+        "type": "comment",
+        "z": "bdb60e75c804bf59",
+        "name": "sto usando BFS per ora",
+        "info": "",
+        "x": 360,
+        "y": 320,
+        "wires": []
     },
     {
         "id": "27c801e912b2bd2c",
@@ -4055,7 +4772,7 @@
                 "t": "set",
                 "p": "payload.variables",
                 "pt": "msg",
-                "to": "{\"DangerZones\":{\"count\":0},\"SignalledAreas\":{\"count\":0},\"Building\":{\"occupancy\":0}}",
+                "to": "{}",
                 "tot": "json"
             }
         ],
@@ -5018,7 +5735,7 @@
             },
             {
                 "p": "payload.variables",
-                "v": "{\"DangerZones\": {\"count\": 3}}",
+                "v": "{\"DangerZones\":{\"count\":3},\"MyPlace\":{\"name\":\"AA1\"}}",
                 "vt": "json"
             }
         ],
@@ -5036,42 +5753,171 @@
         ]
     },
     {
-        "id": "43bcf6facb7945a2",
+        "id": "f826475f7ed34e80",
         "type": "task-worker",
         "z": "1a10bef68b9ba5b6",
-        "name": "Worker: occupant-get-out",
+        "g": "c643b2bd69088014",
+        "name": "Worker: signal-area",
         "camunda": "cc7538c088cd1d8b",
-        "taskType": "occupant-get-out",
+        "taskType": "signal-area",
         "maxActiveJobs": 32,
         "timeout": 1000,
-        "x": 390,
-        "y": 2400,
+        "x": 410,
+        "y": 2740,
         "wires": [
             [
-                "eb23c341cbf6671a",
-                "5e0d2cddb013d2a2"
+                "246bb3a9caba877f",
+                "eb627453f595862e"
             ]
         ]
     },
     {
-        "id": "50c97ad24a11a988",
-        "type": "throw-error",
+        "id": "246bb3a9caba877f",
+        "type": "change",
         "z": "1a10bef68b9ba5b6",
-        "name": "",
-        "camunda": "cc7538c088cd1d8b",
-        "x": 850,
-        "y": 2400,
+        "g": "c643b2bd69088014",
+        "name": "Configure Assignments SafeZones lights on",
+        "rules": [
+            {
+                "t": "set",
+                "p": "assignments",
+                "pt": "msg",
+                "to": "{\t    \"view\": \"SafeZones\",\t    \"assignments\": [\t        {\t            \"parameter\": \"signalled\",\t            \"state\": true\t        }\t    ]\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 2740,
         "wires": [
             [
-                "8a53c4eaf71dd074"
+                "8d32cb2922256e3d",
+                "1bd9a0a8b6125170"
             ]
         ]
     },
     {
-        "id": "eb23c341cbf6671a",
+        "id": "f9ba76c5cf495b49",
+        "type": "complete-task",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "",
+        "x": 1240,
+        "y": 2800,
+        "wires": []
+    },
+    {
+        "id": "351ec3e0ec705167",
+        "type": "neo4j-bolt",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "server": "d9d1b2e046e79011",
+        "name": "Update Lights (Batch)",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 740,
+        "y": 2800,
+        "wires": [
+            [
+                "7f6711853f9230d1",
+                "3fda76198dafeb1d"
+            ],
+            [
+                "7f6711853f9230d1",
+                "3fda76198dafeb1d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7f6711853f9230d1",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "Restore Job & Clean Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"job\": $$.job}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 2800,
+        "wires": [
+            [
+                "f9ba76c5cf495b49"
+            ]
+        ]
+    },
+    {
+        "id": "8d32cb2922256e3d",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "Prepare UNWIND Query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{   \t    \"MyPlaceName\": $$.payload.job.variables.MyPlace.name,\t    \"assignments_list\": [$$.assignments.assignments]\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (p:Place) WHERE p.name = $MyPlaceName  UNWIND $assignments_list AS assignment  CALL create.set_property(p, assignment.parameter, assignment.state) YIELD node  RETURN count(DISTINCT node) AS updated_nodes",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 2800,
+        "wires": [
+            [
+                "351ec3e0ec705167",
+                "5c323e8e7b36a5e1"
+            ]
+        ]
+    },
+    {
+        "id": "3fda76198dafeb1d",
         "type": "debug",
         "z": "1a10bef68b9ba5b6",
-        "name": "debug 1",
+        "g": "c643b2bd69088014",
+        "name": "debug 3",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -5080,28 +5926,340 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 560,
-        "y": 2520,
+        "x": 1160,
+        "y": 2740,
         "wires": []
     },
     {
-        "id": "5e0d2cddb013d2a2",
+        "id": "509643f3a74e9a43",
         "type": "change",
         "z": "1a10bef68b9ba5b6",
+        "name": "Initialize process variables",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.variables",
+                "pt": "msg",
+                "to": "{\"DangerZones\":{\"count\":0},\"SignalledAreas\":{\"count\":0},\"Building\":{\"occupancy\":0}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eb627453f595862e",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 2700,
+        "wires": []
+    },
+    {
+        "id": "1bd9a0a8b6125170",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 2700,
+        "wires": []
+    },
+    {
+        "id": "5c323e8e7b36a5e1",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 2860,
+        "wires": []
+    },
+    {
+        "id": "92857f1bf7410593",
+        "type": "subflow:df8d344bd7233279",
+        "z": "1a10bef68b9ba5b6",
+        "g": "eebb8a9fccbfa553",
+        "name": "",
+        "x": 1200,
+        "y": 2200,
+        "wires": []
+    },
+    {
+        "id": "1085422a7aea65f0",
+        "type": "inject",
+        "z": "1a10bef68b9ba5b6",
+        "g": "eebb8a9fccbfa553",
+        "name": "Real Data inject",
+        "props": [
+            {
+                "p": "payload.tenantId",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.processDefinitionKey",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.variables",
+                "v": "$flowContext(\"processData\").variables",
+                "vt": "jsonata"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 960,
+        "y": 2200,
+        "wires": [
+            [
+                "92857f1bf7410593"
+            ]
+        ]
+    },
+    {
+        "id": "c968c501e43330d8",
+        "type": "inject",
+        "z": "1a10bef68b9ba5b6",
+        "g": "eebb8a9fccbfa553",
+        "name": "SignalledAreas Spotted inject",
+        "props": [
+            {
+                "p": "payload.tenantId",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Emergency_Warden\"].process.tenantId",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.processDefinitionKey",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Emergency_Warden\"].process.processDefinitionKey",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.variables",
+                "v": "{\"SignalledAreas\":{\"count\":3}}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1000,
+        "y": 2260,
+        "wires": [
+            [
+                "92857f1bf7410593"
+            ]
+        ]
+    },
+    {
+        "id": "1f2bc83bb6889e6d",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "Set Route Parameters (External)",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "startRoom",
+                "pt": "msg",
+                "to": "AA1",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "traverseLogicalRooms",
+                "pt": "msg",
+                "to": "SafeZones",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "targetLogicalRooms",
+                "pt": "msg",
+                "to": "GatheringPoints",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 2500,
+        "wires": [
+            [
+                "1d73f9b0a89aa022"
+            ]
+        ]
+    },
+    {
+        "id": "1d73f9b0a89aa022",
+        "type": "subflow:bdb60e75c804bf59",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "Execute Path Calculation",
+        "x": 950,
+        "y": 2500,
+        "wires": [
+            [
+                "9dd2f99a4cc318d1",
+                "eefa509433ddba2f"
+            ]
+        ]
+    },
+    {
+        "id": "3dfef2f147f66ec9",
+        "type": "inject",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 460,
+        "y": 2500,
+        "wires": [
+            [
+                "1f2bc83bb6889e6d"
+            ]
+        ]
+    },
+    {
+        "id": "9dd2f99a4cc318d1",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 2580,
+        "wires": []
+    },
+    {
+        "id": "eefa509433ddba2f",
+        "type": "switch",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "",
+        "property": "payload.variables.RoutePaths",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "empty"
+            },
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1190,
+        "y": 2440,
+        "wires": [
+            [
+                "a46823a955034c15"
+            ],
+            [
+                "a128b891590b4d75"
+            ]
+        ]
+    },
+    {
+        "id": "a128b891590b4d75",
+        "type": "complete-task",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "",
+        "x": 1360,
+        "y": 2460,
+        "wires": []
+    },
+    {
+        "id": "a46823a955034c15",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload.jobKey",
                 "pt": "msg",
-                "to": "payload.job.key",
+                "to": "job.key",
                 "tot": "msg"
             },
             {
                 "t": "set",
                 "p": "payload.variables",
                 "pt": "msg",
-                "to": "payload.variables",
+                "to": "job.variables",
                 "tot": "msg"
             },
             {
@@ -5124,19 +6282,72 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 640,
+        "x": 1380,
         "y": 2400,
         "wires": [
             [
-                "50c97ad24a11a988"
+                "417c8a0daed26cca"
             ]
         ]
     },
     {
-        "id": "8a53c4eaf71dd074",
+        "id": "417c8a0daed26cca",
+        "type": "throw-error",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "",
+        "camunda": "cc7538c088cd1d8b",
+        "x": 1590,
+        "y": 2400,
+        "wires": [
+            [
+                "aeca90174de1c13e"
+            ]
+        ]
+    },
+    {
+        "id": "aeca90174de1c13e",
         "type": "debug",
         "z": "1a10bef68b9ba5b6",
-        "name": "debug 2",
+        "g": "047df9d275c966b7",
+        "name": "debug 15",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1780,
+        "y": 2400,
+        "wires": []
+    },
+    {
+        "id": "1f6462ea3db68534",
+        "type": "task-worker",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "Worker: occupant-get-out",
+        "camunda": "cc7538c088cd1d8b",
+        "taskType": "occupant-get-out",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 430,
+        "y": 2420,
+        "wires": [
+            [
+                "1f2bc83bb6889e6d",
+                "7256c58f6d7e498c"
+            ]
+        ]
+    },
+    {
+        "id": "7256c58f6d7e498c",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "debug 16",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -5145,8 +6356,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1040,
-        "y": 2400,
+        "x": 640,
+        "y": 2380,
         "wires": []
     },
     {
