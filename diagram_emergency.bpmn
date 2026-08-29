@@ -2,9 +2,9 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1pwaro4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.50.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0">
   <bpmn:message id="Message_2r6r873" name="Message_2r6r873" />
   <bpmn:collaboration id="Collaboration_12aru2n">
-    <bpmn:participant id="Participant_0x8kekh" name="Emergency Warden" processRef="Process_1ptdbb2" />
-    <bpmn:participant id="Participant_1b80b3f" name="Security System" processRef="Process_1alebu8" />
-    <bpmn:participant id="Participant_0ihyw4y" name="Occupant" processRef="Process_00ifeqb" />
+    <bpmn:participant id="Participant_0x8kekh" name="Emergency Warden" processRef="Process_Emergency_Warden" />
+    <bpmn:participant id="Participant_1b80b3f" name="Security System" processRef="Process_SecSys" />
+    <bpmn:participant id="Participant_0ihyw4y" name="Occupant" processRef="Process_Occupant" />
     <bpmn:messageFlow id="Flow_021bh60" sourceRef="Activity_1m4lfju" targetRef="Activity_1n9n9dl" />
     <bpmn:messageFlow id="Flow_0kxb5fp" sourceRef="Activity_0mktwid" targetRef="Activity_0m3m1yv" />
     <bpmn:textAnnotation id="TextAnnotation_1di7pvl">
@@ -63,9 +63,12 @@ P: SafeZones</bpmn:text>
     <bpmn:association id="Association_0lsgawi" associationDirection="None" sourceRef="Activity_0nnuss2" targetRef="TextAnnotation_1clvkri" />
     <bpmn:association id="Association_14kud3n" associationDirection="None" sourceRef="Activity_1qm61wx" targetRef="TextAnnotation_1di7pvl" />
     <bpmn:association id="Association_0x5w7kb" associationDirection="None" sourceRef="Activity_1jq3s9s" targetRef="TextAnnotation_04nok61" />
-    <bpmn:association id="Association_11x6hxx" associationDirection="None" sourceRef="Activity_180iozn" targetRef="TextAnnotation_0tgyfki" />
+    <bpmn:textAnnotation id="TextAnnotation_0hxtq89">
+      <bpmn:text>TODO devo cambiarlo in conditional, appena trovo un modo per non creare infiniti processi</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1devbir" associationDirection="None" sourceRef="Event_0aqhfta" targetRef="TextAnnotation_0hxtq89" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1ptdbb2" isExecutable="false">
+  <bpmn:process id="Process_Emergency_Warden" isExecutable="true">
     <bpmn:task id="Activity_1n9n9dl" name="Rescue occupant">
       <bpmn:incoming>Flow_044bdqr</bpmn:incoming>
       <bpmn:outgoing>Flow_15l9ztx</bpmn:outgoing>
@@ -83,11 +86,12 @@ P: SafeZones</bpmn:text>
       <bpmn:incoming>Flow_0zxhuds</bpmn:incoming>
       <bpmn:outgoing>Flow_1osji9s</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:task id="Activity_1qm61wx" name="Move to signaled area">
-      <bpmn:incoming>Flow_1osji9s</bpmn:incoming>
-      <bpmn:outgoing>Flow_044bdqr</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:exclusiveGateway id="Gateway_06o3sbc" name="G: SignalledAreas.count == 0">
+    <bpmn:exclusiveGateway id="Gateway_06o3sbc" name="G: SignalledAreas.count == 0" default="Flow_0qwiyn8">
+      <bpmn:extensionElements>
+        <zeebe:executionListeners>
+          <zeebe:executionListener eventType="start" type="get-signalled-areas" />
+        </zeebe:executionListeners>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1c1a5lt</bpmn:incoming>
       <bpmn:outgoing>Flow_0qwiyn8</bpmn:outgoing>
       <bpmn:outgoing>Flow_14licj8</bpmn:outgoing>
@@ -99,7 +103,7 @@ P: SafeZones</bpmn:text>
       <bpmn:extensionElements />
       <bpmn:outgoing>Flow_0zxhuds</bpmn:outgoing>
       <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_1p5trj8">
-        <bpmn:condition xsi:type="bpmn:tFormalExpression" />
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">=SignalledAreas.count &gt; 0</bpmn:condition>
       </bpmn:conditionalEventDefinition>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_044bdqr" sourceRef="Activity_1qm61wx" targetRef="Activity_1n9n9dl" />
@@ -109,44 +113,23 @@ P: SafeZones</bpmn:text>
     <bpmn:sequenceFlow id="Flow_0qwiyn8" name="false" sourceRef="Gateway_06o3sbc" targetRef="Gateway_1h3x2hh" />
     <bpmn:sequenceFlow id="Flow_0zxhuds" sourceRef="Event_14zplqr" targetRef="Gateway_1h3x2hh" />
     <bpmn:sequenceFlow id="Flow_1osji9s" sourceRef="Gateway_1h3x2hh" targetRef="Activity_1qm61wx" />
-    <bpmn:sequenceFlow id="Flow_14licj8" name="true" sourceRef="Gateway_06o3sbc" targetRef="Event_0sn3abz" />
+    <bpmn:sequenceFlow id="Flow_14licj8" name="true" sourceRef="Gateway_06o3sbc" targetRef="Event_0sn3abz">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=SignalledAreas.count = 0</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Activity_1qm61wx" name="Move to signaled area">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="move" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1osji9s</bpmn:incoming>
+      <bpmn:outgoing>Flow_044bdqr</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
-  <bpmn:process id="Process_1alebu8" isExecutable="true">
-    <bpmn:sequenceFlow id="Flow_1340q0r" sourceRef="Activity_0gzcids" targetRef="Event_1huklhk" />
-    <bpmn:startEvent id="Event_1wm8jfq">
-      <bpmn:outgoing>Flow_0dox171</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:intermediateCatchEvent id="Event_0aqhfta" name="DangerZones spotted">
-      <bpmn:incoming>Flow_0dox171</bpmn:incoming>
-      <bpmn:outgoing>Flow_0pitvgb</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1wrnc3h" messageRef="Message_309b1c0" />
-    </bpmn:intermediateCatchEvent>
+  <bpmn:process id="Process_SecSys" isExecutable="true">
     <bpmn:exclusiveGateway id="Gateway_0ets6td">
       <bpmn:incoming>Flow_0ykp37t</bpmn:incoming>
       <bpmn:incoming>Flow_0pitvgb</bpmn:incoming>
-      <bpmn:outgoing>Flow_188jxr2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0fft6gk</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_180iozn" name="Adjust emergency lights">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="adjust-lights" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_188jxr2</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ul7uq5</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="Gateway_1ic8yvh" name="G: Building.occupancy == 0" default="Flow_1ol631i">
-      <bpmn:extensionElements>
-        <zeebe:executionListeners>
-          <zeebe:executionListener eventType="start" type="get-building-occupancy" />
-        </zeebe:executionListeners>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1ul7uq5</bpmn:incoming>
-      <bpmn:outgoing>Flow_0bflofo</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1ol631i</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:task id="Activity_0gzcids" name="Shut off emergency lights">
-      <bpmn:incoming>Flow_0bflofo</bpmn:incoming>
-      <bpmn:outgoing>Flow_1340q0r</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:intermediateCatchEvent id="Event_0acpmw0" name="10 seconds">
       <bpmn:incoming>Flow_1ol631i</bpmn:incoming>
       <bpmn:outgoing>Flow_0ykp37t</bpmn:outgoing>
@@ -154,25 +137,65 @@ P: SafeZones</bpmn:text>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">="PT10S"</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_0dox171" sourceRef="Event_1wm8jfq" targetRef="Event_0aqhfta" />
-    <bpmn:sequenceFlow id="Flow_0pitvgb" sourceRef="Event_0aqhfta" targetRef="Gateway_0ets6td" />
     <bpmn:sequenceFlow id="Flow_0ykp37t" sourceRef="Event_0acpmw0" targetRef="Gateway_0ets6td" />
-    <bpmn:sequenceFlow id="Flow_188jxr2" sourceRef="Gateway_0ets6td" targetRef="Activity_180iozn" />
-    <bpmn:sequenceFlow id="Flow_1ul7uq5" sourceRef="Activity_180iozn" targetRef="Gateway_1ic8yvh" />
-    <bpmn:sequenceFlow id="Flow_0bflofo" name="true" sourceRef="Gateway_1ic8yvh" targetRef="Activity_0gzcids">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=buildingOccupancy = 0</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1ol631i" sourceRef="Gateway_1ic8yvh" targetRef="Event_0acpmw0" />
+    <bpmn:serviceTask id="Activity_180iozn" name="Adjust emergency lights">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="adjust-lights" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15i7xxc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pp5n71</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0fft6gk" sourceRef="Gateway_0ets6td" targetRef="Activity_0x7itzg" />
+    <bpmn:task id="Activity_0x7itzg" name="Monitor building">
+      <bpmn:incoming>Flow_0fft6gk</bpmn:incoming>
+      <bpmn:outgoing>Flow_15i7xxc</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_15i7xxc" sourceRef="Activity_0x7itzg" targetRef="Activity_180iozn" />
+    <bpmn:exclusiveGateway id="Gateway_1ic8yvh" name="G: Building.occupancy == 0" default="Flow_1ol631i">
+      <bpmn:extensionElements>
+        <zeebe:executionListeners>
+          <zeebe:executionListener eventType="start" type="get-building-occupancy" />
+        </zeebe:executionListeners>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0pp5n71</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bflofo</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ol631i</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_0gzcids" name="Shut off emergency lights">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="shut-off-emergency-lights" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0bflofo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1340q0r</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:endEvent id="Event_1huklhk">
       <bpmn:incoming>Flow_1340q0r</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0bflofo" name="true" sourceRef="Gateway_1ic8yvh" targetRef="Activity_0gzcids">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=Building.occupancy = 0</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1340q0r" sourceRef="Activity_0gzcids" targetRef="Event_1huklhk" />
+    <bpmn:sequenceFlow id="Flow_0pp5n71" sourceRef="Activity_180iozn" targetRef="Gateway_1ic8yvh" />
+    <bpmn:sequenceFlow id="Flow_0pitvgb" sourceRef="Event_0aqhfta" targetRef="Gateway_0ets6td" />
+    <bpmn:startEvent id="Event_1wm8jfq">
+      <bpmn:outgoing>Flow_0dox171</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0dox171" sourceRef="Event_1wm8jfq" targetRef="Event_0aqhfta" />
+    <bpmn:intermediateCatchEvent id="Event_0aqhfta" name="DangerZones spotted">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=DangerZones&#10;" target="DangerZones" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dox171</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pitvgb</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1wrnc3h" messageRef="Message_309b1c0" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:association id="Association_11x6hxx" associationDirection="None" sourceRef="Activity_180iozn" targetRef="TextAnnotation_0tgyfki" />
     <bpmn:association id="Association_1ngghi4" associationDirection="None" sourceRef="Activity_0gzcids" targetRef="TextAnnotation_178ix69" />
   </bpmn:process>
-  <bpmn:process id="Process_00ifeqb" isExecutable="false">
-    <bpmn:task id="Activity_10obiin" name="Get out">
-      <bpmn:incoming>Flow_1e25g40</bpmn:incoming>
-      <bpmn:outgoing>Flow_0117h9c</bpmn:outgoing>
-    </bpmn:task>
+  <bpmn:process id="Process_Occupant" isExecutable="true">
     <bpmn:endEvent id="Event_17ny5dy">
       <bpmn:incoming>Flow_1x41zn7</bpmn:incoming>
     </bpmn:endEvent>
@@ -194,19 +217,26 @@ P: SafeZones</bpmn:text>
     <bpmn:startEvent id="Event_0pd0444" name="DangerZones&#10;.count &#62; 0">
       <bpmn:outgoing>Flow_1e25g40</bpmn:outgoing>
       <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_0l4msem">
-        <bpmn:condition xsi:type="bpmn:tFormalExpression" />
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">=DangerZones.count &gt; 0</bpmn:condition>
       </bpmn:conditionalEventDefinition>
     </bpmn:startEvent>
-    <bpmn:boundaryEvent id="Event_0natkg0" name="unreachable" attachedToRef="Activity_10obiin">
-      <bpmn:outgoing>Flow_0yy6qq9</bpmn:outgoing>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_0pykx0n" />
-    </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1e25g40" sourceRef="Event_0pd0444" targetRef="Activity_10obiin" />
     <bpmn:sequenceFlow id="Flow_0117h9c" sourceRef="Activity_10obiin" targetRef="Event_0o6mont" />
     <bpmn:sequenceFlow id="Flow_1x41zn7" sourceRef="Activity_0mktwid" targetRef="Event_17ny5dy" />
     <bpmn:sequenceFlow id="Flow_008f714" sourceRef="Activity_1m4lfju" targetRef="Activity_0mktwid" />
     <bpmn:sequenceFlow id="Flow_1mqslpx" sourceRef="Activity_0nnuss2" targetRef="Activity_1m4lfju" />
     <bpmn:sequenceFlow id="Flow_0yy6qq9" sourceRef="Event_0natkg0" targetRef="Activity_0nnuss2" />
+    <bpmn:serviceTask id="Activity_10obiin" name="Get out">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="occupant-get-out" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1e25g40</bpmn:incoming>
+      <bpmn:outgoing>Flow_0117h9c</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_0natkg0" name="unreachable" attachedToRef="Activity_10obiin">
+      <bpmn:outgoing>Flow_0yy6qq9</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0pykx0n" />
+    </bpmn:boundaryEvent>
   </bpmn:process>
   <bpmn:message id="Message_2972ft0" name="Message_2972ft0" />
   <bpmn:message id="Message_3dp3rim" name="start" />
@@ -236,10 +266,6 @@ P: SafeZones</bpmn:text>
       <bpmndi:BPMNShape id="BPMNShape_1053nn5" bpmnElement="Gateway_1h3x2hh" isMarkerVisible="true">
         <dc:Bounds x="325" y="825" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_014pwr4" bpmnElement="Activity_1qm61wx">
-        <dc:Bounds x="430" y="810" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0byqm6k" bpmnElement="Gateway_06o3sbc" isMarkerVisible="true">
         <dc:Bounds x="1085" y="825" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -254,6 +280,9 @@ P: SafeZones</bpmn:text>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="214" y="875" width="74" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0umki2g_di" bpmnElement="Activity_1qm61wx">
+        <dc:Bounds x="430" y="810" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_1brg857" bpmnElement="Flow_044bdqr">
         <di:waypoint x="530" y="850" />
@@ -295,12 +324,98 @@ P: SafeZones</bpmn:text>
           <dc:Bounds x="1145" y="832" width="19" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_0ifdikq" bpmnElement="Participant_0ihyw4y" isHorizontal="true">
-        <dc:Bounds x="160" y="970" width="920" height="270" />
+      <bpmndi:BPMNShape id="BPMNShape_1w32aki" bpmnElement="Participant_1b80b3f" isHorizontal="true">
+        <dc:Bounds x="160" y="390" width="1378" height="325" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0mgnz7w" bpmnElement="Activity_10obiin">
-        <dc:Bounds x="320" y="1080" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_1b37asw_di" bpmnElement="Event_1wm8jfq">
+        <dc:Bounds x="222" y="532" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qvzw4r_di" bpmnElement="Event_0aqhfta">
+        <dc:Bounds x="362" y="532" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="348" y="575" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0c545cw" bpmnElement="Gateway_0ets6td" isMarkerVisible="true">
+        <dc:Bounds x="550" y="525" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0oazx80" bpmnElement="Event_0acpmw0">
+        <dc:Bounds x="732" y="642" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="722" y="685" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0eja0nl_di" bpmnElement="Activity_180iozn">
+        <dc:Bounds x="760" y="510" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x7itzg_di" bpmnElement="Activity_0x7itzg">
+        <dc:Bounds x="630" y="510" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_02rb97g" bpmnElement="Gateway_1ic8yvh" isMarkerVisible="true">
+        <dc:Bounds x="1100" y="525" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1052" y="503" width="135" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ke4s8f_di" bpmnElement="Activity_0gzcids">
+        <dc:Bounds x="1230" y="510" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1t6mijl" bpmnElement="Event_1huklhk">
+        <dc:Bounds x="1402" y="532" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0dox171_di" bpmnElement="Flow_0dox171">
+        <di:waypoint x="258" y="550" />
+        <di:waypoint x="362" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pitvgb_di" bpmnElement="Flow_0pitvgb">
+        <di:waypoint x="398" y="550" />
+        <di:waypoint x="550" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ykp37t_di" bpmnElement="Flow_0ykp37t">
+        <di:waypoint x="732" y="660" />
+        <di:waypoint x="575" y="660" />
+        <di:waypoint x="575" y="575" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ol631i_di" bpmnElement="Flow_1ol631i">
+        <di:waypoint x="1125" y="575" />
+        <di:waypoint x="1125" y="660" />
+        <di:waypoint x="768" y="660" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fft6gk_di" bpmnElement="Flow_0fft6gk">
+        <di:waypoint x="600" y="550" />
+        <di:waypoint x="630" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15i7xxc_di" bpmnElement="Flow_15i7xxc">
+        <di:waypoint x="730" y="550" />
+        <di:waypoint x="760" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1yrdr4g" bpmnElement="Flow_0bflofo">
+        <di:waypoint x="1150" y="550" />
+        <di:waypoint x="1230" y="550" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1165" y="523" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1xgophs" bpmnElement="Flow_1340q0r">
+        <di:waypoint x="1330" y="550" />
+        <di:waypoint x="1402" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pp5n71_di" bpmnElement="Flow_0pp5n71">
+        <di:waypoint x="860" y="550" />
+        <di:waypoint x="1100" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1yq5zz9" bpmnElement="Association_11x6hxx">
+        <di:waypoint x="819" y="510" />
+        <di:waypoint x="824" y="483" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_10sa6x9" bpmnElement="Association_1ngghi4">
+        <di:waypoint x="1230" y="529" />
+        <di:waypoint x="1140" y="492" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_0ifdikq" bpmnElement="Participant_0ihyw4y" isHorizontal="true">
+        <dc:Bounds x="160" y="970" width="920" height="270" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1asg0u4" bpmnElement="Event_17ny5dy">
@@ -326,6 +441,9 @@ P: SafeZones</bpmn:text>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="218" y="1145" width="67" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11zr0bc_di" bpmnElement="Activity_10obiin">
+        <dc:Bounds x="320" y="1080" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0abh04c" bpmnElement="Event_0natkg0">
         <dc:Bounds x="352" y="1142" width="36" height="36" />
@@ -359,88 +477,9 @@ P: SafeZones</bpmn:text>
         <di:waypoint x="610" y="1210" />
         <di:waypoint x="610" y="1160" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_1w32aki" bpmnElement="Participant_1b80b3f" isHorizontal="true">
-        <dc:Bounds x="160" y="390" width="1378" height="325" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1b37asw_di" bpmnElement="Event_1wm8jfq">
-        <dc:Bounds x="222" y="532" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0qvzw4r_di" bpmnElement="Event_0aqhfta">
-        <dc:Bounds x="362" y="532" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="348" y="575" width="67" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0c545cw" bpmnElement="Gateway_0ets6td" isMarkerVisible="true">
-        <dc:Bounds x="550" y="525" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0eja0nl_di" bpmnElement="Activity_180iozn">
-        <dc:Bounds x="700" y="510" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_02rb97g" bpmnElement="Gateway_1ic8yvh" isMarkerVisible="true">
-        <dc:Bounds x="910" y="525" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="862" y="503" width="135" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0a0a3c6" bpmnElement="Activity_0gzcids">
-        <dc:Bounds x="1040" y="510" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0oazx80" bpmnElement="Event_0acpmw0">
-        <dc:Bounds x="732" y="642" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="722" y="685" width="57" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1t6mijl" bpmnElement="Event_1huklhk">
-        <dc:Bounds x="1212" y="532" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_10sa6x9" bpmnElement="Association_1ngghi4">
-        <di:waypoint x="1091" y="510" />
-        <di:waypoint x="1091" y="492" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1xgophs" bpmnElement="Flow_1340q0r">
-        <di:waypoint x="1140" y="550" />
-        <di:waypoint x="1212" y="550" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dox171_di" bpmnElement="Flow_0dox171">
-        <di:waypoint x="258" y="550" />
-        <di:waypoint x="362" y="550" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pitvgb_di" bpmnElement="Flow_0pitvgb">
-        <di:waypoint x="398" y="550" />
-        <di:waypoint x="550" y="550" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ykp37t_di" bpmnElement="Flow_0ykp37t">
-        <di:waypoint x="732" y="660" />
-        <di:waypoint x="575" y="660" />
-        <di:waypoint x="575" y="575" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1o7o90a" bpmnElement="Flow_188jxr2">
-        <di:waypoint x="600" y="550" />
-        <di:waypoint x="700" y="550" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ul7uq5_di" bpmnElement="Flow_1ul7uq5">
-        <di:waypoint x="800" y="550" />
-        <di:waypoint x="910" y="550" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1yrdr4g" bpmnElement="Flow_0bflofo">
-        <di:waypoint x="960" y="550" />
-        <di:waypoint x="1040" y="550" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="975" y="523" width="19" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ol631i_di" bpmnElement="Flow_1ol631i">
-        <di:waypoint x="935" y="575" />
-        <di:waypoint x="935" y="660" />
-        <di:waypoint x="768" y="660" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1yq5zz9" bpmnElement="Association_11x6hxx">
-        <di:waypoint x="723" y="510" />
-        <di:waypoint x="698" y="473" />
+      <bpmndi:BPMNEdge id="Association_1devbir_di" bpmnElement="Association_1devbir">
+        <di:waypoint x="388" y="534" />
+        <di:waypoint x="403" y="505" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_0g3yevr" bpmnElement="TextAnnotation_1di7pvl">
         <dc:Bounds x="425" y="750" width="112" height="40" />
@@ -450,8 +489,16 @@ P: SafeZones</bpmn:text>
         <dc:Bounds x="746" y="750" width="118" height="40" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1ti4pa2" bpmnElement="TextAnnotation_0tgyfki">
+        <dc:Bounds x="735" y="440" width="189" height="43" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1y9ggh6" bpmnElement="TextAnnotation_1iu01us">
         <dc:Bounds x="740" y="80" width="401" height="273" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0j01ym7" bpmnElement="TextAnnotation_178ix69">
+        <dc:Bounds x="994" y="452" width="201" height="40" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0trd91u" bpmnElement="TextAnnotation_17dqptb">
@@ -494,12 +541,8 @@ P: SafeZones</bpmn:text>
         <di:waypoint x="810" y="810" />
         <di:waypoint x="810" y="790" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_1ti4pa2" bpmnElement="TextAnnotation_0tgyfki">
-        <dc:Bounds x="590" y="430" width="189" height="43" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0j01ym7" bpmnElement="TextAnnotation_178ix69">
-        <dc:Bounds x="994" y="452" width="201" height="40" />
+      <bpmndi:BPMNShape id="TextAnnotation_0hxtq89_di" bpmnElement="TextAnnotation_0hxtq89">
+        <dc:Bounds x="400" y="390" width="102.31562137049941" height="115" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
