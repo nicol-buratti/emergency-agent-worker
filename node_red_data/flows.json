@@ -843,12 +843,13 @@
         },
         "nodes": [
             "3f61dbfac8e312e0",
-            "9adb4f4c4528e10d"
+            "9adb4f4c4528e10d",
+            "2854baa19fda51ef"
         ],
         "x": 294,
-        "y": 2239,
-        "w": 452,
-        "h": 82
+        "y": 2159,
+        "w": 512,
+        "h": 142
     },
     {
         "id": "19268c5a199e4927",
@@ -4651,7 +4652,7 @@
         "z": "1a10bef68b9ba5b6",
         "g": "647c338746d7bb2b",
         "name": "",
-        "x": 650,
+        "x": 670,
         "y": 1760,
         "wires": [
             [
@@ -4716,7 +4717,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 940,
+        "x": 960,
         "y": 1760,
         "wires": [
             [
@@ -4811,8 +4812,8 @@
         "z": "1a10bef68b9ba5b6",
         "g": "90d0d0a88bf68fdf",
         "name": "",
-        "x": 600,
-        "y": 2280,
+        "x": 660,
+        "y": 2200,
         "wires": []
     },
     {
@@ -4820,7 +4821,7 @@
         "type": "inject",
         "z": "1a10bef68b9ba5b6",
         "g": "90d0d0a88bf68fdf",
-        "name": "",
+        "name": "Real Data inject",
         "props": [
             {
                 "p": "payload.tenantId",
@@ -4843,8 +4844,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 390,
-        "y": 2280,
+        "x": 420,
+        "y": 2200,
         "wires": [
             [
                 "3f61dbfac8e312e0"
@@ -4950,8 +4951,8 @@
         "z": "1a10bef68b9ba5b6",
         "g": "647c338746d7bb2b",
         "name": "",
-        "x": 460,
-        "y": 1840,
+        "x": 420,
+        "y": 1760,
         "wires": [
             [
                 "ff79817c2adbc7ed"
@@ -4981,7 +4982,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 420,
-        "y": 1800,
+        "y": 1820,
         "wires": [
             [
                 "fb7e4c97a81debfa"
@@ -4996,6 +4997,156 @@
         "info": "",
         "x": 1590,
         "y": 1940,
+        "wires": []
+    },
+    {
+        "id": "2854baa19fda51ef",
+        "type": "inject",
+        "z": "1a10bef68b9ba5b6",
+        "g": "90d0d0a88bf68fdf",
+        "name": "DangerZone Spotted inject",
+        "props": [
+            {
+                "p": "payload.tenantId",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.processDefinitionKey",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.variables",
+                "v": "{\"DangerZones\": {\"count\": 3}}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 450,
+        "y": 2260,
+        "wires": [
+            [
+                "3f61dbfac8e312e0"
+            ]
+        ]
+    },
+    {
+        "id": "43bcf6facb7945a2",
+        "type": "task-worker",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Worker: occupant-get-out",
+        "camunda": "cc7538c088cd1d8b",
+        "taskType": "occupant-get-out",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 390,
+        "y": 2400,
+        "wires": [
+            [
+                "eb23c341cbf6671a",
+                "5e0d2cddb013d2a2"
+            ]
+        ]
+    },
+    {
+        "id": "50c97ad24a11a988",
+        "type": "throw-error",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "camunda": "cc7538c088cd1d8b",
+        "x": 850,
+        "y": 2400,
+        "wires": [
+            [
+                "8a53c4eaf71dd074"
+            ]
+        ]
+    },
+    {
+        "id": "eb23c341cbf6671a",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 2520,
+        "wires": []
+    },
+    {
+        "id": "5e0d2cddb013d2a2",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.jobKey",
+                "pt": "msg",
+                "to": "payload.job.key",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.variables",
+                "pt": "msg",
+                "to": "payload.variables",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.errorCode",
+                "pt": "msg",
+                "to": "no-way-found",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.errorMessage",
+                "pt": "msg",
+                "to": "No way found",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 2400,
+        "wires": [
+            [
+                "50c97ad24a11a988"
+            ]
+        ]
+    },
+    {
+        "id": "8a53c4eaf71dd074",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 2400,
         "wires": []
     },
     {
