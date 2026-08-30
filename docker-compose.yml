@@ -91,9 +91,70 @@ services:
       MCP_READ_ONLY: "true"
       MCP_SERVER: "server"
 
+  camunda-data-init:
+    image: camunda/camunda:8.9.16
+    user: "0:0"
+    entrypoint: [ "/bin/sh", "-c", "chown -R 1001:1001 /usr/local/camunda/camunda-data && chmod 775 /usr/local/camunda/camunda-data" ]
+    volumes:
+      - camunda-data:/usr/local/camunda/camunda-data
+    restart: "no"
+
+  orchestration:
+    # Consolidated Zeebe + Operate + Tasklist - https://docs.camunda.io/docs/self-managed/setup/deploy/other/docker/#zeebe
+    image: camunda/camunda:8.9.16
+    container_name: orchestration
+    ports:
+      - "26500:26500"
+      - "9600:9600"
+      - "8080:8080"
+    environment:
+      - JAVA_TOOL_OPTIONS="-XX:+PrintFlagsFinal"
+    env_file:
+      - path: .env
+        required: true
+    mem_limit: 1g
+    restart: on-failure
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "bash -c 'exec 3<>/dev/tcp/127.0.0.1/9600 && echo -e \"GET /actuator/health/status HTTP/1.1\r
+
+            Host: localhost\r
+
+            \r
+
+            \" >&3 && head -n 1 <&3'"
+        ]
+      interval: 1s
+      retries: 30
+      start_period: 30s
+    volumes:
+      - camunda:/usr/local/camunda/data
+      - camunda-data:/usr/local/camunda/camunda-data
+      - ./driver-lib:/driver-lib:ro
+    configs:
+      - source: orchestration-config
+        target: /usr/local/camunda/config/application.yaml
+    networks:
+      - camunda
+    depends_on:
+      camunda-data-init:
+        condition: service_completed_successfully
+
 volumes:
   node_red_data:
+  camunda:
+  camunda-data:
 
   mg_lib:
   mg_log:
   mg_etc:
+
+networks:
+  camunda:
+    name: camunda
+
+configs:
+  orchestration-config:
+    file: ./configuration/application-h2.yaml
