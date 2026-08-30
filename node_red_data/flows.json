@@ -301,7 +301,18 @@
                 ]
             }
         ],
-        "out": [],
+        "out": [
+            {
+                "x": 720,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "dc19b9df1af8d1c3",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
         "env": [],
         "meta": {},
         "color": "#DDAA99"
@@ -894,9 +905,9 @@
             "fb7e4c97a81debfa",
             "1108cf533143a035"
         ],
-        "x": 294,
+        "x": 284,
         "y": 1579,
-        "w": 1032,
+        "w": 1042,
         "h": 542
     },
     {
@@ -910,11 +921,13 @@
         "nodes": [
             "3f61dbfac8e312e0",
             "9adb4f4c4528e10d",
-            "2854baa19fda51ef"
+            "2854baa19fda51ef",
+            "95466f1d318214c1",
+            "acfb22dd0f0f02a2"
         ],
         "x": 294,
         "y": 2159,
-        "w": 512,
+        "w": 892,
         "h": 142
     },
     {
@@ -958,11 +971,13 @@
         "nodes": [
             "92857f1bf7410593",
             "1085422a7aea65f0",
-            "c968c501e43330d8"
+            "c968c501e43330d8",
+            "ddc60365bf2e2ddf",
+            "ec9babf2a69f9adf"
         ],
-        "x": 834,
+        "x": 1214,
         "y": 2159,
-        "w": 512,
+        "w": 912,
         "h": 142
     },
     {
@@ -4878,6 +4893,20 @@
                 "pt": "flow",
                 "to": "payload",
                 "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "wardenStarted",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "occupantStarted",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -4885,7 +4914,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1200,
+        "x": 1180,
         "y": 500,
         "wires": [
             [
@@ -5529,9 +5558,13 @@
         "z": "1a10bef68b9ba5b6",
         "g": "90d0d0a88bf68fdf",
         "name": "",
-        "x": 660,
+        "x": 860,
         "y": 2200,
-        "wires": []
+        "wires": [
+            [
+                "acfb22dd0f0f02a2"
+            ]
+        ]
     },
     {
         "id": "9adb4f4c4528e10d",
@@ -5565,7 +5598,7 @@
         "y": 2200,
         "wires": [
             [
-                "3f61dbfac8e312e0"
+                "95466f1d318214c1"
             ]
         ]
     },
@@ -5577,7 +5610,9 @@
         "name": "",
         "x": 1160,
         "y": 1980,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
         "id": "8e87128e338e1375",
@@ -5748,7 +5783,7 @@
         "y": 2260,
         "wires": [
             [
-                "3f61dbfac8e312e0"
+                "95466f1d318214c1"
             ]
         ]
     },
@@ -6014,9 +6049,13 @@
         "z": "1a10bef68b9ba5b6",
         "g": "eebb8a9fccbfa553",
         "name": "",
-        "x": 1200,
+        "x": 1860,
         "y": 2200,
-        "wires": []
+        "wires": [
+            [
+                "ec9babf2a69f9adf"
+            ]
+        ]
     },
     {
         "id": "1085422a7aea65f0",
@@ -6046,11 +6085,11 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 960,
+        "x": 1340,
         "y": 2200,
         "wires": [
             [
-                "92857f1bf7410593"
+                "ddc60365bf2e2ddf"
             ]
         ]
     },
@@ -6082,11 +6121,11 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 1000,
+        "x": 1380,
         "y": 2260,
         "wires": [
             [
-                "92857f1bf7410593"
+                "ddc60365bf2e2ddf"
             ]
         ]
     },
@@ -6337,7 +6376,6 @@
         "y": 2420,
         "wires": [
             [
-                "1f2bc83bb6889e6d",
                 "7256c58f6d7e498c"
             ]
         ]
@@ -6359,6 +6397,106 @@
         "x": 640,
         "y": 2380,
         "wires": []
+    },
+    {
+        "id": "95466f1d318214c1",
+        "type": "switch",
+        "z": "1a10bef68b9ba5b6",
+        "g": "90d0d0a88bf68fdf",
+        "name": "Check if Started",
+        "property": "occupantStarted",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 2200,
+        "wires": [
+            [
+                "3f61dbfac8e312e0"
+            ]
+        ]
+    },
+    {
+        "id": "acfb22dd0f0f02a2",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "90d0d0a88bf68fdf",
+        "name": "Set flow var",
+        "rules": [
+            {
+                "t": "set",
+                "p": "occupantStarted",
+                "pt": "flow",
+                "to": "$count(payload.processInstances) > 0",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1090,
+        "y": 2200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ddc60365bf2e2ddf",
+        "type": "switch",
+        "z": "1a10bef68b9ba5b6",
+        "g": "eebb8a9fccbfa553",
+        "name": "Check if Started",
+        "property": "wardenStarted",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1600,
+        "y": 2200,
+        "wires": [
+            [
+                "92857f1bf7410593"
+            ]
+        ]
+    },
+    {
+        "id": "ec9babf2a69f9adf",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "eebb8a9fccbfa553",
+        "name": "Set flow var",
+        "rules": [
+            {
+                "t": "set",
+                "p": "wardenStarted",
+                "pt": "flow",
+                "to": "$count(payload.processInstances) > 0",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2030,
+        "y": 2260,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "b4253b79dc30039e",
