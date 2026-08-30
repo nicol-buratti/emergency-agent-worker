@@ -977,7 +977,7 @@
         ],
         "x": 1214,
         "y": 2159,
-        "w": 912,
+        "w": 972,
         "h": 142
     },
     {
@@ -996,20 +996,38 @@
         "nodes": [
             "1f6462ea3db68534",
             "1f2bc83bb6889e6d",
-            "7256c58f6d7e498c",
             "3dfef2f147f66ec9",
             "1d73f9b0a89aa022",
-            "9dd2f99a4cc318d1",
             "eefa509433ddba2f",
             "a128b891590b4d75",
             "a46823a955034c15",
             "417c8a0daed26cca",
-            "aeca90174de1c13e"
+            "aeca90174de1c13e",
+            "50acbfb917aaa253",
+            "e951eb7cd2155f72"
         ],
         "x": 294,
-        "y": 2339,
+        "y": 2359,
         "w": 1592,
-        "h": 282
+        "h": 262
+    },
+    {
+        "id": "b12df3ad553d7c82",
+        "type": "group",
+        "z": "1a10bef68b9ba5b6",
+        "name": "Manual start Occupant process",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "bf7718f8c9570737",
+            "5ac855a2fe91e3c9",
+            "d93c683f4468a5aa"
+        ],
+        "x": 294,
+        "y": 2959,
+        "w": 712,
+        "h": 142
     },
     {
         "id": "19268c5a199e4927",
@@ -3757,12 +3775,10 @@
         "y": 260,
         "wires": [
             [
-                "45f703bebf1064b1",
-                "d77a0b55dbd2f358"
+                "45f703bebf1064b1"
             ],
             [
-                "45f703bebf1064b1",
-                "d77a0b55dbd2f358"
+                "45f703bebf1064b1"
             ],
             []
         ]
@@ -3789,9 +3805,7 @@
         "x": 920,
         "y": 260,
         "wires": [
-            [
-                "1b598d2610d4ae9f"
-            ]
+            []
         ]
     },
     {
@@ -3984,40 +3998,6 @@
         "info": "",
         "x": 1140,
         "y": 80,
-        "wires": []
-    },
-    {
-        "id": "d77a0b55dbd2f358",
-        "type": "debug",
-        "z": "bdb60e75c804bf59",
-        "name": "debug 10",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 820,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "1b598d2610d4ae9f",
-        "type": "debug",
-        "z": "bdb60e75c804bf59",
-        "name": "debug 12",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1080,
-        "y": 380,
         "wires": []
     },
     {
@@ -4904,7 +4884,14 @@
             {
                 "t": "set",
                 "p": "occupantStarted",
-                "pt": "msg",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "secSysStarted",
+                "pt": "flow",
                 "to": "false",
                 "tot": "bool"
             }
@@ -6188,7 +6175,6 @@
         "y": 2500,
         "wires": [
             [
-                "9dd2f99a4cc318d1",
                 "eefa509433ddba2f"
             ]
         ]
@@ -6224,23 +6210,6 @@
         ]
     },
     {
-        "id": "9dd2f99a4cc318d1",
-        "type": "debug",
-        "z": "1a10bef68b9ba5b6",
-        "g": "047df9d275c966b7",
-        "name": "debug 8",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1140,
-        "y": 2580,
-        "wires": []
-    },
-    {
         "id": "eefa509433ddba2f",
         "type": "switch",
         "z": "1a10bef68b9ba5b6",
@@ -6266,7 +6235,7 @@
                 "a46823a955034c15"
             ],
             [
-                "a128b891590b4d75"
+                "e951eb7cd2155f72"
             ]
         ]
     },
@@ -6276,8 +6245,8 @@
         "z": "1a10bef68b9ba5b6",
         "g": "047df9d275c966b7",
         "name": "",
-        "x": 1360,
-        "y": 2460,
+        "x": 1740,
+        "y": 2500,
         "wires": []
     },
     {
@@ -6376,27 +6345,9 @@
         "y": 2420,
         "wires": [
             [
-                "7256c58f6d7e498c"
+                "1f2bc83bb6889e6d"
             ]
         ]
-    },
-    {
-        "id": "7256c58f6d7e498c",
-        "type": "debug",
-        "z": "1a10bef68b9ba5b6",
-        "g": "047df9d275c966b7",
-        "name": "debug 16",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 640,
-        "y": 2380,
-        "wires": []
     },
     {
         "id": "95466f1d318214c1",
@@ -6433,6 +6384,13 @@
                 "t": "set",
                 "p": "occupantStarted",
                 "pt": "flow",
+                "to": "$count(payload.processInstances) > 0",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "secSysStarted",
+                "pt": "msg",
                 "to": "$count(payload.processInstances) > 0",
                 "tot": "jsonata"
             }
@@ -6492,10 +6450,138 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2030,
-        "y": 2260,
+        "x": 2090,
+        "y": 2200,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "50acbfb917aaa253",
+        "type": "comment",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "prendi la prima route e assegna la posizione del occupant a target",
+        "info": "",
+        "x": 1570,
+        "y": 2580,
+        "wires": []
+    },
+    {
+        "id": "bf7718f8c9570737",
+        "type": "subflow:df8d344bd7233279",
+        "z": "1a10bef68b9ba5b6",
+        "g": "b12df3ad553d7c82",
+        "name": "",
+        "x": 860,
+        "y": 3000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5ac855a2fe91e3c9",
+        "type": "inject",
+        "z": "1a10bef68b9ba5b6",
+        "g": "b12df3ad553d7c82",
+        "name": "Real Data inject",
+        "props": [
+            {
+                "p": "payload.tenantId",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.processDefinitionKey",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.variables",
+                "v": "$flowContext(\"processData\").variables",
+                "vt": "jsonata"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 420,
+        "y": 3000,
+        "wires": [
+            [
+                "bf7718f8c9570737"
+            ]
+        ]
+    },
+    {
+        "id": "d93c683f4468a5aa",
+        "type": "inject",
+        "z": "1a10bef68b9ba5b6",
+        "g": "b12df3ad553d7c82",
+        "name": "DangerZone Spotted inject",
+        "props": [
+            {
+                "p": "payload.tenantId",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.processDefinitionKey",
+                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
+                "vt": "jsonata"
+            },
+            {
+                "p": "payload.variables",
+                "v": "{\"DangerZones\":{\"count\":3},\"MyPlace\":{\"name\":\"AA1\"}}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 450,
+        "y": 3060,
+        "wires": [
+            [
+                "bf7718f8c9570737"
+            ]
+        ]
+    },
+    {
+        "id": "e951eb7cd2155f72",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.variables.MyPlace.name",
+                "pt": "msg",
+                "to": "payload.variables.RoutePaths[0].target_id.properties.name",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.variables.RoutePaths",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1360,
+        "y": 2480,
+        "wires": [
+            [
+                "a128b891590b4d75"
+            ]
         ]
     },
     {
