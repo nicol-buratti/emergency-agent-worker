@@ -1,0 +1,2270 @@
+[
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (438-451 ppm), temperature (25.99-26.11°C), and humidity (64.82-65.01%). No HVAC/shaft connections detected. No critical hazards found in adjacent rooms (C3, E5) or nearby areas.",
+    "elapsed_time_seconds": 41.2761746289998
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (433-443 ppm), normal temperature (26°C), and humidity (65%). No critical hazards detected in adjacent rooms or structural context. No threat propagation risk identified.",
+    "elapsed_time_seconds": 64.27397042999837
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC (60,000 ppb) and eCO2 (57,330 ppm) levels indicate potential gas/vapor accumulation or ventilation failure, posing health risks despite normal CO2/temperature/humidity.",
+    "elapsed_time_seconds": 25.96022167999945
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.1,
+    "justification": "CO2 levels (437-440 ppm) are slightly elevated but within acceptable limits. No significant temperature spikes or HVAC/shaft connections detected that could propagate hazards.",
+    "elapsed_time_seconds": 139.09790403899933
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (430-436 ppm), temperature (26.1-26.3°C), humidity (64-65%), and TVOC/eCO2 (57k-60k) within normal ranges. No adjacent hazards detected via HVAC/shaft connections or critical hazard radius. Adjacent rooms (C3, E5) require no immediate assessment based on current data.",
+    "elapsed_time_seconds": 34.779922273999546
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.75,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels detected, which may indicate potential air quality issues or chemical exposure risks.",
+    "elapsed_time_seconds": 89.98080201199991
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "All sensor readings (CO2: 437-440 ppm, temperature: 25.9°C, humidity: 59.3-59.6%, TVOC: 0, eco2: 400) are within normal safety ranges. No immediate threats detected.",
+    "elapsed_time_seconds": 30.575551003001237
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "All sensor readings (CO2: 431-433 ppm, temperature: 26.2-26.4°C, humidity: 64.1-64.4%, TVOC: 60,000, eco2: 57,330) are within safe thresholds. No immediate hazards detected.",
+    "elapsed_time_seconds": 18.7068978949992
+  },
+  {
+    "room": "departmentA:StanzaCulmone",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.15,
+    "justification": "CO2 level (412 ppm) slightly elevated but within acceptable range for unoccupied spaces. Temperature (27.5°C) and humidity (55%) within normal limits. No critical hazards or system connections detected.",
+    "elapsed_time_seconds": 50.96968416100026
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "heat",
+    "danger_score": 0.2,
+    "justification": "Temperature shows a gradual increase (26.29°C to 26.44°C over 5 minutes) which could indicate early-stage thermal anomaly, though CO2 levels remain low (430-432 ppm).",
+    "elapsed_time_seconds": 54.995032429000275
+  },
+  {
+    "room": "departmentA:StanzaDocente",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.75,
+    "justification": "Elevated CO2 (432-435 ppm) and high temperature (31.5°C) suggest potential combustion or smoke presence. No HVAC connections found, but adjacent rooms should be monitored for spread.",
+    "elapsed_time_seconds": 130.63396564200048
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (429-431 ppm), temperature (26.4-26.5°C), humidity (64%), and TVOC/eCO2 levels. No adjacent hazards or system connections detected.",
+    "elapsed_time_seconds": 42.15226789500048
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (428-430 ppm), moderate temperature (26.5°C), and no anomalies in humidity or TVOC. No immediate fire, smoke, or hazardous conditions detected.",
+    "elapsed_time_seconds": 74.95872443299959
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (428-429 ppm), temperature (26.5°C), humidity (63-64%), TVOC (60,000 ppm), and eCO2 (57,330 ppm) within safe thresholds. No immediate threats detected.",
+    "elapsed_time_seconds": 17.17103637600121
+  },
+  {
+    "room": "departmentA:StanzaCulmone",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (408-411 ppm), temperature (27.5°C), and humidity (55%) within normal ranges. No occupants present. No anomalies detected in primary room.",
+    "elapsed_time_seconds": 17.487443039000937
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings (CO2: 443 ppm, TVOC: 60,000, eCO2: 57,330) are within safe thresholds. No immediate hazards detected.",
+    "elapsed_time_seconds": 28.48541732800004
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC levels (60,000) detected in sensor data, indicating potential air quality issues. No critical hazards found in adjacent rooms or immediate vicinity.",
+    "elapsed_time_seconds": 57.476458066001214
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings (CO2: 443-448 ppm, temperature: 28.3°C, humidity: 58%, TVOC/eCO2: 57-60k) are within normal operational ranges. No immediate threats detected.",
+    "elapsed_time_seconds": 34.179405386001235
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels detected in consecutive readings, indicating potential air quality issues or chemical exposure risks. Temperature (28.3°C) and CO2 (445 ppm) are within moderate ranges but contribute to discomfort.",
+    "elapsed_time_seconds": 77.8857696569994
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (447-449 ppm), normal temperature (28.3°C), and acceptable TVOC/eCO2 levels. No immediate threats detected in primary room.",
+    "elapsed_time_seconds": 52.571935968000616
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential air quality issues, though CO2 remains within safe limits. This could signal early-stage contamination or ventilation problems.",
+    "elapsed_time_seconds": 67.1034407850002
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.95,
+    "justification": "Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate severe air quality issues, posing health risks and potential for hazardous gas accumulation.",
+    "elapsed_time_seconds": 45.197096635998605
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "smoke",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC (60,000 ppm) and CO2 (445-447 ppm) levels indicate potential combustion or chemical release. While CO2 is within normal range, TVOC suggests possible smoke or volatile chemical presence.",
+    "elapsed_time_seconds": 139.2856839649994
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels detected in room AB2, which may indicate potential air quality issues or gas accumulation. While adjacent rooms (C3, E5) show no critical hazards, these readings exceed typical safe thresholds for indoor air quality.",
+    "elapsed_time_seconds": 94.25604047500019
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (444-447 ppm), temperature (28.4°C), and no spikes in TVOC/eco2. Values remain within safe thresholds for occupancy. No immediate fire, smoke, or hazard propagation risk detected.",
+    "elapsed_time_seconds": 40.10983122499965
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (425 ppm), temperature (26.78°C), humidity (63.3%), and TVOC/eCO2 levels. No adjacent room hazards detected via available tools. HVAC/shaft connection data unavailable but no immediate risks indicated.",
+    "elapsed_time_seconds": 64.31531720600105
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "CO2 levels (444-445 ppm) are slightly elevated above normal (typically <400 ppm) but not yet in hazardous range. Temperature (28.4°C) and humidity (57-58%) are within acceptable limits. Adjacent rooms (C3, E5) exist but no critical hazards detected in immediate vicinity.",
+    "elapsed_time_seconds": 68.73209915500047
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (444-445 ppm), temperature (28.4-28.5°C), humidity (57.7-57.8%), and TVOC/eCO2 levels. No adjacent room hazards or structural risks detected.",
+    "elapsed_time_seconds": 54.593345289000354
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) detected in room AB2, which may indicate a chemical hazard. While CO2 and temperature are within normal ranges, the TVOC level exceeds typical safety thresholds. Adjacent rooms (C3, E5) should be checked for potential spread via shared systems.",
+    "elapsed_time_seconds": 90.2169076400005
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.9,
+    "justification": "Extremely high TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate potential chemical release or fire hazard.",
+    "elapsed_time_seconds": 60.44391270500091
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC levels (60,000 ppm) detected in sensor data, which may indicate poor air quality or potential chemical exposure. No immediate hazards found in adjacent rooms or critical systems, but warrants further investigation.",
+    "elapsed_time_seconds": 66.77892996899936
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (443-445 ppm), temperature (28.5°C), humidity (57.5-57.6%), TVOC (60,000), and eCO2 (57,330) within normal ranges. No immediate hazards detected.",
+    "elapsed_time_seconds": 16.45907572299984
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (443-445 ppm), normal temperature (28.5°C), and humidity (57.5%). No anomalies detected in adjacent rooms (C3, E5) or HVAC/shaft connections. TVOC (60,000) within acceptable range.",
+    "elapsed_time_seconds": 45.571363121000104
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (422-424 ppm), normal temperature (26.8-26.9°C), and acceptable TVOC (60,000 ppm). No anomalies detected that would indicate fire, smoke, or hazardous conditions.",
+    "elapsed_time_seconds": 70.4582786739993
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (443-444 ppm), temperature (28.5°C), humidity (57.5%), and TVOC/eCO2 levels. No adjacent room hazards or system connections detected via available tools.",
+    "elapsed_time_seconds": 43.55972150100024
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "CO2 levels (422-424 ppm) are slightly elevated above normal indoor levels (typically <400 ppm) but not yet in hazardous range. Consistent readings suggest potential early-stage issue or environmental factor.",
+    "elapsed_time_seconds": 68.81014301200048
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (443-444 ppm) within safe range, temperature (28.5°C) moderate, humidity (57.5%) acceptable. No critical hazards or HVAC connections detected. Adjacent rooms (C3, E5) identified but no immediate threats found.",
+    "elapsed_time_seconds": 68.0022268419998
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.92,
+    "justification": "Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels far exceed safe thresholds (TVOC >1000 ppm, eCO2 >500 ppm), indicating potential chemical exposure or sensor malfunction.",
+    "elapsed_time_seconds": 29.484489278000183
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (443-444 ppm), temperature (28.5°C), humidity (57.5%), TVOC (60,000), and eCO2 (57,330) all within normal safety ranges. No anomalies detected in primary room.",
+    "elapsed_time_seconds": 24.55563451099988
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.92,
+    "justification": "Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate potential chemical contamination or combustion byproducts, posing immediate health risks.",
+    "elapsed_time_seconds": 39.775807154001086
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "Elevated TVOC (60,000) detected, but CO2/temperature/humidity within normal ranges. Potential minor air quality concern requiring monitoring.",
+    "elapsed_time_seconds": 77.15240296400043
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.92,
+    "justification": "Extremely high TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels detected, indicating potential chemical contamination or ventilation failure. CO2 levels are also rising steadily (444-447 ppm).",
+    "elapsed_time_seconds": 30.416261361999204
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (444-447 ppm), moderate temperature (28.5°C), and normal TVOC/eCO2 levels. No HVAC/shaft connections detected, and no nearby critical hazards found. Room parameters indicate safe conditions.",
+    "elapsed_time_seconds": 48.10152450299938
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels suggest potential air quality issues or inadequate ventilation. While CO2 levels are within normal range, combined with high TVOC, this could indicate a developing hazard requiring monitoring.",
+    "elapsed_time_seconds": 29.927080794001085
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.65,
+    "justification": "Elevated CO2 levels (424-425 ppm) and rising temperature (27°C) suggest potential fire/smoke risk. No critical hazards or HVAC connections detected, but adjacent rooms (C3, E5) could propagate threat if conditions worsen.",
+    "elapsed_time_seconds": 155.06023962400104
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.65,
+    "justification": "Elevated CO2 levels (425 ppm) detected in departmentA:AB1, which could indicate early signs of combustion or poor ventilation. Adjacent rooms C3 and E5 require monitoring due to potential fire/smoke spread via unknown pathways.",
+    "elapsed_time_seconds": 118.0759701140014
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (446-449 ppm), temperature (28.5-28.6°C), humidity (57.4%), TVOC (60,000), and eCO2 (57,330) within normal ranges. No immediate threats detected.",
+    "elapsed_time_seconds": 27.60358143099984
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (422-425 ppm), temperature (27°C), and humidity (62-63%). No adjacent room hazards detected. Missing HVAC/structural data does not indicate immediate threats.",
+    "elapsed_time_seconds": 54.660689819000254
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) and CO2 (446-450 ppm) levels indicate potential air quality issues, though not immediately hazardous. Temperature and humidity are within acceptable ranges.",
+    "elapsed_time_seconds": 30.240296318999754
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.1,
+    "justification": "CO2 levels (422-424 ppm) are within normal range (400-500 ppm), temperature (27°C) is slightly elevated but not alarming, and no smoke/heat spikes detected. No immediate threat identified.",
+    "elapsed_time_seconds": 90.29555191200052
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC levels (60,000) indicate potential volatile organic compound exposure, which poses health risks.",
+    "elapsed_time_seconds": 41.8757511950007
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate potential air quality issues or ventilation problems, though not immediately life-threatening.",
+    "elapsed_time_seconds": 41.75042921200111
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "fire",
+    "danger_score": 0.85,
+    "justification": "CO2 levels consistently exceed 435 ppm (normal <400 ppm), indicating potential combustion or inadequate ventilation. No critical hazards or HVAC connections detected, but elevated CO2 suggests fire risk.",
+    "elapsed_time_seconds": 131.80534850299955
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (450 ppm), temperature (28°C), humidity (60%), and TVOC/eCO2 levels. No critical hazards or system connections detected in adjacent rooms or vertical topology.",
+    "elapsed_time_seconds": 52.514589651998904
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (435-437 ppm), temperature (25.6°C), and humidity (58.3%). No adjacent room hazards detected via HVAC/shaft connections or critical hazard radius. No threat propagation indicators found.",
+    "elapsed_time_seconds": 40.6770796790006
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (448-451 ppm), temperature (28.03-28.09°C), humidity (60%), and TVOC/eCO2 levels. No critical hazards detected in adjacent rooms (C3, E5) or structural/HVAC connections.",
+    "elapsed_time_seconds": 90.79001824199986
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (447-451 ppm), temperature (28°C), humidity (60%), and TVOC/eCO2 within normal ranges. No adjacent hazards detected via available tools.",
+    "elapsed_time_seconds": 70.90037738599858
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (444-450 ppm), temperature (28°C), humidity (59-60%), TVOC (60,000 ppb), and eCO2 (57,330 ppb) all within safe thresholds. No anomalies detected in primary room.",
+    "elapsed_time_seconds": 17.42654650300028
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (435-437 ppm), normal temperature (25.5-25.6°C), and humidity (58%). No anomalies detected in room parameters or structural context.",
+    "elapsed_time_seconds": 32.788537791000635
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (444-450 ppm), temperature (28.09-28.11°C), humidity (59.99-60.09%), and TVOC/eCO2 levels. No critical hazards or system connections detected in adjacent rooms or vertical topology.",
+    "elapsed_time_seconds": 42.04023374099961
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "CO2 levels (435-437 ppm) are slightly elevated but within acceptable limits. No critical hazards detected in adjacent rooms (C1, E1) or nearby areas. Sensor data shows stable environmental conditions.",
+    "elapsed_time_seconds": 50.95374996999999
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (444-448 ppm), temperature (28°C), humidity (60%), and TVOC/eCO2 levels. No adjacent hazards or structural risks detected via available tools.",
+    "elapsed_time_seconds": 96.19251233599971
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (444-448 ppm), temperature (28°C), humidity (60%), and TVOC/eCO2 levels. No critical hazards or HVAC connections detected in adjacent rooms (C3, E5) or within 1-hop radius.",
+    "elapsed_time_seconds": 49.408949542999835
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "none",
+    "danger_type": "other",
+    "danger_score": 0.6,
+    "justification": "Elevated TVOC levels (60,000) detected, which may indicate potential air quality issues or precursor to fire hazards. No critical hazards or HVAC connections found in adjacent rooms or structural context.",
+    "elapsed_time_seconds": 59.95665977000135
+  },
+  {
+    "room": "departmentA:StanzaCulmone",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "All sensor readings (CO2: 409-412 ppm, temperature: 27.78-27.83°C, humidity: 54.58-54.64%, TVOC: 0) are within safe thresholds. No occupants present. No threat detected.",
+    "elapsed_time_seconds": 16.506539394000356
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings within normal ranges (CO2: 444-446 ppm, temperature: 28-28.15°C, humidity: 59-60%, TVOC/eCO2: 57k-60k). No adjacent hazards or system connections detected.",
+    "elapsed_time_seconds": 48.118946335000146
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (444-446 ppm), temperature (28.1°C), humidity (59.9%), and TVOC/eco2 levels. No adjacent room hazards or critical risks detected.",
+    "elapsed_time_seconds": 46.83303554300073
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.3,
+    "justification": "Elevated CO2 levels (422 ppm) detected, which may indicate poor ventilation or a potential gas leak.",
+    "elapsed_time_seconds": 60.398844838000514
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "fire",
+    "danger_score": 0.85,
+    "justification": "Sustained CO2 levels (444-445 ppm) exceed safe thresholds (typically <400 ppm), indicating potential combustion or fire hazard. Adjacent rooms C3 and E5 are connected, increasing risk of smoke/CO2 spread.",
+    "elapsed_time_seconds": 102.3514255609989
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "none",
+    "danger_type": "other",
+    "danger_score": 0.3,
+    "justification": "Consistently elevated TVOC levels (60,000) detected, which may indicate potential air quality issues or chemical exposure risks. No immediate hazards found in adjacent rooms, HVAC connections, or critical hazard zones.",
+    "elapsed_time_seconds": 34.2004626020007
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.3,
+    "justification": "Elevated TVOC levels (60,000) detected, which may indicate potential air quality issues. CO2, temperature, and humidity within normal ranges.",
+    "elapsed_time_seconds": 44.04714023100132
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "fire",
+    "danger_score": 0.85,
+    "justification": "Elevated CO2 levels (445 ppm) and high temperature (28.3°C) indicate potential fire/smoke hazard. Adjacent rooms C3 and E5 are connected, increasing risk of spread.",
+    "elapsed_time_seconds": 108.22445194500142
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.65,
+    "justification": "Elevated CO2 levels (444-445 ppm) exceed normal baseline (400 ppm) and may indicate early fire/smoke presence. Adjacent rooms C3 and E5 require monitoring for spread risk.",
+    "elapsed_time_seconds": 115.99958314600008
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.3,
+    "justification": "Elevated CO2 levels (423-426 ppm) detected in the room, which may indicate potential ventilation issues or occupant accumulation. No immediate hazards found in adjacent rooms or critical systems.",
+    "elapsed_time_seconds": 82.06567840800017
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "fire",
+    "danger_score": 0.2,
+    "justification": "CO2 levels show a gradual increase (445-450 ppm) over 5 minutes, which may indicate early signs of combustion or occupancy-related buildup. No immediate hazards detected in adjacent rooms or HVAC systems, but monitoring is recommended.",
+    "elapsed_time_seconds": 148.44915091999974
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (446-450 ppm), temperature (27.6°C), and humidity (59.7%). No critical hazards or HVAC connections detected. No threat propagation risk identified.",
+    "elapsed_time_seconds": 66.8759752779988
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings (CO2: 446-450 ppm, temperature: 27.6°C, humidity: 59-60%) are within normal safety ranges. No critical hazards detected in immediate vicinity.",
+    "elapsed_time_seconds": 31.93525746299929
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "CO2 levels (446-448 ppm) are within safe limits, temperature (27.65-27.67°C) is normal, humidity (59.65-59.78%) is stable, and no hazardous gases detected. No HVAC/shaft connections found to propagate threats.",
+    "elapsed_time_seconds": 45.99167939900144
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (425-428 ppm), temperature (26.36-26.45°C), and humidity (55-55.5%). No adjacent hazards detected via HVAC/shaft connections or critical hazard radius. No structural risks identified.",
+    "elapsed_time_seconds": 116.91832836299909
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings (CO2: 446-449 ppm, temperature: 27.6-27.7°C, humidity: 59-60%) are within safe limits. No critical hazards detected in immediate vicinity.",
+    "elapsed_time_seconds": 45.494410539000455
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (447-449 ppm), normal temperature (27.6-27.7°C), and humidity (59-60%). No immediate hazards detected in primary room.",
+    "elapsed_time_seconds": 19.933837270000367
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "CO2 levels (447-449 ppm) are moderately elevated but below critical thresholds (1000+ ppm). Temperature (27.7°C) and humidity (59.5%) are within normal ranges. No critical hazards detected in adjacent rooms or system connections.",
+    "elapsed_time_seconds": 79.68704536799851
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (446-448 ppm), temperature (27.7°C), and humidity (59-60%). No critical hazards detected in adjacent rooms (C3, E5) or nearby systems.",
+    "elapsed_time_seconds": 44.52184451299945
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "All sensor readings (CO2: 446-448 ppm, temperature: 27.7°C, humidity: 59-60%, TVOC: 0, eCO2: 400) are within normal safety thresholds. No anomalies detected in primary room.",
+    "elapsed_time_seconds": 13.216008163999504
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated CO2 levels (424-426 ppm) exceed safe thresholds (typically <400 ppm), indicating potential air quality issues. No critical hazards found nearby, but adjacent rooms (C1, E1) should be monitored for threat propagation via HVAC or shared systems.",
+    "elapsed_time_seconds": 61.01224331699996
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "fire",
+    "danger_score": 0.92,
+    "justification": "CO2 levels rising steadily above 450 ppm (current: 450 ppm), indicating potential fire/smoke source. Temperature also elevated at 27.7°C.",
+    "elapsed_time_seconds": 100.97834571000021
+  },
+  {
+    "room": "departmentA:C3",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "No data available yet. Adjacent room requires monitoring due to connectivity to AB2.",
+    "elapsed_time_seconds": 100.97834571000021
+  },
+  {
+    "room": "departmentA:E5",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "No data available yet. Adjacent room requires monitoring due to connectivity to AB2.",
+    "elapsed_time_seconds": 100.97834571000021
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "CO2 levels (447-450 ppm) slightly elevated but within acceptable limits. No critical hazards detected in adjacent rooms or structural context.",
+    "elapsed_time_seconds": 52.12151580199861
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (445-450 ppm), temperature (27.7-27.8°C), and humidity (59%) within normal ranges. No hazardous thresholds exceeded. No structural or system risks detected.",
+    "elapsed_time_seconds": 14.70874813500086
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (445-450 ppm) within safe range, temperature (27.8°C) and humidity (59%) within normal limits. No hazardous indicators detected.",
+    "elapsed_time_seconds": 31.13835781600028
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (424-428 ppm), temperature (26.4-26.5°C), and humidity (55-56%). No critical hazards detected in adjacent rooms (C1, E1) or nearby systems. Structural and HVAC checks not required for this assessment.",
+    "elapsed_time_seconds": 41.07017274699865
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (445-450 ppm) within safe limits, temperature (27.8°C) and humidity (59%) normal. No HVAC/shaft connections detected, and no nearby critical hazards found.",
+    "elapsed_time_seconds": 56.48390139500043
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (447-450 ppm), temperature (27.8°C), and humidity (59.3%). No anomalies detected in primary room or adjacent systems.",
+    "elapsed_time_seconds": 58.835507259000224
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (450 ppm), temperature (27.8°C), and humidity (59.2%) within safe thresholds. No hazardous indicators detected.",
+    "elapsed_time_seconds": 24.37568353399911
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (425-426 ppm), moderate temperature (26.4°C), and normal humidity (55-56%). No anomalies detected in primary room.",
+    "elapsed_time_seconds": 18.26353368299897
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "fire",
+    "danger_score": 0.85,
+    "justification": "Elevated CO2 levels (448-450 ppm) exceeding safe thresholds (400 ppm) combined with rising temperature (27.8°C) indicate potential fire hazard. Adjacent rooms C3 and E5 require monitoring for threat propagation.",
+    "elapsed_time_seconds": 99.06442232299923
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (447-450 ppm), normal temperature (27.8°C), and humidity (59%). No hazardous thresholds exceeded. No adjacent hazards detected via graph topology.",
+    "elapsed_time_seconds": 51.492634096000984
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (447-450 ppm), temperature (27.8-27.9°C), and humidity (59%). No nearby critical hazards detected. No threat propagation risk identified.",
+    "elapsed_time_seconds": 34.83365900199897
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Sudden spike in eCO2 levels (57,330 ppm) detected in latest sensor reading, indicating potential gas leak or sensor malfunction. No adjacent room connections or critical hazards found, but localized anomaly requires immediate investigation.",
+    "elapsed_time_seconds": 59.298583808998956
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC (60,000 ppm) and CO2 (446 ppm) levels indicate potential air quality issues or chemical exposure risks. Temperature and humidity are within normal ranges.",
+    "elapsed_time_seconds": 79.1922087109997
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC levels (60,000) indicate potential chemical hazards or poor air quality, exceeding safe thresholds.",
+    "elapsed_time_seconds": 84.22147734700047
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "none",
+    "danger_type": "other",
+    "danger_score": 0.3,
+    "justification": "Elevated TVOC (60,000) and CO2 (440-446 ppm) levels detected, which may indicate poor air quality or early signs of contamination. No immediate danger detected, but warrants monitoring.",
+    "elapsed_time_seconds": 50.82078694200027
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.95,
+    "justification": "Elevated CO2 (416-418 ppm) and eco2 (57,330 ppm) levels exceed safe thresholds, indicating potential air quality hazards or combustion risks.",
+    "elapsed_time_seconds": 102.81632175899904
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (440-446 ppm), moderate temperature (29.15-29.19°C), and normal TVOC/eCO2 levels. No critical hazards or HVAC connections detected in adjacent rooms or vertical topology.",
+    "elapsed_time_seconds": 47.30149886300023
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.3,
+    "justification": "Elevated TVOC levels (60,000) suggest potential volatile organic compounds, but no immediate danger detected. CO2, temperature, and humidity within acceptable ranges.",
+    "elapsed_time_seconds": 46.242640892000054
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.6,
+    "justification": "Elevated TVOC levels (60,000) detected, which may indicate potential air quality issues or chemical presence. CO2, temperature, and humidity within normal ranges.",
+    "elapsed_time_seconds": 64.96313201199882
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "fire",
+    "danger_score": 0.85,
+    "justification": "Sustained CO2 levels above 440 ppm (normal: ~400 ppm) and rising temperature (29.2°C) indicate potential fire hazard. Adjacent rooms C3 and E5 require monitoring for spread risk.",
+    "elapsed_time_seconds": 117.50695439400079
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "earthquake",
+    "danger_score": 0.1,
+    "justification": "Sensor data shows stable environmental parameters (CO2: ~440ppm, temperature: ~29°C, humidity: ~56%). No critical hazards detected in immediate vicinity. Structural context data unavailable, but no signs of seismic vulnerability indicators in available data.",
+    "elapsed_time_seconds": 117.50695439400079
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (438-441 ppm), moderate temperature (29.2°C), and elevated TVOC/eco2 (60,000/57,330) but no critical thresholds exceeded. No immediate fire, smoke, or heat hazards detected.",
+    "elapsed_time_seconds": 66.15666508899994
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "none",
+    "danger_score": 0.1,
+    "justification": "Sensor data shows stable CO2 levels (438-441 ppm), temperature (29.2°C), and humidity (56%). No anomalies detected that would indicate immediate fire, smoke, or CO2 hazards. Risk of propagation is minimal without anomalous data.",
+    "elapsed_time_seconds": 77.44505933899927
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (438-440 ppm), temperature (29.25°C), humidity (56%), and TVOC/eCO2 levels within normal ranges. No nearby critical hazards detected.",
+    "elapsed_time_seconds": 69.06724157499957
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.65,
+    "justification": "CO2 levels show a steady increase (439→443 ppm) with rising temperature (29.25→29.32°C), indicating potential fire/smoke origin. Adjacent rooms C3 and E5 are connected, posing propagation risk.",
+    "elapsed_time_seconds": 111.0493339550012
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC (60,000) and CO2 (440 ppm) levels indicate potential air quality issues or chemical exposure risks.",
+    "elapsed_time_seconds": 50.551173661000576
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.92,
+    "justification": "Extremely high TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate a potential chemical leak or hazardous gas presence, exceeding safe thresholds by orders of magnitude.",
+    "elapsed_time_seconds": 63.33996570399904
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (440-443 ppm), temperature (29.3°C), humidity (56%), and TVOC/eCO2 levels within acceptable ranges. No critical hazards or HVAC connections detected.",
+    "elapsed_time_seconds": 84.6985006119994
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.75,
+    "justification": "Elevated TVOC (60,000 ppm) and CO2 (440 ppm) levels indicate potential air quality issues. While not immediately critical, sustained high levels could pose health risks or precede more severe hazards.",
+    "elapsed_time_seconds": 69.11052472099982
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "All sensor readings (CO2: 422-424 ppm, temperature: 26.4-26.5°C, humidity: 54-55%) are within safe thresholds. No immediate threats detected.",
+    "elapsed_time_seconds": 15.779898808001235
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (440-443 ppm), temperature (29.3°C), humidity (55-56%), and TVOC/eCO2 levels. No adjacent hazards or system connections detected.",
+    "elapsed_time_seconds": 89.83949537800072
+  },
+  {
+    "room": "departmentA:StanzaDocente",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "smoke",
+    "danger_score": 0.65,
+    "justification": "Elevated CO2 levels (425-429 ppm) exceed normal thresholds (400 ppm), indicating potential smoke or combustion byproducts. No HVAC/shaft data available to confirm spread risk, but adjacent room connectivity exists. Temperature and humidity within normal ranges.",
+    "elapsed_time_seconds": 96.52523940299943
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.75,
+    "justification": "Elevated TVOC (60,000 ppm) and eco2 (57,330 ppm) levels indicate potential chemical contamination or poor ventilation, though CO2/temperature/humidity remain within normal ranges.",
+    "elapsed_time_seconds": 43.27367657200011
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings (CO2: 440 ppm, temperature: 29.3°C, humidity: 55-56%, TVOC/eCO2: 57-60k) are within safe thresholds. No anomalies detected in primary room or adjacent rooms (C3, E5). HVAC/shaft connection data unavailable but no immediate threat indicators.",
+    "elapsed_time_seconds": 52.96808817099918
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.92,
+    "justification": "Extremely high TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate potential chemical contamination or sensor malfunction. Immediate investigation required.",
+    "elapsed_time_seconds": 45.131369665999955
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "smoke",
+    "danger_score": 0.75,
+    "justification": "CO2 levels steadily increasing from 439 to 441 ppm over 5 minutes (normal <400 ppm), indicating potential smoke/fire origin. Temperature rise (29.34→29.39°C) supports combustion risk. HVAC connection data unavailable, but adjacent rooms C3/E5 require monitoring for spread.",
+    "elapsed_time_seconds": 67.00244258900057
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "fire",
+    "danger_score": 0.2,
+    "justification": "Elevated CO2 (440-441 ppm) and temperature (29.3-29.4°C) suggest potential early-stage fire or ventilation issue, but levels remain below critical thresholds. No critical hazards detected in adjacent rooms (C3, E5) or nearby systems.",
+    "elapsed_time_seconds": 145.73871233799946
+  },
+  {
+    "room": "C3",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "No anomalous data detected in room C3. No critical hazards identified in immediate vicinity.",
+    "elapsed_time_seconds": 145.73871233799946
+  },
+  {
+    "room": "E5",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "No anomalous data detected in room E5. No critical hazards identified in immediate vicinity.",
+    "elapsed_time_seconds": 145.73871233799946
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (440-441 ppm), temperature (29.3-29.4°C), humidity (55.7-55.8%), and TVOC/eCO2 levels. No adjacent room hazards detected via HVAC/shaft connections or critical hazard radius. Building topology shows connections to C3 and E5, but no risk indicators found.",
+    "elapsed_time_seconds": 32.56161643899759
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "Elevated TVOC levels (60,000 ppm) detected, which may indicate potential air quality concerns. No immediate hazards found in adjacent rooms or building systems.",
+    "elapsed_time_seconds": 88.45268487400244
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential air quality issues or early signs of chemical/vapor release, though CO2/temperature/humidity remain within normal ranges.",
+    "elapsed_time_seconds": 51.70540712900038
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (438-440 ppm), temperature (29.35-29.39°C), humidity (55.75-55.84%), and TVOC/eCO2 levels. No adjacent room hazards detected via available tools.",
+    "elapsed_time_seconds": 30.40497742200023
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential chemical contamination or ventilation failure, posing health risks despite normal CO2 and temperature.",
+    "elapsed_time_seconds": 39.64556231000097
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.9,
+    "justification": "Extremely high TVOC levels (60,000 ppm) detected, indicating potential chemical hazard or ventilation failure.",
+    "elapsed_time_seconds": 27.23886515200138
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.9,
+    "justification": "Extremely high eCO2 level (57,330 ppm) detected, which exceeds safe thresholds (typically <1000 ppm). Other sensors (CO2, temperature, humidity) show normal ranges, but the eCO2 anomaly indicates a potential chemical hazard or sensor malfunction requiring immediate investigation.",
+    "elapsed_time_seconds": 30.468061315998057
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.3,
+    "justification": "Elevated TVOC levels (60,000 ppm) detected, which may indicate poor air quality or potential chemical release. CO2 and temperature remain within normal ranges, but further monitoring is advised.",
+    "elapsed_time_seconds": 99.94305676400108
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (437-440 ppm), temperature (29.37-29.48°C), and humidity (55.59-55.72%) within safe ranges. No adjacent hazards or system connections detected via available tools.",
+    "elapsed_time_seconds": 59.76680098200086
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "none",
+    "danger_score": 0.1,
+    "justification": "Sensor data shows stable CO2 levels (~437-439 ppm), moderate temperature (29.4°C), and normal humidity (55-56%). No immediate fire, smoke, or CO2 spike detected. HVAC/shaft connection data unavailable, but no evidence of threat propagation path.",
+    "elapsed_time_seconds": 92.27706876899902
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential chemical contamination or poor air quality, though CO2/temperature/humidity remain within normal ranges.",
+    "elapsed_time_seconds": 62.86182785299752
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "none",
+    "danger_score": 0.1,
+    "justification": "Sensor data shows stable CO2 levels (437-440 ppm), moderate temperature (29.4°C), and normal humidity (55-56%). No anomalies detected that would indicate immediate fire, smoke, or CO2 hazards. HVAC/shaft connections could not be verified due to missing data, but current readings do not suggest threat propagation.",
+    "elapsed_time_seconds": 191.67247811099878
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.65,
+    "justification": "CO2 levels show a gradual increase (435-440 ppm) combined with rising temperature (29.47-29.51°C), indicating potential early-stage fire or combustion process. No critical hazards found in immediate vicinity, but trend suggests risk propagation.",
+    "elapsed_time_seconds": 143.50326633900113
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.7,
+    "justification": "Elevated CO2 levels (435-440 ppm) exceeding safe thresholds (typically <400 ppm) indicate potential combustion or fire risk. Adjacent rooms (C3, E5) are connected, increasing spread risk despite no HVAC/shaft data available.",
+    "elapsed_time_seconds": 85.42943364000166
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "smoke",
+    "danger_score": 0.7,
+    "justification": "Sustained CO2 levels (435-440 ppm) exceed safe thresholds (typically <400 ppm), indicating potential smoke or fire origin. Temperature (29.5°C) and humidity (55%) are within normal ranges but do not mitigate the CO2 anomaly.",
+    "elapsed_time_seconds": 134.78435791399897
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential air quality issues or chemical exposure risks. Temperature (29.5°C) is slightly elevated but within acceptable limits.",
+    "elapsed_time_seconds": 64.13314327099943
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "fire",
+    "danger_score": 0.1,
+    "justification": "CO2 levels (436-439 ppm) are within normal indoor air quality ranges (<1000 ppm). No temperature or humidity anomalies detected. Adjacent rooms (C3, E5) exist but no HVAC/ventilation connections confirmed. No critical hazards identified in immediate vicinity.",
+    "elapsed_time_seconds": 129.23645588
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.65,
+    "justification": "CO2 levels (437 ppm) show a gradual increase, indicating potential fire or combustion source. Adjacent rooms (C3, E5) require monitoring due to connectivity.",
+    "elapsed_time_seconds": 105.41082665999784
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential air quality issues that may precede hazardous conditions.",
+    "elapsed_time_seconds": 48.87998859399886
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.65,
+    "justification": "Elevated CO2 levels (436-440 ppm) and rising temperature (29.5-29.6°C) indicate potential fire/smoke risk. Adjacent rooms C3 and E5 are connected, increasing propagation risk.",
+    "elapsed_time_seconds": 213.96650018599757
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "earthquake",
+    "danger_score": 0.65,
+    "justification": "Elevated CO2 levels (436-440 ppm) and stable temperature/humidity suggest potential structural stress or ventilation issues. Adjacent rooms (C3, E5) are connected, increasing propagation risk if seismic activity occurs.",
+    "elapsed_time_seconds": 213.96650018599757
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (436-440 ppm), temperature (29.5-29.6°C), and humidity (55%) within safe thresholds. No HVAC/shaft connections or critical hazards detected in adjacent rooms (C3, E5) or within 2-hop radius.",
+    "elapsed_time_seconds": 62.47748499700174
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.92,
+    "justification": "Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate potential chemical release or combustion risk. Temperature (28°C) and CO2 (417-418 ppm) are within normal ranges but do not mitigate the hazardous gas readings.",
+    "elapsed_time_seconds": 47.40179168800023
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.25,
+    "justification": "Elevated CO2 level (450 ppm) detected, which may indicate poor ventilation or occupancy issues. Other parameters (temperature, humidity) within normal ranges.",
+    "elapsed_time_seconds": 49.54707094599871
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (428-431 ppm), temperature (26°C), humidity (57-58%), and no TVOC/eco2 anomalies. No structural or system risks detected.",
+    "elapsed_time_seconds": 53.52164445100061
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (450 ppm), temperature (28.5°C), and humidity (57.5%). No critical hazards detected in adjacent rooms or building systems. Structural and HVAC data unavailable but no immediate threats indicated.",
+    "elapsed_time_seconds": 50.04431223499705
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "Elevated CO2 levels (450 ppm) detected, which may indicate potential air quality issues or early signs of hazardous gas accumulation.",
+    "elapsed_time_seconds": 132.09635222999714
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (447-451 ppm), moderate temperature (28.5°C), and normal humidity (57.3-57.5%). No hazardous thresholds exceeded. No adjacent room risks detected.",
+    "elapsed_time_seconds": 18.950599355997838
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (447-451 ppm) within safe limits, no critical hazards detected in adjacent rooms or structural context.",
+    "elapsed_time_seconds": 58.17580934599755
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.3,
+    "justification": "Elevated CO2 levels (447-449 ppm) detected, which may indicate potential air quality issues or early signs of ventilation problems. No immediate fire, smoke, or structural threats detected.",
+    "elapsed_time_seconds": 69.13575811099872
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (447-449 ppm) within acceptable range, temperature (28.5°C) and humidity (57%) within normal limits. No critical hazards detected in adjacent rooms (C3, E5) or nearby areas.",
+    "elapsed_time_seconds": 57.351796293001826
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "All sensor readings (CO2: 447-448 ppm, temperature: 28.5°C, humidity: 57.3%, TVOC: 0) are within normal safety thresholds. No immediate threats detected.",
+    "elapsed_time_seconds": 10.68202267399829
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (430-432 ppm), temperature (26°C), and humidity (57-58%). No critical hazards detected in adjacent areas.",
+    "elapsed_time_seconds": 37.01331043300161
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (447-449 ppm) within safe range, temperature (28.55°C) and humidity (57.3%) within normal limits. No adjacent hazards or system connections detected.",
+    "elapsed_time_seconds": 52.767595713001356
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (429-432 ppm) within acceptable range, temperature (26.1°C) and humidity (57.7%) within normal limits. No critical hazards detected in immediate vicinity.",
+    "elapsed_time_seconds": 35.9921650139986
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "CO2 levels (447-449 ppm) show a gradual upward trend, which may indicate potential ventilation issues or early signs of occupancy-related air quality degradation.",
+    "elapsed_time_seconds": 52.59333998999864
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (448-449 ppm), temperature (28.5°C), humidity (57%), and no TVOC/eCO2 anomalies. No critical hazards detected in adjacent rooms (C3, E5) via topology checks.",
+    "elapsed_time_seconds": 55.74862370500341
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "CO2 levels (445-449 ppm) are elevated but within acceptable limits for short-term exposure. No critical hazards detected in adjacent rooms or structural context.",
+    "elapsed_time_seconds": 43.73835406100261
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (445-449 ppm), normal temperature (28.5-28.6°C), and humidity (57.3%). No TVOC or eco2 anomalies detected. Adjacent rooms (C3, E5) require no immediate assessment as primary room is safe.",
+    "elapsed_time_seconds": 67.62593233399821
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (445-448 ppm), temperature (28.5-28.6°C), and humidity (57%). No HVAC/shaft connections or critical hazards detected in adjacent rooms (C3, E5) or within 2 hops.",
+    "elapsed_time_seconds": 28.76461989100062
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (429-433 ppm) within safe limits, temperature (26.1°C) and humidity (57.8%) within normal ranges. No critical hazards or system connections detected in adjacent rooms or vertical topology. No threat propagation risk identified.",
+    "elapsed_time_seconds": 51.91725461199894
+  },
+  {
+    "room": "departmentA:StanzaCulmone",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (413 ppm) within safe limits, temperature (28.6°C) within acceptable range, and no critical hazards detected nearby. People count is zero, but this may reflect unoccupied status rather than a threat.",
+    "elapsed_time_seconds": 43.10391342499861
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (446-448 ppm), temperature (28.6°C), and humidity (57%) within normal ranges. No hazardous gas (TVOC/eco2) detected. No immediate threat indicators present.",
+    "elapsed_time_seconds": 12.997490333000314
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "Elevated CO2 levels (430 ppm) detected, which may indicate poor ventilation or occupancy issues. No immediate threat detected in adjacent rooms or critical hazards.",
+    "elapsed_time_seconds": 88.54170385599718
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (446-448 ppm), temperature (28.6°C), and humidity (57%). No critical hazards detected in adjacent rooms.",
+    "elapsed_time_seconds": 27.736753503999353
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (428-433 ppm), normal temperature (25.95-26.11°C), and humidity (57.6-57.8%). No critical hazards detected in adjacent rooms (C1, E1) or nearby areas. Structural context not yet verified but no immediate threats indicated.",
+    "elapsed_time_seconds": 58.504951459999575
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (446-450 ppm), temperature (28.6°C), humidity (57%), and TVOC (0) within normal ranges. No immediate threats detected.",
+    "elapsed_time_seconds": 17.23724587900142
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC (60,000) indicates potential chemical exposure or poor ventilation, though CO2 and temperature remain within moderate ranges.",
+    "elapsed_time_seconds": 52.010778059000586
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (423-429 ppm) within acceptable range, normal temperature (26°C), and no critical hazards detected in adjacent rooms or structural context.",
+    "elapsed_time_seconds": 49.146933027997875
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "Elevated TVOC levels (60,000) and moderate CO2 (450 ppm) detected, but no critical hazards nearby. Temperature/humidity within acceptable ranges. Potential for minor air quality issues.",
+    "elapsed_time_seconds": 89.76124889900166
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential chemical exposure or ventilation issues, though no immediate hazards or system connections were detected.",
+    "elapsed_time_seconds": 94.73395889699896
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (418-420 ppm), temperature (26.2°C), humidity (61%), and TVOC (0) within normal ranges. No immediate threats detected.",
+    "elapsed_time_seconds": 13.607186508997984
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate potential air quality issues, though not immediately critical. CO2 (450 ppm) and temperature (29.18°C) are within normal ranges.",
+    "elapsed_time_seconds": 35.662140684002225
+  },
+  {
+    "room": "departmentA:StanzaDocente",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.5,
+    "justification": "Elevated CO2 (423-425 ppm) and TVOC (60,000) levels detected, which may indicate poor ventilation or chemical exposure. No critical hazards found in adjacent rooms or structural context.",
+    "elapsed_time_seconds": 65.27981033900141
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (448-450 ppm), temperature (29.18-29.21°C), humidity (57%), TVOC (60,000), and eco2 (57,330) within safe thresholds. No immediate hazards detected.",
+    "elapsed_time_seconds": 16.300255801001185
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (418-432 ppm), temperature (25.6-26.2°C), and humidity (61-62%) within safe thresholds. No critical hazards or HVAC/shaft connections detected in adjacent rooms or systems. No propagation risk identified.",
+    "elapsed_time_seconds": 85.52794702900064
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "fire",
+    "danger_score": 0.85,
+    "justification": "Elevated CO2 levels (449-450 ppm) and high temperature (29.2°C) indicate potential fire hazard. Adjacent rooms (C3, E5) require immediate assessment due to connectivity.",
+    "elapsed_time_seconds": 111.7037567419975
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (447-450 ppm), moderate temperature (29.2°C), and normal humidity (57%). No anomalies detected in fire-related parameters (heat, smoke, CO2 spikes).",
+    "elapsed_time_seconds": 64.11508929199772
+  },
+  {
+    "room": "departmentB:LB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.92,
+    "justification": "Elevated TVOC (60,000) and eco2 (57,330) levels indicate potential air quality hazards or sensor anomalies requiring immediate investigation.",
+    "elapsed_time_seconds": 29.41323245500098
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable readings within safe limits (CO2 < 1000 ppm, temperature ~29°C, humidity ~57%, TVOC/eCO2 within normal ranges). No critical hazards or HVAC anomalies detected in adjacent rooms or systems.",
+    "elapsed_time_seconds": 62.01005821899889
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "heat",
+    "danger_score": 0.65,
+    "justification": "Elevated temperature (29.2°C) detected in primary room, which could indicate early-stage heat buildup. Adjacent rooms (C3, E5) require monitoring for potential spread.",
+    "elapsed_time_seconds": 92.5137653219972
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "All sensor readings (CO2: 425-428 ppm, temperature: 25.6°C, humidity: 62%, TVOC: 0) are within normal safety ranges. No anomalies detected in primary room.",
+    "elapsed_time_seconds": 16.492138813002384
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (424-428 ppm), normal temperature (25.6°C), and humidity (62%). No TVOC or eCO2 anomalies detected. No immediate threats identified in primary room.",
+    "elapsed_time_seconds": 35.44427831400026
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.3,
+    "justification": "Elevated TVOC levels (60,000) detected, which may indicate potential air quality concerns. No immediate hazards found in adjacent rooms or critical systems.",
+    "elapsed_time_seconds": 50.39918756100087
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.35,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels detected, which may indicate potential air quality issues or early signs of hazardous gas accumulation. Current CO2, temperature, and humidity levels remain within normal ranges.",
+    "elapsed_time_seconds": 63.38429950800128
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings within normal ranges (CO2: 424-425 ppm, temperature: 25.65°C, humidity: 62%, TVOC: 0). No critical hazards detected in adjacent rooms (C1, C2, E1).",
+    "elapsed_time_seconds": 56.76385780300188
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (425 ppm), normal temperature (25.6°C), and humidity (62%). No adjacent room hazards detected via HVAC/shaft connections. No immediate threats identified.",
+    "elapsed_time_seconds": 42.389471669997874
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.95,
+    "justification": "Extremely high TVOC (60,000 ppb) and eCO2 (57,330 ppb) levels detected, indicating potential chemical exposure or equipment malfunction. CO2 levels are elevated but within acceptable ranges.",
+    "elapsed_time_seconds": 73.97654368200165
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "fire",
+    "danger_score": 0.85,
+    "justification": "Elevated CO2 levels (447-449 ppm) and rising temperature (29.35°C) indicate potential fire hazard. Adjacent rooms C3 and E5 are connected, increasing risk of spread via unknown pathways.",
+    "elapsed_time_seconds": 80.27694395300205
+  },
+  {
+    "room": "C3",
+    "warning": "none",
+    "danger": "medium",
+    "danger_type": "smoke",
+    "danger_score": 0.6,
+    "justification": "Adjacent to AB2 with potential smoke propagation through HVAC/shaft connections (data unavailable).",
+    "elapsed_time_seconds": 80.27694395300205
+  },
+  {
+    "room": "E5",
+    "warning": "none",
+    "danger": "medium",
+    "danger_type": "smoke",
+    "danger_score": 0.6,
+    "justification": "Adjacent to AB2 with potential smoke propagation through HVAC/shaft connections (data unavailable).",
+    "elapsed_time_seconds": 80.27694395300205
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.5,
+    "justification": "Elevated CO2 levels (425 ppm) detected in departmentA:AA1, which may indicate early fire/smoke development. Adjacent rooms (C1, C2, E1) are connected, posing potential for threat propagation through shared systems or airflow.",
+    "elapsed_time_seconds": 107.58251128899792
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.15,
+    "justification": "CO2 levels (425 ppm) are slightly elevated but within acceptable limits for short-term exposure. No critical hazards detected in adjacent rooms (C1, C2, E1) or structural risks identified. Temperature and humidity within normal ranges.",
+    "elapsed_time_seconds": 64.66053102300066
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential air quality issues or chemical exposure, though CO2 and temperature remain within normal ranges. Requires further investigation for source identification.",
+    "elapsed_time_seconds": 35.15586136099955
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.5,
+    "justification": "CO2 levels rising from 424 to 428 ppm over 5 minutes (threshold for concern: >400 ppm). Stable temperature/humidity suggest no immediate fire, but elevated CO2 indicates potential ventilation issue or early combustion.",
+    "elapsed_time_seconds": 109.01585049400092
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (445-449 ppm), temperature (29.38°C), humidity (56.5%), and TVOC/eCO2 within normal ranges. No critical hazards or HVAC connections detected. Adjacent rooms (C3, E5) lack anomaly indicators in available data.",
+    "elapsed_time_seconds": 48.60112907400253
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "Elevated TVOC (60,000) and eco2 (57,330) levels detected, which may indicate potential air quality concerns. No immediate hazards found in adjacent rooms or critical systems.",
+    "elapsed_time_seconds": 61.827717498999846
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.5,
+    "justification": "Elevated CO2 levels (445-449 ppm) approaching threshold for potential air quality concerns, but within acceptable range for immediate safety.",
+    "elapsed_time_seconds": 74.31743355600338
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (423-426 ppm), temperature (25.65°C), humidity (62%), and no TVOC/eCO2 anomalies. No critical hazards detected in adjacent rooms or structural context.",
+    "elapsed_time_seconds": 84.77586379399872
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.6,
+    "justification": "Elevated TVOC (60,000 ppb) and eCO2 (57,330 ppb) levels indicate potential poor air quality, though not immediately hazardous.",
+    "elapsed_time_seconds": 38.30862932799937
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings (CO2: 416 ppm, temperature: 28.38°C, humidity: 59.4%, TVOC: 60,000, eCO2: 57,330) are within safe thresholds. No immediate threats detected.",
+    "elapsed_time_seconds": 27.61134012799812
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.7,
+    "justification": "Elevated TVOC (60,000 ppm) and CO2 (449 ppm) levels indicate potential air quality issues, though not immediately critical. Temperature and humidity remain within acceptable ranges.",
+    "elapsed_time_seconds": 63.01719802999651
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 (436-449 ppm), temperature (29.4-29.9°C), and humidity (54-56%) within normal ranges. No HVAC/shaft connections or nearby critical hazards detected via available tools.",
+    "elapsed_time_seconds": 41.26100018800207
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 levels (436-438 ppm), moderate temperature (29.95°C), and normal TVOC/eco2 readings. No anomalies detected that would indicate fire, smoke, or hazardous propagation risk.",
+    "elapsed_time_seconds": 73.86511928099935
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (425 ppm), normal temperature (25-26°C), and humidity (62%). No critical hazards detected in adjacent rooms (C1, C2, E1) or immediate vicinity. No threat propagation risk identified.",
+    "elapsed_time_seconds": 86.71321919600086
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (434-438 ppm), temperature (29.95-30.03°C), and air quality (TVOC/eCO2) within safe thresholds. No adjacent hazards detected via HVAC/shaft connections or critical hazard radius.",
+    "elapsed_time_seconds": 68.14381105400025
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (434-437 ppm), temperature (29.95-30.04°C), humidity (54.23-54.29%), and TVOC/eCO2 levels. No adjacent room hazards or system connections detected.",
+    "elapsed_time_seconds": 29.505074864999187
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "All sensor readings (CO2: 425-428 ppm, temperature: 25.97°C, humidity: 61-62%) are within normal ranges. No immediate threats detected.",
+    "elapsed_time_seconds": 20.021216406999883
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels detected, indicating potential air quality issues or localized contamination. Temperature (28.4°C) is slightly elevated but within non-critical range.",
+    "elapsed_time_seconds": 33.65712833799989
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (435-437 ppm), temperature (30.02-30.08°C), and air quality (TVOC/eCO2). No adjacent hazards or critical risks detected via HVAC/shaft connections or nearby critical hazards tools.",
+    "elapsed_time_seconds": 37.40668196900151
+  },
+  {
+    "room": "departmentA:AA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (425-428 ppm) within acceptable range, temperature (25.96-25.97°C) and humidity (61.93-61.95%) within normal limits. No immediate threats detected.",
+    "elapsed_time_seconds": 36.2751173430006
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "smoke",
+    "danger_score": 0.65,
+    "justification": "Elevated CO2 levels (435-439 ppm) exceed baseline thresholds, indicating potential smoke or combustion byproducts. Adjacent rooms (C3, E5) require monitoring due to possible ventilation pathways, though HVAC data is unavailable.",
+    "elapsed_time_seconds": 101.70649568099907
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.75,
+    "justification": "CO2 levels rising from 435 to 439 ppm over 5 minutes (normal <400 ppm), indicating potential fire or combustion source. Adjacent rooms C3 and E5 are connected, posing spread risk.",
+    "elapsed_time_seconds": 72.85845445199811
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential chemical hazards or poor air quality, posing health risks.",
+    "elapsed_time_seconds": 31.27984198100239
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (439 ppm), temperature (30.1°C), humidity (54%), and TVOC/eCO2 levels. No critical hazards or system connections detected in adjacent rooms (C3, E5) or via HVAC/shafts. No nearby hazards within 1 hop.",
+    "elapsed_time_seconds": 68.77796867200232
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (437-439 ppm) within normal range, temperature (30.1°C) slightly elevated but not critical, and TVOC (60,000 ppb) extremely high but not directly indicative of fire hazard. No anomalous data detected for fire/smoke/heat risks.",
+    "elapsed_time_seconds": 127.15006231799998
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (436-439 ppm) within normal indoor air range (below 1000 ppm threshold). No anomalous trends detected in temperature, humidity, or TVOC. No immediate fire, smoke, or CO2 hazard identified.",
+    "elapsed_time_seconds": 92.09590635900167
+  },
+  {
+    "room": "departmentA:AB2",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows CO2 levels (434-436 ppm) within normal indoor ranges (<1000 ppm), temperature (30.1°C) slightly elevated but not critical, and no anomalies in TVOC/eCO2. No immediate fire/hazard indicators detected.",
+    "elapsed_time_seconds": 125.16177345400138
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.45,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels detected, indicating potential air quality issues despite normal CO2/temperature/humidity readings.",
+    "elapsed_time_seconds": 67.64690328900178
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate potential air quality issues, though within non-critical thresholds. Temperature (28.5°C) and CO2 (415-418 ppm) are within acceptable ranges.",
+    "elapsed_time_seconds": 39.376709211999696
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (415-417 ppm), temperature (28.5°C), humidity (59%), and TVOC (60,000). No anomalies detected in primary room. Adjacent rooms (C3, E5) and system connections (HVAC/shafts) lack data but no immediate threats identified.",
+    "elapsed_time_seconds": 57.30156024999815
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels detected, indicating potential air quality issues or early signs of hazardous gas accumulation.",
+    "elapsed_time_seconds": 71.9326816190005
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "low",
+    "danger_type": "none",
+    "danger_score": 0.1,
+    "justification": "Sensor data shows stable CO2 levels (~415 ppm), moderate temperature (28.5°C), and normal humidity. No immediate anomalies detected that would indicate fire, smoke, or hazardous propagation risks.",
+    "elapsed_time_seconds": 118.6259033589995
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC levels (60,000) and CO2 (415 ppm) detected, indicating potential air quality issues. No adjacent hazards found, but TVOC suggests possible chemical exposure risk.",
+    "elapsed_time_seconds": 44.95307288299955
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "TVOC level (60,000) is elevated but below critical thresholds. Other sensors (CO2, temperature, humidity) within normal ranges. No immediate hazards detected in adjacent rooms or critical systems.",
+    "elapsed_time_seconds": 59.85739775700131
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "none",
+    "danger_type": "other",
+    "danger_score": 0.15,
+    "justification": "Elevated CO2 levels (415-416 ppm) detected, slightly above normal thresholds. No critical hazards found in immediate vicinity. Requires monitoring but not an immediate threat.",
+    "elapsed_time_seconds": 39.70204170099896
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (416 ppm), temperature (28.5°C), humidity (59%), and TVOC/eCO2 levels. No critical hazards or HVAC connections detected. Adjacent rooms exist (C3, E5) but no anomaly propagation detected.",
+    "elapsed_time_seconds": 89.90805088599882
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "low",
+    "danger_type": "other",
+    "danger_score": 0.2,
+    "justification": "TVOC level (60,000) slightly elevated but within manageable range. No immediate hazards detected in primary room.",
+    "elapsed_time_seconds": 66.68447444599951
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate potential air quality hazards, which could escalate to health risks or fire hazards if not addressed.",
+    "elapsed_time_seconds": 28.19484497799931
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.6,
+    "justification": "Elevated TVOC levels (60,000) detected in room departmentA:AB1, which may indicate potential air quality issues or chemical exposure risks. Other parameters (CO2, temperature, humidity) remain within normal ranges.",
+    "elapsed_time_seconds": 28.57609292699999
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings (CO2: 415-419 ppm, temperature: 28.5°C, humidity: 59%, TVOC/eCO2: 57-60k) are within normal ranges. No critical hazards detected in adjacent rooms (C3, E5) or via HVAC/shaft connections.",
+    "elapsed_time_seconds": 67.2746966550003
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows stable CO2 (415-416 ppm), moderate temperature (28.5°C), and normal humidity (58.8-58.9%). No anomalies detected in adjacent rooms (C3, E5) or critical hazards within 2 hops. HVAC/shaft connections data unavailable but no immediate threats identified.",
+    "elapsed_time_seconds": 71.71106507299919
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (415 ppm), temperature (28.5°C), humidity (58.8%), and TVOC (60,000). No critical hazards, HVAC connections, or structural risks detected via graph tools. TVOC level may warrant monitoring but no immediate threat identified.",
+    "elapsed_time_seconds": 58.020365558000776
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.92,
+    "justification": "Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate severe air quality issues, potentially linked to chemical leaks or ventilation failure.",
+    "elapsed_time_seconds": 65.73540274400148
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.65,
+    "justification": "Elevated TVOC levels (60,000) detected in room AB1, which may indicate potential chemical emissions or poor ventilation. While CO2, temperature, and humidity are within normal ranges, the high TVOC warrants further investigation for possible hazardous substances.",
+    "elapsed_time_seconds": 52.17903454599946
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (414-416 ppm), temperature (28.5°C), humidity (58-59%), and TVOC/eCO2 levels. No adjacent room hazards detected via available tools. Building system connections data unavailable, but no immediate threats indicated.",
+    "elapsed_time_seconds": 41.25990681800249
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor readings within normal ranges (CO2: 414-415 ppm, temperature: 28.5°C, humidity: 58-59%). No critical hazards or HVAC connections detected.",
+    "elapsed_time_seconds": 51.29856738200033
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "fire",
+    "danger_score": 0.65,
+    "justification": "CO2 levels (413-415 ppm) exceed normal thresholds (400 ppm) indicating potential early fire/smoke development. Adjacent rooms C3 and E5 are connected via direct pathways, increasing spread risk. HVAC/shaft connections data unavailable, but spatial topology suggests potential propagation routes.",
+    "elapsed_time_seconds": 109.24957562499912
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate potential air quality hazards, possibly from chemical emissions or poor ventilation.",
+    "elapsed_time_seconds": 47.68439529099851
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "medium",
+    "danger_type": "other",
+    "danger_score": 0.75,
+    "justification": "Elevated TVOC levels (60,000 ppm) detected, indicating potential chemical vapor presence. While CO2, temperature, and humidity are within normal ranges, high TVOC suggests possible indoor air quality issues requiring investigation.",
+    "elapsed_time_seconds": 23.648891213000752
+  },
+  {
+    "room": "departmentA:LA1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (424-427 ppm), temperature (26.03-26.05°C), and humidity (58%). No HVAC/shaft connections or critical hazards detected in adjacent rooms (C1, E1) or within 2 hops. Structural and spatial data confirm normal conditions.",
+    "elapsed_time_seconds": 81.5771058859973
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (413-415 ppm), temperature (28.5°C), humidity (58-59%), and TVOC/eCO2 levels. No critical hazards detected in adjacent rooms (C3, E5) or via HVAC/shaft connections. No threat propagation risk identified.",
+    "elapsed_time_seconds": 45.54735022599925
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "none",
+    "danger": "none",
+    "danger_type": "none",
+    "danger_score": 0,
+    "justification": "Sensor data shows normal CO2 (414-416 ppm), temperature (28.5-28.6°C), humidity (58.7-58.8%), and TVOC/eCO2 levels. No critical hazards detected in adjacent rooms (C3, E5) or within 2-hop radius. Structural and HVAC checks not required for this assessment.",
+    "elapsed_time_seconds": 47.209623692000605
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.92,
+    "justification": "Elevated TVOC (60,000 ppb) and eCO2 (57,330 ppm) levels exceed safe thresholds, indicating potential chemical contamination or gas leak.",
+    "elapsed_time_seconds": 48.88647611899796
+  },
+  {
+    "room": "departmentA:AB1",
+    "warning": "pre-alert",
+    "danger": "high",
+    "danger_type": "other",
+    "danger_score": 0.85,
+    "justification": "Elevated TVOC (60,000) and eCO2 (57,330) levels indicate poor air quality, posing health risks. No HVAC connections found, but localized hazard confirmed.",
+    "elapsed_time_seconds": 64.34328351100339
+  }
+]
