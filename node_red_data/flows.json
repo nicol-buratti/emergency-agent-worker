@@ -617,8 +617,9 @@
     {
         "id": "aa1f41e3b45644a7",
         "type": "subflow",
-        "name": "Subflow 1",
+        "name": "Assign MyPlace",
         "info": "",
+        "category": "",
         "in": [
             {
                 "x": 60,
@@ -632,16 +633,19 @@
         ],
         "out": [
             {
-                "x": 440,
-                "y": 80,
+                "x": 1020,
+                "y": 60,
                 "wires": [
                     {
-                        "id": "8d32cb2922256e3d",
+                        "id": "7f6711853f9230d1",
                         "port": 0
                     }
                 ]
             }
-        ]
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
     },
     {
         "id": "8499b914410e71fe",
@@ -934,11 +938,19 @@
             "eb627453f595862e",
             "5c323e8e7b36a5e1",
             "7df983eddd1fb2ef",
-            "e2b2865d42f66977"
+            "e2b2865d42f66977",
+            "0fb8cfe1c1d20bc4",
+            "616ae4bd078a85c2",
+            "dfb23dafe01b4829",
+            "0ad0ea79bd08e4f9",
+            "4d84dbc397d5c18f",
+            "6ee927c9f6542486",
+            "cdbf7afcd2322f6a",
+            "8339a47e1675ec88"
         ],
         "x": 294,
         "y": 2419,
-        "w": 832,
+        "w": 1412,
         "h": 282
     },
     {
@@ -957,7 +969,6 @@
         "nodes": [
             "1f6462ea3db68534",
             "1f2bc83bb6889e6d",
-            "3dfef2f147f66ec9",
             "1d73f9b0a89aa022",
             "eefa509433ddba2f",
             "a128b891590b4d75",
@@ -968,12 +979,13 @@
             "2a04e2c73e600d8e",
             "5c8a20872053f876",
             "2f51c84ba6d5d3db",
-            "9cc84c5ebd9de3a2"
+            "9cc84c5ebd9de3a2",
+            "299fd178072c6d20"
         ],
         "x": 294,
-        "y": 2159,
-        "w": 1592,
-        "h": 182
+        "y": 2099,
+        "w": 1872,
+        "h": 262
     },
     {
         "id": "b12df3ad553d7c82",
@@ -1036,11 +1048,13 @@
         "nodes": [
             "89618defe1e0d74e",
             "b3fe909e96ce7298",
-            "1763c6511fc9c7ea"
+            "1763c6511fc9c7ea",
+            "12fe6a303f7436bd",
+            "72074794a3bc3208"
         ],
         "x": 1014,
         "y": 2739,
-        "w": 532,
+        "w": 732,
         "h": 142
     },
     {
@@ -1181,7 +1195,8 @@
             "509b073aa33df68f",
             "2c12c472cc25349d",
             "8d673807c1145cb1",
-            "b0c0f2f5386f50e4"
+            "b0c0f2f5386f50e4",
+            "785d32be2a6300fb"
         ],
         "x": 934,
         "y": 2939,
@@ -4300,10 +4315,12 @@
         "y": 80,
         "wires": [
             [
-                "7f6711853f9230d1"
+                "7f6711853f9230d1",
+                "6bb80c6d1f2ec1c4"
             ],
             [
-                "7f6711853f9230d1"
+                "7f6711853f9230d1",
+                "6bb80c6d1f2ec1c4"
             ],
             []
         ]
@@ -4318,7 +4335,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"job\": $$.job}",
+                "to": "{\"nodes\": [payload.updated_nodes.properties.name],\"job\": $$.job}",
                 "tot": "jsonata"
             }
         ],
@@ -4330,18 +4347,23 @@
         "x": 760,
         "y": 80,
         "wires": [
-            [
-                "f9ba76c5cf495b49"
-            ]
+            []
         ]
     },
     {
-        "id": "f9ba76c5cf495b49",
-        "type": "complete-task",
+        "id": "6bb80c6d1f2ec1c4",
+        "type": "debug",
         "z": "aa1f41e3b45644a7",
-        "name": "",
-        "x": 1000,
-        "y": 80,
+        "name": "debug 35",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 160,
         "wires": []
     },
     {
@@ -5101,7 +5123,7 @@
                 "t": "set",
                 "p": "payload.variables",
                 "pt": "msg",
-                "to": "{}",
+                "to": "{\"DangerZones\":{\"count\":0},\"SignalledAreas\":{\"count\":0}}",
                 "tot": "json"
             }
         ],
@@ -5846,7 +5868,8 @@
         "y": 1890.5704345703125,
         "wires": [
             [
-                "33431691ec6c35ce"
+                "33431691ec6c35ce",
+                "f13cdf0465022840"
             ]
         ]
     },
@@ -6037,7 +6060,7 @@
         "z": "1a10bef68b9ba5b6",
         "g": "c643b2bd69088014",
         "name": "debug 6",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -6115,36 +6138,6 @@
         ]
     },
     {
-        "id": "3dfef2f147f66ec9",
-        "type": "inject",
-        "z": "1a10bef68b9ba5b6",
-        "g": "047df9d275c966b7",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 460,
-        "y": 2300,
-        "wires": [
-            [
-                "1f2bc83bb6889e6d"
-            ]
-        ]
-    },
-    {
         "id": "eefa509433ddba2f",
         "type": "switch",
         "z": "1a10bef68b9ba5b6",
@@ -6181,8 +6174,8 @@
         "z": "1a10bef68b9ba5b6",
         "g": "047df9d275c966b7",
         "name": "",
-        "x": 1740,
-        "y": 2300,
+        "x": 1540,
+        "y": 2280,
         "wires": []
     },
     {
@@ -6263,8 +6256,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1780,
-        "y": 2200,
+        "x": 1760,
+        "y": 2140,
         "wires": []
     },
     {
@@ -6675,7 +6668,7 @@
         "z": "1a10bef68b9ba5b6",
         "g": "fcc107977ac8dda3",
         "name": "",
-        "x": 1400,
+        "x": 1600,
         "y": 2780,
         "wires": [
             []
@@ -6706,14 +6699,14 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
         "x": 1140,
         "y": 2780,
         "wires": [
             [
-                "89618defe1e0d74e"
+                "12fe6a303f7436bd"
             ]
         ]
     },
@@ -6749,7 +6742,8 @@
         "y": 2840,
         "wires": [
             [
-                "89618defe1e0d74e"
+                "89618defe1e0d74e",
+                "72074794a3bc3208"
             ]
         ]
     },
@@ -7822,7 +7816,8 @@
         "y": 3040,
         "wires": [
             [
-                "509b073aa33df68f"
+                "509b073aa33df68f",
+                "785d32be2a6300fb"
             ]
         ]
     },
@@ -7853,9 +7848,241 @@
         "y": 2540,
         "wires": [
             [
+                "cdbf7afcd2322f6a",
+                "0fb8cfe1c1d20bc4",
                 "5c323e8e7b36a5e1"
             ]
         ]
+    },
+    {
+        "id": "12fe6a303f7436bd",
+        "type": "function",
+        "z": "1a10bef68b9ba5b6",
+        "g": "fcc107977ac8dda3",
+        "name": "Warden in random exit",
+        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// Assicurati che payload e variables esistano per evitare errori\nmsg.payload = msg.payload || {};\nlet originalVars = msg.payload.variables || {};\n\n// Crea un nuovo oggetto contenente ESCLUSIVAMENTE MyPlace e SignalledAreas\nlet newVariables = {\n    MyPlace: originalVars.MyPlace || {},\n    SignalledAreas: originalVars.SignalledAreas || {}\n};\n\n// Modifica i valori in base alla tua logica\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234\n// Sovrascrivi le variabili di payload eliminando tutto il resto (es. DangerZones)\nmsg.payload.variables = newVariables;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 2780,
+        "wires": [
+            [
+                "89618defe1e0d74e",
+                "72074794a3bc3208"
+            ]
+        ]
+    },
+    {
+        "id": "72074794a3bc3208",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "fcc107977ac8dda3",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1540,
+        "y": 2840,
+        "wires": []
+    },
+    {
+        "id": "785d32be2a6300fb",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "ce01d23e65e712d4",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1500,
+        "y": 3040,
+        "wires": []
+    },
+    {
+        "id": "299fd178072c6d20",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "047df9d275c966b7",
+        "name": "debug 33",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2060,
+        "y": 2320,
+        "wires": []
+    },
+    {
+        "id": "4d84dbc397d5c18f",
+        "type": "subflow:df8d344bd7233279",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "",
+        "x": 1380,
+        "y": 2660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0ad0ea79bd08e4f9",
+        "type": "function",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "Warden in random exit",
+        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// 1. Recupera i dati dal flow context (equivalente all'inject)\nlet processData = flow.get(\"processData\") || {};\nlet deployments = processData.deployments || [];\n\n// 2. Trova la definizione per \"Process_Emergency_Warden\"\nlet wardenDeployment = deployments.find(d => d.process && d.process.bpmnProcessId === \"Process_Emergency_Warden\");\n// Assicurati che payload esista\nmsg.payload = msg.payload || {};\n\n// 3. Aggiungi tenantId e processDefinitionKey estratti dal context\nif (wardenDeployment) {\n    msg.payload.tenantId = wardenDeployment.process.tenantId;\n    msg.payload.processDefinitionKey = wardenDeployment.process.processDefinitionKey;\n}\n\n// 4. Preleva le variabili dal context (o dal payload se non presenti)\nlet originalVars = processData.variables || msg.payload.variables || {};\n\n// Crea un nuovo oggetto contenente ESCLUSIVAMENTE MyPlace e SignalledAreas\nlet newVariables = {\n    SignalledAreas: originalVars.SignalledAreas || {},\n    MyPlace: originalVars.MyPlace || {}\n};\n\n// Modifica i valori in base alla tua logica\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234;\nnewVariables.SignalledAreas.count = msg.aggregation;\ndelete msg.payload.job;\n// Sovrascrivi le variabili di payload\nmsg.payload.variables = newVariables;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 2620,
+        "wires": [
+            [
+                "4d84dbc397d5c18f",
+                "6ee927c9f6542486"
+            ]
+        ]
+    },
+    {
+        "id": "dfb23dafe01b4829",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "count zones",
+        "rules": [
+            {
+                "t": "set",
+                "p": "aggregation",
+                "pt": "msg",
+                "to": "$count($$.payload.variables.SignalledAreas)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1330,
+        "y": 2580,
+        "wires": [
+            [
+                "0ad0ea79bd08e4f9",
+                "8339a47e1675ec88"
+            ]
+        ]
+    },
+    {
+        "id": "616ae4bd078a85c2",
+        "type": "subflow:33089873be7dbdab",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "",
+        "x": 1330,
+        "y": 2540,
+        "wires": [
+            [
+                "dfb23dafe01b4829"
+            ]
+        ]
+    },
+    {
+        "id": "0fb8cfe1c1d20bc4",
+        "type": "change",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "Save Camunda job on msg & PREPARE VIEWS",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "currentViewNames",
+                "pt": "msg",
+                "to": "[ \"SignalledAreas\" ]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1360,
+        "y": 2500,
+        "wires": [
+            [
+                "616ae4bd078a85c2"
+            ]
+        ]
+    },
+    {
+        "id": "6ee927c9f6542486",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "debug 34",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1600,
+        "y": 2620,
+        "wires": []
+    },
+    {
+        "id": "cdbf7afcd2322f6a",
+        "type": "complete-task",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "",
+        "x": 1100,
+        "y": 2620,
+        "wires": []
+    },
+    {
+        "id": "8339a47e1675ec88",
+        "type": "debug",
+        "z": "1a10bef68b9ba5b6",
+        "g": "c643b2bd69088014",
+        "name": "debug 36",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1560,
+        "y": 2560,
+        "wires": []
     },
     {
         "id": "b4253b79dc30039e",
