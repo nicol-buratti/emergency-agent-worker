@@ -789,6 +789,19 @@
             ],
             "expression": "amenity == 'gatheringPoint'",
             "query": "MATCH (p:Place) WHERE p.amenity = 'gatheringPoint' RETURN DISTINCT p;"
+        },
+        {
+            "id": "set6",
+            "name": "Signalled areas",
+            "conditions": [
+                {
+                    "attribute": "signalled",
+                    "operator": "==",
+                    "value": true
+                }
+            ],
+            "expression": "signalled == true",
+            "query": "MATCH (p:Place) WHERE p.signalled = true RETURN DISTINCT p;"
         }
     ],
     "views": [
@@ -829,6 +842,14 @@
             "name": "GatheringPoints",
             "logicalPlaces": [
                 "set5"
+            ],
+            "attributes": {}
+        },
+        {
+            "id": "view5",
+            "name": "SignalledAreas",
+            "logicalPlaces": [
+                "set6"
             ],
             "attributes": {}
         }
