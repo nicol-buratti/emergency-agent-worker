@@ -11,15 +11,15 @@ wheels/
 .env
 
 # Ignore all contents of the Node-RED folder...
-node_red_data/*
+node-red/node_red_data/*
 
 # ...except for the essential project files
-!node_red_data/flows.json
-!node_red_data/package.json
-!node_red_data/settings.js
+!node-red/node_red_data/flows.json
+!node-red/node_red_data/package.json
+!node-red/node_red_data/settings.js
 
 # (Optional) If you use custom nodes or libraries, keep the package-lock as well
-!node_red_data/package-lock.json
+!node-red/node_red_data/package-lock.json
 
 # MAKE SURE TO IGNORE CREDENTIALS (for security)
-node_red_data/flows_cred.json
+node-red/node_red_data/flows_cred.json
