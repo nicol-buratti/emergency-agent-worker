@@ -62,15 +62,12 @@ P: SafeZones</bpmn:text>
     <bpmn:association id="Association_04jly0o" associationDirection="None" sourceRef="Activity_10obiin" targetRef="TextAnnotation_0zjil4v" />
     <bpmn:association id="Association_0lsgawi" associationDirection="None" sourceRef="Activity_0nnuss2" targetRef="TextAnnotation_1clvkri" />
     <bpmn:association id="Association_14kud3n" associationDirection="None" sourceRef="Activity_1qm61wx" targetRef="TextAnnotation_1di7pvl" />
-    <bpmn:textAnnotation id="TextAnnotation_0hxtq89">
-      <bpmn:text>TODO devo cambiarlo in conditional, appena trovo un modo per non creare infiniti processi</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_1devbir" associationDirection="None" sourceRef="Event_0aqhfta" targetRef="TextAnnotation_0hxtq89" />
     <bpmn:textAnnotation id="TextAnnotation_18kwdnu">
       <bpmn:text>A: MyPlace.signalled := false</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0x5w7kb" associationDirection="None" sourceRef="Activity_1jq3s9s" targetRef="TextAnnotation_04nok61" />
     <bpmn:association id="Association_1esbujh" associationDirection="None" sourceRef="Activity_1pbzxop" targetRef="TextAnnotation_18kwdnu" />
+    <bpmn:association id="Association_1ngghi4" associationDirection="None" sourceRef="Activity_0gzcids" targetRef="TextAnnotation_178ix69" />
   </bpmn:collaboration>
   <bpmn:process id="Process_Emergency_Warden" isExecutable="true">
     <bpmn:exclusiveGateway id="Gateway_1h3x2hh">
@@ -216,7 +213,6 @@ P: SafeZones</bpmn:text>
       </bpmn:conditionalEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:association id="Association_11x6hxx" associationDirection="None" sourceRef="Activity_180iozn" targetRef="TextAnnotation_0tgyfki" />
-    <bpmn:association id="Association_1ngghi4" associationDirection="None" sourceRef="Activity_0gzcids" targetRef="TextAnnotation_178ix69" />
   </bpmn:process>
   <bpmn:process id="Process_Occupant" isExecutable="true">
     <bpmn:endEvent id="Event_17ny5dy">
@@ -454,10 +450,6 @@ P: SafeZones</bpmn:text>
         <di:waypoint x="819" y="510" />
         <di:waypoint x="824" y="483" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_10sa6x9" bpmnElement="Association_1ngghi4">
-        <di:waypoint x="1230" y="529" />
-        <di:waypoint x="1140" y="492" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_0ifdikq" bpmnElement="Participant_0ihyw4y" isHorizontal="true">
         <dc:Bounds x="160" y="970" width="920" height="270" />
         <bpmndi:BPMNLabel />
@@ -518,16 +510,16 @@ P: SafeZones</bpmn:text>
         <di:waypoint x="610" y="1210" />
         <di:waypoint x="610" y="1160" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_01dde9j" bpmnElement="Association_0x5w7kb">
-        <di:waypoint x="1046" y="810" />
-        <di:waypoint x="1050" y="800" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1esbujh_di" bpmnElement="Association_1esbujh">
-        <di:waypoint x="836" y="810" />
-        <di:waypoint x="832" y="780" />
+      <bpmndi:BPMNEdge id="BPMNEdge_10sa6x9" bpmnElement="Association_1ngghi4">
+        <di:waypoint x="1290" y="510" />
+        <di:waypoint x="1297" y="482" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_0g3yevr" bpmnElement="TextAnnotation_1di7pvl">
         <dc:Bounds x="425" y="750" width="112" height="40" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_023dolv" bpmnElement="TextAnnotation_04nok61">
+        <dc:Bounds x="994" y="760" width="118" height="40" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1ti4pa2" bpmnElement="TextAnnotation_0tgyfki">
@@ -536,10 +528,6 @@ P: SafeZones</bpmn:text>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1y9ggh6" bpmnElement="TextAnnotation_1iu01us">
         <dc:Bounds x="740" y="80" width="401" height="273" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0j01ym7" bpmnElement="TextAnnotation_178ix69">
-        <dc:Bounds x="994" y="452" width="201" height="40" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0trd91u" bpmnElement="TextAnnotation_17dqptb">
@@ -554,26 +542,10 @@ P: SafeZones</bpmn:text>
         <dc:Bounds x="295" y="1010" width="152" height="43" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0hxtq89_di" bpmnElement="TextAnnotation_0hxtq89">
-        <dc:Bounds x="400" y="390" width="102.31562137049941" height="115" />
+      <bpmndi:BPMNShape id="TextAnnotation_18kwdnu_di" bpmnElement="TextAnnotation_18kwdnu">
+        <dc:Bounds x="780" y="740" width="171" height="40" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_0rpr8ou" bpmnElement="Association_04jly0o">
-        <di:waypoint x="367" y="1080" />
-        <di:waypoint x="366" y="1053" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1dshyut" bpmnElement="Association_0lsgawi">
-        <di:waypoint x="610" y="1080" />
-        <di:waypoint x="610" y="1052" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_0sfc2cr" bpmnElement="Association_14kud3n">
-        <di:waypoint x="480" y="810" />
-        <di:waypoint x="480" y="790" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1devbir_di" bpmnElement="Association_1devbir">
-        <di:waypoint x="388" y="534" />
-        <di:waypoint x="403" y="505" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0v9bkr8_di" bpmnElement="Flow_0v9bkr8">
         <di:waypoint x="650" y="890" />
         <di:waypoint x="650" y="985" />
@@ -586,12 +558,28 @@ P: SafeZones</bpmn:text>
         <di:waypoint x="910" y="985" />
         <di:waypoint x="910" y="1080" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_023dolv" bpmnElement="TextAnnotation_04nok61">
-        <dc:Bounds x="994" y="760" width="118" height="40" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_18kwdnu_di" bpmnElement="TextAnnotation_18kwdnu">
-        <dc:Bounds x="780" y="740" width="171" height="40" />
+      <bpmndi:BPMNEdge id="BPMNEdge_0rpr8ou" bpmnElement="Association_04jly0o">
+        <di:waypoint x="367" y="1080" />
+        <di:waypoint x="366" y="1053" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1dshyut" bpmnElement="Association_0lsgawi">
+        <di:waypoint x="610" y="1080" />
+        <di:waypoint x="610" y="1052" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0sfc2cr" bpmnElement="Association_14kud3n">
+        <di:waypoint x="480" y="810" />
+        <di:waypoint x="480" y="790" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_01dde9j" bpmnElement="Association_0x5w7kb">
+        <di:waypoint x="1046" y="810" />
+        <di:waypoint x="1050" y="800" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1esbujh_di" bpmnElement="Association_1esbujh">
+        <di:waypoint x="836" y="810" />
+        <di:waypoint x="832" y="780" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_0j01ym7" bpmnElement="TextAnnotation_178ix69">
+        <dc:Bounds x="1200" y="442" width="201" height="40" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>

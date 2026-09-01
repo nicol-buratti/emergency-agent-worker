@@ -11,8 +11,7 @@
         "id": "1a10bef68b9ba5b6",
         "type": "tab",
         "label": "Camunda",
-        "disabled": false,
-        "locked": true,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -21,7 +20,6 @@
         "type": "tab",
         "label": "iot caching low code",
         "disabled": false,
-        "locked": true,
         "info": "",
         "env": []
     },
@@ -495,7 +493,7 @@
     {
         "id": "aa1f41e3b45644a7",
         "type": "subflow",
-        "name": "Assign MyPlace",
+        "name": "Assign MyPlace brutto",
         "info": "",
         "category": "",
         "in": [
@@ -1762,7 +1760,7 @@
                 "y": 80,
                 "wires": [
                     {
-                        "id": "7a78ae9a50106cf2",
+                        "id": "aa7d1a7d51472958",
                         "port": 0
                     }
                 ]
@@ -2389,46 +2387,6 @@
         "h": 318
     },
     {
-        "id": "3fd163a400b4ae13",
-        "type": "group",
-        "z": "f080f7d563bd7ed5",
-        "name": "Manual start Occupant process",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "e621ff4a766711bb",
-            "813f0809b20a74d9",
-            "2db2d5f7617d7d64",
-            "7ac5e9c733f9483b",
-            "587eeaddb3de51e3"
-        ],
-        "x": 294,
-        "y": 679,
-        "w": 632,
-        "h": 162
-    },
-    {
-        "id": "0180574585c1f837",
-        "type": "group",
-        "z": "f080f7d563bd7ed5",
-        "name": "Manual start Warden process",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "12270f836f2aac1b",
-            "b3514fd878637eaa",
-            "8a51cece66e04667",
-            "870ba56f373ff734",
-            "5edd1f67a11040fe"
-        ],
-        "x": 954,
-        "y": 679,
-        "w": 612,
-        "h": 162
-    },
-    {
         "id": "781eade0d5b0ace5",
         "type": "group",
         "z": "f080f7d563bd7ed5",
@@ -2445,11 +2403,12 @@
             "a83b38c8841ddf4f",
             "b05432613735b292",
             "28c4a8b737448d99",
-            "d66c5f67058fad52"
+            "d66c5f67058fad52",
+            "016eacaecea5a0e1"
         ],
         "x": 304,
         "y": 879,
-        "w": 542,
+        "w": 762,
         "h": 202
     },
     {
@@ -2502,7 +2461,6 @@
             "3285c3ee3c824d55",
             "6bcd51ea3fa5bec7",
             "fb5058208b1e7147",
-            "41525d7b08132387",
             "29d8fd7b9d6515e0"
         ],
         "x": 294,
@@ -2531,14 +2489,13 @@
             "1742fadc78d6d30f",
             "239288df8fde5231",
             "f9d6f8fefafc4ebb",
-            "bb786a57dccd9b07",
-            "4b5f696b814ecb0d",
-            "7462797686383c0a"
+            "5feae36c9451135a",
+            "6d808a383a4cee1e"
         ],
         "x": 334,
         "y": 2059,
-        "w": 712,
-        "h": 282
+        "w": 1032,
+        "h": 262
     },
     {
         "id": "b001dcd7f4e84d23",
@@ -2640,11 +2597,13 @@
             "943614bdcb31dfd3",
             "5d3812ec5dd547db",
             "f03fce4e8b97aeda",
-            "a52b7fed013f434e"
+            "a52b7fed013f434e",
+            "b70a3a374649d0e7",
+            "85d2af0fd80290ad"
         ],
         "x": 334,
         "y": 2939,
-        "w": 572,
+        "w": 752,
         "h": 162
     },
     {
@@ -3878,15 +3837,16 @@
         "id": "f876e996eda28593",
         "type": "debug",
         "z": "df8d344bd7233279",
-        "name": "debug 9",
+        "name": "Conditional Event Response",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 640,
+        "x": 700,
         "y": 160,
         "wires": []
     },
@@ -4712,7 +4672,8 @@
         "y": 80,
         "wires": [
             [
-                "351ec3e0ec705167"
+                "351ec3e0ec705167",
+                "f095a7134a94fe08"
             ]
         ]
     },
@@ -4729,12 +4690,10 @@
         "y": 80,
         "wires": [
             [
-                "7f6711853f9230d1",
-                "6bb80c6d1f2ec1c4"
+                "7f6711853f9230d1"
             ],
             [
-                "7f6711853f9230d1",
-                "6bb80c6d1f2ec1c4"
+                "7f6711853f9230d1"
             ],
             []
         ]
@@ -4765,19 +4724,20 @@
         ]
     },
     {
-        "id": "6bb80c6d1f2ec1c4",
+        "id": "f095a7134a94fe08",
         "type": "debug",
         "z": "aa1f41e3b45644a7",
-        "name": "debug 35",
+        "name": "debug BRUTTO",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 640,
-        "y": 160,
+        "x": 440,
+        "y": 220,
         "wires": []
     },
     {
@@ -5495,7 +5455,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"job\": $$.job}",
+                "to": "{\t    \"job\": $$.job,\t    \"variables\": $$.job.variables\t}",
                 "tot": "jsonata"
             }
         ],
@@ -6715,7 +6675,7 @@
                 "t": "set",
                 "p": "params",
                 "pt": "msg",
-                "to": "{\t    \"start_name\": $$.roomName ? $$.roomName : $env(\"StartRoom\"),\t    \"allowed_ids\": $$.traverseIds,\t    \"target_ids\": $$.targetIds\t}",
+                "to": "{\t    \"start_name\": $$.roomName ? $$.roomName : $env(\"StartRoom\"),\t    \"allowed_ids\": [$$.traverseIds],\t    \"target_ids\": [$$.targetIds]\t}",
                 "tot": "jsonata"
             }
         ],
@@ -6728,8 +6688,7 @@
         "y": 300,
         "wires": [
             [
-                "a0e71bc369f91ae9",
-                "f0eff2ec5cf01f16"
+                "a0e71bc369f91ae9"
             ]
         ]
     },
@@ -6852,23 +6811,6 @@
         ]
     },
     {
-        "id": "f0eff2ec5cf01f16",
-        "type": "debug",
-        "z": "444a81068c9c6b09",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 540,
-        "y": 360,
-        "wires": []
-    },
-    {
         "id": "1858798fa916440c",
         "type": "change",
         "z": "5b0a1aaaa2443453",
@@ -6960,8 +6902,7 @@
         "y": 140,
         "wires": [
             [
-                "ea9dbf90594c52f3",
-                "d57a915a7bd2fb71"
+                "ea9dbf90594c52f3"
             ]
         ]
     },
@@ -6975,14 +6916,14 @@
                 "t": "set",
                 "p": "params",
                 "pt": "msg",
-                "to": "{   \"logicalPlacesIds\": [payload.p.identity],   \"assignments_list\": [$$.assignments ? $$.assignments : $env(\"Assignments\")] }",
+                "to": "{   \"logicalPlacesIds\": [payload.p.identity],   \"assignments\": $$.assignments ? $$.assignments : $env(\"Assignments\") }",
                 "tot": "jsonata"
             },
             {
                 "t": "set",
                 "p": "query",
                 "pt": "msg",
-                "to": "MATCH (p:Place) WHERE id(p) IN $logicalPlacesIds  UNWIND $assignments_list AS assignment  CALL create.set_property(p, assignment.parameter, assignment.state) YIELD node  RETURN count(DISTINCT node) AS updated_nodes",
+                "to": "MATCH (p:Place) WHERE id(p) IN $logicalPlacesIds SET p += $assignments RETURN count(p) AS updated_nodes",
                 "tot": "str"
             }
         ],
@@ -7042,23 +6983,6 @@
         ]
     },
     {
-        "id": "d57a915a7bd2fb71",
-        "type": "debug",
-        "z": "b009507935e1772b",
-        "name": "debug 8",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 400,
-        "y": 100,
-        "wires": []
-    },
-    {
         "id": "8d824396c9f2764e",
         "type": "subflow:444a81068c9c6b09",
         "z": "13c5d37ce66a7ebc",
@@ -7091,17 +7015,10 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
+                "p": "job.variables.MyPlace.name",
                 "pt": "msg",
-                "to": "payload[0].target_id.identity",
+                "to": "payload[0].target_id.properties.name",
                 "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "assignments",
-                "pt": "msg",
-                "to": "{\t    \"parameter\": $env(\"AssignParameter\"),\t    \"state\": $$.payload\t}",
-                "tot": "jsonata"
             }
         ],
         "action": "",
@@ -7109,20 +7026,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 420,
-        "y": 80,
-        "wires": [
-            [
-                "7a78ae9a50106cf2"
-            ]
-        ]
-    },
-    {
-        "id": "7a78ae9a50106cf2",
-        "type": "subflow:b009507935e1772b",
-        "z": "13c5d37ce66a7ebc",
-        "name": "",
-        "x": 640,
+        "x": 490,
         "y": 80,
         "wires": [
             []
@@ -7159,7 +7063,7 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": true,
+        "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
@@ -7764,7 +7668,7 @@
         "z": "1a10bef68b9ba5b6",
         "g": "c6472bd832318f7a",
         "name": "Debug: Process Variables",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -10225,7 +10129,7 @@
         "z": "1a10bef68b9ba5b6",
         "g": "047df9d275c966b7",
         "name": "debug 33",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -10443,7 +10347,7 @@
         "type": "debug",
         "z": "742c3f66713f865c",
         "name": "Errors",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -10893,7 +10797,7 @@
         "type": "debug",
         "z": "7d41b691517b8892",
         "name": "debug 18",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -11139,7 +11043,7 @@
                 "t": "set",
                 "p": "payload.variables",
                 "pt": "msg",
-                "to": "{\"DangerZones\":{\"count\":0},\"SignalledAreas\":{\"count\":0}}",
+                "to": "{}",
                 "tot": "json"
             }
         ],
@@ -11367,285 +11271,6 @@
         "wires": []
     },
     {
-        "id": "e621ff4a766711bb",
-        "type": "subflow:df8d344bd7233279",
-        "z": "f080f7d563bd7ed5",
-        "g": "3fd163a400b4ae13",
-        "name": "",
-        "x": 780,
-        "y": 760,
-        "wires": [
-            [
-                "587eeaddb3de51e3"
-            ]
-        ]
-    },
-    {
-        "id": "813f0809b20a74d9",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "3fd163a400b4ae13",
-        "name": "Real Data inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.variables",
-                "v": "$flowContext(\"processData\").variables",
-                "vt": "jsonata"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 420,
-        "y": 720,
-        "wires": [
-            [
-                "7ac5e9c733f9483b"
-            ]
-        ]
-    },
-    {
-        "id": "2db2d5f7617d7d64",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "3fd163a400b4ae13",
-        "name": "DangerZone Spotted inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.variables",
-                "v": "{\"DangerZones\":{\"count\":3},\"MyPlace\":{\"name\":\"AA1\"}}",
-                "vt": "json"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 450,
-        "y": 780,
-        "wires": [
-            [
-                "7ac5e9c733f9483b"
-            ]
-        ]
-    },
-    {
-        "id": "7ac5e9c733f9483b",
-        "type": "switch",
-        "z": "f080f7d563bd7ed5",
-        "g": "3fd163a400b4ae13",
-        "name": "Check if Started",
-        "property": "occupantStarted",
-        "propertyType": "flow",
-        "rules": [
-            {
-                "t": "false"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 740,
-        "y": 720,
-        "wires": [
-            [
-                "e621ff4a766711bb"
-            ]
-        ]
-    },
-    {
-        "id": "587eeaddb3de51e3",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "3fd163a400b4ae13",
-        "name": "Set flow var",
-        "rules": [
-            {
-                "t": "set",
-                "p": "occupantStarted",
-                "pt": "flow",
-                "to": "$count(payload.processInstances) > 0",
-                "tot": "jsonata"
-            },
-            {
-                "t": "set",
-                "p": "secSysStarted",
-                "pt": "msg",
-                "to": "$count(payload.processInstances) > 0",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 730,
-        "y": 800,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "12270f836f2aac1b",
-        "type": "subflow:df8d344bd7233279",
-        "z": "f080f7d563bd7ed5",
-        "g": "0180574585c1f837",
-        "name": "",
-        "x": 1420,
-        "y": 760,
-        "wires": [
-            [
-                "5edd1f67a11040fe"
-            ]
-        ]
-    },
-    {
-        "id": "b3514fd878637eaa",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "0180574585c1f837",
-        "name": "Real Data inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.variables",
-                "v": "$flowContext(\"processData\").variables",
-                "vt": "jsonata"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 1080,
-        "y": 720,
-        "wires": [
-            [
-                "870ba56f373ff734"
-            ]
-        ]
-    },
-    {
-        "id": "8a51cece66e04667",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "0180574585c1f837",
-        "name": "SignalledAreas Spotted inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Emergency_Warden\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Emergency_Warden\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.variables",
-                "v": "{\"SignalledAreas\":{\"count\":3}}",
-                "vt": "json"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 1120,
-        "y": 780,
-        "wires": [
-            [
-                "870ba56f373ff734"
-            ]
-        ]
-    },
-    {
-        "id": "870ba56f373ff734",
-        "type": "switch",
-        "z": "f080f7d563bd7ed5",
-        "g": "0180574585c1f837",
-        "name": "Check if Started",
-        "property": "wardenStarted",
-        "propertyType": "flow",
-        "rules": [
-            {
-                "t": "false"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1380,
-        "y": 720,
-        "wires": [
-            [
-                "12270f836f2aac1b"
-            ]
-        ]
-    },
-    {
-        "id": "5edd1f67a11040fe",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "0180574585c1f837",
-        "name": "Set flow var",
-        "rules": [
-            {
-                "t": "set",
-                "p": "wardenStarted",
-                "pt": "flow",
-                "to": "$count(payload.processInstances) > 0",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1370,
-        "y": 800,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "a83b38c8841ddf4f",
         "type": "comment",
         "z": "f080f7d563bd7ed5",
@@ -11734,7 +11359,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "f87dfaf878317100",
         "name": "debug 2",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -11915,7 +11540,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "f87dfaf878317100",
         "name": "debug 3",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -12003,7 +11628,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "f87dfaf878317100",
         "name": "debug 10",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -12110,7 +11735,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "f87dfaf878317100",
         "name": "debug 7",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -12274,7 +11899,8 @@
         "y": 980,
         "wires": [
             [
-                "d66c5f67058fad52"
+                "d66c5f67058fad52",
+                "016eacaecea5a0e1"
             ]
         ]
     },
@@ -12289,7 +11915,7 @@
                 "t": "set",
                 "p": "occupancy",
                 "pt": "msg",
-                "to": "$sum($$.payload.Building.p.properties.occupancy)",
+                "to": "$sum($$.payload.Building.p.properties.occupancy.($type($)=\"object\" ? low : $))",
                 "tot": "jsonata"
             },
             {
@@ -12299,7 +11925,7 @@
             },
             {
                 "t": "set",
-                "p": "payload.Building.occupancy",
+                "p": "job.variables.Building.occupancy",
                 "pt": "msg",
                 "to": "occupancy",
                 "tot": "msg"
@@ -12319,7 +11945,8 @@
         "y": 1040,
         "wires": [
             [
-                "b05432613735b292"
+                "b05432613735b292",
+                "016eacaecea5a0e1"
             ]
         ]
     },
@@ -12443,7 +12070,7 @@
             },
             {
                 "name": "Assignments",
-                "value": "{\"parameter\":\"lights\",\"state\":\"off\"}",
+                "value": "{\"lights\":\"off\"}",
                 "type": "json"
             }
         ],
@@ -12564,8 +12191,7 @@
         "y": 1760,
         "wires": [
             [
-                "c4b9da2d450f73bc",
-                "41525d7b08132387"
+                "c4b9da2d450f73bc"
             ]
         ]
     },
@@ -12713,7 +12339,7 @@
         "env": [
             {
                 "name": "TraverseView",
-                "value": "Building",
+                "value": "SafeZones",
                 "type": "str"
             },
             {
@@ -12726,8 +12352,7 @@
         "y": 2180,
         "wires": [
             [
-                "74a5a868cd1089fd",
-                "7462797686383c0a"
+                "74a5a868cd1089fd"
             ]
         ]
     },
@@ -12742,7 +12367,7 @@
                 "t": "set",
                 "p": "roomName",
                 "pt": "msg",
-                "to": "payload.variables.MyPlace.name",
+                "to": "job.variables.MyPlace.name",
                 "tot": "msg"
             }
         ],
@@ -12852,63 +12477,6 @@
         ]
     },
     {
-        "id": "f9d6f8fefafc4ebb",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "79f178997defc9f3",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload[0].target_id.identity",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "assignments",
-                "pt": "msg",
-                "to": "{\t    \"parameter\":\"name\",\t    \"state\":$$.payload\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 440,
-        "y": 2260,
-        "wires": [
-            [
-                "bb786a57dccd9b07",
-                "4b5f696b814ecb0d"
-            ]
-        ]
-    },
-    {
-        "id": "bb786a57dccd9b07",
-        "type": "subflow:b009507935e1772b",
-        "z": "f080f7d563bd7ed5",
-        "g": "79f178997defc9f3",
-        "name": "",
-        "env": [
-            {
-                "name": "Assignments",
-                "value": "{\"parameter\":\"signalled\",\"state\":true}",
-                "type": "json"
-            }
-        ],
-        "x": 440,
-        "y": 2300,
-        "wires": [
-            [
-                "befa1004272787e1"
-            ]
-        ]
-    },
-    {
         "id": "07a7a4d2c6efad2d",
         "type": "change",
         "z": "f080f7d563bd7ed5",
@@ -12919,7 +12487,7 @@
                 "t": "set",
                 "p": "roomName",
                 "pt": "msg",
-                "to": "payload.variables.MyPlace.name",
+                "to": "job.variables.MyPlace.name",
                 "tot": "msg"
             }
         ],
@@ -12945,7 +12513,7 @@
         "env": [
             {
                 "name": "Assignments",
-                "value": "{\"parameter\":\"signalled\",\"state\":true}",
+                "value": "{\"signalled\":true}",
                 "type": "json"
             }
         ],
@@ -13009,7 +12577,7 @@
         "rules": [
             {
                 "t": "set",
-                "p": "count",
+                "p": "aggregation",
                 "pt": "msg",
                 "to": "$count($$.payload.SignalledAreas)",
                 "tot": "jsonata"
@@ -13023,12 +12591,12 @@
                 "t": "set",
                 "p": "payload.SignalledAreas.count",
                 "pt": "msg",
-                "to": "count",
+                "to": "aggregation",
                 "tot": "msg"
             },
             {
                 "t": "delete",
-                "p": "count",
+                "p": "aggregation",
                 "pt": "msg"
             }
         ],
@@ -13051,7 +12619,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "b001dcd7f4e84d23",
         "name": "Warden in random exit",
-        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// 1. Recupera i dati dal flow context (equivalente all'inject)\nlet processData = flow.get(\"processData\") || {};\nlet deployments = processData.deployments || [];\n\n// 2. Trova la definizione per \"Process_Emergency_Warden\"\nlet wardenDeployment = deployments.find(d => d.process && d.process.bpmnProcessId === \"Process_Emergency_Warden\");\n// Assicurati che payload esista\nmsg.payload = msg.payload || {};\n\n// 3. Aggiungi tenantId e processDefinitionKey estratti dal context\nif (wardenDeployment) {\n    msg.payload.tenantId = wardenDeployment.process.tenantId;\n    msg.payload.processDefinitionKey = wardenDeployment.process.processDefinitionKey;\n}\n\n// 4. Preleva le variabili dal context (o dal payload se non presenti)\nlet originalVars = processData.variables || msg.payload.variables || {};\n\n// Crea un nuovo oggetto contenente ESCLUSIVAMENTE MyPlace e SignalledAreas\nlet newVariables = {\n    SignalledAreas: originalVars.SignalledAreas || {},\n    MyPlace: originalVars.MyPlace || {}\n};\n\n// Modifica i valori in base alla tua logica\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234;\nnewVariables.SignalledAreas.count = msg.aggregation;\ndelete msg.payload.job;\n// Sovrascrivi le variabili di payload\nmsg.payload.variables = newVariables;\n\nreturn msg;",
+        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// 1. Recupera i dati dal flow context (equivalente all'inject)\nlet processData = flow.get(\"processData\") || {};\nlet deployments = processData.deployments || [];\n\n// 2. Trova la definizione per \"Process_Emergency_Warden\"\nlet wardenDeployment = deployments.find(d => d.process && d.process.bpmnProcessId === \"Process_Emergency_Warden\");\n// Assicurati che payload esista\nmsg.payload = msg.payload || {};\n\n// 3. Aggiungi tenantId e processDefinitionKey estratti dal context\nif (wardenDeployment) {\n    msg.payload.tenantId = wardenDeployment.process.tenantId;\n    msg.payload.processDefinitionKey = wardenDeployment.process.processDefinitionKey;\n}\n\n// 4. Preleva le variabili dal context (o dal payload se non presenti)\nlet originalVars = processData.variables || msg.payload.variables || {};\n\n// Crea un nuovo oggetto contenente ESCLUSIVAMENTE MyPlace e SignalledAreas\nlet newVariables = {\n    SignalledAreas: originalVars.SignalledAreas || {},\n    MyPlace: originalVars.MyPlace || {}\n};\n\n// Modifica i valori in base alla tua logica\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234;\nnewVariables.SignalledAreas.count = msg.payload.SignalledAreas.count;\ndelete msg.payload.job;\n// Sovrascrivi le variabili di payload\nmsg.payload.variables = newVariables;\ndelete msg.payload.SignalledAreas\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -13199,7 +12767,7 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": true,
+        "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "x": 3160,
@@ -13384,7 +12952,7 @@
         "y": 2980,
         "wires": [
             [
-                "5d3812ec5dd547db"
+                "b70a3a374649d0e7"
             ]
         ]
     },
@@ -13415,7 +12983,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "f87dfaf878317100",
         "name": "debug 4",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -13449,7 +13017,7 @@
                 "type": "str"
             }
         ],
-        "x": 770,
+        "x": 950,
         "y": 2980,
         "wires": [
             [
@@ -13474,7 +13042,7 @@
         "y": 3060,
         "wires": [
             [
-                "a52b7fed013f434e"
+                "85d2af0fd80290ad"
             ]
         ]
     },
@@ -13501,7 +13069,7 @@
                 "type": "str"
             }
         ],
-        "x": 770,
+        "x": 950,
         "y": 3060,
         "wires": [
             [
@@ -13722,7 +13290,7 @@
             },
             {
                 "t": "set",
-                "p": "payload.SignalledAreas.count",
+                "p": "job.variables.SignalledAreas.count",
                 "pt": "msg",
                 "to": "count",
                 "tot": "msg"
@@ -13755,7 +13323,7 @@
         "env": [
             {
                 "name": "Assignments",
-                "value": "{\"parameter\":\"signalled\",\"state\":false}",
+                "value": "{\"signalled\":false}",
                 "type": "json"
             }
         ],
@@ -13778,7 +13346,7 @@
                 "t": "set",
                 "p": "roomName",
                 "pt": "msg",
-                "to": "payload.variables.MyPlace.name",
+                "to": "job.variables.MyPlace.name",
                 "tot": "msg"
             }
         ],
@@ -13848,62 +13416,9 @@
         "y": 1620,
         "wires": [
             [
-                "48b3e32e7756eacf"
+                "0cd6868982052b31"
             ]
         ]
-    },
-    {
-        "id": "41525d7b08132387",
-        "type": "debug",
-        "z": "f080f7d563bd7ed5",
-        "g": "250c3b9bf684f063",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 880,
-        "y": 1720,
-        "wires": []
-    },
-    {
-        "id": "4b5f696b814ecb0d",
-        "type": "debug",
-        "z": "f080f7d563bd7ed5",
-        "g": "79f178997defc9f3",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 940,
-        "y": 2280,
-        "wires": []
-    },
-    {
-        "id": "7462797686383c0a",
-        "type": "debug",
-        "z": "f080f7d563bd7ed5",
-        "g": "79f178997defc9f3",
-        "name": "debug 11",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 700,
-        "y": 2160,
-        "wires": []
     },
     {
         "id": "29d8fd7b9d6515e0",
@@ -13911,7 +13426,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "250c3b9bf684f063",
         "name": "assign MyPlace to occupant",
-        "func": "// 1. Ensure 'variables' exists\nif (!msg.payload.variables) {\n    msg.payload.variables = {};\n}\n\n// 2. Ensure 'MyPlace' exists inside 'variables'\nif (!msg.payload.variables.MyPlace) {\n    msg.payload.variables.MyPlace = {};\n}\n\n// 3. Now it is safe to assign 'name'\nmsg.payload.variables.MyPlace.name = \"AA1\";\n\nreturn msg;",
+        "func": "// 1. Ensure 'variables' exists\nif (!msg.payload.variables) {\n    msg.payload.variables = {};\n}\n\n// 2. Ensure 'MyPlace' exists inside 'variables'\nif (!msg.payload.variables.MyPlace) {\n    msg.payload.variables.MyPlace = {};\n}\n\n// 3. Now it is safe to assign 'name'\nmsg.payload.variables.MyPlace.name = \"StanzaCulmone\";\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -13932,7 +13447,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "b3afd4bf20adcfb3",
         "name": "debug Adjust light",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -13943,5 +13458,149 @@
         "x": 710,
         "y": 1180,
         "wires": []
+    },
+    {
+        "id": "3763112bf69167dc",
+        "type": "comment",
+        "z": "f080f7d563bd7ed5",
+        "name": "adjust light funziona",
+        "info": "",
+        "x": 990,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "c5b2fe51af89c353",
+        "type": "comment",
+        "z": "f080f7d563bd7ed5",
+        "name": "funziona, da migliorare magari\\n la funzione finale",
+        "info": "",
+        "x": 1340,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "5feae36c9451135a",
+        "type": "comment",
+        "z": "f080f7d563bd7ed5",
+        "g": "79f178997defc9f3",
+        "name": "se faccio una volta occupant aa1 trova la strada\\n la seconda volta no. \\n sistemare se è un problema grave",
+        "info": "",
+        "x": 1080,
+        "y": 2160,
+        "wires": []
+    },
+    {
+        "id": "f9d6f8fefafc4ebb",
+        "type": "change",
+        "z": "f080f7d563bd7ed5",
+        "g": "79f178997defc9f3",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job.variables.MyPlace.name",
+                "pt": "msg",
+                "to": "$$.payload[0].target_id.properties.name",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 2280,
+        "wires": [
+            [
+                "befa1004272787e1"
+            ]
+        ]
+    },
+    {
+        "id": "6d808a383a4cee1e",
+        "type": "comment",
+        "z": "f080f7d563bd7ed5",
+        "g": "79f178997defc9f3",
+        "name": "senza hazard DangerZones mi risultano 21, sistemare la query",
+        "info": "",
+        "x": 1120,
+        "y": 2240,
+        "wires": []
+    },
+    {
+        "id": "016eacaecea5a0e1",
+        "type": "debug",
+        "z": "f080f7d563bd7ed5",
+        "g": "781eade0d5b0ace5",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "b70a3a374649d0e7",
+        "type": "change",
+        "z": "f080f7d563bd7ed5",
+        "g": "860ae4eb696a0d39",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "roomName",
+                "pt": "msg",
+                "to": "job.variables.MyPlace.name",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 2980,
+        "wires": [
+            [
+                "5d3812ec5dd547db"
+            ]
+        ]
+    },
+    {
+        "id": "85d2af0fd80290ad",
+        "type": "change",
+        "z": "f080f7d563bd7ed5",
+        "g": "860ae4eb696a0d39",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "roomName",
+                "pt": "msg",
+                "to": "job.variables.MyPlace.name",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 3060,
+        "wires": [
+            [
+                "a52b7fed013f434e"
+            ]
+        ]
     }
 ]
