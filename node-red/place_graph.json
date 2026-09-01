@@ -744,7 +744,7 @@
                 }
             ],
             "expression": "danger == 'low' || danger == 'null'",
-            "query": "MATCH (p:Place) WHERE size([(p)-[:AFFECTS]-(h_excluded:Hazard) WHERE NOT h_excluded.level IN ['low', 'none'] | h_excluded]) = 0 OPTIONAL MATCH (p)-[r:AFFECTS]-(h:Hazard) RETURN DISTINCT p, r, h;"
+            "query": "MATCH (p:Place) WHERE size([(p)-[:AFFECTS]-(h_excluded:Hazard) WHERE NOT h_excluded.level IN ['low', 'none'] | h_excluded]) = 0 OPTIONAL MATCH (p)-[r:AFFECTS]-(h:Hazard) RETURN DISTINCT p;"
         },
         {
             "id": "set3",
@@ -762,7 +762,7 @@
                 }
             ],
             "expression": "danger == 'high' || danger == 'medium'",
-            "query": "MATCH (p:Place) WHERE size([(p)-[:AFFECTS]-(h_excluded:Hazard) WHERE NOT h_excluded.level IN ['medium', 'high'] | h_excluded]) = 0 OPTIONAL MATCH (p)-[r:AFFECTS]-(h:Hazard) RETURN DISTINCT p, r, h;"
+            "query": "MATCH (p:Place) WHERE size([(p)-[:AFFECTS]-(h_excluded:Hazard) WHERE NOT h_excluded.level IN ['medium', 'high'] | h_excluded]) = 0 OPTIONAL MATCH (p)-[r:AFFECTS]-(h:Hazard) RETURN DISTINCT p;"
         },
         {
             "id": "set4",
