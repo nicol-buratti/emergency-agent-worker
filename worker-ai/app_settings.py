@@ -12,7 +12,6 @@ class AppSettings(BaseSettings):
     llm_model: str = Field(default="gpt-4", validation_alias="LLM_MODEL")
     llm_api_key: SecretStr = Field(validation_alias="LLM_API_KEY")
     llm_base_url: str | None = Field(default=None, validation_alias="LLM_BASE_URL")
-    langfuse_enabled: bool = Field(default=False, validation_alias="LANGFUSE_ENABLED")
     extra_llm_models: list[str] | None = Field(
         default=None, validation_alias="EXTRA_LLM_MODELS"
     )

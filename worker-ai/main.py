@@ -8,7 +8,6 @@ from collections import defaultdict
 from typing import Any, Dict, List
 import datetime
 import aiomqtt
-from langfuse import get_client
 import redis.asyncio as redis
 from dotenv import load_dotenv
 
@@ -23,7 +22,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 load_dotenv()
-langfuse = get_client()
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
 QUEUE_NAME = os.getenv("QUEUE_NAME", "room_pq")

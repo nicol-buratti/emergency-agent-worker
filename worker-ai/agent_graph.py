@@ -6,7 +6,6 @@ from langchain.agents import create_agent
 from langchain_core.messages import AnyMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
-from langfuse.langchain import CallbackHandler
 from langgraph.graph import StateGraph, START, END
 from langgraph.types import Send
 from pydantic import BaseModel, Field, ValidationError
@@ -100,9 +99,6 @@ class HazardMapReduceManager:
         )
 
         self.callbacks: list[Any] = []
-        if settings.langfuse_enabled:
-            self.callbacks.append(CallbackHandler())
-
         template_string: str = """IoT Context & Input Data:
 {data}
 
