@@ -1,139 +1,148 @@
-# Emergency Agent Worker
+<div align="center">
 
-An asynchronous Python worker that evaluates fire and earthquake risk in a building in real time, based on IoT sensor data. The system uses a swarm of LLM agents (via **LangGraph**) organized with a **map-reduce** pattern: a triage agent routes data to specialized experts (fire, earthquake), which in turn query a **Memgraph** graph containing the building's topology to assess hazard propagation between adjacent rooms.
+# Indoor Emergency System
+### Adaptive Multi-Hazard Emergency Response Framework for Indoor Environments
 
-> ⚠️ Research project / prototype. It is not intended to be the sole safety system of a real building.
+An asynchronous, LLM-driven agent swarm for real-time fire and earthquake risk assessment in smart buildings
 
-## How it works
+[![Python](https://img.shields.io/badge/python-3.14%2B-blue.svg)](https://www.python.org/)
+[![uv](https://img.shields.io/badge/dependency%20manager-uv-de5fe9)](https://docs.astral.sh/uv/)
+[![LangGraph](https://img.shields.io/badge/orchestration-LangGraph-1c3c3c)](https://github.com/langchain-ai/langgraph)
+[![Camunda](https://img.shields.io/badge/workflow-Camunda-fb610b)](https://camunda.com/)
+[![Memgraph](https://img.shields.io/badge/graph%20db-Memgraph-ff5000)](https://memgraph.com/)
+[![Redis](https://img.shields.io/badge/queue-Redis-dc382d)](https://redis.io/)
+[![Node--RED](https://img.shields.io/badge/ingestion-Node--RED-8f0000)](https://nodered.org/)
+[![Docker](https://img.shields.io/badge/deploy-Docker%20Compose-2496ed)](https://www.docker.com/)
+[![Status](https://img.shields.io/badge/status-research%20prototype-yellow.svg)]()
+[![License](https://img.shields.io/badge/license-unspecified-lightgrey.svg)]()
 
-```mermaid
-flowchart TD
-    A[IoT sensors] --> B[Node-RED]
-    B --> C[(Redis<br/>priority queue)]
-    C --> D[Python Worker]
-    D --> E["Triage Agent<br/>(LangGraph, LLM)<br/>uses Memgraph tools directly"]
-    E -- "no anomaly<br/>(safe, no escalation needed)" --> H[Risk assessment]
-    E -- "anomaly detected<br/>→ escalation" --> F["Fire Safety Agent<br/>(uses Memgraph tools)"]
-    E -- "anomaly detected<br/>→ escalation" --> G["Earthquake Safety Agent<br/>(uses Memgraph tools)"]
-    F --> H
-    G --> H
-    H --> I[/MQTT publish topic/]
-```
+</div>
 
-1. **Node-RED** collects data from the sensors (via ThingsBoard/department VPN) and writes it to **Redis** as timestamp-ordered snapshots, in a priority queue (`room_pq`).
-2. The **worker** (`main.py`) pops rooms from the Redis queue, rebuilds the history of sensor snapshots, and sends them to the agent swarm.
-3. The LangGraph graph (`agent_graph.py`) first runs a **triage agent**. This agent can itself query **Memgraph** (through the tools in `memgraph_custom_tools.py`) to inspect the building's topology and current sensor snapshots. If both the telemetry and the graph data look safe, the triage agent produces the final assessment directly, **without** escalating to any expert. Only when it detects an anomaly does it escalate, indicating which specialized experts (`fire`, `earthquake`) are required.
-4. The **expert agents**, once escalated to, also query **Memgraph** to read the building's topology (adjacent rooms, ventilation paths, structural dependencies) and understand how the hazard could propagate.
-5. The final result (a list of `ThreatAssessment` objects, including risk level, hazard type, score, and justification) — coming either directly from triage or from the escalated experts — is published to an **MQTT** topic.
-6. **Langfuse** can be enabled to trace and observe the LLM calls.
+> **Research project / prototype.** This system is not intended to be the sole safety mechanism of a real building and should not replace certified fire/seismic safety infrastructure.
 
-## Tech stack
+---
+
+## Description
+
+Traditional building safety systems rely on single-hazard, threshold-based logic: a smoke detector triggers an alarm, a seismic sensor trips a cutoff - each in isolation, with no shared understanding of the building's spatial structure or of how one hazard might interact with or accelerate another. The Emergency Agent Worker implements an adaptive, multi-hazard emergency response framework for indoor environments, designed to move beyond isolated threshold alarms toward a context-aware, graph-informed reasoning process.
+
+The framework treats hazard detection as a collaborative reasoning problem rather than a static rule-evaluation problem. Real-time telemetry from IoT sensors (temperature, smoke, gas, vibration, and other environmental signals) is streamed through Node-RED, buffered in a Redis priority queue, and consumed by an asynchronous Python worker. Each room's sensor history is handed to a swarm of language model agents, orchestrated with LangGraph using a map-reduce (triage → specialized experts) pattern:
+
+- A triage agent performs an initial, lightweight assessment of each room, cross-referencing live telemetry against the building's topology.
+- Only when an anomaly is detected does the system escalate to domain-specific expert agents - currently a fire safety agent and an earthquake safety agent - which reason more deeply about hazard-specific dynamics.
+- Both triage and expert agents are grounded in a Memgraph graph database encoding the building's topology (rooms, adjacency, ventilation paths, structural dependencies), allowing the agents to reason about how a hazard could propagate between physically or structurally connected spaces - a core requirement for adaptive, spatially-aware indoor emergency response.
+- The resulting structured risk assessments are published to an MQTT topic, ready for consumption by alerting dashboards, building management systems, or evacuation-guidance applications.
+
+This escalate-only-when-needed design reduces unnecessary inference cost while preserving deeper, explainable reasoning for genuinely ambiguous or dangerous situations - a practical trade-off central to deploying adaptive reasoning systems in latency- and resource-constrained indoor monitoring contexts.
+
+---
+
+## Key Features
+
+- Multi-agent hazard reasoning - a triage agent and specialized fire/earthquake expert agents built with LangGraph, following a map-reduce escalation pattern.
+- Topology-aware risk propagation - hazard reasoning is grounded in a Memgraph graph of the building's rooms, adjacencies, and structural paths.
+- Real-time IoT ingestion - sensor data collected via Node-RED (e.g. from ThingsBoard) and buffered as timestamp-ordered snapshots in a Redis priority queue (`room_pq`).
+- Asynchronous worker core - non-blocking Python worker (`main.py`).
+- Pluggable LLM backend - any OpenAI-compatible endpoint (e.g. OpenRouter), with configurable primary and fallback models.
+- Custom Memgraph tool layer - purpose-built tools (`memgraph_custom_tools.py`) exposed to agents for querying building topology and current sensor state.
+- Structured MQTT output - each assessment is a validated `ThreatAssessment` object (room, warning level, danger level/type, score, justification).
+- Containerized supporting stack - Docker Compose definitions for Node-RED, Redis, Memgraph (MAGE), Memgraph Lab, and Memgraph MCP.
+
+---
+
+## Tech Stack
 
 | Component | Role |
 |---|---|
 | [LangGraph](https://github.com/langchain-ai/langgraph) / [LangChain](https://github.com/langchain-ai/langchain) | Orchestration of the agent swarm (triage → experts) |
 | LLM via OpenAI-compatible API (e.g. [OpenRouter](https://openrouter.ai/)) | Agent reasoning |
-| [Memgraph](https://memgraph.com/) + Memgraph MAGE/Lab/MCP | Building topology graph, queried by the expert agents |
+| [Memgraph](https://memgraph.com/) (+ MAGE / Lab / MCP) | Building topology graph, queried by the agents |
 | [Redis](https://redis.io/) | Priority queue of sensor snapshots to process |
 | [Node-RED](https://nodered.org/) | Ingestion/routing of IoT sensor data |
-| [aiomqtt](https://github.com/sbtinstruments/aiomqtt) | Publishing results to an MQTT broker |
-| [ThingsBoard MCP](https://github.com/thingsboard) | MCP tool for accessing data from the ThingsBoard IoT platform |
-| [Langfuse](https://langfuse.com/) | Optional observability/tracing of LLM calls |
 | Python ≥ 3.14, [uv](https://docs.astral.sh/uv/) | Runtime and dependency management |
 
-## Repository structure
-
-| File | Description |
-|---|---|
-| `main.py` | Worker entry point: reads from the Redis queue, orchestrates processing, and publishes results to MQTT |
-| `agent_graph.py` | LangGraph graph definition (`HazardMapReduceManager`): states, Pydantic output schemas, and triage/fire/earthquake nodes |
-| `agent_swarm_prebuilts.py` | Prebuilt components/agents reused within the swarm |
-| `memgraph_custom_tools.py` | Custom tools exposed to the agents for querying the Memgraph database |
-| `app_settings.py` | App configuration based on `pydantic-settings` (read from `.env`) |
-| `place_graph.json` | Building topology definition/dataset to load into Memgraph |
-| `nodered_config.yml` | Node-RED flow configuration |
-| `node_red_data/` | Persistent data for the Node-RED container |
-| `docker-compose.yml` | Supporting services stack (Node-RED, Redis, Memgraph, Memgraph Lab, ThingsBoard MCP, Memgraph MCP) |
-| `.env.example` | Example of the required environment variables |
+---
 
 ## Prerequisites
 
-- Python **3.14+**
+- Python 3.14+
 - [uv](https://docs.astral.sh/uv/getting-started/installation/) for dependency management
 - Docker and Docker Compose for the supporting services (Redis, Memgraph, Node-RED, etc.)
-- An OpenAI-compatible API key for the LLM (e.g. [OpenRouter](https://openrouter.ai/))
-- A reachable MQTT broker (for publishing results)
+- An OpenAI-compatible API key for the LLM (e.g. OpenRouter)
+- A reachable MQTT broker for publishing results
+
+---
 
 ## Installation
 
 ```bash
-git clone https://github.com/nicol-buratti/emergency-agent-worker.git
-cd emergency-agent-worker
+# 1. Clone the repository
+git clone https://github.com/nicol-buratti/multi-hazard-emergency-framework.git
+cd multi-hazard-emergency-framework
 
-# install dependencies with uv
+# 2. Install Python dependencies with uv
 uv sync
-```
 
-## Configuration
-
-Copy the example file and fill in the values:
-
-```bash
+# 3. Copy the environment template and configure it
 cp .env.example .env
 ```
 
-Main variables (see `app_settings.py` and `main.py`):
+### Configuration
+
+Edit `.env` with your environment values. Key variables (see `app_settings.py` and `main.py`):
 
 | Variable | Description | Default |
 |---|---|---|
 | `LLM_MODEL` | Primary LLM model (OpenRouter-compatible format) | `gpt-4` |
 | `LLM_API_KEY` | API key for the LLM provider | *required* |
 | `LLM_BASE_URL` | Base URL of the OpenAI-compatible endpoint | `https://openrouter.ai/api/v1` |
-| `EXTRA_LLM_MODELS` | JSON list of fallback/alternative models | — |
-| `LANGFUSE_ENABLED` | Enables Langfuse tracing | `false` |
+| `EXTRA_LLM_MODELS` | JSON list of fallback/alternative models | - |
 | `REDIS_HOST` | Redis server host | `localhost` |
 | `REDIS_PORT` | Redis server port | `6379` |
 | `QUEUE_NAME` | Name of the Redis priority queue to consume | `room_pq` |
 | `MQTT_BROKER_ADDRESS` | MQTT broker address | `localhost` |
 | `MQTT_PUBLISH_TOPIC` | MQTT topic to publish results to | `emergency/agent/data` |
 
-If you use Langfuse, also make sure to set the related keys/host required by the SDK (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_HOST`).
-
-## Starting the supporting services
-
-The `docker-compose.yml` file starts Node-RED, Redis, Memgraph (MAGE), Memgraph Lab, the ThingsBoard MCP connector, and the Memgraph MCP server:
+### Start the supporting services
 
 ```bash
 docker compose up -d
 ```
 
-> Note: some containers use `network_mode: host` to access the department's sensor data over VPN during development — adjust this to your environment as needed.
+This launches Node-RED, Redis, Memgraph (MAGE), Memgraph Lab and the Memgraph MCP server.
 
-Default exposed services:
+Note: some containers use `network_mode: host` to reach sensor data over a VPN during development - adjust for your environment.
 
 | Service | Port | Notes |
 |---|---|---|
 | Node-RED | `1880` | Ingestion flows UI |
 | Redis | `6379` | Priority queue |
 | Memgraph (Bolt) | `7687` | Graph database |
-| Memgraph (log/monitor) | `7444` | — |
+| Memgraph (log/monitor) | `7444` | - |
 | Memgraph Lab | `3000` | Graph administration UI |
-| ThingsBoard MCP | `8000` | MCP tool for the ThingsBoard platform |
 | Memgraph MCP | `8001` | Read-only MCP tool for querying Memgraph |
 
-## Running the worker
+---
 
-Once the supporting services are up and `.env` is configured:
+## Usage
+
+Once the supporting services are running and `.env` is configured, start the worker:
 
 ```bash
 uv run main.py
 ```
 
-The worker listens on the Redis queue (`QUEUE_NAME`), pops the highest-priority rooms, rebuilds the sensor snapshot history, sends it to the agent swarm, and publishes each risk assessment to the configured MQTT topic. Shutdown is handled gracefully via `SIGINT`/`SIGTERM`.
+The worker:
+1. Pops the highest-priority room from the Redis queue (`QUEUE_NAME`).
+2. Rebuilds the sensor snapshot history for that room.
+3. Passes it to the LangGraph agent swarm (triage → fire/earthquake experts if escalated).
+4. Publishes the resulting risk assessment to the configured MQTT topic.
 
-## Output format
+Shutdown is handled gracefully on `SIGINT` / `SIGTERM`.
 
-Each assessment published on MQTT follows the `ThreatAssessment` schema:
+### Example output
+
+Each assessment published to MQTT follows the `ThreatAssessment` schema:
 
 ```json
 {
@@ -146,12 +155,44 @@ Each assessment published on MQTT follows the `ThreatAssessment` schema:
 }
 ```
 
-## Roadmap / future ideas
+### Loading building topology
 
-- Extend the expert agents to hazard types beyond fire and earthquake
-- Improve triage routing with more historical context per room
-- Add automated tests and CI
+The building's spatial and structural model is described in `place_graph.json` and loaded into Memgraph, enabling propagation-aware reasoning across adjacent rooms and shared ventilation/structural paths.
+
+---
+
+## Project Structure
+```
+multi-hazard-emergency-framework/
+├── .vscode/ # Editor configuration
+├── camunda/ # Process-orchestration / workflow definitions
+├── node-red/ # Node-RED ingestion flows and configuration
+│ ├── nodered_config.yml # Node-RED flow configuration
+│ └── node_red_data/ # Persistent Node-RED container data
+├── worker-ai/ # Core Python agent worker
+│ ├── main.py # Worker entry point: Redis consumption, orchestration, MQTT publishing
+│ ├── agent_graph.py # LangGraph graph definition (HazardMapReduceManager): states, schemas, triage/fire/earthquake nodes
+│ ├── agent_swarm_prebuilts.py # Prebuilt components/agents reused within the swarm
+│ ├── memgraph_custom_tools.py # Custom tools exposed to agents for querying Memgraph
+│ ├── app_settings.py # Application configuration (pydantic-settings, reads .env)
+│ ├── place_graph.json # Building topology dataset loaded into Memgraph
+│ └── .env.example # Example required environment variables
+├── .pre-commit-config.yaml # Pre-commit hook definitions
+├── .secrets.baseline # Baseline for secrets-scanning tooling
+├── docker-compose.yml # Supporting services stack (Node-RED, Redis, Memgraph, Memgraph Lab, Memgraph MCP)
+└── README.md # Project documentation
+```
+
+---
 
 ## License
 
-No license file is present in the repository at the time of writing this README.
+No license file is currently present in this repository. Until one is added, all rights are reserved by the repository owner, and no reuse, modification, or distribution rights are implicitly granted. Contributors and users should contact the maintainer for clarification before reuse.
+
+---
+
+<div align="center">
+
+Built as part of research into adaptive multi-hazard emergency response for indoor environments.
+
+</div>
