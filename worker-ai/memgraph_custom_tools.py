@@ -43,7 +43,7 @@ async def get_memgraph_tools() -> List[BaseTool]:
         """
         cypher = f"""
         MATCH (n:Place)
-        WHERE n.department = '{department}' AND n.room = '{room}'
+        WHERE n.department = '{department}' AND n.name = '{room}'
         RETURN n
         LIMIT 1
         """
@@ -68,7 +68,7 @@ async def get_memgraph_tools() -> List[BaseTool]:
         """
         cypher = f"""
         MATCH (n:Place)
-        WHERE n.department = '{department}' AND n.room = '{room}'
+        WHERE n.department = '{department}' AND n.name = '{room}'
 
         MATCH p = (n)-[:CONNECTED_TO*1..{depth}]-(target)
 
@@ -84,9 +84,9 @@ async def get_memgraph_tools() -> List[BaseTool]:
         WITH rel, collect({{n1: n_from, n2: n_to, depth: level}})[0] AS data
 
         RETURN
-        data.n1.room AS n1,
+        data.n1.name AS n1,
         type(rel) AS edge,
-        data.n2.room AS n2
+        data.n2.name AS n2
         ORDER BY data.depth ASC, n1 ASC, n2 ASC
         LIMIT {limit}
         """
