@@ -882,6 +882,326 @@
         "color": "#DDAA99"
     },
     {
+        "id": "b383b6062cf0c044",
+        "type": "subflow",
+        "name": "DB Executor (1)",
+        "category": "",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "2f60157eee5ec5b2"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 920,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "f35bade81327ab59",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 920,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "281011cf3094276c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "366aabfc7e2ab40f",
+        "type": "subflow",
+        "name": "Get View (1)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "55d647e1f66bd0ad"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 860,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "0609f5423cfa60dd",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "ViewName",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "66cb7b7ad11fbb9f",
+        "type": "subflow",
+        "name": "Camunda Task Wrapper (1)",
+        "info": "Subflow che centralizza il Task Worker Camunda, il setup iniziale e la pulizia/completamento finale.",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "0bc1ca220c63baf0"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 680,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "65a9596ca3bf2e5e",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "TASK_TYPE",
+                "type": "str",
+                "value": "default-task"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "c6172473ac2e1198",
+        "type": "subflow",
+        "name": "DB Executor (2)",
+        "category": "",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "96552ad5392b0893"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 920,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "b4d440dbfa1b0245",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 920,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "186d9e562f7dcd2c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "78d8a57c36e211a6",
+        "type": "subflow",
+        "name": "Get View (2)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "462634e34721d905"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 860,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "da461fa6897f7ae2",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "ViewName",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "496fc4fc9bb328b7",
+        "type": "subflow",
+        "name": "Assign flow (1)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 80,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "7ba3e9ea269e5b5e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 700,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "105c3c265fb57673",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "ViewName",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Assignments",
+                "type": "json",
+                "value": "{}",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "json",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "07314571c78da6c0",
+        "type": "subflow",
+        "name": "Camunda Task Wrapper (2)",
+        "info": "Subflow che centralizza il Task Worker Camunda, il setup iniziale e la pulizia/completamento finale.",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "48600e99a33ba53d"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 680,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "0d7838996e78d369",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "TASK_TYPE",
+                "type": "str",
+                "value": "default-task"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "8499b914410e71fe",
         "type": "group",
         "z": "742c3f66713f865c",
@@ -902,37 +1222,6 @@
         "y": 199,
         "w": 432,
         "h": 82
-    },
-    {
-        "id": "eebd3d5c418f638f",
-        "type": "group",
-        "z": "f080f7d563bd7ed5",
-        "name": "Emergency Evacuation Process Deployment",
-        "style": {
-            "stroke": "#555555",
-            "stroke-opacity": "1",
-            "fill": "rgba(255, 255, 255, 0.03)",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#f0f0f0"
-        },
-        "nodes": [
-            "1f5b27d5e2028f39",
-            "522b99c7dbbe8556",
-            "93f3ad1b8dc208f3",
-            "ebc7ce0115fa73e8",
-            "df0f947042bd03b0",
-            "f657ef28aa7c1e34",
-            "65253ce983dd1a18",
-            "74e794dd7e8c0f38",
-            "e3c4bd4ca104d81b",
-            "49ba58a9bde9f816"
-        ],
-        "x": 304,
-        "y": 299,
-        "w": 1062,
-        "h": 322
     },
     {
         "id": "ae6f29a92edd75b0",
@@ -961,67 +1250,12 @@
         "h": 318
     },
     {
-        "id": "781eade0d5b0ace5",
-        "type": "group",
-        "z": "f080f7d563bd7ed5",
-        "style": {
-            "stroke": "#555555",
-            "stroke-opacity": "1",
-            "fill": "rgba(255, 255, 255, 0.03)",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#f0f0f0"
-        },
-        "nodes": [
-            "a83b38c8841ddf4f",
-            "b05432613735b292",
-            "28c4a8b737448d99",
-            "d66c5f67058fad52"
-        ],
-        "x": 304,
-        "y": 879,
-        "w": 502,
-        "h": 202
-    },
-    {
-        "id": "b3afd4bf20adcfb3",
-        "type": "group",
-        "z": "f080f7d563bd7ed5",
-        "style": {
-            "stroke": "#555555",
-            "stroke-opacity": "1",
-            "fill": "rgba(255, 255, 255, 0.03)",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#f0f0f0"
-        },
-        "nodes": [
-            "40706266b23e997e",
-            "780f2846bca1cb05",
-            "f6bdd1ce4cb89538",
-            "19fa5cd9c1d25e21",
-            "6ac5d113c50533ab",
-            "b6785f5696595ec6"
-        ],
-        "x": 314,
-        "y": 1119,
-        "w": 532,
-        "h": 282
-    },
-    {
         "id": "250c3b9bf684f063",
         "type": "group",
         "z": "f080f7d563bd7ed5",
+        "name": "Emergency Occupant Process",
         "style": {
-            "stroke": "#555555",
-            "stroke-opacity": "1",
-            "fill": "rgba(255, 255, 255, 0.03)",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#f0f0f0"
+            "label": true
         },
         "nodes": [
             "89a280b92b9b94c8",
@@ -1035,22 +1269,20 @@
             "fb5058208b1e7147",
             "29d8fd7b9d6515e0"
         ],
-        "x": 294,
-        "y": 1659,
-        "w": 852,
-        "h": 382
+        "x": 334,
+        "y": 1579,
+        "w": 512,
+        "h": 322
     },
     {
         "id": "79f178997defc9f3",
         "type": "group",
         "z": "f080f7d563bd7ed5",
+        "name": "",
         "style": {
             "stroke": "#555555",
-            "stroke-opacity": "1",
             "fill": "rgba(255, 255, 255, 0.03)",
-            "fill-opacity": "1",
             "label": true,
-            "label-position": "nw",
             "color": "#f0f0f0"
         },
         "nodes": [
@@ -1062,8 +1294,8 @@
             "239288df8fde5231",
             "f9d6f8fefafc4ebb"
         ],
-        "x": 334,
-        "y": 2059,
+        "x": 314,
+        "y": 1939,
         "w": 532,
         "h": 262
     },
@@ -1089,10 +1321,10 @@
             "6a6b0c282bd03a6a",
             "dc8b43c7ee5a77e2"
         ],
-        "x": 334,
-        "y": 2419,
-        "w": 492,
-        "h": 302
+        "x": 294,
+        "y": 2239,
+        "w": 452,
+        "h": 222
     },
     {
         "id": "860ae4eb696a0d39",
@@ -1115,10 +1347,10 @@
             "b70a3a374649d0e7",
             "85d2af0fd80290ad"
         ],
-        "x": 334,
-        "y": 2939,
-        "w": 752,
-        "h": 162
+        "x": 274,
+        "y": 2619,
+        "w": 312,
+        "h": 322
     },
     {
         "id": "85408742bdb1ceb3",
@@ -1141,8 +1373,8 @@
             "a439960bd1ff7425",
             "2f614fa84bfb5a90"
         ],
-        "x": 334,
-        "y": 3119,
+        "x": 274,
+        "y": 2979,
         "w": 692,
         "h": 222
     },
@@ -1164,10 +1396,10 @@
             "93101a5b0f3961a2",
             "4a1bc982215a2ebf"
         ],
-        "x": 334,
-        "y": 3379,
+        "x": 274,
+        "y": 3239,
         "w": 472,
-        "h": 162
+        "h": 142
     },
     {
         "id": "356bd6381fe28003",
@@ -1187,10 +1419,10 @@
             "35a50239f6974e65",
             "fa60061cfa03ef8c"
         ],
-        "x": 354,
-        "y": 3619,
-        "w": 292,
-        "h": 202
+        "x": 274,
+        "y": 3439,
+        "w": 492,
+        "h": 142
     },
     {
         "id": "f87dfaf878317100",
@@ -1346,6 +1578,69 @@
         "y": 759,
         "w": 612,
         "h": 162
+    },
+    {
+        "id": "23cf73e2f9f11f12",
+        "type": "group",
+        "z": "f080f7d563bd7ed5",
+        "name": "Emergency Evacuation Process Deployment",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "7aa25ae1d3aab2f8",
+            "515a31f2dcd85f0d",
+            "831f58c35210e839",
+            "9e0430c2f86dc657",
+            "9f1202e4a288f706",
+            "cd2097daa6a20642",
+            "90d985bc592f540e",
+            "20fee08c2762f191",
+            "f63dc4b4812203a9",
+            "875da4e0434cc707"
+        ],
+        "x": 294,
+        "y": 339,
+        "w": 372,
+        "h": 442
+    },
+    {
+        "id": "eae2b23e1aa0fcc3",
+        "type": "group",
+        "z": "f080f7d563bd7ed5",
+        "name": "Building Occupancy Process",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "799975521ec28fb7",
+            "4b7707ba58ad90e1",
+            "c01eca7e0d1e5a33"
+        ],
+        "x": 314,
+        "y": 919,
+        "w": 612,
+        "h": 142
+    },
+    {
+        "id": "ee4e8865308b5702",
+        "type": "group",
+        "z": "f080f7d563bd7ed5",
+        "name": "Building Lighting Control",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "67f6ce838bcf83c5",
+            "b004d3367cae2b38",
+            "1bbab437ca0cb33b",
+            "0f62d3742017a7b6",
+            "c61ded82cf4b93c3"
+        ],
+        "x": 334,
+        "y": 1199,
+        "w": 612,
+        "h": 202
     },
     {
         "id": "19268c5a199e4927",
@@ -3980,7 +4275,7 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
@@ -4046,6 +4341,898 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "2f60157eee5ec5b2",
+        "type": "change",
+        "z": "b383b6062cf0c044",
+        "name": "Prepare data for DB",
+        "rules": [
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 80,
+        "wires": [
+            [
+                "22ef0219b42b1654"
+            ]
+        ]
+    },
+    {
+        "id": "22ef0219b42b1654",
+        "type": "neo4j-bolt",
+        "z": "b383b6062cf0c044",
+        "server": "d9d1b2e046e79011",
+        "name": "Memgraph: Execute query",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 500,
+        "y": 80,
+        "wires": [
+            [
+                "f35bade81327ab59"
+            ],
+            [
+                "f35bade81327ab59"
+            ],
+            [
+                "281011cf3094276c"
+            ]
+        ]
+    },
+    {
+        "id": "f35bade81327ab59",
+        "type": "change",
+        "z": "b383b6062cf0c044",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "database",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[$$.payload]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "281011cf3094276c",
+        "type": "change",
+        "z": "b383b6062cf0c044",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "database",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "55d647e1f66bd0ad",
+        "type": "change",
+        "z": "366aabfc7e2ab40f",
+        "name": "Get query from view",
+        "rules": [
+            {
+                "t": "set",
+                "p": "viewObject",
+                "pt": "msg",
+                "to": "$globalContext(\"views\")[name in $env(\"ViewName\")]",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "queries",
+                "pt": "msg",
+                "to": "$globalContext(\"logicalPlaces\")[id in $$.viewObject.logicalPlaces].query",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "queries",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "queries",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "viewObject",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 80,
+        "wires": [
+            [
+                "47e3b107bd5f6c3f"
+            ]
+        ]
+    },
+    {
+        "id": "47e3b107bd5f6c3f",
+        "type": "split",
+        "z": "366aabfc7e2ab40f",
+        "name": "Split Queries",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 490,
+        "y": 80,
+        "wires": [
+            [
+                "1a06f74f45cef0f8"
+            ]
+        ]
+    },
+    {
+        "id": "1a06f74f45cef0f8",
+        "type": "change",
+        "z": "366aabfc7e2ab40f",
+        "name": "Set msg.query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 80,
+        "wires": [
+            [
+                "31c61e87b16d6b1e"
+            ]
+        ]
+    },
+    {
+        "id": "e4503877e86273b4",
+        "type": "join",
+        "z": "366aabfc7e2ab40f",
+        "name": "Join Results",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 490,
+        "y": 180,
+        "wires": [
+            [
+                "0609f5423cfa60dd"
+            ]
+        ]
+    },
+    {
+        "id": "0609f5423cfa60dd",
+        "type": "change",
+        "z": "366aabfc7e2ab40f",
+        "name": "Format Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{$env(\"ViewName\"): $$.payload[0]}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "delete",
+                "p": "query",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "31c61e87b16d6b1e",
+        "type": "subflow:b383b6062cf0c044",
+        "z": "366aabfc7e2ab40f",
+        "name": "",
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "e4503877e86273b4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "92d53a65e8374671",
+        "type": "change",
+        "z": "366aabfc7e2ab40f",
+        "name": "Format Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "flatNames",
+                "pt": "msg",
+                "to": "$reduce(payload, function($acc, $v) { $append($acc, $v) }, [])",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "keyName",
+                "pt": "msg",
+                "to": "job.variables.logicalPlaces ? job.variables.logicalPlaces : \"logicalPlaces\"",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t  \"variables\": {\t      $$.viewObject.name: $$.flatNames\t  },\t  \"job\": job\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{$env(\"ViewName\"): $$.payload}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd1f5e67ee4d765c",
+        "type": "task-worker",
+        "z": "66cb7b7ad11fbb9f",
+        "name": "Worker: ${TASK_TYPE}",
+        "camunda": "cc7538c088cd1d8b",
+        "taskType": "${TASK_TYPE}",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "65a9596ca3bf2e5e"
+            ]
+        ]
+    },
+    {
+        "id": "65a9596ca3bf2e5e",
+        "type": "change",
+        "z": "66cb7b7ad11fbb9f",
+        "name": "Save Camunda job on msg & prepare views",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0bc1ca220c63baf0",
+        "type": "change",
+        "z": "66cb7b7ad11fbb9f",
+        "name": "Restore Job & Clean Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t  \"job\": $$.job,\t  \"variables\": $$.job.variables\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 200,
+        "wires": [
+            [
+                "0ed731d21f2b08ea"
+            ]
+        ]
+    },
+    {
+        "id": "0ed731d21f2b08ea",
+        "type": "complete-task",
+        "z": "66cb7b7ad11fbb9f",
+        "name": "Complete",
+        "x": 480,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "96552ad5392b0893",
+        "type": "change",
+        "z": "c6172473ac2e1198",
+        "name": "Prepare data for DB",
+        "rules": [
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 80,
+        "wires": [
+            [
+                "62c13c5161c317d0"
+            ]
+        ]
+    },
+    {
+        "id": "62c13c5161c317d0",
+        "type": "neo4j-bolt",
+        "z": "c6172473ac2e1198",
+        "server": "d9d1b2e046e79011",
+        "name": "Memgraph: Execute query",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 500,
+        "y": 80,
+        "wires": [
+            [
+                "b4d440dbfa1b0245"
+            ],
+            [
+                "b4d440dbfa1b0245"
+            ],
+            [
+                "186d9e562f7dcd2c"
+            ]
+        ]
+    },
+    {
+        "id": "b4d440dbfa1b0245",
+        "type": "change",
+        "z": "c6172473ac2e1198",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "database",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[$$.payload]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "186d9e562f7dcd2c",
+        "type": "change",
+        "z": "c6172473ac2e1198",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "database",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "462634e34721d905",
+        "type": "change",
+        "z": "78d8a57c36e211a6",
+        "name": "Get query from view",
+        "rules": [
+            {
+                "t": "set",
+                "p": "viewObject",
+                "pt": "msg",
+                "to": "$globalContext(\"views\")[name in $env(\"ViewName\")]",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "queries",
+                "pt": "msg",
+                "to": "$globalContext(\"logicalPlaces\")[id in $$.viewObject.logicalPlaces].query",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "queries",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "queries",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "viewObject",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 80,
+        "wires": [
+            [
+                "45dd85af5042633c"
+            ]
+        ]
+    },
+    {
+        "id": "45dd85af5042633c",
+        "type": "split",
+        "z": "78d8a57c36e211a6",
+        "name": "Split Queries",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 490,
+        "y": 80,
+        "wires": [
+            [
+                "1c5bc23acc317fcd"
+            ]
+        ]
+    },
+    {
+        "id": "1c5bc23acc317fcd",
+        "type": "change",
+        "z": "78d8a57c36e211a6",
+        "name": "Set msg.query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 80,
+        "wires": [
+            [
+                "351e84020c8975fa"
+            ]
+        ]
+    },
+    {
+        "id": "f0eb48e9deec0216",
+        "type": "join",
+        "z": "78d8a57c36e211a6",
+        "name": "Join Results",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 490,
+        "y": 180,
+        "wires": [
+            [
+                "da461fa6897f7ae2"
+            ]
+        ]
+    },
+    {
+        "id": "da461fa6897f7ae2",
+        "type": "change",
+        "z": "78d8a57c36e211a6",
+        "name": "Format Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{$env(\"ViewName\"): $$.payload[0]}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "delete",
+                "p": "query",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "351e84020c8975fa",
+        "type": "subflow:c6172473ac2e1198",
+        "z": "78d8a57c36e211a6",
+        "name": "",
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "f0eb48e9deec0216"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "0350688c7809dd6b",
+        "type": "change",
+        "z": "78d8a57c36e211a6",
+        "name": "Format Output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "flatNames",
+                "pt": "msg",
+                "to": "$reduce(payload, function($acc, $v) { $append($acc, $v) }, [])",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "keyName",
+                "pt": "msg",
+                "to": "job.variables.logicalPlaces ? job.variables.logicalPlaces : \"logicalPlaces\"",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t  \t    \"variables\": {\t  \t        $$.viewObject.name: $$.flatNames\t  \t    },\t  \t    \"job\": job\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{$env(\"ViewName\"): $$.payload}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "105c3c265fb57673",
+        "type": "change",
+        "z": "496fc4fc9bb328b7",
+        "name": "Restore Job & Clean Payload",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "params",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "query",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fd55f2b45fe9c05d",
+        "type": "change",
+        "z": "496fc4fc9bb328b7",
+        "name": "Prepare UNWIND Query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{\t  \t    \"logicalPlacesIds\": [$lookup($$.payload, $env(\"ViewName\")).p.identity],\t  \t    \"assignments\": $env(\"Assignments\")\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (p:Place) WHERE id(p) IN $logicalPlacesIds SET p += $assignments RETURN count(p) AS updated_nodes",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 120,
+        "wires": [
+            [
+                "da18e2140bac4336"
+            ]
+        ]
+    },
+    {
+        "id": "7ba3e9ea269e5b5e",
+        "type": "subflow:78d8a57c36e211a6",
+        "z": "496fc4fc9bb328b7",
+        "name": "",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "ViewName",
+                "type": "env"
+            }
+        ],
+        "x": 240,
+        "y": 120,
+        "wires": [
+            [
+                "fd55f2b45fe9c05d"
+            ]
+        ]
+    },
+    {
+        "id": "da18e2140bac4336",
+        "type": "subflow:c6172473ac2e1198",
+        "z": "496fc4fc9bb328b7",
+        "name": "",
+        "x": 270,
+        "y": 180,
+        "wires": [
+            [
+                "105c3c265fb57673"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "91469efb5909424b",
+        "type": "task-worker",
+        "z": "07314571c78da6c0",
+        "name": "Worker: ${TASK_TYPE}",
+        "camunda": "cc7538c088cd1d8b",
+        "taskType": "${TASK_TYPE}",
+        "maxActiveJobs": 32,
+        "timeout": 1000,
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "0d7838996e78d369"
+            ]
+        ]
+    },
+    {
+        "id": "0d7838996e78d369",
+        "type": "change",
+        "z": "07314571c78da6c0",
+        "name": "Save Camunda job on msg & prepare views",
+        "rules": [
+            {
+                "t": "set",
+                "p": "job",
+                "pt": "msg",
+                "to": "payload.job",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "48600e99a33ba53d",
+        "type": "change",
+        "z": "07314571c78da6c0",
+        "name": "Restore Job & Clean Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t  \t    \"job\": $$.job,\t  \t    \"variables\": $$.job.variables\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 200,
+        "wires": [
+            [
+                "eec7fd4d506bfb78"
+            ]
+        ]
+    },
+    {
+        "id": "eec7fd4d506bfb78",
+        "type": "complete-task",
+        "z": "07314571c78da6c0",
+        "name": "Complete",
+        "x": 480,
+        "y": 200,
+        "wires": []
     },
     {
         "id": "e9f82a0cda79707c",
@@ -4523,210 +5710,6 @@
         "wires": []
     },
     {
-        "id": "1f5b27d5e2028f39",
-        "type": "deploy",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Deploy Emergency BPMN",
-        "camunda": "cc7538c088cd1d8b",
-        "x": 620,
-        "y": 420,
-        "wires": [
-            [
-                "65253ce983dd1a18"
-            ]
-        ]
-    },
-    {
-        "id": "522b99c7dbbe8556",
-        "type": "file in",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Read diagram_emergency.bpmn",
-        "filename": "/data/camunda/diagram_emergency.bpmn",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 770,
-        "y": 340,
-        "wires": [
-            [
-                "ebc7ce0115fa73e8"
-            ]
-        ]
-    },
-    {
-        "id": "93f3ad1b8dc208f3",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Trigger Deployment",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "str",
-        "x": 470,
-        "y": 340,
-        "wires": [
-            [
-                "522b99c7dbbe8556"
-            ]
-        ]
-    },
-    {
-        "id": "ebc7ce0115fa73e8",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Prepare Deployment Payload",
-        "rules": [
-            {
-                "t": "move",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.definition",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload.resourceName",
-                "pt": "msg",
-                "to": "filename",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1060,
-        "y": 340,
-        "wires": [
-            [
-                "1f5b27d5e2028f39"
-            ]
-        ]
-    },
-    {
-        "id": "df0f947042bd03b0",
-        "type": "process-instance",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Start Emergency Process Instance",
-        "camunda": "cc7538c088cd1d8b",
-        "x": 470,
-        "y": 500,
-        "wires": [
-            [
-                "e3c4bd4ca104d81b"
-            ]
-        ]
-    },
-    {
-        "id": "f657ef28aa7c1e34",
-        "type": "debug",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Debug: Process Variables",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1210,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "65253ce983dd1a18",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Extract Process ID",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.processId",
-                "pt": "msg",
-                "to": "payload.deployments[process.bpmnProcessId = \"Process_SecSys\"].process",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 840,
-        "y": 420,
-        "wires": [
-            [
-                "df0f947042bd03b0"
-            ]
-        ]
-    },
-    {
-        "id": "74e794dd7e8c0f38",
-        "type": "set-variables",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Set Initial Variables",
-        "camunda": "cc7538c088cd1d8b",
-        "x": 990,
-        "y": 500,
-        "wires": [
-            [
-                "49ba58a9bde9f816"
-            ]
-        ]
-    },
-    {
-        "id": "e3c4bd4ca104d81b",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Initialize process variables",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.variables",
-                "pt": "msg",
-                "to": "{}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 750,
-        "y": 500,
-        "wires": [
-            [
-                "74e794dd7e8c0f38"
-            ]
-        ]
-    },
-    {
         "id": "5fc1ea99cdf336da",
         "type": "comment",
         "z": "f080f7d563bd7ed5",
@@ -4793,55 +5776,6 @@
         "wires": []
     },
     {
-        "id": "49ba58a9bde9f816",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "processData",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "wardenStarted",
-                "pt": "flow",
-                "to": "false",
-                "tot": "bool"
-            },
-            {
-                "t": "set",
-                "p": "occupantStarted",
-                "pt": "flow",
-                "to": "false",
-                "tot": "bool"
-            },
-            {
-                "t": "set",
-                "p": "secSysStarted",
-                "pt": "flow",
-                "to": "false",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1180,
-        "y": 500,
-        "wires": [
-            [
-                "f657ef28aa7c1e34"
-            ]
-        ]
-    },
-    {
         "id": "b07ba3a4645ad38f",
         "type": "comment",
         "z": "f080f7d563bd7ed5",
@@ -4887,8 +5821,8 @@
         "z": "f080f7d563bd7ed5",
         "name": "---------------------------------------------------------------------------------------------------------",
         "info": "",
-        "x": 610,
-        "y": 2860,
+        "x": 570,
+        "y": 2600,
         "wires": []
     },
     {
@@ -4897,8 +5831,8 @@
         "z": "f080f7d563bd7ed5",
         "name": "Warden flows",
         "info": "",
-        "x": 410,
-        "y": 2820,
+        "x": 370,
+        "y": 2560,
         "wires": []
     },
     {
@@ -4907,41 +5841,9 @@
         "z": "f080f7d563bd7ed5",
         "name": "---------------------------------------------------------------------------------------------------------",
         "info": "",
-        "x": 610,
-        "y": 2780,
+        "x": 570,
+        "y": 2520,
         "wires": []
-    },
-    {
-        "id": "a83b38c8841ddf4f",
-        "type": "comment",
-        "z": "f080f7d563bd7ed5",
-        "g": "781eade0d5b0ace5",
-        "name": "GET (Guard) logical place flow",
-        "info": "",
-        "x": 460,
-        "y": 920,
-        "wires": []
-    },
-    {
-        "id": "b05432613735b292",
-        "type": "subflow:5122c220d975922b",
-        "z": "f080f7d563bd7ed5",
-        "g": "781eade0d5b0ace5",
-        "name": "Wrapper: get-building-occupancy",
-        "env": [
-            {
-                "name": "TASK_TYPE",
-                "value": "get-building-occupancy",
-                "type": "str"
-            }
-        ],
-        "x": 470,
-        "y": 980,
-        "wires": [
-            [
-                "28c4a8b737448d99"
-            ]
-        ]
     },
     {
         "id": "36f8afff78416346",
@@ -5524,203 +6426,6 @@
         ]
     },
     {
-        "id": "28c4a8b737448d99",
-        "type": "subflow:7a7a13d9d614cb94",
-        "z": "f080f7d563bd7ed5",
-        "g": "781eade0d5b0ace5",
-        "name": "",
-        "env": [
-            {
-                "name": "ViewName",
-                "value": "Building",
-                "type": "str"
-            }
-        ],
-        "x": 720,
-        "y": 980,
-        "wires": [
-            [
-                "d66c5f67058fad52"
-            ]
-        ]
-    },
-    {
-        "id": "d66c5f67058fad52",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "781eade0d5b0ace5",
-        "name": "Count aggregation",
-        "rules": [
-            {
-                "t": "set",
-                "p": "occupancy",
-                "pt": "msg",
-                "to": "$sum($$.payload.Building.p.properties.occupancy.($type($)=\"object\" ? low : $))",
-                "tot": "jsonata"
-            },
-            {
-                "t": "delete",
-                "p": "payload.Building",
-                "pt": "msg"
-            },
-            {
-                "t": "set",
-                "p": "job.variables.Building.occupancy",
-                "pt": "msg",
-                "to": "occupancy",
-                "tot": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "occupancy",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 590,
-        "y": 1040,
-        "wires": [
-            [
-                "b05432613735b292"
-            ]
-        ]
-    },
-    {
-        "id": "40706266b23e997e",
-        "type": "comment",
-        "z": "f080f7d563bd7ed5",
-        "g": "b3afd4bf20adcfb3",
-        "name": "ASSIGN flow",
-        "info": "",
-        "x": 410,
-        "y": 1160,
-        "wires": []
-    },
-    {
-        "id": "780f2846bca1cb05",
-        "type": "subflow:5122c220d975922b",
-        "z": "f080f7d563bd7ed5",
-        "g": "b3afd4bf20adcfb3",
-        "name": "Wrapper: adjust-lights",
-        "env": [
-            {
-                "name": "TASK_TYPE",
-                "value": "adjust-lights",
-                "type": "str"
-            }
-        ],
-        "x": 460,
-        "y": 1240,
-        "wires": [
-            [
-                "6ac5d113c50533ab"
-            ]
-        ]
-    },
-    {
-        "id": "f6bdd1ce4cb89538",
-        "type": "subflow:e46666be184c7a03",
-        "z": "f080f7d563bd7ed5",
-        "g": "b3afd4bf20adcfb3",
-        "name": "",
-        "env": [
-            {
-                "name": "ViewName",
-                "value": "SafeZones",
-                "type": "str"
-            },
-            {
-                "name": "Assignments",
-                "value": "{\"parameter\":\"lights\",\"state\":\"on\"}",
-                "type": "json"
-            }
-        ],
-        "x": 690,
-        "y": 1300,
-        "wires": [
-            [
-                "780f2846bca1cb05"
-            ]
-        ]
-    },
-    {
-        "id": "19fa5cd9c1d25e21",
-        "type": "subflow:5122c220d975922b",
-        "z": "f080f7d563bd7ed5",
-        "g": "b3afd4bf20adcfb3",
-        "name": "Wrapper: shut-off-emergency-lights",
-        "env": [
-            {
-                "name": "TASK_TYPE",
-                "value": "shut-off-emergency-lights",
-                "type": "str"
-            }
-        ],
-        "x": 500,
-        "y": 1360,
-        "wires": [
-            [
-                "b6785f5696595ec6"
-            ]
-        ]
-    },
-    {
-        "id": "6ac5d113c50533ab",
-        "type": "subflow:e46666be184c7a03",
-        "z": "f080f7d563bd7ed5",
-        "g": "b3afd4bf20adcfb3",
-        "name": "",
-        "env": [
-            {
-                "name": "ViewName",
-                "value": "DangerZones",
-                "type": "str"
-            },
-            {
-                "name": "Assignments",
-                "value": "{\"lights\":\"off\"}",
-                "type": "json"
-            }
-        ],
-        "x": 690,
-        "y": 1220,
-        "wires": [
-            [
-                "f6bdd1ce4cb89538"
-            ]
-        ]
-    },
-    {
-        "id": "b6785f5696595ec6",
-        "type": "subflow:e46666be184c7a03",
-        "z": "f080f7d563bd7ed5",
-        "g": "b3afd4bf20adcfb3",
-        "name": "",
-        "env": [
-            {
-                "name": "ViewName",
-                "value": "Building",
-                "type": "str"
-            },
-            {
-                "name": "Assignments",
-                "value": "{\"lights\":\"off\"}",
-                "type": "json"
-            }
-        ],
-        "x": 750,
-        "y": 1360,
-        "wires": [
-            [
-                "19fa5cd9c1d25e21"
-            ]
-        ]
-    },
-    {
         "id": "89a280b92b9b94c8",
         "type": "mqtt in",
         "z": "f080f7d563bd7ed5",
@@ -5734,7 +6439,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 430,
+        "x": 490,
         "y": 1700,
         "wires": [
             [
@@ -5760,8 +6465,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 700,
-        "y": 1700,
+        "x": 440,
+        "y": 1740,
         "wires": [
             [
                 "0cd6868982052b31"
@@ -5774,8 +6479,8 @@
         "z": "f080f7d563bd7ed5",
         "g": "250c3b9bf684f063",
         "name": "",
-        "x": 430,
-        "y": 1760,
+        "x": 490,
+        "y": 1660,
         "wires": [
             [
                 "48b3e32e7756eacf"
@@ -5804,8 +6509,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 500,
-        "y": 1820,
+        "x": 440,
+        "y": 1620,
         "wires": [
             [
                 "70a4d974a77d43ad"
@@ -5825,8 +6530,8 @@
                 "type": "str"
             }
         ],
-        "x": 720,
-        "y": 1760,
+        "x": 580,
+        "y": 1740,
         "wires": [
             [
                 "c4b9da2d450f73bc"
@@ -5838,7 +6543,7 @@
         "type": "change",
         "z": "f080f7d563bd7ed5",
         "g": "250c3b9bf684f063",
-        "name": "Get occupancy aggregation custom",
+        "name": "Get Building occupancy",
         "rules": [
             {
                 "t": "set",
@@ -5884,8 +6589,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 800,
-        "y": 1820,
+        "x": 490,
+        "y": 1780,
         "wires": [
             [
                 "3285c3ee3c824d55"
@@ -5897,10 +6602,10 @@
         "type": "set-variables",
         "z": "f080f7d563bd7ed5",
         "g": "250c3b9bf684f063",
-        "name": "",
+        "name": "Set Process Variables",
         "camunda": "cc7538c088cd1d8b",
-        "x": 730,
-        "y": 1880,
+        "x": 720,
+        "y": 1780,
         "wires": [
             [
                 "6bcd51ea3fa5bec7"
@@ -5927,8 +6632,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 740,
-        "y": 1960,
+        "x": 460,
+        "y": 1820,
         "wires": [
             [
                 "29d8fd7b9d6515e0"
@@ -5941,8 +6646,8 @@
         "z": "f080f7d563bd7ed5",
         "g": "250c3b9bf684f063",
         "name": "",
-        "x": 780,
-        "y": 2000,
+        "x": 500,
+        "y": 1860,
         "wires": [
             []
         ]
@@ -5960,8 +6665,8 @@
                 "type": "str"
             }
         ],
-        "x": 480,
-        "y": 2100,
+        "x": 460,
+        "y": 1980,
         "wires": [
             [
                 "245510184595e6f1"
@@ -5986,8 +6691,8 @@
                 "type": "str"
             }
         ],
-        "x": 440,
-        "y": 2180,
+        "x": 420,
+        "y": 2060,
         "wires": [
             [
                 "74a5a868cd1089fd"
@@ -6014,8 +6719,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 450,
-        "y": 2140,
+        "x": 430,
+        "y": 2020,
         "wires": [
             [
                 "4840e0b64567ac7a"
@@ -6041,8 +6746,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 410,
-        "y": 2220,
+        "x": 390,
+        "y": 2100,
         "wires": [
             [
                 "1742fadc78d6d30f"
@@ -6093,8 +6798,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 600,
-        "y": 2220,
+        "x": 580,
+        "y": 2100,
         "wires": [
             [
                 "239288df8fde5231"
@@ -6108,8 +6813,8 @@
         "g": "79f178997defc9f3",
         "name": "",
         "camunda": "cc7538c088cd1d8b",
-        "x": 770,
-        "y": 2220,
+        "x": 750,
+        "y": 2100,
         "wires": [
             []
         ]
@@ -6134,8 +6839,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 450,
-        "y": 2500,
+        "x": 630,
+        "y": 2280,
         "wires": [
             [
                 "6b1b99b2fff1b223"
@@ -6155,8 +6860,8 @@
                 "type": "json"
             }
         ],
-        "x": 440,
-        "y": 2540,
+        "x": 400,
+        "y": 2340,
         "wires": [
             [
                 "f94983912255ad43",
@@ -6177,8 +6882,8 @@
                 "type": "str"
             }
         ],
-        "x": 460,
-        "y": 2460,
+        "x": 420,
+        "y": 2280,
         "wires": [
             [
                 "07a7a4d2c6efad2d"
@@ -6198,8 +6903,8 @@
                 "type": "str"
             }
         ],
-        "x": 640,
-        "y": 2560,
+        "x": 600,
+        "y": 2340,
         "wires": [
             [
                 "710220f83021b5f2"
@@ -6243,8 +6948,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 670,
-        "y": 2600,
+        "x": 410,
+        "y": 2380,
         "wires": [
             [
                 "6a6b0c282bd03a6a"
@@ -6264,8 +6969,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 680,
-        "y": 2640,
+        "x": 620,
+        "y": 2380,
         "wires": [
             [
                 "dc8b43c7ee5a77e2"
@@ -6278,8 +6983,8 @@
         "z": "f080f7d563bd7ed5",
         "g": "b001dcd7f4e84d23",
         "name": "",
-        "x": 680,
-        "y": 2680,
+        "x": 440,
+        "y": 2420,
         "wires": [
             []
         ]
@@ -6297,8 +7002,8 @@
                 "type": "str"
             }
         ],
-        "x": 490,
-        "y": 2980,
+        "x": 430,
+        "y": 2660,
         "wires": [
             [
                 "b70a3a374649d0e7"
@@ -6366,8 +7071,8 @@
                 "type": "str"
             }
         ],
-        "x": 950,
-        "y": 2980,
+        "x": 430,
+        "y": 2740,
         "wires": [
             [
                 "943614bdcb31dfd3"
@@ -6387,8 +7092,8 @@
                 "type": "str"
             }
         ],
-        "x": 490,
-        "y": 3060,
+        "x": 430,
+        "y": 2820,
         "wires": [
             [
                 "85d2af0fd80290ad"
@@ -6418,8 +7123,8 @@
                 "type": "str"
             }
         ],
-        "x": 950,
-        "y": 3060,
+        "x": 430,
+        "y": 2900,
         "wires": [
             [
                 "f03fce4e8b97aeda"
@@ -6439,8 +7144,8 @@
                 "type": "str"
             }
         ],
-        "x": 500,
-        "y": 3220,
+        "x": 440,
+        "y": 3080,
         "wires": [
             [
                 "9b6d12fe34b073c3"
@@ -6481,8 +7186,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 740,
-        "y": 3220,
+        "x": 680,
+        "y": 3080,
         "wires": [
             [
                 "62eab7dd784e38b9",
@@ -6497,8 +7202,8 @@
         "g": "85408742bdb1ceb3",
         "name": "",
         "camunda": "cc7538c088cd1d8b",
-        "x": 940,
-        "y": 3260,
+        "x": 880,
+        "y": 3120,
         "wires": []
     },
     {
@@ -6514,8 +7219,8 @@
                 "type": "str"
             }
         ],
-        "x": 490,
-        "y": 3300,
+        "x": 430,
+        "y": 3160,
         "wires": [
             [
                 "a439960bd1ff7425"
@@ -6556,8 +7261,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 740,
-        "y": 3300,
+        "x": 680,
+        "y": 3160,
         "wires": [
             [
                 "2d7cd2ee4647afdf",
@@ -6572,8 +7277,8 @@
         "g": "85408742bdb1ceb3",
         "name": "Messages Occupant-Warden",
         "info": "",
-        "x": 480,
-        "y": 3160,
+        "x": 420,
+        "y": 3020,
         "wires": []
     },
     {
@@ -6589,8 +7294,8 @@
                 "type": "str"
             }
         ],
-        "x": 480,
-        "y": 3420,
+        "x": 420,
+        "y": 3280,
         "wires": [
             [
                 "93101a5b0f3961a2"
@@ -6610,8 +7315,8 @@
                 "type": "str"
             }
         ],
-        "x": 720,
-        "y": 3420,
+        "x": 660,
+        "y": 3280,
         "wires": [
             [
                 "4a1bc982215a2ebf"
@@ -6655,8 +7360,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 630,
-        "y": 3500,
+        "x": 510,
+        "y": 3340,
         "wires": [
             [
                 "4d96aa1e66f455f1"
@@ -6676,8 +7381,8 @@
                 "type": "json"
             }
         ],
-        "x": 500,
-        "y": 3780,
+        "x": 520,
+        "y": 3540,
         "wires": [
             [
                 "fa60061cfa03ef8c"
@@ -6704,8 +7409,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
-        "y": 3720,
+        "x": 650,
+        "y": 3480,
         "wires": [
             [
                 "238a8a4e8ab7d185"
@@ -6725,8 +7430,8 @@
                 "type": "str"
             }
         ],
-        "x": 500,
-        "y": 3660,
+        "x": 420,
+        "y": 3480,
         "wires": [
             [
                 "35a50239f6974e65"
@@ -6757,23 +7462,13 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1000,
-        "y": 1960,
+        "x": 700,
+        "y": 1820,
         "wires": [
             [
                 "fb5058208b1e7147"
             ]
         ]
-    },
-    {
-        "id": "3763112bf69167dc",
-        "type": "comment",
-        "z": "f080f7d563bd7ed5",
-        "name": "adjust light funziona",
-        "info": "",
-        "x": 990,
-        "y": 1180,
-        "wires": []
     },
     {
         "id": "c5b2fe51af89c353",
@@ -6805,8 +7500,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 510,
-        "y": 2280,
+        "x": 490,
+        "y": 2160,
         "wires": [
             [
                 "befa1004272787e1"
@@ -6833,8 +7528,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 730,
-        "y": 2980,
+        "x": 410,
+        "y": 2700,
         "wires": [
             [
                 "5d3812ec5dd547db"
@@ -6861,8 +7556,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 730,
-        "y": 3060,
+        "x": 410,
+        "y": 2860,
         "wires": [
             [
                 "a52b7fed013f434e"
@@ -6888,5 +7583,465 @@
         "x": 1180,
         "y": 2180,
         "wires": []
+    },
+    {
+        "id": "7aa25ae1d3aab2f8",
+        "type": "deploy",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Deploy Emergency Process BPMN",
+        "camunda": "cc7538c088cd1d8b",
+        "x": 500,
+        "y": 500,
+        "wires": [
+            [
+                "90d985bc592f540e"
+            ]
+        ]
+    },
+    {
+        "id": "515a31f2dcd85f0d",
+        "type": "file in",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Read Emergency BPMN Diagram",
+        "filename": "/data/camunda/diagram_emergency.bpmn",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 500,
+        "y": 420,
+        "wires": [
+            [
+                "9e0430c2f86dc657"
+            ]
+        ]
+    },
+    {
+        "id": "831f58c35210e839",
+        "type": "inject",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Trigger Deployment",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "515a31f2dcd85f0d"
+            ]
+        ]
+    },
+    {
+        "id": "9e0430c2f86dc657",
+        "type": "change",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Prepare Deployment Payload",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.definition",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.resourceName",
+                "pt": "msg",
+                "to": "filename",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 460,
+        "wires": [
+            [
+                "7aa25ae1d3aab2f8"
+            ]
+        ]
+    },
+    {
+        "id": "9f1202e4a288f706",
+        "type": "process-instance",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Start Emergency Process Instance",
+        "camunda": "cc7538c088cd1d8b",
+        "x": 500,
+        "y": 580,
+        "wires": [
+            [
+                "f63dc4b4812203a9"
+            ]
+        ]
+    },
+    {
+        "id": "cd2097daa6a20642",
+        "type": "debug",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Debug Process Variables",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "90d985bc592f540e",
+        "type": "change",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Extract Process ID",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.processId",
+                "pt": "msg",
+                "to": "payload.deployments[process.bpmnProcessId = \"Process_SecSys\"].process",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 540,
+        "wires": [
+            [
+                "9f1202e4a288f706"
+            ]
+        ]
+    },
+    {
+        "id": "20fee08c2762f191",
+        "type": "set-variables",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Set Initial Variables",
+        "camunda": "cc7538c088cd1d8b",
+        "x": 450,
+        "y": 660,
+        "wires": [
+            [
+                "875da4e0434cc707"
+            ]
+        ]
+    },
+    {
+        "id": "f63dc4b4812203a9",
+        "type": "change",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Initialize Process Variables",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.variables",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 620,
+        "wires": [
+            [
+                "20fee08c2762f191"
+            ]
+        ]
+    },
+    {
+        "id": "875da4e0434cc707",
+        "type": "change",
+        "z": "f080f7d563bd7ed5",
+        "g": "23cf73e2f9f11f12",
+        "name": "Set Flow State Variables",
+        "rules": [
+            {
+                "t": "set",
+                "p": "processData",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "wardenStarted",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "occupantStarted",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "secSysStarted",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 700,
+        "wires": [
+            [
+                "cd2097daa6a20642"
+            ]
+        ]
+    },
+    {
+        "id": "799975521ec28fb7",
+        "type": "subflow:66cb7b7ad11fbb9f",
+        "z": "f080f7d563bd7ed5",
+        "g": "eae2b23e1aa0fcc3",
+        "name": "Get Building Occupancy Task Wrapper",
+        "env": [
+            {
+                "name": "TASK_TYPE",
+                "value": "get-building-occupancy",
+                "type": "str"
+            }
+        ],
+        "x": 490,
+        "y": 960,
+        "wires": [
+            [
+                "4b7707ba58ad90e1"
+            ]
+        ]
+    },
+    {
+        "id": "4b7707ba58ad90e1",
+        "type": "subflow:366aabfc7e2ab40f",
+        "z": "f080f7d563bd7ed5",
+        "g": "eae2b23e1aa0fcc3",
+        "name": "Get Building View Data",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "Building",
+                "type": "str"
+            }
+        ],
+        "x": 790,
+        "y": 960,
+        "wires": [
+            [
+                "c01eca7e0d1e5a33"
+            ]
+        ]
+    },
+    {
+        "id": "c01eca7e0d1e5a33",
+        "type": "change",
+        "z": "f080f7d563bd7ed5",
+        "g": "eae2b23e1aa0fcc3",
+        "name": "Aggregate Building Occupancy",
+        "rules": [
+            {
+                "t": "set",
+                "p": "occupancy",
+                "pt": "msg",
+                "to": "$sum($$.payload.Building.p.properties.occupancy.($type($)=\"object\" ? low : $))",
+                "tot": "jsonata"
+            },
+            {
+                "t": "delete",
+                "p": "payload.Building",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "job.variables.Building.occupancy",
+                "pt": "msg",
+                "to": "occupancy",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "occupancy",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 1020,
+        "wires": [
+            [
+                "799975521ec28fb7"
+            ]
+        ]
+    },
+    {
+        "id": "67f6ce838bcf83c5",
+        "type": "subflow:07314571c78da6c0",
+        "z": "f080f7d563bd7ed5",
+        "g": "ee4e8865308b5702",
+        "name": "Camunda: Adjust Lights",
+        "env": [
+            {
+                "name": "TASK_TYPE",
+                "value": "adjust-lights",
+                "type": "str"
+            }
+        ],
+        "x": 470,
+        "y": 1240,
+        "wires": [
+            [
+                "0f62d3742017a7b6"
+            ]
+        ]
+    },
+    {
+        "id": "b004d3367cae2b38",
+        "type": "subflow:496fc4fc9bb328b7",
+        "z": "f080f7d563bd7ed5",
+        "g": "ee4e8865308b5702",
+        "name": "Set Lights ON (SafeZones)",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "SafeZones",
+                "type": "str"
+            },
+            {
+                "name": "Assignments",
+                "value": "{\"parameter\":\"lights\",\"state\":\"on\"}",
+                "type": "json"
+            }
+        ],
+        "x": 600,
+        "y": 1300,
+        "wires": [
+            [
+                "67f6ce838bcf83c5"
+            ]
+        ]
+    },
+    {
+        "id": "1bbab437ca0cb33b",
+        "type": "subflow:07314571c78da6c0",
+        "z": "f080f7d563bd7ed5",
+        "g": "ee4e8865308b5702",
+        "name": "Camunda: Shut Off Emergency Lights",
+        "env": [
+            {
+                "name": "TASK_TYPE",
+                "value": "shut-off-emergency-lights",
+                "type": "str"
+            }
+        ],
+        "x": 510,
+        "y": 1360,
+        "wires": [
+            [
+                "c61ded82cf4b93c3"
+            ]
+        ]
+    },
+    {
+        "id": "0f62d3742017a7b6",
+        "type": "subflow:496fc4fc9bb328b7",
+        "z": "f080f7d563bd7ed5",
+        "g": "ee4e8865308b5702",
+        "name": "Set Lights OFF (DangerZones)",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "DangerZones",
+                "type": "str"
+            },
+            {
+                "name": "Assignments",
+                "value": "{\"lights\":\"off\"}",
+                "type": "json"
+            }
+        ],
+        "x": 750,
+        "y": 1240,
+        "wires": [
+            [
+                "b004d3367cae2b38"
+            ]
+        ]
+    },
+    {
+        "id": "c61ded82cf4b93c3",
+        "type": "subflow:496fc4fc9bb328b7",
+        "z": "f080f7d563bd7ed5",
+        "g": "ee4e8865308b5702",
+        "name": "Set Lights OFF (Building)",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "Building",
+                "type": "str"
+            },
+            {
+                "name": "Assignments",
+                "value": "{\"lights\":\"off\"}",
+                "type": "json"
+            }
+        ],
+        "x": 810,
+        "y": 1360,
+        "wires": [
+            [
+                "1bbab437ca0cb33b"
+            ]
+        ]
     }
 ]
