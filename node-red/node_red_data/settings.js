@@ -358,14 +358,6 @@ module.exports = {
         default: {
             module: "memory"
         },
-        redis: {
-            module: require("node-red-context-redis"),
-            config: {
-                // host: "127.0.0.1",
-                // port: 6379,
-                // db: 0
-            }
-        },
         file: {
             module: "localfilesystem"
         }
