@@ -24,14 +24,6 @@
         "env": []
     },
     {
-        "id": "7d41b691517b8892",
-        "type": "tab",
-        "label": "Create json",
-        "disabled": true,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "e1861ddff91fe985",
         "type": "subflow",
         "name": "Sensor Aggregator",
@@ -963,8 +955,8 @@
             "2722952374d96777",
             "e8b31de7ed9e1961"
         ],
-        "x": 1454,
-        "y": 243,
+        "x": 1434,
+        "y": 303,
         "w": 832,
         "h": 318
     },
@@ -989,7 +981,7 @@
         ],
         "x": 304,
         "y": 879,
-        "w": 542,
+        "w": 502,
         "h": 202
     },
     {
@@ -1015,7 +1007,7 @@
         ],
         "x": 314,
         "y": 1119,
-        "w": 572,
+        "w": 532,
         "h": 282
     },
     {
@@ -1103,62 +1095,6 @@
         "h": 302
     },
     {
-        "id": "68a5e76185fc95bc",
-        "type": "group",
-        "z": "f080f7d563bd7ed5",
-        "name": "Manual start Occupant process",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "0a80675fbe6f4305",
-            "2a9623123d4b807e",
-            "dc2930a0c18aa661"
-        ],
-        "x": 2314,
-        "y": 259,
-        "w": 712,
-        "h": 142
-    },
-    {
-        "id": "b1cbab91fda6bba1",
-        "type": "group",
-        "z": "f080f7d563bd7ed5",
-        "name": "Manual start Warden process",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "6b7c64da37a9df8c",
-            "8b788ca0f1978f3d",
-            "b10eac87ba6745ab",
-            "a08ddf23be2f3e14"
-        ],
-        "x": 3034,
-        "y": 259,
-        "w": 732,
-        "h": 142
-    },
-    {
-        "id": "e3e20e73c18b01d7",
-        "type": "group",
-        "z": "f080f7d563bd7ed5",
-        "name": "Manual start Occupant process",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "0397a31b9cd61e63",
-            "4a0d69fc91d79404",
-            "3e358976d4b58559",
-            "de712f728f928b5d"
-        ],
-        "x": 2954,
-        "y": 459,
-        "w": 712,
-        "h": 142
-    },
-    {
         "id": "860ae4eb696a0d39",
         "type": "group",
         "z": "f080f7d563bd7ed5",
@@ -1230,7 +1166,7 @@
         ],
         "x": 334,
         "y": 3379,
-        "w": 512,
+        "w": 472,
         "h": 162
     },
     {
@@ -4797,8 +4733,8 @@
         "g": "ae6f29a92edd75b0",
         "name": "A: Assign\\n G:Guard\\n D: Destination?\\n P: Place (current)?",
         "info": "",
-        "x": 1570,
-        "y": 320,
+        "x": 1550,
+        "y": 380,
         "wires": []
     },
     {
@@ -4808,8 +4744,8 @@
         "g": "ae6f29a92edd75b0",
         "name": "Assign uso SET",
         "info": "",
-        "x": 1560,
-        "y": 400,
+        "x": 1540,
+        "y": 460,
         "wires": []
     },
     {
@@ -4819,8 +4755,8 @@
         "g": "ae6f29a92edd75b0",
         "name": "Guard uso WHERE",
         "info": "",
-        "x": 1570,
-        "y": 440,
+        "x": 1550,
+        "y": 500,
         "wires": []
     },
     {
@@ -4830,8 +4766,8 @@
         "g": "ae6f29a92edd75b0",
         "name": "Destination uso BFS/Shortestpath tra place",
         "info": "",
-        "x": 1640,
-        "y": 480,
+        "x": 1620,
+        "y": 540,
         "wires": []
     },
     {
@@ -4841,8 +4777,8 @@
         "g": "ae6f29a92edd75b0",
         "name": "Place uso WHERE",
         "info": "",
-        "x": 1570,
-        "y": 520,
+        "x": 1550,
+        "y": 580,
         "wires": []
     },
     {
@@ -4852,8 +4788,8 @@
         "g": "ae6f29a92edd75b0",
         "name": "per ognuno di questi dovrei definire un interfaccia, input e output\\n se mettiamo un ",
         "info": "",
-        "x": 2030,
-        "y": 420,
+        "x": 2010,
+        "y": 480,
         "wires": []
     },
     {
@@ -5020,7 +4956,7 @@
                 "type": "str"
             }
         ],
-        "x": 580,
+        "x": 560,
         "y": 4580,
         "wires": [
             [
@@ -5094,7 +5030,7 @@
                 "type": "json"
             }
         ],
-        "x": 590,
+        "x": 570,
         "y": 4680,
         "wires": [
             [
@@ -5156,7 +5092,7 @@
                 "type": "str"
             }
         ],
-        "x": 560,
+        "x": 540,
         "y": 4880,
         "wires": [
             [
@@ -5600,7 +5536,7 @@
                 "type": "str"
             }
         ],
-        "x": 740,
+        "x": 720,
         "y": 980,
         "wires": [
             [
@@ -5703,7 +5639,7 @@
                 "type": "json"
             }
         ],
-        "x": 710,
+        "x": 690,
         "y": 1300,
         "wires": [
             [
@@ -5750,7 +5686,7 @@
                 "type": "json"
             }
         ],
-        "x": 710,
+        "x": 690,
         "y": 1220,
         "wires": [
             [
@@ -5776,7 +5712,7 @@
                 "type": "json"
             }
         ],
-        "x": 770,
+        "x": 750,
         "y": 1360,
         "wires": [
             [
@@ -5889,7 +5825,7 @@
                 "type": "str"
             }
         ],
-        "x": 740,
+        "x": 720,
         "y": 1760,
         "wires": [
             [
@@ -5976,7 +5912,7 @@
         "type": "change",
         "z": "f080f7d563bd7ed5",
         "g": "250c3b9bf684f063",
-        "name": "Filtra Payload",
+        "name": "Filter Payload",
         "rules": [
             {
                 "t": "set",
@@ -6262,7 +6198,7 @@
                 "type": "str"
             }
         ],
-        "x": 660,
+        "x": 640,
         "y": 2560,
         "wires": [
             [
@@ -6321,7 +6257,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "b001dcd7f4e84d23",
         "name": "Warden in random exit",
-        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// 1. Recupera i dati dal flow context (equivalente all'inject)\nlet processData = flow.get(\"processData\") || {};\nlet deployments = processData.deployments || [];\n\n// 2. Trova la definizione per \"Process_Emergency_Warden\"\nlet wardenDeployment = deployments.find(d => d.process && d.process.bpmnProcessId === \"Process_Emergency_Warden\");\n// Assicurati che payload esista\nmsg.payload = msg.payload || {};\n\n// 3. Aggiungi tenantId e processDefinitionKey estratti dal context\nif (wardenDeployment) {\n    msg.payload.tenantId = wardenDeployment.process.tenantId;\n    msg.payload.processDefinitionKey = wardenDeployment.process.processDefinitionKey;\n}\n\n// 4. Preleva le variabili dal context (o dal payload se non presenti)\nlet originalVars = processData.variables || msg.payload.variables || {};\n\n// Crea un nuovo oggetto contenente ESCLUSIVAMENTE MyPlace e SignalledAreas\nlet newVariables = {\n    SignalledAreas: originalVars.SignalledAreas || {},\n    MyPlace: originalVars.MyPlace || {}\n};\n\n// Modifica i valori in base alla tua logica\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234;\nnewVariables.SignalledAreas.count = msg.payload.SignalledAreas.count;\ndelete msg.payload.job;\n// Sovrascrivi le variabili di payload\nmsg.payload.variables = newVariables;\ndelete msg.payload.SignalledAreas\n\nreturn msg;",
+        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// 1. Retrieve data from the flow context (equivalent to the inject)\nlet processData = flow.get(\"processData\") || {};\nlet deployments = processData.deployments || [];\n\n// 2. Find the definition for \"Process_Emergency_Warden\"\nlet wardenDeployment = deployments.find(d => d.process && d.process.bpmnProcessId === \"Process_Emergency_Warden\");\n// Ensure that the payload exists\nmsg.payload = msg.payload || {};\n\n// 3. Add tenantId and processDefinitionKey extracted from the context\nif (wardenDeployment) {\n    msg.payload.tenantId = wardenDeployment.process.tenantId;\n    msg.payload.processDefinitionKey = wardenDeployment.process.processDefinitionKey;\n}\n\n// 4. Get variables from the context (or from the payload if not present)\nlet originalVars = processData.variables || msg.payload.variables || {};\n\n// Create a new object containing EXCLUSIVELY MyPlace and SignalledAreas\nlet newVariables = {\n    SignalledAreas: originalVars.SignalledAreas || {},\n    MyPlace: originalVars.MyPlace || {}\n};\n\n// Modify the values based on your logic\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234;\nnewVariables.SignalledAreas.count = msg.payload.SignalledAreas.count;\ndelete msg.payload.job;\n// Overwrite the payload variables\nmsg.payload.variables = newVariables;\ndelete msg.payload.SignalledAreas\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -6346,295 +6282,6 @@
         "y": 2680,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "0a80675fbe6f4305",
-        "type": "subflow:df8d344bd7233279",
-        "z": "f080f7d563bd7ed5",
-        "g": "68a5e76185fc95bc",
-        "name": "",
-        "x": 2880,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "2a9623123d4b807e",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "68a5e76185fc95bc",
-        "name": "Real Data inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.variables",
-                "v": "$flowContext(\"processData\").variables",
-                "vt": "jsonata"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 2440,
-        "y": 300,
-        "wires": [
-            [
-                "0a80675fbe6f4305"
-            ]
-        ]
-    },
-    {
-        "id": "dc2930a0c18aa661",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "68a5e76185fc95bc",
-        "name": "DangerZone Spotted inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.variables",
-                "v": "{\"DangerZones\":{\"count\":3},\"MyPlace\":{\"name\":\"AA1\"}}",
-                "vt": "json"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 2470,
-        "y": 360,
-        "wires": [
-            [
-                "0a80675fbe6f4305"
-            ]
-        ]
-    },
-    {
-        "id": "6b7c64da37a9df8c",
-        "type": "subflow:df8d344bd7233279",
-        "z": "f080f7d563bd7ed5",
-        "g": "b1cbab91fda6bba1",
-        "name": "",
-        "x": 3620,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "8b788ca0f1978f3d",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "b1cbab91fda6bba1",
-        "name": "Real Data inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.variables",
-                "v": "$flowContext(\"processData\").variables",
-                "vt": "jsonata"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 3160,
-        "y": 300,
-        "wires": [
-            [
-                "a08ddf23be2f3e14"
-            ]
-        ]
-    },
-    {
-        "id": "b10eac87ba6745ab",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "b1cbab91fda6bba1",
-        "name": "SignalledAreas Spotted inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Emergency_Warden\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Emergency_Warden\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.variables",
-                "v": "{\"SignalledAreas\":{\"count\":1},\"MyPlace\":{\"name\":\"E1\"},\"WardenID\":1234}",
-                "vt": "json"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 3200,
-        "y": 360,
-        "wires": [
-            [
-                "6b7c64da37a9df8c"
-            ]
-        ]
-    },
-    {
-        "id": "a08ddf23be2f3e14",
-        "type": "function",
-        "z": "f080f7d563bd7ed5",
-        "g": "b1cbab91fda6bba1",
-        "name": "Warden in random exit",
-        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// Assicurati che payload e variables esistano per evitare errori\nmsg.payload = msg.payload || {};\nlet originalVars = msg.payload.variables || {};\n\n// Crea un nuovo oggetto contenente ESCLUSIVAMENTE MyPlace e SignalledAreas\nlet newVariables = {\n    MyPlace: originalVars.MyPlace || {},\n    SignalledAreas: originalVars.SignalledAreas || {}\n};\n\n// Modifica i valori in base alla tua logica\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234\n// Sovrascrivi le variabili di payload eliminando tutto il resto (es. DangerZones)\nmsg.payload.variables = newVariables;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 3360,
-        "y": 300,
-        "wires": [
-            [
-                "6b7c64da37a9df8c"
-            ]
-        ]
-    },
-    {
-        "id": "0397a31b9cd61e63",
-        "type": "subflow:df8d344bd7233279",
-        "z": "f080f7d563bd7ed5",
-        "g": "e3e20e73c18b01d7",
-        "name": "",
-        "x": 3520,
-        "y": 500,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "4a0d69fc91d79404",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "e3e20e73c18b01d7",
-        "name": "Real Data inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.variables",
-                "v": "$flowContext(\"processData\").variables",
-                "vt": "jsonata"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 3080,
-        "y": 500,
-        "wires": [
-            [
-                "0397a31b9cd61e63"
-            ]
-        ]
-    },
-    {
-        "id": "3e358976d4b58559",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "g": "e3e20e73c18b01d7",
-        "name": "DangerZone Spotted inject",
-        "props": [
-            {
-                "p": "payload.tenantId",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.tenantId",
-                "vt": "jsonata"
-            },
-            {
-                "p": "payload.processDefinitionKey",
-                "v": "$flowContext(\"processData\").deployments[process.bpmnProcessId = \"Process_Occupant\"].process.processDefinitionKey",
-                "vt": "jsonata"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 3110,
-        "y": 560,
-        "wires": [
-            [
-                "de712f728f928b5d"
-            ]
-        ]
-    },
-    {
-        "id": "de712f728f928b5d",
-        "type": "function",
-        "z": "f080f7d563bd7ed5",
-        "g": "e3e20e73c18b01d7",
-        "name": "Genera Posti Multipli",
-        "func": "// Definisci qui l'elenco dei nomi che vuoi testare\n// const places = [\"LA1\", \"cisco\", \"TeamLab\", \"AA1\",\n// \"AB1\", \"AB2\", \"AB3\", \"AulaRicercatori\", \"cisco\",\n// \"scale\", \"C1\", \"C2\",\"C3\", \"StanzaCulmone\"];\n\nconst places = [\"StanzaCulmone\"];\n\n// Clona il messaggio per ogni posto e imposta le variabili specifiche\nlet messages = places.map(place => {\n    let newMsg = RED.util.cloneMessage(msg);\n    \n    newMsg.payload.variables = {\n        \"DangerZones\": { \"count\": 3 },\n        \"MyPlace\": { \"name\": place }\n    };\n    \n    return newMsg;\n});\n\n// Ritornare l'array in questo formato fa sì che Node-RED \n// invii un messaggio distinto per ogni elemento\nreturn [messages];",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 3340,
-        "y": 560,
-        "wires": [
-            [
-                "0397a31b9cd61e63"
-            ]
         ]
     },
     {
@@ -6963,7 +6610,7 @@
                 "type": "str"
             }
         ],
-        "x": 740,
+        "x": 720,
         "y": 3420,
         "wires": [
             [
@@ -7241,156 +6888,5 @@
         "x": 1180,
         "y": 2180,
         "wires": []
-    },
-    {
-        "id": "ad8291b3ff19e65d",
-        "type": "mqtt in",
-        "z": "7d41b691517b8892",
-        "name": "iot data",
-        "topic": "sensors/+/data",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "19268c5a199e4927",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 210,
-        "y": 420,
-        "wires": [
-            [
-                "d6be08c820c7833a",
-                "3a401804f2a3c43a"
-            ]
-        ],
-        "info": "thingsboard has the Shared Subscriptions feature that allows to define a group of clients that will share the same topic\n\nthis allows to have multiple deployed agents where each one dynamically handle the telemetry of a room/area\n"
-    },
-    {
-        "id": "3a401804f2a3c43a",
-        "type": "function",
-        "z": "7d41b691517b8892",
-        "name": "agg",
-        "func": "// 1. Recupera la lista esistente dalla memoria persistente (context) o crea un array vuoto\n\nlet listaDati = flow.get(\"lista_mqtt\") || [];\n\n\n\n// 3. Aggiunge il nuovo elemento in coda alla lista\n\nlistaDati.push(msg.payload);\n\n\n\n// 4. Salva nuovamente la lista aggiornata in memoria\n\nflow.set(\"lista_mqtt\", listaDati);\n\n\n\n// 5. Prepara il payload per il file: converte l'intero array in una stringa JSON leggibile\n\nmsg.payload = JSON.stringify(listaDati, null, 2);\n\n\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
-        "y": 420,
-        "wires": [
-            [
-                "d6be08c820c7833a",
-                "faa005d708f09146"
-            ]
-        ]
-    },
-    {
-        "id": "cd1db7b1d3fdc303",
-        "type": "function",
-        "z": "7d41b691517b8892",
-        "name": "agg",
-        "func": "// 1. Recupera la lista esistente dalla memoria persistente (context) o crea un array vuoto\nlet listaDati = flow.get(\"lista_agente\") || [];\n\n// 3. Aggiunge il nuovo elemento in coda alla lista\nlistaDati.push(msg.payload);\n\n// 4. Salva nuovamente la lista aggiornata in memoria\nflow.set(\"lista_agente\", listaDati);\n\n// 5. Prepara il payload per il file: converte l'intero array in una stringa JSON leggibile\nmsg.payload = JSON.stringify(listaDati, null, 2);\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
-        "y": 560,
-        "wires": [
-            [
-                "ef9f1dfdd73bf509"
-            ]
-        ]
-    },
-    {
-        "id": "dbfa7a75331cd681",
-        "type": "mqtt in",
-        "z": "7d41b691517b8892",
-        "name": "",
-        "topic": "emergency/agent/data",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "19268c5a199e4927",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 240,
-        "y": 560,
-        "wires": [
-            [
-                "cd1db7b1d3fdc303"
-            ]
-        ]
-    },
-    {
-        "id": "d6be08c820c7833a",
-        "type": "debug",
-        "z": "7d41b691517b8892",
-        "name": "debug 17",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "190466f5b57d48bb",
-        "type": "debug",
-        "z": "7d41b691517b8892",
-        "name": "debug 18",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 420,
-        "y": 660,
-        "wires": []
-    },
-    {
-        "id": "faa005d708f09146",
-        "type": "file",
-        "z": "7d41b691517b8892",
-        "name": "",
-        "filename": "/data/host_files/json_fake_data/iot_data_test.json",
-        "filenameType": "str",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 770,
-        "y": 420,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ef9f1dfdd73bf509",
-        "type": "file",
-        "z": "7d41b691517b8892",
-        "name": "",
-        "filename": "/data/host_files/json_fake_data/agent_data_test.json",
-        "filenameType": "str",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 780,
-        "y": 560,
-        "wires": [
-            []
-        ]
     }
 ]
