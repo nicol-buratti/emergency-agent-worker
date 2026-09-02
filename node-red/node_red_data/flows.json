@@ -47,7 +47,7 @@
         "category": "",
         "in": [
             {
-                "x": 160,
+                "x": 200,
                 "y": 360,
                 "wires": [
                     {
@@ -58,8 +58,8 @@
         ],
         "out": [
             {
-                "x": 1180,
-                "y": 360,
+                "x": 960,
+                "y": 400,
                 "wires": [
                     {
                         "id": "ae7ef502090ce27a",
@@ -210,18 +210,7 @@
                 ]
             }
         ],
-        "out": [
-            {
-                "x": 880,
-                "y": 420,
-                "wires": [
-                    {
-                        "id": "d6520757a852f64a",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
+        "out": [],
         "env": [],
         "meta": {},
         "color": "#DDAA99"
@@ -1796,6 +1785,216 @@
         "color": "#DDAA99"
     },
     {
+        "id": "adb1be0b22848256",
+        "type": "subflow",
+        "name": "Save Nodes",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 820,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "6202ecb01f191868"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 2400,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "9e8f82db66d4f75c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "8b0673d8fb8e42df",
+        "type": "subflow",
+        "name": "Save Edges",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 720,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "6789ef890721a865"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "d1b9b9d4afc205b1",
+        "type": "subflow",
+        "name": "Save Edges (1)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 720,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "a23045fcdb79491c"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "06f4ba71fc182b98",
+        "type": "subflow",
+        "name": "Save Places",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 820,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "9ed25f994a65b966"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 2400,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "fa05e63a2669832b",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "ed46c7591fcf911b",
+        "type": "subflow",
+        "name": "Simulate Agent Output",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 240,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "a9767ab93186fd3b"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 900,
+                "y": 240,
+                "wires": [
+                    {
+                        "id": "78a4d6c60b1896d4",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "73bd2f48f9176df1",
+        "type": "subflow",
+        "name": "Manage Graph Hazards (1)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 500,
+                "y": 300,
+                "wires": [
+                    {
+                        "id": "588289bb9abbc250"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "a9e85b51b2948727",
+        "type": "subflow",
+        "name": "Cache Hazard State (1)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 360,
+                "y": 360,
+                "wires": [
+                    {
+                        "id": "ce54436d090f01cb"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "cfe2febad04ff8c6",
+        "type": "subflow",
+        "name": "Trigger and Read place graph",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 620,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "42a75337a1d67c44",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "8499b914410e71fe",
         "type": "group",
         "z": "742c3f66713f865c",
@@ -1812,15 +2011,15 @@
             "ab0915b6b4da93d4",
             "b928fed8df64dcdd"
         ],
-        "x": 14,
-        "y": 179,
+        "x": 174,
+        "y": 199,
         "w": 432,
         "h": 82
     },
     {
         "id": "7c0664c35f16aa57",
         "type": "group",
-        "z": "61370204cb540a30",
+        "z": "adb1be0b22848256",
         "name": "1. Process Place Nodes",
         "style": {
             "stroke": "#999999",
@@ -1835,15 +2034,15 @@
             "8844cdac01a249da",
             "9e8f82db66d4f75c"
         ],
-        "x": 774,
-        "y": 411.5,
+        "x": 874,
+        "y": 111.5,
         "w": 1472,
         "h": 97
     },
     {
         "id": "0253f6cdf3b062ca",
         "type": "group",
-        "z": "61370204cb540a30",
+        "z": "8b0673d8fb8e42df",
         "name": "2. Process Relationship Edges",
         "style": {
             "stroke": "#999999",
@@ -1857,39 +2056,10 @@
             "52c781b4074528df",
             "2677c40ec83380da"
         ],
-        "x": 774,
-        "y": 591.5,
-        "w": 1222,
+        "x": 764,
+        "y": 111.5,
+        "w": 1242,
         "h": 97
-    },
-    {
-        "id": "779fc989ebbe1d72",
-        "type": "group",
-        "z": "742c3f66713f865c",
-        "style": {
-            "stroke": "#555555",
-            "stroke-opacity": "1",
-            "fill": "rgba(255, 255, 255, 0.03)",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#f0f0f0"
-        },
-        "nodes": [
-            "0c4a1faa281a16bc",
-            "f6a2eff97c9e5967",
-            "e4c02c6ad3faca1a",
-            "d42bfc72df84e8b9",
-            "d22bea9ba6a2eefe",
-            "1dd539870b095daa",
-            "9fa13db2d48fb18b",
-            "b4253b79dc30039e",
-            "34e914a0d7f7d8a5"
-        ],
-        "x": 14,
-        "y": 299,
-        "w": 572,
-        "h": 422
     },
     {
         "id": "c6472bd832318f7a",
@@ -1922,35 +2092,6 @@
         "y": 239,
         "w": 1072,
         "h": 382
-    },
-    {
-        "id": "8e2850966c0b89d7",
-        "type": "group",
-        "z": "742c3f66713f865c",
-        "name": "Emergency Routing & Hazard Updates",
-        "style": {
-            "stroke": "#555555",
-            "stroke-opacity": "1",
-            "fill": "rgba(255, 255, 255, 0.03)",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#f0f0f0"
-        },
-        "nodes": [
-            "5b955beefaf1d116",
-            "c534e4279e6b138a",
-            "5fb32ecb529864e5",
-            "f581fb7a0701bc6d",
-            "0f0812a17f0b33de",
-            "b6d306df011358a8",
-            "ebdef3cf06a7ba9f",
-            "c968ea43c5b30376"
-        ],
-        "x": 14,
-        "y": 759,
-        "w": 832,
-        "h": 434
     },
     {
         "id": "a7285a611bd878d4",
@@ -2350,15 +2491,14 @@
             "df0f947042bd03b0",
             "f657ef28aa7c1e34",
             "65253ce983dd1a18",
-            "1175c23908057e4d",
             "74e794dd7e8c0f38",
             "e3c4bd4ca104d81b",
             "49ba58a9bde9f816"
         ],
-        "x": 294,
-        "y": 239,
-        "w": 1072,
-        "h": 382
+        "x": 304,
+        "y": 299,
+        "w": 1062,
+        "h": 322
     },
     {
         "id": "ae6f29a92edd75b0",
@@ -2403,12 +2543,11 @@
             "a83b38c8841ddf4f",
             "b05432613735b292",
             "28c4a8b737448d99",
-            "d66c5f67058fad52",
-            "016eacaecea5a0e1"
+            "d66c5f67058fad52"
         ],
         "x": 304,
         "y": 879,
-        "w": 762,
+        "w": 542,
         "h": 202
     },
     {
@@ -2430,8 +2569,7 @@
             "f6bdd1ce4cb89538",
             "19fa5cd9c1d25e21",
             "6ac5d113c50533ab",
-            "b6785f5696595ec6",
-            "1ab013341b63eab9"
+            "b6785f5696595ec6"
         ],
         "x": 314,
         "y": 1119,
@@ -2488,13 +2626,11 @@
             "74a5a868cd1089fd",
             "1742fadc78d6d30f",
             "239288df8fde5231",
-            "f9d6f8fefafc4ebb",
-            "5feae36c9451135a",
-            "6d808a383a4cee1e"
+            "f9d6f8fefafc4ebb"
         ],
         "x": 334,
         "y": 2059,
-        "w": 1032,
+        "w": 532,
         "h": 262
     },
     {
@@ -2726,6 +2862,114 @@
         "h": 982
     },
     {
+        "id": "88963d7c846d47fd",
+        "type": "group",
+        "z": "d1b9b9d4afc205b1",
+        "name": "2. Process Edges",
+        "style": {
+            "stroke": "#999999",
+            "fill": "#ffe6cc",
+            "fill-opacity": "0.5"
+        },
+        "nodes": [
+            "a23045fcdb79491c",
+            "943acecb0130ee47",
+            "1196890b4abbfd29",
+            "bf15ae4e6e9eae1c",
+            "8bb9d06df7f1d7a4"
+        ],
+        "x": 764,
+        "y": 111.5,
+        "w": 1242,
+        "h": 97
+    },
+    {
+        "id": "36f18f2dc7123516",
+        "type": "group",
+        "z": "06f4ba71fc182b98",
+        "name": "1. Process Places",
+        "style": {
+            "stroke": "#999999",
+            "fill": "#e3f3d3",
+            "fill-opacity": "0.5"
+        },
+        "nodes": [
+            "9ed25f994a65b966",
+            "bc303244c5741cf5",
+            "6896374bc6497c4f",
+            "8dea218a5ffe100f",
+            "2477c6733ebe224d",
+            "fa05e63a2669832b"
+        ],
+        "x": 904,
+        "y": 111.5,
+        "w": 1442,
+        "h": 97
+    },
+    {
+        "id": "4907d7deac7717b4",
+        "type": "group",
+        "z": "61370204cb540a30",
+        "name": "Graph Data Ingestion",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "e9f82a0cda79707c",
+            "8711aabe09e2ebfd",
+            "d9a4d0486b82627e",
+            "dd1ed75679f32934"
+        ],
+        "x": 134,
+        "y": 159,
+        "w": 372,
+        "h": 202
+    },
+    {
+        "id": "1053c6913c681fc3",
+        "type": "group",
+        "z": "742c3f66713f865c",
+        "name": "IoT Data Processing Pipeline",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "dc6fe25e1517c08a",
+            "c4937737b4143d09",
+            "2fa72771db35b587",
+            "71056585189d11e6",
+            "de10066219bbac35",
+            "a291520a155c7b6c",
+            "59a90900cb2fbb4e",
+            "77037d974ae8b72e",
+            "b93880db3f7bb69d"
+        ],
+        "x": 174,
+        "y": 339,
+        "w": 592,
+        "h": 282
+    },
+    {
+        "id": "cb7ca2b0d5cb52a8",
+        "type": "group",
+        "z": "742c3f66713f865c",
+        "name": "Emergency Routing & Hazard Updates",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "3f6304bec4774eb3",
+            "262ec9919d6c2cf4",
+            "0d11580ae1afbdee",
+            "5470b2a140c5f635",
+            "a14c3f6d56f98923"
+        ],
+        "x": 174,
+        "y": 759,
+        "w": 612,
+        "h": 162
+    },
+    {
         "id": "19268c5a199e4927",
         "type": "mqtt-broker",
         "name": "thingsboard",
@@ -2828,19 +3072,20 @@
         "y": 360,
         "wires": [
             [
-                "0271f7dd94740084"
-            ],
-            [
-                "0271f7dd94740084"
-            ],
-            [
-                "0271f7dd94740084"
-            ],
-            [
-                "0271f7dd94740084"
-            ],
-            [
                 "e1abe26676bc6185"
+            ],
+            [
+                "0271f7dd94740084"
+            ],
+            [
+                "0271f7dd94740084"
+            ],
+            [
+                "0271f7dd94740084",
+                "9481333c9ee23d03"
+            ],
+            [
+                "40122d1e02a678ae"
             ],
             [
                 "d03459d0547b2b18"
@@ -2997,8 +3242,8 @@
         "reduceInit": "",
         "reduceInitType": "num",
         "reduceFixup": "",
-        "x": 1030,
-        "y": 360,
+        "x": 810,
+        "y": 400,
         "wires": [
             []
         ]
@@ -7033,156 +7278,9 @@
         ]
     },
     {
-        "id": "4ffa66e9f39fbce1",
-        "type": "watch",
-        "z": "61370204cb540a30",
-        "name": "Watch place_graph.json",
-        "files": "/data/host_files/place_graph.json",
-        "recursive": "",
-        "x": 260,
-        "y": 320,
-        "wires": [
-            [
-                "329820d8a14629c6"
-            ]
-        ]
-    },
-    {
-        "id": "38d723712ce24168",
-        "type": "inject",
-        "z": "61370204cb540a30",
-        "name": "Trigger Flow",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 220,
-        "y": 380,
-        "wires": [
-            [
-                "329820d8a14629c6"
-            ]
-        ]
-    },
-    {
-        "id": "329820d8a14629c6",
-        "type": "delay",
-        "z": "61370204cb540a30",
-        "name": "Delay 5s",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 400,
-        "y": 380,
-        "wires": [
-            [
-                "c6a0a8a79d02898e"
-            ]
-        ]
-    },
-    {
-        "id": "c6a0a8a79d02898e",
-        "type": "file in",
-        "z": "61370204cb540a30",
-        "name": "Read place_graph.json",
-        "filename": "/data/host_files/place_graph.json",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 250,
-        "y": 460,
-        "wires": [
-            [
-                "ac50638272677eca"
-            ]
-        ]
-    },
-    {
-        "id": "ac50638272677eca",
-        "type": "json",
-        "z": "61370204cb540a30",
-        "name": "Parse Graph JSON",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 460,
-        "y": 460,
-        "wires": [
-            [
-                "03bbf23d3d8dbf7d",
-                "d4160a0a7b4f03c0"
-            ]
-        ]
-    },
-    {
-        "id": "03bbf23d3d8dbf7d",
-        "type": "change",
-        "z": "61370204cb540a30",
-        "name": "Extract Places & Edges",
-        "rules": [
-            {
-                "t": "set",
-                "p": "places",
-                "pt": "msg",
-                "to": "payload.places",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "edges",
-                "pt": "msg",
-                "to": "payload.edges",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 670,
-        "y": 460,
-        "wires": [
-            [
-                "6202ecb01f191868"
-            ]
-        ]
-    },
-    {
         "id": "6202ecb01f191868",
         "type": "split",
-        "z": "61370204cb540a30",
+        "z": "adb1be0b22848256",
         "g": "7c0664c35f16aa57",
         "name": "Split Array of Places",
         "splt": "\\n",
@@ -7192,8 +7290,8 @@
         "stream": false,
         "addname": "",
         "property": "places",
-        "x": 900,
-        "y": 460,
+        "x": 1000,
+        "y": 160,
         "wires": [
             [
                 "1b2144a03f8d96c3"
@@ -7203,7 +7301,7 @@
     {
         "id": "1b2144a03f8d96c3",
         "type": "delay",
-        "z": "61370204cb540a30",
+        "z": "adb1be0b22848256",
         "g": "7c0664c35f16aa57",
         "name": "Rate Limit: 5 msg/sec",
         "pauseType": "rate",
@@ -7218,8 +7316,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1120,
-        "y": 460,
+        "x": 1220,
+        "y": 160,
         "wires": [
             [
                 "cf389616be8c7ada"
@@ -7229,7 +7327,7 @@
     {
         "id": "cf389616be8c7ada",
         "type": "change",
-        "z": "61370204cb540a30",
+        "z": "adb1be0b22848256",
         "g": "7c0664c35f16aa57",
         "name": "Map Cypher Parameters for Places",
         "rules": [
@@ -7288,8 +7386,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1380,
-        "y": 460,
+        "x": 1480,
+        "y": 160,
         "wires": [
             [
                 "8108b6e337abbbb6"
@@ -7299,7 +7397,7 @@
     {
         "id": "8108b6e337abbbb6",
         "type": "template",
-        "z": "61370204cb540a30",
+        "z": "adb1be0b22848256",
         "g": "7c0664c35f16aa57",
         "name": "Place Merge Query",
         "field": "query",
@@ -7308,8 +7406,8 @@
         "syntax": "mustache",
         "template": "MERGE (p:Place {id: $id})\nSET p += $attributes,\n    p.name = $name,\n    p.coordinates = $coordinates\nRETURN p;",
         "output": "str",
-        "x": 1630,
-        "y": 460,
+        "x": 1730,
+        "y": 160,
         "wires": [
             [
                 "8844cdac01a249da"
@@ -7319,15 +7417,15 @@
     {
         "id": "8844cdac01a249da",
         "type": "neo4j-bolt",
-        "z": "61370204cb540a30",
+        "z": "adb1be0b22848256",
         "g": "7c0664c35f16aa57",
         "server": "d9d1b2e046e79011",
         "name": "Execute Cypher: Merge Place",
         "query": "",
         "sessions": 10,
         "database": "",
-        "x": 1870,
-        "y": 460,
+        "x": 1970,
+        "y": 160,
         "wires": [
             [
                 "9e8f82db66d4f75c"
@@ -7339,7 +7437,7 @@
     {
         "id": "9e8f82db66d4f75c",
         "type": "join",
-        "z": "61370204cb540a30",
+        "z": "adb1be0b22848256",
         "g": "7c0664c35f16aa57",
         "name": "Wait for All Places",
         "mode": "auto",
@@ -7358,18 +7456,16 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 2130,
-        "y": 460,
+        "x": 2230,
+        "y": 160,
         "wires": [
-            [
-                "6789ef890721a865"
-            ]
+            []
         ]
     },
     {
         "id": "6789ef890721a865",
         "type": "split",
-        "z": "61370204cb540a30",
+        "z": "8b0673d8fb8e42df",
         "g": "0253f6cdf3b062ca",
         "name": "Split Array of Edges",
         "splt": "\\n",
@@ -7380,7 +7476,7 @@
         "addname": "",
         "property": "edges",
         "x": 890,
-        "y": 640,
+        "y": 160,
         "wires": [
             [
                 "1d82c444a921b7a0"
@@ -7390,7 +7486,7 @@
     {
         "id": "1d82c444a921b7a0",
         "type": "delay",
-        "z": "61370204cb540a30",
+        "z": "8b0673d8fb8e42df",
         "g": "0253f6cdf3b062ca",
         "name": "Rate Limit: 5 msg/sec",
         "pauseType": "rate",
@@ -7406,7 +7502,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 1110,
-        "y": 640,
+        "y": 160,
         "wires": [
             [
                 "9051c52f57d646e4"
@@ -7416,7 +7512,7 @@
     {
         "id": "9051c52f57d646e4",
         "type": "change",
-        "z": "61370204cb540a30",
+        "z": "8b0673d8fb8e42df",
         "g": "0253f6cdf3b062ca",
         "name": "Map Cypher Parameters for Edges",
         "rules": [
@@ -7469,7 +7565,7 @@
         "to": "",
         "reg": false,
         "x": 1370,
-        "y": 640,
+        "y": 160,
         "wires": [
             [
                 "52c781b4074528df"
@@ -7479,7 +7575,7 @@
     {
         "id": "52c781b4074528df",
         "type": "template",
-        "z": "61370204cb540a30",
+        "z": "8b0673d8fb8e42df",
         "g": "0253f6cdf3b062ca",
         "name": "Edge Merge Query",
         "field": "query",
@@ -7489,7 +7585,7 @@
         "template": "MATCH (s:Place {id: $source})\nMATCH (t:Place {id: $target})\nMERGE (s)-[r:{{{edge_type}}}]->(t)\nSET r += $attributes\nRETURN r;",
         "output": "str",
         "x": 1620,
-        "y": 640,
+        "y": 160,
         "wires": [
             [
                 "2677c40ec83380da"
@@ -7499,7 +7595,7 @@
     {
         "id": "2677c40ec83380da",
         "type": "neo4j-bolt",
-        "z": "61370204cb540a30",
+        "z": "8b0673d8fb8e42df",
         "g": "0253f6cdf3b062ca",
         "server": "d9d1b2e046e79011",
         "name": "Execute Cypher: Merge Edge",
@@ -7507,7 +7603,7 @@
         "sessions": 10,
         "database": "",
         "x": 1850,
-        "y": 640,
+        "y": 160,
         "wires": [
             [],
             [],
@@ -7515,11 +7611,671 @@
         ]
     },
     {
-        "id": "d4160a0a7b4f03c0",
+        "id": "a23045fcdb79491c",
+        "type": "split",
+        "z": "d1b9b9d4afc205b1",
+        "g": "88963d7c846d47fd",
+        "name": "Split Edges",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "edges",
+        "x": 890,
+        "y": 160,
+        "wires": [
+            [
+                "943acecb0130ee47"
+            ]
+        ]
+    },
+    {
+        "id": "943acecb0130ee47",
+        "type": "delay",
+        "z": "d1b9b9d4afc205b1",
+        "g": "88963d7c846d47fd",
+        "name": "Throttle (5/sec)",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "5",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1110,
+        "y": 160,
+        "wires": [
+            [
+                "1196890b4abbfd29"
+            ]
+        ]
+    },
+    {
+        "id": "1196890b4abbfd29",
+        "type": "change",
+        "z": "d1b9b9d4afc205b1",
+        "g": "88963d7c846d47fd",
+        "name": "Set Edge Params",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "params.source",
+                "pt": "msg",
+                "to": "edges.source",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.target",
+                "pt": "msg",
+                "to": "edges.target",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.attributes",
+                "pt": "msg",
+                "to": "edges.attributes",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "edge_type",
+                "pt": "msg",
+                "to": "$exists(edges.type) ? $replace($uppercase(edges.type), /\\s+/, \"_\") : \"CONNECTED_TO\"",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1370,
+        "y": 160,
+        "wires": [
+            [
+                "bf15ae4e6e9eae1c"
+            ]
+        ]
+    },
+    {
+        "id": "bf15ae4e6e9eae1c",
+        "type": "template",
+        "z": "d1b9b9d4afc205b1",
+        "g": "88963d7c846d47fd",
+        "name": "Format Edge Cypher",
+        "field": "query",
+        "fieldType": "msg",
+        "format": "text",
+        "syntax": "mustache",
+        "template": "MATCH (s:Place {id: $source})\nMATCH (t:Place {id: $target})\nMERGE (s)-[r:{{{edge_type}}}]->(t)\nSET r += $attributes\nRETURN r;",
+        "output": "str",
+        "x": 1620,
+        "y": 160,
+        "wires": [
+            [
+                "8bb9d06df7f1d7a4"
+            ]
+        ]
+    },
+    {
+        "id": "8bb9d06df7f1d7a4",
+        "type": "neo4j-bolt",
+        "z": "d1b9b9d4afc205b1",
+        "g": "88963d7c846d47fd",
+        "server": "d9d1b2e046e79011",
+        "name": "Run Cypher: Merge Edge",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 1850,
+        "y": 160,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9ed25f994a65b966",
+        "type": "split",
+        "z": "06f4ba71fc182b98",
+        "g": "36f18f2dc7123516",
+        "name": "Split Places",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "places",
+        "x": 1000,
+        "y": 160,
+        "wires": [
+            [
+                "bc303244c5741cf5"
+            ]
+        ]
+    },
+    {
+        "id": "bc303244c5741cf5",
+        "type": "delay",
+        "z": "06f4ba71fc182b98",
+        "g": "36f18f2dc7123516",
+        "name": "Throttle (5/sec)",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "5",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1220,
+        "y": 160,
+        "wires": [
+            [
+                "6896374bc6497c4f"
+            ]
+        ]
+    },
+    {
+        "id": "6896374bc6497c4f",
+        "type": "change",
+        "z": "06f4ba71fc182b98",
+        "g": "36f18f2dc7123516",
+        "name": "Set Place Params",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "params.id",
+                "pt": "msg",
+                "to": "places.id",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.name",
+                "pt": "msg",
+                "to": "places.name",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "places.attributes.danger",
+                "pt": "msg",
+                "to": "$type(places.attributes.danger) = \"null\" ? \"null\" : places.attributes.danger",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "params.attributes",
+                "pt": "msg",
+                "to": "places.attributes",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.coordinates",
+                "pt": "msg",
+                "to": "$string(places.coordinates)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1480,
+        "y": 160,
+        "wires": [
+            [
+                "8dea218a5ffe100f"
+            ]
+        ]
+    },
+    {
+        "id": "8dea218a5ffe100f",
+        "type": "template",
+        "z": "06f4ba71fc182b98",
+        "g": "36f18f2dc7123516",
+        "name": "Format Place Cypher",
+        "field": "query",
+        "fieldType": "msg",
+        "format": "text",
+        "syntax": "mustache",
+        "template": "MERGE (p:Place {id: $id})\nSET p += $attributes,\n    p.name = $name,\n    p.coordinates = $coordinates\nRETURN p;",
+        "output": "str",
+        "x": 1730,
+        "y": 160,
+        "wires": [
+            [
+                "2477c6733ebe224d"
+            ]
+        ]
+    },
+    {
+        "id": "2477c6733ebe224d",
+        "type": "neo4j-bolt",
+        "z": "06f4ba71fc182b98",
+        "g": "36f18f2dc7123516",
+        "server": "d9d1b2e046e79011",
+        "name": "Run Cypher: Merge Place",
+        "query": "",
+        "sessions": 10,
+        "database": "",
+        "x": 1970,
+        "y": 160,
+        "wires": [
+            [
+                "fa05e63a2669832b"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "fa05e63a2669832b",
+        "type": "join",
+        "z": "06f4ba71fc182b98",
+        "g": "36f18f2dc7123516",
+        "name": "Wait for Completion",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": true,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 2230,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "78a4d6c60b1896d4",
+        "type": "delay",
+        "z": "ed46c7591fcf911b",
+        "name": "Rate Limit Agent Output",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 680,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67518950f2ae0a8c",
+        "type": "split",
+        "z": "ed46c7591fcf911b",
+        "name": "Split JSON Lines",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload",
+        "x": 510,
+        "y": 240,
+        "wires": [
+            [
+                "78a4d6c60b1896d4"
+            ]
+        ]
+    },
+    {
+        "id": "370e4b5057bcc7c7",
+        "type": "json",
+        "z": "ed46c7591fcf911b",
+        "name": "Parse JSON",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "67518950f2ae0a8c"
+            ]
+        ]
+    },
+    {
+        "id": "a9767ab93186fd3b",
+        "type": "file in",
+        "z": "ed46c7591fcf911b",
+        "name": "Read Agent Data File",
+        "filename": "/data/host_files/json_fake_data/agent_data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 520,
+        "y": 160,
+        "wires": [
+            [
+                "370e4b5057bcc7c7"
+            ]
+        ]
+    },
+    {
+        "id": "588289bb9abbc250",
+        "type": "change",
+        "z": "73bd2f48f9176df1",
+        "name": "Prepare Cypher Parameters",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params",
+                "pt": "msg",
+                "to": "{\t    \"department\": $split(payload.room, ':')[0],\t    \"room\": $split(payload.room, ':')[1],\t    \"type\": payload.danger_type,\t    \"level\": payload.danger,\t    \"score\": payload.danger_score,\t    \"warning\": payload.warning,\t    \"justification\": payload.justification,\t    \"k\": 10\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "database",
+                "pt": "msg",
+                "to": "memgraph",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 300,
+        "wires": [
+            [
+                "b88ce66d13f4b2b0"
+            ]
+        ]
+    },
+    {
+        "id": "b88ce66d13f4b2b0",
+        "type": "change",
+        "z": "73bd2f48f9176df1",
+        "name": "Build Update Hazard Query",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "MATCH (p:Place {department: $department, name: $room})MERGE (h:Hazard {type: $type})-[:AFFECTS]->(p)SET h += { level: $level, score: $score, warning: $warning, justification: $justification }, p.dynamic_weight = coalesce(p.weight, 1.0) * (1 + ($score * $k))RETURN p, h;",
+                "tot": "str"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 360,
+        "wires": [
+            [
+                "e0702b9938d886ff"
+            ]
+        ]
+    },
+    {
+        "id": "e0702b9938d886ff",
+        "type": "subflow:3830ac3a9c9ecd5b",
+        "z": "73bd2f48f9176df1",
+        "name": "",
+        "x": 650,
+        "y": 420,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ce54436d090f01cb",
+        "type": "change",
+        "z": "a9e85b51b2948727",
+        "name": "Prepare Redis HSET Payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.room",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[\"danger_\" & payload.danger_type, payload.danger]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 360,
+        "wires": [
+            [
+                "e240c62f2d3feda9"
+            ]
+        ]
+    },
+    {
+        "id": "e240c62f2d3feda9",
+        "type": "redis-command",
+        "z": "a9e85b51b2948727",
+        "server": "a12b266a42104227",
+        "command": "HSET",
+        "name": "Redis: HSET Hazard State",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 540,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1175b62de804d93a",
+        "type": "file in",
+        "z": "cfe2febad04ff8c6",
+        "name": "Read place_graph.json",
+        "filename": "/data/host_files/place_graph.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 250,
+        "y": 160,
+        "wires": [
+            [
+                "42a75337a1d67c44"
+            ]
+        ]
+    },
+    {
+        "id": "2ff5774bca4ce0be",
+        "type": "inject",
+        "z": "cfe2febad04ff8c6",
+        "name": "Manual Trigger",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 120,
+        "wires": [
+            [
+                "dc13fe3224d9a91a"
+            ]
+        ]
+    },
+    {
+        "id": "dc13fe3224d9a91a",
+        "type": "delay",
+        "z": "cfe2febad04ff8c6",
+        "name": "Throttle Updates (5s)",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 440,
+        "y": 120,
+        "wires": [
+            [
+                "1175b62de804d93a"
+            ]
+        ]
+    },
+    {
+        "id": "d7653bc1947907b2",
+        "type": "watch",
+        "z": "cfe2febad04ff8c6",
+        "name": "Watch File",
+        "files": "/data/host_files/place_graph.json",
+        "recursive": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "dc13fe3224d9a91a"
+            ]
+        ]
+    },
+    {
+        "id": "42a75337a1d67c44",
+        "type": "json",
+        "z": "cfe2febad04ff8c6",
+        "name": "Parse to JSON Object",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 480,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e9f82a0cda79707c",
         "type": "change",
         "z": "61370204cb540a30",
-        "name": "Set Global Vars",
+        "g": "4907d7deac7717b4",
+        "name": "Set Globals & Extract Places & Edges",
         "rules": [
+            {
+                "t": "set",
+                "p": "places",
+                "pt": "msg",
+                "to": "payload.places",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "edges",
+                "pt": "msg",
+                "to": "payload.edges",
+                "tot": "msg"
+            },
             {
                 "t": "set",
                 "p": "logicalPlaces",
@@ -7533,6 +8289,13 @@
                 "pt": "global",
                 "to": "payload.views",
                 "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
             }
         ],
         "action": "",
@@ -7540,10 +8303,50 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 540,
-        "y": 560,
+        "x": 330,
+        "y": 240,
         "wires": [
-            []
+            [
+                "8711aabe09e2ebfd"
+            ]
+        ]
+    },
+    {
+        "id": "8711aabe09e2ebfd",
+        "type": "subflow:06f4ba71fc182b98",
+        "z": "61370204cb540a30",
+        "g": "4907d7deac7717b4",
+        "name": "Subflow: Save Places",
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "d9a4d0486b82627e"
+            ]
+        ]
+    },
+    {
+        "id": "d9a4d0486b82627e",
+        "type": "subflow:d1b9b9d4afc205b1",
+        "z": "61370204cb540a30",
+        "g": "4907d7deac7717b4",
+        "name": "Subflow: Save Edges",
+        "x": 280,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "dd1ed75679f32934",
+        "type": "subflow:cfe2febad04ff8c6",
+        "z": "61370204cb540a30",
+        "g": "4907d7deac7717b4",
+        "name": "",
+        "x": 280,
+        "y": 200,
+        "wires": [
+            [
+                "e9f82a0cda79707c"
+            ]
         ]
     },
     {
@@ -10313,36 +11116,6 @@
         ]
     },
     {
-        "id": "b4253b79dc30039e",
-        "type": "inject",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 120,
-        "y": 340,
-        "wires": [
-            [
-                "34e914a0d7f7d8a5"
-            ]
-        ]
-    },
-    {
         "id": "6f4707f6ffd1fe37",
         "type": "debug",
         "z": "742c3f66713f865c",
@@ -10355,8 +11128,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 250,
-        "y": 140,
+        "x": 410,
+        "y": 160,
         "wires": []
     },
     {
@@ -10366,8 +11139,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 80,
-        "y": 140,
+        "x": 240,
+        "y": 160,
         "wires": [
             [
                 "6f4707f6ffd1fe37"
@@ -10408,6 +11181,13 @@
                 "pt": "global",
                 "to": "{\"AA1-01\":\"AA1\",\"AA1-02\":\"AA1\",\"AB1-01\":\"AB1\",\"AB2-01\":\"AB2\",\"AB2-02\":\"AB2\",\"LA1-01\":\"LA1\",\"LA1-02\":\"LA1\",\"StanzaCulmone\":\"StanzaCulmone\",\"StanzaDocente\":\"StanzaDocente\",\"TeamLab-01\":\"TeamLab\",\"TeamLab-02\":\"TeamLab\"}",
                 "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "sensor_configs",
+                "pt": "global",
+                "to": "{     \"temperature\": {       \"threshold_type\": \"always\",       \"threshold_value\": null     },     \"co2\": {       \"threshold_type\": \"always\",       \"threshold_value\": null     },     \"humidity\": {       \"threshold_type\": \"always\",       \"threshold_value\": null     },     \"tvoc\": {       \"threshold_type\": \"always\",       \"threshold_value\": null     },     \"eco2\": {       \"threshold_type\": \"always\",       \"threshold_value\": null     },     \"people_count\": {       \"threshold_type\": \"always\",       \"threshold_value\": null     }   }",
+                "tot": "json"
             }
         ],
         "action": "",
@@ -10415,8 +11195,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 340,
-        "y": 220,
+        "x": 500,
+        "y": 240,
         "wires": [
             []
         ]
@@ -10439,33 +11219,11 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 150,
-        "y": 220,
+        "x": 310,
+        "y": 240,
         "wires": [
             [
                 "ab0915b6b4da93d4"
-            ]
-        ]
-    },
-    {
-        "id": "0c4a1faa281a16bc",
-        "type": "mqtt in",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Sub: sensors/+/data",
-        "topic": "sensors/+/data",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "19268c5a199e4927",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 130,
-        "y": 440,
-        "wires": [
-            [
-                "e4c02c6ad3faca1a"
             ]
         ]
     },
@@ -10475,17 +11233,37 @@
         "z": "742c3f66713f865c",
         "name": "mapping si potrebbe fare su thingsboard",
         "info": "",
-        "x": 1210,
-        "y": 440,
+        "x": 960,
+        "y": 220,
         "wires": []
     },
     {
-        "id": "5b955beefaf1d116",
+        "id": "c534e4279e6b138a",
+        "type": "comment",
+        "z": "742c3f66713f865c",
+        "name": "TODO se shortest path è corretto aggiungere in tesi",
+        "info": "",
+        "x": 1190,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "5fb32ecb529864e5",
+        "type": "comment",
+        "z": "742c3f66713f865c",
+        "name": "sarebbe meglio usare K weighted shortest path ma devo farlo custom\\n visto che in letteratura usano dijkstra posso inserirlo come future work",
+        "info": "",
+        "x": 1190,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "dc6fe25e1517c08a",
         "type": "mqtt in",
         "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "Receive Emergency Data",
-        "topic": "emergency/agent/data",
+        "g": "1053c6913c681fc3",
+        "name": "MQTT Subscribe: Sensor Data",
+        "topic": "sensors/+/data",
         "qos": "2",
         "datatype": "auto-detect",
         "broker": "19268c5a199e4927",
@@ -10493,166 +11271,96 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 170,
-        "y": 800,
+        "x": 330,
+        "y": 420,
         "wires": [
             [
-                "f581fb7a0701bc6d",
-                "0f0812a17f0b33de"
+                "2fa72771db35b587"
             ]
         ]
     },
     {
-        "id": "c534e4279e6b138a",
-        "type": "comment",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "TODO se shortest path è corretto aggiungere in tesi",
-        "info": "",
-        "x": 570,
-        "y": 1080,
-        "wires": []
-    },
-    {
-        "id": "5fb32ecb529864e5",
-        "type": "comment",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "sarebbe meglio usare K weighted shortest path ma devo farlo custom\\n visto che in letteratura usano dijkstra posso inserirlo come future work",
-        "info": "",
-        "x": 570,
-        "y": 1140,
-        "wires": []
-    },
-    {
-        "id": "f6a2eff97c9e5967",
+        "id": "c4937737b4143d09",
         "type": "subflow:e1861ddff91fe985",
         "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "",
-        "x": 170,
-        "y": 560,
-        "wires": [
-            [
-                "d42bfc72df84e8b9",
-                "1dd539870b095daa"
-            ]
-        ]
-    },
-    {
-        "id": "e4c02c6ad3faca1a",
-        "type": "subflow:58f18eb3ecf48522",
-        "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "",
-        "x": 200,
+        "g": "1053c6913c681fc3",
+        "name": "Aggregate Sensor Data",
+        "x": 330,
         "y": 500,
         "wires": [
             [
-                "f6a2eff97c9e5967"
+                "71056585189d11e6",
+                "a291520a155c7b6c"
             ]
         ]
     },
     {
-        "id": "d42bfc72df84e8b9",
+        "id": "2fa72771db35b587",
+        "type": "subflow:58f18eb3ecf48522",
+        "z": "742c3f66713f865c",
+        "g": "1053c6913c681fc3",
+        "name": "Enrich Sensor Data",
+        "x": 310,
+        "y": 460,
+        "wires": [
+            [
+                "c4937737b4143d09"
+            ]
+        ]
+    },
+    {
+        "id": "71056585189d11e6",
         "type": "subflow:aff3e93ce0e38714",
         "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "",
-        "x": 180,
-        "y": 620,
+        "g": "1053c6913c681fc3",
+        "name": "Evaluate Sensor Thresholds",
+        "x": 340,
+        "y": 540,
         "wires": [
             [
-                "d22bea9ba6a2eefe",
-                "9fa13db2d48fb18b"
+                "de10066219bbac35",
+                "59a90900cb2fbb4e"
             ]
         ]
     },
     {
-        "id": "d22bea9ba6a2eefe",
+        "id": "de10066219bbac35",
         "type": "subflow:6bf237a7a76370e9",
         "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "",
-        "x": 180,
-        "y": 680,
+        "g": "1053c6913c681fc3",
+        "name": "Persist State to Redis",
+        "x": 320,
+        "y": 580,
         "wires": [
             []
         ]
     },
     {
-        "id": "f581fb7a0701bc6d",
-        "type": "subflow:43cc147402d11042",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "",
-        "x": 410,
-        "y": 860,
-        "wires": []
-    },
-    {
-        "id": "0f0812a17f0b33de",
-        "type": "subflow:49df7fbfa1735b3d",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "",
-        "x": 420,
-        "y": 920,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b6d306df011358a8",
-        "type": "subflow:6e3d39d123c8fd3a",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "",
-        "x": 430,
-        "y": 980,
-        "wires": []
-    },
-    {
-        "id": "1dd539870b095daa",
+        "id": "a291520a155c7b6c",
         "type": "subflow:40eb59643ffd1130",
         "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Save timeseries for Agent",
-        "x": 450,
-        "y": 560,
+        "g": "1053c6913c681fc3",
+        "name": "Persist Timeseries Data",
+        "x": 590,
+        "y": 500,
         "wires": []
     },
     {
-        "id": "9fa13db2d48fb18b",
+        "id": "59a90900cb2fbb4e",
         "type": "subflow:eb8bbd730a415b4e",
         "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "Update Place Graph",
-        "x": 440,
-        "y": 620,
+        "g": "1053c6913c681fc3",
+        "name": "Update Neo4j Place Graph",
+        "x": 620,
+        "y": 540,
         "wires": []
     },
     {
-        "id": "ebdef3cf06a7ba9f",
-        "type": "subflow:e8aef35ab083c2f1",
-        "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "",
-        "x": 150,
-        "y": 880,
-        "wires": [
-            [
-                "f581fb7a0701bc6d",
-                "0f0812a17f0b33de"
-            ]
-        ]
-    },
-    {
-        "id": "c968ea43c5b30376",
+        "id": "77037d974ae8b72e",
         "type": "inject",
         "z": "742c3f66713f865c",
-        "g": "8e2850966c0b89d7",
-        "name": "",
+        "g": "1053c6913c681fc3",
+        "name": "Trigger Simulation",
         "props": [
             {
                 "p": "payload"
@@ -10669,27 +11377,124 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 130,
-        "y": 940,
+        "x": 310,
+        "y": 380,
         "wires": [
             [
-                "ebdef3cf06a7ba9f"
+                "b93880db3f7bb69d"
             ]
         ]
     },
     {
-        "id": "34e914a0d7f7d8a5",
+        "id": "b93880db3f7bb69d",
         "type": "subflow:4644f4b8459c8ede",
         "z": "742c3f66713f865c",
-        "g": "779fc989ebbe1d72",
-        "name": "",
-        "x": 140,
-        "y": 400,
+        "g": "1053c6913c681fc3",
+        "name": "Simulate IoT Data Stream",
+        "x": 550,
+        "y": 380,
         "wires": [
             [
-                "e4c02c6ad3faca1a"
+                "2fa72771db35b587"
             ]
         ]
+    },
+    {
+        "id": "3f6304bec4774eb3",
+        "type": "mqtt in",
+        "z": "742c3f66713f865c",
+        "g": "cb7ca2b0d5cb52a8",
+        "name": "MQTT Subscribe: Emergency Data",
+        "topic": "emergency/agent/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "19268c5a199e4927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 340,
+        "y": 880,
+        "wires": [
+            [
+                "262ec9919d6c2cf4",
+                "a14c3f6d56f98923"
+            ]
+        ]
+    },
+    {
+        "id": "262ec9919d6c2cf4",
+        "type": "subflow:a9e85b51b2948727",
+        "z": "742c3f66713f865c",
+        "g": "cb7ca2b0d5cb52a8",
+        "name": "Cache Hazard State",
+        "x": 640,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "0d11580ae1afbdee",
+        "type": "subflow:ed46c7591fcf911b",
+        "z": "742c3f66713f865c",
+        "g": "cb7ca2b0d5cb52a8",
+        "name": "Simulate Agent Output",
+        "x": 380,
+        "y": 840,
+        "wires": [
+            [
+                "262ec9919d6c2cf4",
+                "a14c3f6d56f98923"
+            ]
+        ]
+    },
+    {
+        "id": "5470b2a140c5f635",
+        "type": "inject",
+        "z": "742c3f66713f865c",
+        "g": "cb7ca2b0d5cb52a8",
+        "name": "Trigger Simulation",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 370,
+        "y": 800,
+        "wires": [
+            [
+                "0d11580ae1afbdee"
+            ]
+        ]
+    },
+    {
+        "id": "b6d306df011358a8",
+        "type": "subflow:6e3d39d123c8fd3a",
+        "z": "742c3f66713f865c",
+        "name": "",
+        "x": 580,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "a14c3f6d56f98923",
+        "type": "subflow:73bd2f48f9176df1",
+        "z": "742c3f66713f865c",
+        "g": "cb7ca2b0d5cb52a8",
+        "name": "Manage Graph Hazards",
+        "x": 650,
+        "y": 880,
+        "wires": []
     },
     {
         "id": "ad8291b3ff19e65d",
@@ -11004,20 +11809,6 @@
         ]
     },
     {
-        "id": "1175c23908057e4d",
-        "type": "watch",
-        "z": "f080f7d563bd7ed5",
-        "g": "eebd3d5c418f638f",
-        "name": "Watch for BPMN updates",
-        "files": "/data/camunda/diagram_emergency.bpmn",
-        "recursive": "",
-        "x": 430,
-        "y": 280,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "74e794dd7e8c0f38",
         "type": "set-variables",
         "z": "f080f7d563bd7ed5",
@@ -11214,31 +12005,6 @@
         "x": 2830,
         "y": 2140,
         "wires": []
-    },
-    {
-        "id": "19edafd22bfbe383",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "name": "Initialize process variables",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.variables",
-                "pt": "msg",
-                "to": "{\"DangerZones\":{\"count\":0},\"SignalledAreas\":{\"count\":0},\"Building\":{\"occupancy\":0}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 770,
-        "y": 560,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "1f389b5fb36badf8",
@@ -11899,8 +12665,7 @@
         "y": 980,
         "wires": [
             [
-                "d66c5f67058fad52",
-                "016eacaecea5a0e1"
+                "d66c5f67058fad52"
             ]
         ]
     },
@@ -11945,8 +12710,7 @@
         "y": 1040,
         "wires": [
             [
-                "b05432613735b292",
-                "016eacaecea5a0e1"
+                "b05432613735b292"
             ]
         ]
     },
@@ -11978,8 +12742,7 @@
         "y": 1240,
         "wires": [
             [
-                "6ac5d113c50533ab",
-                "1ab013341b63eab9"
+                "6ac5d113c50533ab"
             ]
         ]
     },
@@ -13396,31 +14159,6 @@
         "wires": []
     },
     {
-        "id": "a1994c1d46d5b316",
-        "type": "inject",
-        "z": "f080f7d563bd7ed5",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{     \"room\": \"departmentA:AB2\",     \"warning\": \"pre-alert\",     \"danger\": \"high\",     \"danger_type\": \"other\",     \"danger_score\": 0.95,     \"justification\": \"Elevated TVOC (60,000 ppm) and eCO2 (57,330 ppm) levels indicate severe air quality issues, posing health risks and potential for hazardous gas accumulation.\",     \"elapsed_time_seconds\": 45.197096635998605   }",
-        "payloadType": "json",
-        "x": 510,
-        "y": 1620,
-        "wires": [
-            [
-                "0cd6868982052b31"
-            ]
-        ]
-    },
-    {
         "id": "29d8fd7b9d6515e0",
         "type": "function",
         "z": "f080f7d563bd7ed5",
@@ -13442,24 +14180,6 @@
         ]
     },
     {
-        "id": "1ab013341b63eab9",
-        "type": "debug",
-        "z": "f080f7d563bd7ed5",
-        "g": "b3afd4bf20adcfb3",
-        "name": "debug Adjust light",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 710,
-        "y": 1180,
-        "wires": []
-    },
-    {
         "id": "3763112bf69167dc",
         "type": "comment",
         "z": "f080f7d563bd7ed5",
@@ -13477,17 +14197,6 @@
         "info": "",
         "x": 1340,
         "y": 1760,
-        "wires": []
-    },
-    {
-        "id": "5feae36c9451135a",
-        "type": "comment",
-        "z": "f080f7d563bd7ed5",
-        "g": "79f178997defc9f3",
-        "name": "se faccio una volta occupant aa1 trova la strada\\n la seconda volta no. \\n sistemare se è un problema grave",
-        "info": "",
-        "x": 1080,
-        "y": 2160,
         "wires": []
     },
     {
@@ -13517,35 +14226,6 @@
                 "befa1004272787e1"
             ]
         ]
-    },
-    {
-        "id": "6d808a383a4cee1e",
-        "type": "comment",
-        "z": "f080f7d563bd7ed5",
-        "g": "79f178997defc9f3",
-        "name": "senza hazard DangerZones mi risultano 21, sistemare la query",
-        "info": "",
-        "x": 1120,
-        "y": 2240,
-        "wires": []
-    },
-    {
-        "id": "016eacaecea5a0e1",
-        "type": "debug",
-        "z": "f080f7d563bd7ed5",
-        "g": "781eade0d5b0ace5",
-        "name": "debug 5",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 960,
-        "y": 980,
-        "wires": []
     },
     {
         "id": "b70a3a374649d0e7",
@@ -13602,5 +14282,25 @@
                 "a52b7fed013f434e"
             ]
         ]
+    },
+    {
+        "id": "6d808a383a4cee1e",
+        "type": "comment",
+        "z": "f080f7d563bd7ed5",
+        "name": "senza hazard DangerZones mi risultano 21, sistemare la query",
+        "info": "",
+        "x": 1220,
+        "y": 2260,
+        "wires": []
+    },
+    {
+        "id": "5feae36c9451135a",
+        "type": "comment",
+        "z": "f080f7d563bd7ed5",
+        "name": "se faccio una volta occupant aa1 trova la strada\\n la seconda volta no. \\n sistemare se è un problema grave",
+        "info": "",
+        "x": 1180,
+        "y": 2180,
+        "wires": []
     }
 ]
