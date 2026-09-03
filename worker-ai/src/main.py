@@ -11,8 +11,8 @@ import aiomqtt
 import redis.asyncio as redis
 from dotenv import load_dotenv
 
-from agent_graph import HazardMapReduceManager
-from memgraph_custom_tools import get_memgraph_tools
+from src.agent_graph import HazardMapReduceManager
+from src.memgraph_custom_tools import get_memgraph_tools
 
 logging.basicConfig(
     level=logging.INFO,

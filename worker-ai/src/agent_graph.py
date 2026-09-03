@@ -10,7 +10,7 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.types import Send
 from pydantic import BaseModel, Field, ValidationError
 
-from app_settings import AppSettings
+from src.app_settings import AppSettings
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s"

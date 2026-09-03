@@ -5,6 +5,7 @@ services:
     build:
       context: ./worker-ai
       dockerfile: Dockerfile
+      target: prod
     container_name: worker-ai
     env_file:
       - worker-ai/.env

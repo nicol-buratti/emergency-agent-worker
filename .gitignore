@@ -23,3 +23,5 @@ node-red/node_red_data/*
 
 # MAKE SURE TO IGNORE CREDENTIALS (for security)
 node-red/node_red_data/flows_cred.json
+
+.pytest_cache
