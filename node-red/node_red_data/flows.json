@@ -1202,6 +1202,68 @@
         "color": "#DDAA99"
     },
     {
+        "id": "8717f82059831d90",
+        "type": "subflow",
+        "name": "View Aggregation",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "4b7707ba58ad90e1"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1060,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "8fda5da00a1c1c33",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "ViewName",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Attribute",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "8499b914410e71fe",
         "type": "group",
         "z": "742c3f66713f865c",
@@ -1313,18 +1375,17 @@
             "color": "#f0f0f0"
         },
         "nodes": [
-            "07a7a4d2c6efad2d",
-            "6b1b99b2fff1b223",
-            "f94983912255ad43",
-            "4dfdd89668c8fa61",
-            "710220f83021b5f2",
-            "6a6b0c282bd03a6a",
-            "dc8b43c7ee5a77e2"
+            "abca588e321be9db",
+            "d69e5b95fa465e86",
+            "25d7e7c2f589d614",
+            "2d937ca6b4f173e4",
+            "e429d5e754fad474",
+            "6f1248f2076315d7"
         ],
-        "x": 294,
+        "x": 314,
         "y": 2239,
         "w": 452,
-        "h": 222
+        "h": 262
     },
     {
         "id": "860ae4eb696a0d39",
@@ -1393,13 +1454,13 @@
         },
         "nodes": [
             "4d96aa1e66f455f1",
-            "93101a5b0f3961a2",
-            "4a1bc982215a2ebf"
+            "56083d61eb8d3f7b",
+            "cfd8a8515d3fa1f8"
         ],
         "x": 274,
         "y": 3239,
-        "w": 472,
-        "h": 142
+        "w": 672,
+        "h": 82
     },
     {
         "id": "356bd6381fe28003",
@@ -1614,13 +1675,12 @@
         },
         "nodes": [
             "799975521ec28fb7",
-            "4b7707ba58ad90e1",
-            "c01eca7e0d1e5a33"
+            "23f7f72bb0f4eb4c"
         ],
-        "x": 314,
+        "x": 334,
         "y": 919,
-        "w": 612,
-        "h": 142
+        "w": 572,
+        "h": 82
     },
     {
         "id": "ee4e8865308b5702",
@@ -5235,6 +5295,131 @@
         "wires": []
     },
     {
+        "id": "4b7707ba58ad90e1",
+        "type": "subflow:366aabfc7e2ab40f",
+        "z": "8717f82059831d90",
+        "name": "Get Building View Data",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "ViewName",
+                "type": "env"
+            }
+        ],
+        "x": 250,
+        "y": 120,
+        "wires": [
+            [
+                "25e7c9e0d7e431a2"
+            ]
+        ]
+    },
+    {
+        "id": "25e7c9e0d7e431a2",
+        "type": "switch",
+        "z": "8717f82059831d90",
+        "name": "",
+        "property": "$lookup($globalContext(\"views\")[name = $env(\"ViewName\")].attributes, $env(\"Attribute\"))",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "SUM",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "COUNT",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 470,
+        "y": 120,
+        "wires": [
+            [
+                "2567f8b4476c1e6b"
+            ],
+            [
+                "79eebb576c7e2e08"
+            ]
+        ]
+    },
+    {
+        "id": "79eebb576c7e2e08",
+        "type": "change",
+        "z": "8717f82059831d90",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "aggregation",
+                "pt": "msg",
+                "to": "$count($$.payload.Building)",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 140,
+        "wires": [
+            [
+                "8fda5da00a1c1c33"
+            ]
+        ]
+    },
+    {
+        "id": "2567f8b4476c1e6b",
+        "type": "change",
+        "z": "8717f82059831d90",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "aggregation",
+                "pt": "msg",
+                "to": "$sum(\t    $lookup(\t        $lookup($$.payload, $env(\"ViewName\")).p.properties, \t        $env(\"Attribute\")\t    ) . ($type($)=\"object\" ? low : $)\t)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 80,
+        "wires": [
+            [
+                "8fda5da00a1c1c33"
+            ]
+        ]
+    },
+    {
+        "id": "8fda5da00a1c1c33",
+        "type": "function",
+        "z": "8717f82059831d90",
+        "name": "function 1",
+        "func": "const viewName = env.get(\"ViewName\");\nconst attribute = env.get(\"Attribute\");\n\n// 1. Initialize objects if they don't exist\nmsg.job = msg.job || {};\nmsg.job.variables = msg.job.variables || {};\nmsg.job.variables[viewName] = msg.job.variables[viewName] || {};\n\n// 2. Set the dynamic property\nmsg.job.variables[viewName][attribute] = msg.aggregation;\n\n// 3. Delete the dynamic payload property\nif (msg.payload && msg.payload[viewName]) {\n    delete msg.payload[viewName];\n}\n\n// 4. Delete aggregation\ndelete msg.aggregation;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "e9f82a0cda79707c",
         "type": "change",
         "z": "61370204cb540a30",
@@ -6820,176 +7005,6 @@
         ]
     },
     {
-        "id": "07a7a4d2c6efad2d",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "b001dcd7f4e84d23",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "roomName",
-                "pt": "msg",
-                "to": "job.variables.MyPlace.name",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 630,
-        "y": 2280,
-        "wires": [
-            [
-                "6b1b99b2fff1b223"
-            ]
-        ]
-    },
-    {
-        "id": "6b1b99b2fff1b223",
-        "type": "subflow:b009507935e1772b",
-        "z": "f080f7d563bd7ed5",
-        "g": "b001dcd7f4e84d23",
-        "name": "",
-        "env": [
-            {
-                "name": "Assignments",
-                "value": "{\"signalled\":true}",
-                "type": "json"
-            }
-        ],
-        "x": 400,
-        "y": 2340,
-        "wires": [
-            [
-                "f94983912255ad43",
-                "4dfdd89668c8fa61"
-            ]
-        ]
-    },
-    {
-        "id": "f94983912255ad43",
-        "type": "subflow:5122c220d975922b",
-        "z": "f080f7d563bd7ed5",
-        "g": "b001dcd7f4e84d23",
-        "name": "Wrapper: signal-area",
-        "env": [
-            {
-                "name": "TASK_TYPE",
-                "value": "signal-area",
-                "type": "str"
-            }
-        ],
-        "x": 420,
-        "y": 2280,
-        "wires": [
-            [
-                "07a7a4d2c6efad2d"
-            ]
-        ]
-    },
-    {
-        "id": "4dfdd89668c8fa61",
-        "type": "subflow:7a7a13d9d614cb94",
-        "z": "f080f7d563bd7ed5",
-        "g": "b001dcd7f4e84d23",
-        "name": "",
-        "env": [
-            {
-                "name": "ViewName",
-                "value": "SignalledAreas",
-                "type": "str"
-            }
-        ],
-        "x": 600,
-        "y": 2340,
-        "wires": [
-            [
-                "710220f83021b5f2"
-            ]
-        ]
-    },
-    {
-        "id": "710220f83021b5f2",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "b001dcd7f4e84d23",
-        "name": "Count aggregation",
-        "rules": [
-            {
-                "t": "set",
-                "p": "aggregation",
-                "pt": "msg",
-                "to": "$count($$.payload.SignalledAreas)",
-                "tot": "jsonata"
-            },
-            {
-                "t": "delete",
-                "p": "payload.SignalledAreas",
-                "pt": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload.SignalledAreas.count",
-                "pt": "msg",
-                "to": "aggregation",
-                "tot": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "aggregation",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 410,
-        "y": 2380,
-        "wires": [
-            [
-                "6a6b0c282bd03a6a"
-            ]
-        ]
-    },
-    {
-        "id": "6a6b0c282bd03a6a",
-        "type": "function",
-        "z": "f080f7d563bd7ed5",
-        "g": "b001dcd7f4e84d23",
-        "name": "Warden in random exit",
-        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// 1. Retrieve data from the flow context (equivalent to the inject)\nlet processData = flow.get(\"processData\") || {};\nlet deployments = processData.deployments || [];\n\n// 2. Find the definition for \"Process_Emergency_Warden\"\nlet wardenDeployment = deployments.find(d => d.process && d.process.bpmnProcessId === \"Process_Emergency_Warden\");\n// Ensure that the payload exists\nmsg.payload = msg.payload || {};\n\n// 3. Add tenantId and processDefinitionKey extracted from the context\nif (wardenDeployment) {\n    msg.payload.tenantId = wardenDeployment.process.tenantId;\n    msg.payload.processDefinitionKey = wardenDeployment.process.processDefinitionKey;\n}\n\n// 4. Get variables from the context (or from the payload if not present)\nlet originalVars = processData.variables || msg.payload.variables || {};\n\n// Create a new object containing EXCLUSIVELY MyPlace and SignalledAreas\nlet newVariables = {\n    SignalledAreas: originalVars.SignalledAreas || {},\n    MyPlace: originalVars.MyPlace || {}\n};\n\n// Modify the values based on your logic\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234;\nnewVariables.SignalledAreas.count = msg.payload.SignalledAreas.count;\ndelete msg.payload.job;\n// Overwrite the payload variables\nmsg.payload.variables = newVariables;\ndelete msg.payload.SignalledAreas\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 620,
-        "y": 2380,
-        "wires": [
-            [
-                "dc8b43c7ee5a77e2"
-            ]
-        ]
-    },
-    {
-        "id": "dc8b43c7ee5a77e2",
-        "type": "subflow:df8d344bd7233279",
-        "z": "f080f7d563bd7ed5",
-        "g": "b001dcd7f4e84d23",
-        "name": "",
-        "x": 440,
-        "y": 2420,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "943614bdcb31dfd3",
         "type": "subflow:5122c220d975922b",
         "z": "f080f7d563bd7ed5",
@@ -7298,73 +7313,7 @@
         "y": 3280,
         "wires": [
             [
-                "93101a5b0f3961a2"
-            ]
-        ]
-    },
-    {
-        "id": "93101a5b0f3961a2",
-        "type": "subflow:7a7a13d9d614cb94",
-        "z": "f080f7d563bd7ed5",
-        "g": "47838cee09f8b15b",
-        "name": "",
-        "env": [
-            {
-                "name": "ViewName",
-                "value": "SignalledAreas",
-                "type": "str"
-            }
-        ],
-        "x": 660,
-        "y": 3280,
-        "wires": [
-            [
-                "4a1bc982215a2ebf"
-            ]
-        ]
-    },
-    {
-        "id": "4a1bc982215a2ebf",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "47838cee09f8b15b",
-        "name": "Count aggregation",
-        "rules": [
-            {
-                "t": "set",
-                "p": "count",
-                "pt": "msg",
-                "to": "$count($$.payload.SignalledAreas)",
-                "tot": "jsonata"
-            },
-            {
-                "t": "delete",
-                "p": "payload.SignalledAreas",
-                "pt": "msg"
-            },
-            {
-                "t": "set",
-                "p": "job.variables.SignalledAreas.count",
-                "pt": "msg",
-                "to": "count",
-                "tot": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "count",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 510,
-        "y": 3340,
-        "wires": [
-            [
-                "4d96aa1e66f455f1"
+                "56083d61eb8d3f7b"
             ]
         ]
     },
@@ -7850,77 +7799,11 @@
                 "type": "str"
             }
         ],
-        "x": 490,
+        "x": 510,
         "y": 960,
         "wires": [
             [
-                "4b7707ba58ad90e1"
-            ]
-        ]
-    },
-    {
-        "id": "4b7707ba58ad90e1",
-        "type": "subflow:366aabfc7e2ab40f",
-        "z": "f080f7d563bd7ed5",
-        "g": "eae2b23e1aa0fcc3",
-        "name": "Get Building View Data",
-        "env": [
-            {
-                "name": "ViewName",
-                "value": "Building",
-                "type": "str"
-            }
-        ],
-        "x": 790,
-        "y": 960,
-        "wires": [
-            [
-                "c01eca7e0d1e5a33"
-            ]
-        ]
-    },
-    {
-        "id": "c01eca7e0d1e5a33",
-        "type": "change",
-        "z": "f080f7d563bd7ed5",
-        "g": "eae2b23e1aa0fcc3",
-        "name": "Aggregate Building Occupancy",
-        "rules": [
-            {
-                "t": "set",
-                "p": "occupancy",
-                "pt": "msg",
-                "to": "$sum($$.payload.Building.p.properties.occupancy.($type($)=\"object\" ? low : $))",
-                "tot": "jsonata"
-            },
-            {
-                "t": "delete",
-                "p": "payload.Building",
-                "pt": "msg"
-            },
-            {
-                "t": "set",
-                "p": "job.variables.Building.occupancy",
-                "pt": "msg",
-                "to": "occupancy",
-                "tot": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "occupancy",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 610,
-        "y": 1020,
-        "wires": [
-            [
-                "799975521ec28fb7"
+                "23f7f72bb0f4eb4c"
             ]
         ]
     },
@@ -7959,7 +7842,7 @@
             },
             {
                 "name": "Assignments",
-                "value": "{\"parameter\":\"lights\",\"state\":\"on\"}",
+                "value": "{\"lights\":\"on\"}",
                 "type": "json"
             }
         ],
@@ -8042,6 +7925,207 @@
             [
                 "1bbab437ca0cb33b"
             ]
+        ]
+    },
+    {
+        "id": "23f7f72bb0f4eb4c",
+        "type": "subflow:8717f82059831d90",
+        "z": "f080f7d563bd7ed5",
+        "g": "eae2b23e1aa0fcc3",
+        "name": "",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "Building",
+                "type": "str"
+            },
+            {
+                "name": "Attribute",
+                "value": "occupancy",
+                "type": "str"
+            }
+        ],
+        "x": 790,
+        "y": 960,
+        "wires": [
+            [
+                "799975521ec28fb7"
+            ]
+        ]
+    },
+    {
+        "id": "56083d61eb8d3f7b",
+        "type": "subflow:8717f82059831d90",
+        "z": "f080f7d563bd7ed5",
+        "g": "47838cee09f8b15b",
+        "name": "",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "SignalledAreas",
+                "type": "str"
+            },
+            {
+                "name": "Attribute",
+                "value": "count",
+                "type": "str"
+            }
+        ],
+        "x": 670,
+        "y": 3280,
+        "wires": [
+            [
+                "4d96aa1e66f455f1",
+                "cfd8a8515d3fa1f8"
+            ]
+        ]
+    },
+    {
+        "id": "cfd8a8515d3fa1f8",
+        "type": "debug",
+        "z": "f080f7d563bd7ed5",
+        "g": "47838cee09f8b15b",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 3280,
+        "wires": []
+    },
+    {
+        "id": "abca588e321be9db",
+        "type": "subflow:8717f82059831d90",
+        "z": "f080f7d563bd7ed5",
+        "g": "b001dcd7f4e84d23",
+        "name": "",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "SignalledAreas",
+                "type": "str"
+            },
+            {
+                "name": "Attribute",
+                "value": "count",
+                "type": "str"
+            }
+        ],
+        "x": 430,
+        "y": 2380,
+        "wires": [
+            [
+                "25d7e7c2f589d614"
+            ]
+        ]
+    },
+    {
+        "id": "d69e5b95fa465e86",
+        "type": "subflow:b009507935e1772b",
+        "z": "f080f7d563bd7ed5",
+        "g": "b001dcd7f4e84d23",
+        "name": "",
+        "env": [
+            {
+                "name": "Assignments",
+                "value": "{\"signalled\":true}",
+                "type": "json"
+            }
+        ],
+        "x": 420,
+        "y": 2340,
+        "wires": [
+            [
+                "e429d5e754fad474",
+                "abca588e321be9db"
+            ]
+        ]
+    },
+    {
+        "id": "25d7e7c2f589d614",
+        "type": "function",
+        "z": "f080f7d563bd7ed5",
+        "g": "b001dcd7f4e84d23",
+        "name": "Warden in random exit",
+        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// 1. Retrieve data from the flow context (equivalent to the inject)\nlet processData = flow.get(\"processData\") || {};\nlet deployments = processData.deployments || [];\n\n// 2. Find the definition for \"Process_Emergency_Warden\"\nlet wardenDeployment = deployments.find(d => d.process && d.process.bpmnProcessId === \"Process_Emergency_Warden\");\n// Ensure that the payload exists\nmsg.payload = msg.payload || {};\n\n// 3. Add tenantId and processDefinitionKey extracted from the context\nif (wardenDeployment) {\n    msg.payload.tenantId = wardenDeployment.process.tenantId;\n    msg.payload.processDefinitionKey = wardenDeployment.process.processDefinitionKey;\n}\n\n// 4. Get variables from the context (or from the payload if not present)\nlet originalVars = processData.variables || msg.payload.variables || {};\n\n// Create a new object containing EXCLUSIVELY MyPlace and SignalledAreas\nlet newVariables = {\n    SignalledAreas: originalVars.SignalledAreas || {},\n    MyPlace: originalVars.MyPlace || {}\n};\n\n// Modify the values based on your logic\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234;\nnewVariables.SignalledAreas.count = msg.payload.SignalledAreas.count;\ndelete msg.payload.job;\n// Overwrite the payload variables\nmsg.payload.variables = newVariables;\ndelete msg.payload.SignalledAreas\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 2420,
+        "wires": [
+            [
+                "6f1248f2076315d7"
+            ]
+        ]
+    },
+    {
+        "id": "2d937ca6b4f173e4",
+        "type": "change",
+        "z": "f080f7d563bd7ed5",
+        "g": "b001dcd7f4e84d23",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "roomName",
+                "pt": "msg",
+                "to": "job.variables.MyPlace.name",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 2280,
+        "wires": [
+            [
+                "d69e5b95fa465e86"
+            ]
+        ]
+    },
+    {
+        "id": "e429d5e754fad474",
+        "type": "subflow:5122c220d975922b",
+        "z": "f080f7d563bd7ed5",
+        "g": "b001dcd7f4e84d23",
+        "name": "Wrapper: signal-area",
+        "env": [
+            {
+                "name": "TASK_TYPE",
+                "value": "signal-area",
+                "type": "str"
+            }
+        ],
+        "x": 440,
+        "y": 2280,
+        "wires": [
+            [
+                "2d937ca6b4f173e4"
+            ]
+        ]
+    },
+    {
+        "id": "6f1248f2076315d7",
+        "type": "subflow:df8d344bd7233279",
+        "z": "f080f7d563bd7ed5",
+        "g": "b001dcd7f4e84d23",
+        "name": "",
+        "x": 460,
+        "y": 2460,
+        "wires": [
+            []
         ]
     }
 ]
