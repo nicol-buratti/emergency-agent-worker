@@ -1324,12 +1324,12 @@
             "48b3e32e7756eacf",
             "70a4d974a77d43ad",
             "f39d093ef54afb0e",
-            "0cd6868982052b31",
             "c4b9da2d450f73bc",
             "3285c3ee3c824d55",
             "6bcd51ea3fa5bec7",
             "fb5058208b1e7147",
-            "29d8fd7b9d6515e0"
+            "29d8fd7b9d6515e0",
+            "bfbba1b4f96419cf"
         ],
         "x": 334,
         "y": 1579,
@@ -1454,12 +1454,11 @@
         },
         "nodes": [
             "4d96aa1e66f455f1",
-            "56083d61eb8d3f7b",
-            "cfd8a8515d3fa1f8"
+            "56083d61eb8d3f7b"
         ],
         "x": 274,
         "y": 3239,
-        "w": 672,
+        "w": 512,
         "h": 82
     },
     {
@@ -5351,14 +5350,14 @@
         "id": "79eebb576c7e2e08",
         "type": "change",
         "z": "8717f82059831d90",
-        "name": "",
+        "name": "COUNT",
         "rules": [
             {
                 "t": "set",
                 "p": "aggregation",
                 "pt": "msg",
-                "to": "$count($$.payload.Building)",
-                "tot": "str"
+                "to": "$count(\t    $lookup(\t        $$.payload, $env(\"ViewName\")\t        )\t    )",
+                "tot": "jsonata"
             }
         ],
         "action": "",
@@ -5366,7 +5365,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 660,
+        "x": 620,
         "y": 140,
         "wires": [
             [
@@ -5378,7 +5377,7 @@
         "id": "2567f8b4476c1e6b",
         "type": "change",
         "z": "8717f82059831d90",
-        "name": "",
+        "name": "SUM",
         "rules": [
             {
                 "t": "set",
@@ -5393,7 +5392,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 660,
+        "x": 610,
         "y": 80,
         "wires": [
             [
@@ -5406,7 +5405,7 @@
         "type": "function",
         "z": "8717f82059831d90",
         "name": "function 1",
-        "func": "const viewName = env.get(\"ViewName\");\nconst attribute = env.get(\"Attribute\");\n\n// 1. Initialize objects if they don't exist\nmsg.job = msg.job || {};\nmsg.job.variables = msg.job.variables || {};\nmsg.job.variables[viewName] = msg.job.variables[viewName] || {};\n\n// 2. Set the dynamic property\nmsg.job.variables[viewName][attribute] = msg.aggregation;\n\n// 3. Delete the dynamic payload property\nif (msg.payload && msg.payload[viewName]) {\n    delete msg.payload[viewName];\n}\n\n// 4. Delete aggregation\ndelete msg.aggregation;\n\nreturn msg;",
+        "func": "const viewName = env.get(\"ViewName\");\nconst attribute = env.get(\"Attribute\");\n\nmsg.job = msg.job || {};\nmsg.job.variables = msg.job.variables || {};\nmsg.job.variables[viewName] = msg.job.variables[viewName] || {};\n\nmsg.job.variables[viewName][attribute] = msg.aggregation;\n\nmsg.payload = {};\nmsg.payload[viewName] = {}; \nmsg.payload[viewName][attribute] = msg.aggregation;\n\ndelete msg.aggregation;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -6654,7 +6653,7 @@
         "y": 1740,
         "wires": [
             [
-                "0cd6868982052b31"
+                "bfbba1b4f96419cf"
             ]
         ]
     },
@@ -6703,27 +6702,6 @@
         ]
     },
     {
-        "id": "0cd6868982052b31",
-        "type": "subflow:7a7a13d9d614cb94",
-        "z": "f080f7d563bd7ed5",
-        "g": "250c3b9bf684f063",
-        "name": "",
-        "env": [
-            {
-                "name": "ViewName",
-                "value": "DangerZones",
-                "type": "str"
-            }
-        ],
-        "x": 580,
-        "y": 1740,
-        "wires": [
-            [
-                "c4b9da2d450f73bc"
-            ]
-        ]
-    },
-    {
         "id": "c4b9da2d450f73bc",
         "type": "change",
         "z": "f080f7d563bd7ed5",
@@ -6732,27 +6710,10 @@
         "rules": [
             {
                 "t": "set",
-                "p": "count",
-                "pt": "msg",
-                "to": "$count($$.payload.DangerZones)",
-                "tot": "jsonata"
-            },
-            {
-                "t": "delete",
-                "p": "payload.DangerZones",
-                "pt": "msg"
-            },
-            {
-                "t": "set",
                 "p": "DangerZones.count",
                 "pt": "msg",
-                "to": "count",
+                "to": "payload.DangerZones.count",
                 "tot": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "count",
-                "pt": "msg"
             },
             {
                 "t": "set",
@@ -7975,28 +7936,9 @@
         "y": 3280,
         "wires": [
             [
-                "4d96aa1e66f455f1",
-                "cfd8a8515d3fa1f8"
+                "4d96aa1e66f455f1"
             ]
         ]
-    },
-    {
-        "id": "cfd8a8515d3fa1f8",
-        "type": "debug",
-        "z": "f080f7d563bd7ed5",
-        "g": "47838cee09f8b15b",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 840,
-        "y": 3280,
-        "wires": []
     },
     {
         "id": "abca588e321be9db",
@@ -8052,7 +7994,7 @@
         "z": "f080f7d563bd7ed5",
         "g": "b001dcd7f4e84d23",
         "name": "Warden in random exit",
-        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\n// 1. Retrieve data from the flow context (equivalent to the inject)\nlet processData = flow.get(\"processData\") || {};\nlet deployments = processData.deployments || [];\n\n// 2. Find the definition for \"Process_Emergency_Warden\"\nlet wardenDeployment = deployments.find(d => d.process && d.process.bpmnProcessId === \"Process_Emergency_Warden\");\n// Ensure that the payload exists\nmsg.payload = msg.payload || {};\n\n// 3. Add tenantId and processDefinitionKey extracted from the context\nif (wardenDeployment) {\n    msg.payload.tenantId = wardenDeployment.process.tenantId;\n    msg.payload.processDefinitionKey = wardenDeployment.process.processDefinitionKey;\n}\n\n// 4. Get variables from the context (or from the payload if not present)\nlet originalVars = processData.variables || msg.payload.variables || {};\n\n// Create a new object containing EXCLUSIVELY MyPlace and SignalledAreas\nlet newVariables = {\n    SignalledAreas: originalVars.SignalledAreas || {},\n    MyPlace: originalVars.MyPlace || {}\n};\n\n// Modify the values based on your logic\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234;\nnewVariables.SignalledAreas.count = msg.payload.SignalledAreas.count;\ndelete msg.payload.job;\n// Overwrite the payload variables\nmsg.payload.variables = newVariables;\ndelete msg.payload.SignalledAreas\n\nreturn msg;",
+        "func": "let names = [\"E1\", \"E2\", \"E3\", \"E4\", \"E5\", \"E6\", \"E7\"];\n\nlet processData = flow.get(\"processData\") || {};\nlet deployments = processData.deployments || [];\n\nlet wardenDeployment = deployments.find(d => d.process && d.process.bpmnProcessId === \"Process_Emergency_Warden\");\n\nmsg.payload = msg.payload || {};\n\nif (wardenDeployment) {\n    msg.payload.tenantId = wardenDeployment.process.tenantId;\n    msg.payload.processDefinitionKey = wardenDeployment.process.processDefinitionKey;\n}\n\nlet originalVars = processData.variables || (msg.job && msg.job.variables) || msg.payload.variables || {};\n\nlet newVariables = {\n    SignalledAreas: originalVars.SignalledAreas || {},\n    MyPlace: originalVars.MyPlace || {}\n};\n\nnewVariables.MyPlace.name = names[Math.floor(Math.random() * names.length)];\nnewVariables.WardenID = 1234;\nnewVariables.SignalledAreas.count = msg.job.variables.SignalledAreas.count;\n\ndelete msg.payload.SignalledAreas\ndelete msg.job;\nmsg.payload.variables = newVariables;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -8126,6 +8068,32 @@
         "y": 2460,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "bfbba1b4f96419cf",
+        "type": "subflow:8717f82059831d90",
+        "z": "f080f7d563bd7ed5",
+        "g": "250c3b9bf684f063",
+        "name": "",
+        "env": [
+            {
+                "name": "ViewName",
+                "value": "DangerZones",
+                "type": "str"
+            },
+            {
+                "name": "Attribute",
+                "value": "count",
+                "type": "str"
+            }
+        ],
+        "x": 610,
+        "y": 1740,
+        "wires": [
+            [
+                "c4b9da2d450f73bc"
+            ]
         ]
     }
 ]
